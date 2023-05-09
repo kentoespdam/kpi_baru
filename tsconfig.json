@@ -1,0 +1,41 @@
+{
+	"compilerOptions": {
+		"target": "es5",
+		"lib": ["dom", "dom.iterable", "esnext"],
+		"allowJs": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"noEmit": true,
+		"esModuleInterop": true,
+		"module": "esnext",
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"jsx": "preserve",
+		"incremental": true,
+		"plugins": [
+			{
+				"name": "next"
+			}
+		],
+		"baseUrl": ".",
+		"paths": {
+			"@app/*": ["./app/*"],
+			"@utils/*": ["./commons/utils/*"],
+			"@interfaces/*": ["./commons/interfaces/*"],
+			"@helpers/*": ["./commons/helpers/*"],
+			"@commons/*": ["./commons/*"],
+			"@template/*": ["./components/template/*"],
+			"@master/*": ["./components/master/*"],
+			"@bridge/*": ["./components/bridge/*"],
+			"@transaction/*": ["./components/transaction/*"],
+			"@staff/*": ["./components/staff/*"],
+			"@example/*": ["./example/*"],
+			"@storage/*": ["./storage/*"],
+			"@api/*": ["./pages/api/*"]
+		}
+	},
+	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "pages/api/auth/signin.ts.bak", "pages/api/auth/signin.ts.bak", "pages/api/auth/signin.ts.bak"],
+	"exclude": ["node_modules"]
+}
