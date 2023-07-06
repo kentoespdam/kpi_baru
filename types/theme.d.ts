@@ -14,6 +14,10 @@ declare module "@mui/material/styles" {
 		z1: string;
 	}
 
+	interface Theme {
+		customShadows: Shadow;
+	}
+
 	interface ThemeOptions {
 		customShadows?: Shadow;
 	}

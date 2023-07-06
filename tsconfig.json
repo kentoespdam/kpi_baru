@@ -25,7 +25,8 @@
 			"@myConfig/*": ["./src/config/*"],
 			"@components/*": ["./src/components/*"],
 			"@myTypes/*": ["./src/types/*"],
-			"@myMui/*": ["./src/mui/*"]
+			"@myMui/*": ["./src/mui/*"],
+			"@template/*": ["./src/components/template/*"]
 		}
 	},
 	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

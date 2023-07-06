@@ -1,8 +1,8 @@
-import { alpha, createTheme } from "@mui/material/styles";
-import { myPalette } from "./palette";
 import { common } from "@mui/material/colors";
-import { myTypography } from "./typography";
+import { alpha, createTheme } from "@mui/material/styles";
 import OverridesComponent from "./overrides";
+import { myPalette } from "./palette";
+import { myTypography } from "./typography";
 
 export const myTheme = () => {
 	const cusPalette = myPalette();

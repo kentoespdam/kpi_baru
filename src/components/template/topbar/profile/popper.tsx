@@ -1,0 +1,63 @@
+import Box from "@mui/material/Box";
+import Fade from "@mui/material/Fade";
+import Popper from "@mui/material/Popper";
+import { useProfileStore } from "src/store/main/menu";
+import { shallow } from "zustand/shallow";
+import ProfileContent from "./content";
+
+type ProfilePopperProps = {
+	id?: string;
+};
+
+const ProfilePopper = (props: ProfilePopperProps) => {
+	const { id } = props;
+	const { anchorEl, isOpen } = useProfileStore(
+		(state) => ({
+			anchorEl: state.anchorEl,
+			isOpen: state.isOpen,
+		}),
+		shallow
+	);
+
+	return isOpen ? (
+		<Popper
+			id={id}
+			placement="bottom-end"
+			open={isOpen}
+			anchorEl={anchorEl}
+			role={undefined}
+			transition
+			disablePortal
+			popperOptions={{
+				modifiers: [
+					{
+						name: "offset",
+						options: {
+							offset: [0, 5],
+						},
+					},
+				],
+			}}
+		>
+			{({ TransitionProps }) => (
+				<>
+					<Fade
+						in={isOpen}
+						{...TransitionProps}
+						timeout={{
+							appear: 0,
+							enter: 300,
+							exit: 150,
+						}}
+					>
+						<Box sx={{ transformOrigin: "0 0 0" }}>
+							<ProfileContent />
+						</Box>
+					</Fade>
+				</>
+			)}
+		</Popper>
+	) : null;
+};
+
+export default ProfilePopper;
