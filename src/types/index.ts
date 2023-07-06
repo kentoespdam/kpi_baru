@@ -42,3 +42,84 @@ const USER_ROLE = {
 } as const;
 
 export type UserRole = ObjectValues<typeof USER_ROLE>;
+
+export const AUDIT_STATUS = {
+	ENABLED: "Enabled",
+	DISABLED: "Disabled",
+	DELETED: "Deleted",
+} as const;
+
+export type AuditStatus = ObjectValues<typeof AUDIT_STATUS>;
+
+export interface BaseId {
+	id: number;
+	status: AuditStatus;
+}
+
+export function isBaseId(args: any): args is BaseId {
+	return (
+		typeof args === "object" &&
+		typeof args.id === "number" &&
+		typeof args.status === "string"
+	);
+}
+
+export interface Audit {
+	createdAt: Date;
+	createdBy: string;
+	updatedAt: Date;
+	updatedBy: string;
+}
+
+export const EMP_STATUS = {
+	Active: "Active",
+	Inactive: "Inactive",
+	Deleted: "Deleted",
+};
+
+export type EmpStatus = ObjectValues<typeof EMP_STATUS>;
+
+export interface Sort {
+	sorted: boolean;
+	unsorted: boolean;
+	empty: boolean;
+}
+
+export interface Pageable {
+	sort: Sort;
+	offset: number;
+	pageSize: number;
+	pageNumber: number;
+	paged: boolean;
+	unpaged: boolean;
+}
+
+export interface Pages<Data> {
+	content: Data[];
+	empty: boolean;
+	first: boolean;
+	last: boolean;
+	number: number;
+	numberOfElements: number;
+	pageable: Pageable;
+	size: number;
+	sort: Sort;
+	totalElements: number;
+	totalPages: number;
+}
+
+export interface PageRequest {
+	page: number;
+	size: number;
+	sort: string | null;
+	direction: "asc" | "desc";
+}
+
+export interface ApiResponse<Data> {
+	status: string;
+	code: number;
+	timestamp: Date;
+	message: string;
+	error?: string;
+	data: Data;
+}
