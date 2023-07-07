@@ -25,7 +25,7 @@
 			"@myConfig/*": ["./src/config/*"],
 			"@components/*": ["./src/components/*"],
 			"@myTypes/*": ["./src/types/*"],
-			"@myMui/*": ["./src/mui/*"],
+			"@myMui/*": ["src/components/commons/mui/*"],
 			"@template/*": ["./src/components/template/*"]
 		}
 	},

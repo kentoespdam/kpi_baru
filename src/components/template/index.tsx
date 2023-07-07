@@ -1,6 +1,6 @@
 "use client";
 
-import { myTheme } from "@components/theme";
+import { myTheme } from "@components/commons/theme";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
@@ -11,7 +11,9 @@ const TemplateComponent = ({ children }: ChildrenProps) => {
 	return (
 		<ThemeProvider theme={theme}>
 			<CssBaseline />
-			<Box sx={{ display: "flex", width: "100%" }}>{children}</Box>
+			<Box sx={{ display: "flex", width: "100%", minHeight: "100vh" }}>
+				{children}
+			</Box>
 		</ThemeProvider>
 	);
 };
