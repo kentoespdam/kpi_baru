@@ -1,20 +1,21 @@
 "use client";
 
-import { myTheme } from "@components/commons/theme";
-import CssBaseline from "@mui/material/CssBaseline";
-import Box from "@mui/material/Box";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import QueryProvider from "@components/commons/provider/query";
+import TemplateProvider from "@components/commons/provider/theme";
 import { ChildrenProps } from "@myTypes/index";
+import ContentComponent from "./content";
+import MenuDrawerComponent from "./drawer";
+import TopBarComponent from "./topbar";
 
 const TemplateComponent = ({ children }: ChildrenProps) => {
-	const theme = createTheme(myTheme());
 	return (
-		<ThemeProvider theme={theme}>
-			<CssBaseline />
-			<Box sx={{ display: "flex", width: "100%", minHeight: "100vh" }}>
-				{children}
-			</Box>
-		</ThemeProvider>
+		<QueryProvider>
+			<TemplateProvider>
+				<TopBarComponent />
+				<MenuDrawerComponent />
+				<ContentComponent>{children}</ContentComponent>
+			</TemplateProvider>
+		</QueryProvider>
 	);
 };
 

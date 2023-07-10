@@ -7,13 +7,18 @@ import { useLevelStore } from "src/store/filter/master/level";
 import { shallow } from "zustand/shallow";
 
 const LevelComponent = () => {
-	const { sortRequest } = useLevelStore(
-		(state) => ({ sortRequest: state.sortRequest }),
+	const { pageRequest, sortRequest, status, level } = useLevelStore(
+		(state) => ({
+			pageRequest: state.pageRequest,
+			sortRequest: state.sortRequest,
+			status: state.status,
+			level: state.level,
+		}),
 		shallow
 	);
 
-	console.log(sortRequest);
 	
+
 	return (
 		<TableContainer>
 			<Table>

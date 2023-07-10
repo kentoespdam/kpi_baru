@@ -26,7 +26,8 @@
 			"@components/*": ["./src/components/*"],
 			"@myTypes/*": ["./src/types/*"],
 			"@myMui/*": ["src/components/commons/mui/*"],
-			"@template/*": ["./src/components/template/*"]
+			"@template/*": ["./src/components/template/*"],
+			"@helper/*": ["./src/helpers/*"]
 		}
 	},
 	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

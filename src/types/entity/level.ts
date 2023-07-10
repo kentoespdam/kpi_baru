@@ -21,8 +21,19 @@ export interface LevelResponse extends ApiResponse<Level[]> {}
 export interface LevelPageResponse extends ApiResponse<LevelWithPagination> {}
 
 export const levelHeader: MyTableHead[] = [
-	{ field: null, title: "No", sortable: "true" },
-	{ field: "level", title: "Level", sortable: "true" },
-	{ field: "status", title: "Status" },
-	{ field: null, title: "Action" },
+	{ field: null, title: "No", searchable: "false" },
+	{
+		field: "level",
+		title: "Level",
+		sortable: "true",
+		searchable: "true",
+		type: "text",
+	},
+	{
+		field: "status",
+		title: "Status",
+		searchable: "true",
+		type: "auditStatus",
+	},
+	{ field: null, title: "Action", searchable: "false" },
 ];
