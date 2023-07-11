@@ -9,8 +9,11 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { buttonHovered } from "@myConfig/index";
 import { useRouter } from "next/navigation";
+import { useSessionStore } from "src/store/main/session";
+import { shallow } from "zustand/shallow";
 
 const ProfileContent = () => {
+	const user = useSessionStore((state) => state.user, shallow);
 	const router = useRouter();
 	async function handleLogout() {
 		// const logout = await fetch("/api/auth/logout", {
@@ -56,7 +59,7 @@ const ProfileContent = () => {
 								alignItems="center"
 							>
 								<Avatar
-									alt="User"
+									alt={user?.name}
 									src="/images/avatars/avatar_1.png"
 									sx={{
 										bgcolor: "white",
@@ -66,7 +69,7 @@ const ProfileContent = () => {
 								/>
 								<Stack>
 									<Typography variant="subtitle1">
-										User
+										{user?.name}
 									</Typography>
 									<Typography
 										variant="body2"

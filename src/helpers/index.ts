@@ -20,11 +20,15 @@ export const appwriteHeader = (
 	let header;
 	switch (typeof sessCookie) {
 		case "object":
+			const xfallback =
+				sessCookie.get(sessionNames[0])?.value ||
+				sessCookie.get(sessionNames[1])?.value ||
+				"";
 			header = {
 				"X-Appwrite-Project": APPWRITE_PROJECT_ID,
 				"Content-Type": "application/json",
 				"Cookie": sessCookie.toString(),
-				"X-Fallback-Cookies": sessCookie.get(sessionNames[0])?.value,
+				"X-Fallback-Cookies": xfallback,
 			};
 			break;
 		default:
@@ -46,7 +50,6 @@ export const newSetCookies = (cookieString: string) => {
 		APP_HOSTNAME === "localhost" ? APP_HOSTNAME : "." + APP_HOSTNAME;
 
 	let cookie = cookieString.split("." + APPWRITE_HOSTNAME).join(newHostname);
-	const expires = cookie.split(";")[1].split("=")[1];
 	return cookie;
 };
 

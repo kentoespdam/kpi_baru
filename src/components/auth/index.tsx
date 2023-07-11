@@ -18,12 +18,14 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import axios from "axios";
 import { userToEmail } from "@helper/email";
 import { useSnackbar } from "notistack";
+import { useSessionStore } from "src/store/main/session";
 
 const AuthComponent = () => {
+	const { user, setUser } = useSessionStore();
 	const usernameRef = React.useRef<HTMLInputElement>(null);
 	const passwordRef = React.useRef<HTMLInputElement>(null);
 	const { enqueueSnackbar } = useSnackbar();
-	const loading = false;
+	const [loading, setLoading] = React.useState(false);
 	const [showPassword, setShowPassword] = React.useState(false);
 	const handleClickShowPassword = () => setShowPassword((show) => !show);
 	const handleMouseDownPassword = (
@@ -33,14 +35,19 @@ const AuthComponent = () => {
 	};
 
 	const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+		setLoading(true);
 		e.preventDefault();
 		try {
 			const { data, status } = await axios.post("/api/auth", {
 				email: userToEmail(usernameRef.current!.value),
 				password: passwordRef.current!.value,
 			});
-			// console.log(data, status);
+			setUser(data);
+			setLoading(false);
+			enqueueSnackbar("Login Success", { variant: "success" });
+			window.location.href = "/";
 		} catch (e: any) {
+			setLoading(false);
 			const variant = "error";
 			enqueueSnackbar(e.response.data.message, { variant });
 			console.log("error", e.response.data.message);

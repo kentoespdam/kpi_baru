@@ -24,7 +24,6 @@ export const middleware = async (req: NextRequest) => {
 	}
 
 	const sess = await getSession(cookies);
-	console.log("sess", sess);
 	if (sess?.status !== 200) {
 		response.cookies.delete(sessionNames[0]);
 		response.cookies.delete(sessionNames[1]);
