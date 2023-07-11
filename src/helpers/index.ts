@@ -1,4 +1,3 @@
-import { request } from "http";
 import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
 import {
 	APPWRITE_HOSTNAME,
@@ -14,12 +13,29 @@ export const getSessionCookie = (cookies: RequestCookies) => {
 	return sess;
 };
 
-export const appwriteHeader = (sessCookie: string, token?: string) => {
-	const header = {
-		"X-Appwrite-Project": APPWRITE_PROJECT_ID,
-		"Content-Type": "application/json",
-		"X-Fallback-Cookies": sessCookie,
-	};
+export const appwriteHeader = (
+	sessCookie: string | RequestCookies,
+	token?: string
+) => {
+	let header;
+	switch (typeof sessCookie) {
+		case "object":
+			header = {
+				"X-Appwrite-Project": APPWRITE_PROJECT_ID,
+				"Content-Type": "application/json",
+				"Cookie": sessCookie.toString(),
+				"X-Fallback-Cookies": sessCookie.get(sessionNames[0])?.value,
+			};
+			break;
+		default:
+			header = {
+				"X-Appwrite-Project": APPWRITE_PROJECT_ID,
+				"Content-Type": "application/json",
+				"Cookie": `${sessionNames[0]}=${sessCookie}`,
+				"X-Fallback-Cookies": sessCookie,
+			};
+			break;
+	}
 
 	if (token) return { ...header, "X-Appwrite-JWT": token };
 	return header;
@@ -31,4 +47,11 @@ export const newSetCookies = (cookieString: string) => {
 
 	let cookie = cookieString.split("." + APPWRITE_HOSTNAME).join(newHostname);
 	const expires = cookie.split(";")[1].split("=")[1];
+	return cookie;
+};
+
+export const getExpToken = (token: string) => {
+	const tokenParts = token.split(".");
+	const tokenBody = JSON.parse(atob(tokenParts[1]));
+	return tokenBody.exp * 1000;
 };
