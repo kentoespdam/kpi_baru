@@ -2,9 +2,13 @@ import { NextRequest } from "next/server";
 import { getAccount, getSession } from "src/lib/appwrite";
 
 export const GET = async (req: NextRequest) => {
+	const cookie = req.cookies;
+
 	try {
-		const session = await getSession(req.cookies);
-		const account = await getAccount(req.cookies);
+		if (cookie.size === 0)
+			return new Response("unauthorized", { status: 401 });
+		const session = await getSession(cookie);
+		const account = await getAccount(cookie);
 		const user = {
 			$id: session.$id,
 			userId: session.userId,

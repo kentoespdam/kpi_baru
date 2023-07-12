@@ -2,18 +2,18 @@
 
 import MenuFoldOutlined from "@ant-design/icons/MenuFoldOutlined";
 import MenuUnfoldOutlined from "@ant-design/icons/MenuUnfoldOutlined";
-import { useMediaQuery } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Theme, useTheme } from "@mui/material/styles";
 import { buttonSelectedColor, drawerWidth } from "@myConfig/index";
-import { useEffect } from "react";
 import { useMenuStore } from "src/store/main/menu";
 import { useTemplateStore } from "src/store/main/template";
 import { shallow } from "zustand/shallow";
 import ProfileComponent from "./profile";
+import { useSessionStore } from "src/store/main/session";
+import Box from "@mui/material/Box";
 
 const appBarSx = (theme: Theme, isOpen: boolean, isDesktop: boolean) => {
 	return {
@@ -35,6 +35,7 @@ const appBarSx = (theme: Theme, isOpen: boolean, isDesktop: boolean) => {
 };
 
 const TopBarComponent = () => {
+	const user = useSessionStore((state) => state.user, shallow);
 	const theme = useTheme();
 	const { isMenuOpen, toggleDrawer } = useMenuStore(
 		(state) => ({
@@ -43,49 +44,40 @@ const TopBarComponent = () => {
 		}),
 		shallow
 	);
-	const { isDesktop, setDesktop } = useTemplateStore(
-		(state) => ({
-			isDesktop: state.isDesktop,
-			setDesktop: state.setDesktop,
-		}),
-		shallow
-	);
+	const isDesktop = useTemplateStore((state) => state.isDesktop, shallow);
 	const sx = appBarSx(theme, isMenuOpen, isDesktop);
-	const matches = useMediaQuery(`(min-width:600px)`);
-
-	useEffect(() => {
-		setDesktop(matches);
-		return () => {
-			setDesktop(matches);
-		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [matches]);
 
 	return (
-		<AppBar elevation={0} color="inherit" position="fixed" sx={sx}>
-			<Toolbar>
-				<IconButton
-					disableRipple
-					edge="start"
-					aria-label="Main Menu"
-					sx={{
-						color: "text.primary",
-						...(isMenuOpen && { bgcolor: buttonSelectedColor }),
-						ml: { xs: 0, lg: -2 },
-						mr: 2,
-					}}
-					color="secondary"
-					onClick={toggleDrawer}
-				>
-					{isMenuOpen ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />}
-				</IconButton>
+		<Box sx={{ flexGrow: 1 }}>
+			<AppBar elevation={0} color="inherit" position="fixed" sx={sx}>
+				<Toolbar>
+					<IconButton
+						disableRipple
+						edge="start"
+						aria-label="Main Menu"
+						sx={{
+							color: "text.primary",
+							...(isMenuOpen && { bgcolor: buttonSelectedColor }),
+							ml: { xs: 0, lg: -2 },
+							mr: 2,
+						}}
+						color="secondary"
+						onClick={toggleDrawer}
+					>
+						{isMenuOpen ? (
+							<MenuFoldOutlined />
+						) : (
+							<MenuUnfoldOutlined />
+						)}
+					</IconButton>
 
-				<Typography variant="body1" sx={{ flexGrow: 1 }}>
-					KPI Pegawai PerumdamTS
-				</Typography>
-				<ProfileComponent />
-			</Toolbar>
-		</AppBar>
+					<Typography variant="body1" sx={{ flexGrow: 1 }}>
+						KPI Pegawai PerumdamTS
+					</Typography>
+					<ProfileComponent />
+				</Toolbar>
+			</AppBar>
+		</Box>
 	);
 };
 

@@ -45,10 +45,10 @@ export const appwriteHeader = (
 	return header;
 };
 
-export const newSetCookies = (cookieString: string) => {
-	const newHostname =
-		APP_HOSTNAME === "localhost" ? APP_HOSTNAME : "." + APP_HOSTNAME;
+const newHostname =
+	APP_HOSTNAME === "localhost" ? APP_HOSTNAME : "." + APP_HOSTNAME;
 
+export const newSetCookies = (cookieString: string) => {
 	let cookie = cookieString.split("." + APPWRITE_HOSTNAME).join(newHostname);
 	return cookie;
 };
@@ -57,4 +57,14 @@ export const getExpToken = (token: string) => {
 	const tokenParts = token.split(".");
 	const tokenBody = JSON.parse(atob(tokenParts[1]));
 	return tokenBody.exp * 1000;
+};
+
+export const setExpiredCookie = (cookies: RequestCookies) => {
+	if (cookies.size === 0) return "";
+	const expiredCookie = cookies.getAll().map((cookie) => {
+		cookie.value += `; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=${newHostname}; secure; httponly`;
+		return `${cookie.name}=${cookie.value}`;
+	});
+	const result = expiredCookie.join(", ").toString();
+	return result;
 };

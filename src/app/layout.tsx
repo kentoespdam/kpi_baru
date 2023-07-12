@@ -1,9 +1,6 @@
 // import "./globals.css";
 // import { Inter } from 'next/font/google'
-import AppwriteSessionProvider from "@components/commons/provider/session";
-import { cookies } from "next/dist/client/components/headers";
 import { Public_Sans as PublicSans } from "next/font/google";
-import { sessionNames } from "src/lib";
 
 // const inter = Inter({ subsets: ['latin'] })
 const inter = PublicSans({
@@ -21,7 +18,6 @@ export default function RootLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	const cookie = cookies();
 	return (
 		<html lang="en">
 			<body
@@ -30,9 +26,6 @@ export default function RootLayout({
 					backgroundColor: "rgb(239 239 241)",
 				}}
 			>
-				{cookie.has(sessionNames[0]) || cookie.has(sessionNames[1]) ? (
-					<AppwriteSessionProvider />
-				) : null}
 				{children}
 			</body>
 		</html>

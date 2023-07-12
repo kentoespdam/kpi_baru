@@ -23,14 +23,14 @@ export const middleware = async (req: NextRequest) => {
 		return response;
 	}
 
-	const sess = await getSession(cookies);
-	if (sess?.status !== 200) {
-		response.cookies.delete(sessionNames[0]);
-		response.cookies.delete(sessionNames[1]);
-		response.cookies.delete(sessionNames[2]);
-		if (currPath.startsWith("/auth")) return;
-		return response;
-	}
+	// const sess = await getSession(cookies);
+	// if (sess?.status !== 200) {
+	// 	response.cookies.delete(sessionNames[0]);
+	// 	response.cookies.delete(sessionNames[1]);
+	// 	response.cookies.delete(sessionNames[2]);
+	// 	if (currPath.startsWith("/auth")) return;
+	// 	return response;
+	// }
 
 	return response;
 };
@@ -72,7 +72,7 @@ const getSession = async (cookies: RequestCookies) => {
 		const status = req.status;
 		const res = await req.json();
 		return { status, res };
-	} catch (e) {
+	} catch (e:any) {
 		console.log("middleware error", e);
 	}
 };

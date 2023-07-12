@@ -1,17 +1,14 @@
+"use client";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import ButtonBase from "@mui/material/ButtonBase";
 import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
 import { buttonHovered, buttonSelectedColor } from "@myConfig/index";
 import React from "react";
 import { useProfileStore } from "src/store/main/menu";
 import ProfilePopper from "./popper";
-import { useSessionStore } from "src/store/main/session";
-import { shallow } from "zustand/shallow";
 
 const ProfileComponent = () => {
-	const user = useSessionStore((state) => state.user, shallow);
 	const { anchorEl, setAnchorEl, isOpen, toggleProfileMenu } =
 		useProfileStore();
 	const canBeOpen = isOpen && Boolean(anchorEl);
@@ -44,7 +41,7 @@ const ProfileComponent = () => {
 			>
 				<Stack>
 					<Avatar
-						alt={user?.name}
+						alt="user"
 						src="/images/avatars/avatar_1.png"
 						sx={{ bgcolor: "white", width: 32, height: 32 }}
 					/>

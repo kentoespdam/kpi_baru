@@ -7,7 +7,7 @@ export const metadata = {
 };
 const AuthPage = () => {
 	return (
-		<MuiContainer maxWidth="xs" disableGutters>
+		<MuiContainer maxWidth="xs" sx={{ mt: 4 }}>
 			<CardBuilder title={metadata.title} isLink={false} color="error">
 				<AuthComponent />
 			</CardBuilder>

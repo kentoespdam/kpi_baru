@@ -9,16 +9,14 @@ import { SnackbarProvider } from "notistack";
 const TemplateProvider = ({ children }: ChildrenProps) => {
 	const theme = createTheme(myTheme());
 	return (
-		<ThemeProvider theme={theme}>
-			<CssBaseline />
-			<SnackbarProvider maxSnack={3} autoHideDuration={3000}>
-				<Box
-					sx={{ display: "flex", width: "100%", minHeight: "100vh" }}
-				>
+		<>
+			<ThemeProvider theme={theme}>
+				<CssBaseline />
+				<SnackbarProvider maxSnack={3} autoHideDuration={3000}>
 					{children}
-				</Box>
-			</SnackbarProvider>
-		</ThemeProvider>
+				</SnackbarProvider>
+			</ThemeProvider>
+		</>
 	);
 };
 

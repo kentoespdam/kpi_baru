@@ -1,4 +1,10 @@
 import { create } from "zustand";
+import {
+	createJSONStorage,
+	devtools,
+	persist,
+	subscribeWithSelector,
+} from "zustand/middleware";
 
 export interface SessionUser {
 	$id: string;
@@ -13,7 +19,15 @@ interface SessionStore {
 	setUser: (user: SessionUser | null) => void;
 }
 
-export const useSessionStore = create<SessionStore>((set) => ({
-	user: null,
-	setUser: (user) => set({ user }),
-}));
+export const useSessionStore = create(
+	persist<SessionStore>(
+		(set, get) => ({
+			user: null,
+			setUser: (user) => set({ user }),
+		}),
+		{
+			name: "session",
+			storage: createJSONStorage(() => sessionStorage),
+		}
+	)
+);

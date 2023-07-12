@@ -6,8 +6,7 @@ import {
 	useQuery,
 } from "@tanstack/react-query";
 import axios from "axios";
-import { useRouter } from "next/navigation";
-import MuiToolbar from "../mui/toolbar";
+import { redirect } from "next/navigation";
 import { useSessionStore } from "src/store/main/session";
 
 const getSession = async () => {
@@ -16,21 +15,24 @@ const getSession = async () => {
 		if (status !== 200) throw Error("Unauthorized");
 		return data;
 	} catch (e: any) {
-		console.log(e);
 		throw Error(JSON.stringify(e.message));
 	}
 };
 
 const SessionChecker = () => {
 	const { user, setUser } = useSessionStore();
-	const { isSuccess, isError, data } = useQuery({
+
+	const { status, isError, data } = useQuery({
 		queryKey: ["session-checker"],
 		queryFn: getSession,
 	});
 
-	if (isError) window.location.reload();
-	if (isSuccess && data && user === null) setUser(data);
-
+	// console.log(status);
+	if (isError) {
+		setUser(null);
+		redirect("/auth");
+	}
+	if (data && user === null) setUser(data);
 	return null;
 };
 
@@ -44,9 +46,11 @@ const queryClient = new QueryClient({
 });
 const AppwriteSessionProvider = () => {
 	return (
-		<QueryClientProvider client={queryClient}>
-			<SessionChecker />
-		</QueryClientProvider>
+		<>
+			<QueryClientProvider client={queryClient}>
+				<SessionChecker />
+			</QueryClientProvider>
+		</>
 	);
 };
 

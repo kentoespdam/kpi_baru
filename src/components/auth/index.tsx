@@ -38,7 +38,7 @@ const AuthComponent = () => {
 		setLoading(true);
 		e.preventDefault();
 		try {
-			const { data, status } = await axios.post("/api/auth", {
+			const { data } = await axios.post("/api/auth", {
 				email: userToEmail(usernameRef.current!.value),
 				password: passwordRef.current!.value,
 			});

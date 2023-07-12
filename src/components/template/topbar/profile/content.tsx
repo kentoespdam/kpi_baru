@@ -9,17 +9,31 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { buttonHovered } from "@myConfig/index";
 import { useRouter } from "next/navigation";
+import { useProfileStore } from "src/store/main/menu";
 import { useSessionStore } from "src/store/main/session";
 import { shallow } from "zustand/shallow";
 
 const ProfileContent = () => {
-	const user = useSessionStore((state) => state.user, shallow);
+	const { user, setUser } = useSessionStore(
+		(state) => ({
+			user: state.user,
+			setUser: state.setUser,
+		}),
+		shallow
+	);
+	const { setAnchorEl, toggleProfileMenu } = useProfileStore(
+		(state) => ({
+			setAnchorEl: state.setAnchorEl,
+			toggleProfileMenu: state.toggleProfileMenu,
+		}),
+		shallow
+	);
 	const router = useRouter();
 	async function handleLogout() {
-		// const logout = await fetch("/api/auth/logout", {
-		// 	method: "DELETE",
-		// });
-		router.push("/api/auth/logout");
+		setUser(null);
+		toggleProfileMenu();
+		// router.push("/api/auth/logout");
+		// console.log(user);
 	}
 
 	return (
@@ -59,7 +73,7 @@ const ProfileContent = () => {
 								alignItems="center"
 							>
 								<Avatar
-									alt={user?.name}
+									alt="user"
 									src="/images/avatars/avatar_1.png"
 									sx={{
 										bgcolor: "white",

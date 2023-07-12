@@ -13,7 +13,7 @@ export const getSession = async (sessCookie: RequestCookies) => {
 		);
 		return { status: status, ...data };
 	} catch (e: any) {
-		console.log("lib.appwrite.getAppwriteSession", e.response.message);
+		console.log("lib.appwrite.getSession", e.response.data);
 		return {
 			status: e.response.status,
 			data: null,
@@ -38,7 +38,11 @@ export const createToken = async (cookieString: RequestCookies | string) => {
 		)}; path=/; httponly; SameSite=none; Secure`;
 		return resCookie;
 	} catch (e: any) {
-		console.log("api.auth.createToken:", new Date().toLocaleString(), e);
+		console.log(
+			"api.auth.createToken:",
+			new Date().toLocaleString(),
+			e.response.data
+		);
 		return "";
 	}
 };
@@ -50,7 +54,11 @@ export const getAccount = async (cookieString: RequestCookies | string) => {
 		});
 		return data;
 	} catch (e: any) {
-		console.log("api.auth.getAccount:", new Date().toLocaleString(), e);
-		return "";
+		console.log(
+			"api.auth.getAccount:",
+			new Date().toLocaleString(),
+			e.response.data
+		);
+		throw Error(e.response.data.message);
 	}
 };
