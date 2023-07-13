@@ -5,6 +5,7 @@ import {
 	APP_HOSTNAME,
 	sessionNames,
 } from "src/lib";
+import { createToken } from "src/lib/appwrite";
 
 export const getSessionCookie = (cookies: RequestCookies) => {
 	const sess =
@@ -53,6 +54,13 @@ export const newSetCookies = (cookieString: string) => {
 	return cookie;
 };
 
+export const getCurrentToken = async (cookies: RequestCookies) => {
+	const cookieToken = cookies.get(sessionNames[2])?.value;
+	if (cookieToken) return cookieToken;
+	const token = await createToken(cookies);
+	return token;
+};
+
 export const getExpToken = (token: string) => {
 	const tokenParts = token.split(".");
 	const tokenBody = JSON.parse(atob(tokenParts[1]));
@@ -67,4 +75,13 @@ export const setExpiredCookie = (cookies: RequestCookies) => {
 	});
 	const result = expiredCookie.join(", ").toString();
 	return result;
+};
+
+export const setCookieToken = (token: string) => {
+	const resCookie = `${
+		sessionNames[2]
+	}=${token}; domain=${APP_HOSTNAME}; expires=${new Date(
+		getExpToken(token)
+	)}; path=/; httponly; SameSite=none; Secure`;
+	return resCookie;
 };

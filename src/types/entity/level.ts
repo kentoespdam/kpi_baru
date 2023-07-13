@@ -21,7 +21,7 @@ export interface LevelResponse extends ApiResponse<Level[]> {}
 export interface LevelPageResponse extends ApiResponse<LevelWithPagination> {}
 
 export const levelHeader: MyTableHead[] = [
-	{ field: null, title: "No", searchable: "false" },
+	{ field: null, title: "No", searchable: "false", width: 80 },
 	{
 		field: "level",
 		title: "Level",

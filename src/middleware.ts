@@ -15,22 +15,15 @@ export const middleware = async (req: NextRequest) => {
 		return NextResponse.redirect(new URL("/auth", req.url));
 
 	const sessCookie = getSessionCookie(cookies);
-	if (sessCookie === undefined) {
-		response.cookies.delete(sessionNames[0]);
-		response.cookies.delete(sessionNames[1]);
-		response.cookies.delete(sessionNames[2]);
-		if (currPath.startsWith("/auth")) return;
-		return response;
-	}
+	if (sessCookie === undefined) if (currPath.startsWith("/auth")) return;
 
-	// const sess = await getSession(cookies);
-	// if (sess?.status !== 200) {
-	// 	response.cookies.delete(sessionNames[0]);
-	// 	response.cookies.delete(sessionNames[1]);
-	// 	response.cookies.delete(sessionNames[2]);
-	// 	if (currPath.startsWith("/auth")) return;
-	// 	return response;
-	// }
+	const sess = await getSession(cookies);
+	if (!sess) {
+		// response.cookies.delete(sessionNames[0]);
+		// response.cookies.delete(sessionNames[1]);
+		// response.cookies.delete(sessionNames[2]);
+		if (currPath.startsWith("/auth")) return;
+	}
 
 	return response;
 };
@@ -69,10 +62,10 @@ const getSession = async (cookies: RequestCookies) => {
 				headers: headers,
 			}
 		);
-		const status = req.status;
-		const res = await req.json();
-		return { status, res };
-	} catch (e:any) {
+
+		return req.status === 200 ? true : false;
+	} catch (e: any) {
 		console.log("middleware error", e);
+		return false;
 	}
 };

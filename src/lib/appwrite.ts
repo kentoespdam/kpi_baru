@@ -31,12 +31,7 @@ export const createToken = async (cookieString: RequestCookies | string) => {
 				headers: appwriteHeader(cookieString),
 			}
 		);
-		const resCookie = `${sessionNames[2]}=${
-			data.jwt
-		}; domain=${APP_HOSTNAME}; expires=${new Date(
-			getExpToken(data.jwt)
-		)}; path=/; httponly; SameSite=none; Secure`;
-		return resCookie;
+		return data.jwt;
 	} catch (e: any) {
 		console.log(
 			"api.auth.createToken:",

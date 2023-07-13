@@ -1,3 +1,4 @@
+import { setCookieToken } from "@helper/index";
 import { NextRequest } from "next/server";
 import { sessionNames } from "src/lib";
 import { createToken } from "src/lib/appwrite";
@@ -8,9 +9,10 @@ export const GET = async (req: NextRequest) => {
 		return new Response(JSON.stringify({ message: "OK" }));
 
 	const token = await createToken(reqCookies);
+
 	return new Response(JSON.stringify({ message: "OK" }), {
 		headers: {
-			"Set-Cookie": token,
+			"Set-Cookie": setCookieToken(token),
 		},
 	});
 };
