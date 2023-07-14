@@ -5,7 +5,7 @@ import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
 import { LevelWithAudit, LevelWithPagination } from "@myTypes/entity/level";
 import { useQueryClient } from "@tanstack/react-query";
-import { useLevelStore } from "src/store/filter/master/level";
+import { useLevelStore } from "@store/filter/master/level";
 import { shallow } from "zustand/shallow";
 import LevelActionBtn from "./action";
 

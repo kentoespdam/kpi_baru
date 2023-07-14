@@ -6,6 +6,5 @@ export interface BaseStore {
 	setPageRequest: (pageRequest: PageRequest) => void;
 	sortRequest: SortRequest;
 	setSortRequest: (sortRequest: SortRequest) => void;
-	status: AuditStatus;
 	setKeyVal: (field: string, value: string | number | null) => void;
 }

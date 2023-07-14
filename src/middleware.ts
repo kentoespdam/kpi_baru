@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT_ID, sessionNames } from "./lib";
-import { getSessionCookie } from "./helpers";
+import { getExpToken, getSessionCookie, newHostname } from "./helpers";
 import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
 
 export const middleware = async (req: NextRequest) => {
@@ -23,6 +23,20 @@ export const middleware = async (req: NextRequest) => {
 		// response.cookies.delete(sessionNames[1]);
 		// response.cookies.delete(sessionNames[2]);
 		if (currPath.startsWith("/auth")) return;
+	}
+
+	if (!cookies.has(sessionNames[2])) {
+		const token = await createToken(cookies);
+		response.cookies.set(sessionNames[2], token, {
+			path: "/",
+			expires: new Date(getExpToken(token)),
+			domain: newHostname,
+			secure:true,
+			httpOnly:true,
+			
+		});
+
+		console.log(response.cookies.getAll());
 	}
 
 	return response;
@@ -67,5 +81,33 @@ const getSession = async (cookies: RequestCookies) => {
 	} catch (e: any) {
 		console.log("middleware error", e);
 		return false;
+	}
+};
+
+const createToken = async (cookies: RequestCookies) => {
+	try {
+		const xfallback =
+			cookies.get(sessionNames[0])?.value ||
+			cookies.get(sessionNames[1])?.value ||
+			"";
+		const cookieString = cookies.toString();
+		const decodedCookie = decodeURIComponent(cookieString);
+		const headers = {
+			"Content-Type": "application/json",
+			"X-Appwrite-Project": APPWRITE_PROJECT_ID,
+			"Cookie": decodedCookie,
+			"X-Fallback-Cookies": xfallback,
+		};
+		const req = await fetch(`${APPWRITE_ENDPOINT}/v1/account/jwt`, {
+			method: "POST",
+			headers: headers,
+		});
+		console.log(req.status);
+		if (req.status !== 201) throw Error(req.statusText);
+
+		const data = await req.json();
+		return data.jwt;
+	} catch (e: any) {
+		console.log("middleware error", e);
 	}
 };

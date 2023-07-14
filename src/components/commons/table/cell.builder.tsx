@@ -1,5 +1,9 @@
+import { rupiah } from "@helper/number";
 import Chip from "@mui/material/Chip";
 import TableCell, { TableCellProps } from "@mui/material/TableCell";
+
+const numberBuilder = (num: number, currency?: boolean, percent?: boolean) =>
+	currency ? rupiah(num) : percent ? `${num}%` : num;
 
 interface CellBuilderProps extends TableCellProps {
 	value: number | string;
@@ -26,7 +30,7 @@ const CellBuilder = (props: CellBuilderProps) => {
 		case "number":
 			return (
 				<TableCell sx={{ ...sx, textAlign: "right" }} {...other}>
-					{value}
+					{numberBuilder(value, currency, percent)}
 				</TableCell>
 			);
 		case "string":

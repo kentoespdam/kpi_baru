@@ -18,7 +18,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import axios from "axios";
 import { userToEmail } from "@helper/email";
 import { useSnackbar } from "notistack";
-import { useSessionStore } from "src/store/main/session";
+import { useSessionStore } from "@store/main/session";
 
 const AuthComponent = () => {
 	const { user, setUser } = useSessionStore();

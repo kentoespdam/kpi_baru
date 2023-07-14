@@ -1,11 +1,10 @@
 import { PageRequest, SortRequest } from "@myTypes/table";
 import { create } from "zustand";
 import { BaseStore } from "..";
-import { AUDIT_STATUS } from "@myTypes/index";
+import { AUDIT_STATUS, Nullable } from "@myTypes/index";
+import { LevelData } from "@myTypes/entity/level";
 
-interface LevelStore extends BaseStore {
-	level: string | null;
-}
+interface LevelStore extends BaseStore, Nullable<LevelData> {}
 
 export const useLevelStore = create<LevelStore>((set) => ({
 	pageRequest: {

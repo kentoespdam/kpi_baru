@@ -5,7 +5,7 @@ import ButtonBase from "@mui/material/ButtonBase";
 import Stack from "@mui/material/Stack";
 import { buttonHovered, buttonSelectedColor } from "@myConfig/index";
 import React from "react";
-import { useProfileStore } from "src/store/main/menu";
+import { useProfileStore } from "@store/main/menu";
 import ProfilePopper from "./popper";
 
 const ProfileComponent = () => {

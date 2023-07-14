@@ -46,7 +46,7 @@ export const appwriteHeader = (
 	return header;
 };
 
-const newHostname =
+export const newHostname =
 	APP_HOSTNAME === "localhost" ? APP_HOSTNAME : "." + APP_HOSTNAME;
 
 export const newSetCookies = (cookieString: string) => {
@@ -80,7 +80,7 @@ export const setExpiredCookie = (cookies: RequestCookies) => {
 export const setCookieToken = (token: string) => {
 	const resCookie = `${
 		sessionNames[2]
-	}=${token}; domain=${APP_HOSTNAME}; expires=${new Date(
+	}=${token}; domain=${newHostname}; expires=${new Date(
 		getExpToken(token)
 	)}; path=/; httponly; SameSite=none; Secure`;
 	return resCookie;

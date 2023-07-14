@@ -2,7 +2,7 @@ import { newSetCookies } from "@helper/index";
 import axios from "axios";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT_ID, sessionNames } from "src/lib";
 import { createToken, getAccount } from "src/lib/appwrite";
-import { SessionUser } from "src/store/main/session";
+import { SessionUser } from "@store/main/session";
 
 export const POST = async (req: Request) => {
 	const body = await req.json();

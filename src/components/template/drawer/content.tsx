@@ -1,5 +1,5 @@
 import Box from "@mui/material/Box";
-import { useMenuStore } from "src/store/main/menu";
+import { useMenuStore } from "@store/main/menu";
 import { menuList } from "../menu.list";
 import MenuBuilder from "./menu";
 

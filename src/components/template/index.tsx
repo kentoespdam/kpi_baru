@@ -5,7 +5,7 @@ import TemplateProvider from "@components/commons/provider/theme";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { ChildrenProps } from "@myTypes/index";
 import { useEffect } from "react";
-import { useTemplateStore } from "src/store/main/template";
+import { useTemplateStore } from "@store/main/template";
 import { shallow } from "zustand/shallow";
 import ContentComponent from "./content";
 import MenuDrawerComponent from "./drawer";

@@ -3,7 +3,7 @@
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
 import LevelTableHead from "./table/head";
-import { useLevelStore } from "src/store/filter/master/level";
+import { useLevelStore } from "@store/filter/master/level";
 import { shallow } from "zustand/shallow";
 import { useQueries, useQuery } from "@tanstack/react-query";
 import { getPage } from "src/utils/master/level";

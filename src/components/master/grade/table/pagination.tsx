@@ -1,28 +1,27 @@
 "use client";
 
 import TablePagination from "@mui/material/TablePagination";
-import { LevelWithPagination } from "@myTypes/entity/level";
-import { useLevelStore } from "@store/filter/master/level";
+import { GradeWithPagination } from "@myTypes/entity/grade";
+import { useGradeStore } from "@store/filter/master/grade";
 import { useQueryClient } from "@tanstack/react-query";
-import { shallow } from "zustand/shallow";
 
-const LevelPagination = () => {
+const GradePagination = () => {
 	const qc = useQueryClient();
-	const { pageRequest, setPageRequest, sortRequest, status, level } =
-		useLevelStore(
-			(state) => ({
-				pageRequest: state.pageRequest,
-				setPageRequest: state.setPageRequest,
-				sortRequest: state.sortRequest,
-				status: state.status,
-				level: state.level,
-			}),
-			shallow
-		);
+	const {
+		pageRequest,
+		setPageRequest,
+		sortRequest,
+		status,
+		grade,
+		tukin,
+		level,
+	} = useGradeStore();
+
 	const data = qc.getQueryData([
-		"master.level",
-		{ pageRequest, sortRequest, status, level },
-	]) as LevelWithPagination | undefined;
+		"master.grade",
+		{ pageRequest, sortRequest },
+		{ status, grade, tukin, level },
+	]) as GradeWithPagination | undefined;
 
 	const handleChangePage = (
 		event: React.MouseEvent<HTMLButtonElement> | null,
@@ -54,4 +53,4 @@ const LevelPagination = () => {
 	);
 };
 
-export default LevelPagination;
+export default GradePagination;

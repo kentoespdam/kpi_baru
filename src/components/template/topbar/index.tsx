@@ -8,11 +8,11 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Theme, useTheme } from "@mui/material/styles";
 import { buttonSelectedColor, drawerWidth } from "@myConfig/index";
-import { useMenuStore } from "src/store/main/menu";
-import { useTemplateStore } from "src/store/main/template";
+import { useMenuStore } from "@store/main/menu";
+import { useTemplateStore } from "@store/main/template";
 import { shallow } from "zustand/shallow";
 import ProfileComponent from "./profile";
-import { useSessionStore } from "src/store/main/session";
+import { useSessionStore } from "@store/main/session";
 import Box from "@mui/material/Box";
 
 const appBarSx = (theme: Theme, isOpen: boolean, isDesktop: boolean) => {

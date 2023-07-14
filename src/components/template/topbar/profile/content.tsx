@@ -9,8 +9,8 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { buttonHovered } from "@myConfig/index";
 import { useRouter } from "next/navigation";
-import { useProfileStore } from "src/store/main/menu";
-import { useSessionStore } from "src/store/main/session";
+import { useProfileStore } from "@store/main/menu";
+import { useSessionStore } from "@store/main/session";
 import { shallow } from "zustand/shallow";
 
 const ProfileContent = () => {
