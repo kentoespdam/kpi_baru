@@ -8,9 +8,12 @@ export const GET = async (req: NextRequest) => {
 	const search = req.nextUrl.search;
 
 	try {
-		const token = getCurrentToken(cookie);
+		const token = await getCurrentToken(cookie);
 		const { status, data } = await axios.get(
-			`${REMOTE_LEVEL}/page${search}`
+			`${REMOTE_LEVEL}/page${search}`,
+			{
+				headers: appwriteHeader(cookie, token),
+			}
 		);
 		return new Response(JSON.stringify(data), { status: status });
 	} catch (e: any) {

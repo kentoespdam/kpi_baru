@@ -1,9 +1,7 @@
-import { Level } from "@myTypes/entity/level";
-import { BaseStore } from "..";
-import { create } from "zustand";
-import { AUDIT_STATUS, Nullable } from "@myTypes/index";
-import { PageRequest, SortRequest } from "@myTypes/table";
 import { GradeData } from "@myTypes/entity/grade";
+import { AUDIT_STATUS, Nullable } from "@myTypes/index";
+import { create } from "zustand";
+import { BaseStore } from "..";
 
 interface GradeStore extends BaseStore, Nullable<GradeData> {}
 
@@ -12,12 +10,12 @@ export const useGradeStore = create<GradeStore>((set) => ({
 		page: 0,
 		size: 10,
 	},
-	setPageRequest: (pageRequest: PageRequest) => set({ pageRequest }),
+	setPageRequest: (pageRequest) => set({ pageRequest }),
 	sortRequest: {
 		sort: null,
 		direction: "asc",
 	},
-	setSortRequest: (sortRequest: SortRequest) => {
+	setSortRequest: (sortRequest) => {
 		set({ sortRequest });
 	},
 	searchRequest: {

@@ -17,7 +17,7 @@ export const getPage = async (props: any) => {
 	if (gradeData.grade) params.set("grade", gradeData.grade);
 	if (gradeData.status) params.set("status", gradeData.status);
 	if (gradeData.tukin) params.set("tukin", gradeData.tukin);
-	if (gradeData.grade) params.set("grade", gradeData.grade.id);
+	if (gradeData.level) params.set("levelId", gradeData.level.id);
 
 	try {
 		const { data } = await axios.get(`${LOCAL_GRADE}?${params.toString()}`);

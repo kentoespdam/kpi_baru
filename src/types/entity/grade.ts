@@ -11,6 +11,14 @@ export interface Grade extends BaseId {
 	level: Level;
 }
 
+export interface GradeData {
+	id?: number;
+	grade: number;
+	tukin: number;
+	level: Level;
+	status: AuditStatus;
+}
+
 export const isGrade = (obj: any): obj is Grade => {
 	return obj.grade && obj.tukin && obj.level;
 };
@@ -48,11 +56,3 @@ export const gradeHeader: MyTableHead[] = [
 	},
 	{ field: null, title: "Action", searchable: "false", width: 100 },
 ];
-
-export interface GradeData {
-	id?: number;
-	grade: number;
-	tukin: number;
-	level: Level;
-	status: AuditStatus;
-}

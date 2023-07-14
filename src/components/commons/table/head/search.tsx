@@ -8,7 +8,7 @@ import { AuditStatus } from "@myTypes/index";
 type HeaderSearchCellBuilderProps = {
 	header: MyTableHead;
 	handleSearch: (field: string, value: string | number | null) => void;
-	status?: AuditStatus;
+	status?: AuditStatus | null;
 };
 const HeaderSearchCellBuilder = (props: HeaderSearchCellBuilderProps) => {
 	const { header, handleSearch, status } = props;
@@ -42,7 +42,7 @@ const HeaderSearchCellBuilder = (props: HeaderSearchCellBuilderProps) => {
 type HeaderSearchBuilderProps = {
 	headers: MyTableHead[];
 	handleSearch: (field: string, value: string | number | null) => void;
-	status?: AuditStatus;
+	status?: AuditStatus | null;
 };
 const HeaderSearchBuilder = (props: HeaderSearchBuilderProps) => {
 	const { headers, handleSearch, status } = props;
