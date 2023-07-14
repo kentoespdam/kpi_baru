@@ -1,5 +1,6 @@
 import CardBuilder from "@components/commons/card";
 import MuiContainer from "@components/commons/mui/container";
+import LevelForm from "@components/master/level/form";
 
 export const metadata = {
 	title: "Edit Master Level",
@@ -9,7 +10,7 @@ const EditMasterLevel = ({ params }: { params: { id: number } }) => {
 	return (
 		<MuiContainer maxWidth="sm">
 			<CardBuilder title={metadata.title} isLink={false} color="warning">
-				Edit Level {id}
+				<LevelForm id={id} />
 			</CardBuilder>
 		</MuiContainer>
 	);

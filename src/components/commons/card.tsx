@@ -30,7 +30,7 @@ const cardSx = (theme: Theme, color?: string) => {
 			return {
 				borderBottom: `1px solid ${theme.palette.divider}`,
 				backgroundColor: theme.palette.success.main,
-				color: theme.palette.text.primary,
+				color: theme.palette.success.contrastText,
 			};
 		case "error":
 			return {

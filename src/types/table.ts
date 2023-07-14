@@ -2,7 +2,7 @@ import { TableCellProps } from "@mui/material/TableCell";
 
 export interface PageRequest {
 	page: number;
-	size: 10;
+	size: number;
 }
 
 export interface SortRequest {

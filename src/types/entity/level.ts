@@ -1,5 +1,5 @@
 import { MyTableHead } from "@myTypes/table";
-import { ApiResponse, Audit, BaseId, Pages } from "..";
+import { ApiResponse, Audit, AuditStatus, BaseId, Pages } from "..";
 
 export const LOCAL_LEVEL = "/api/master/level";
 export const REMOTE_LEVEL = `${process.env.KPI_API}/master/level`;
@@ -37,3 +37,9 @@ export const levelHeader: MyTableHead[] = [
 	},
 	{ field: null, title: "Action", searchable: "false" },
 ];
+
+export interface LevelData {
+	id?: number;
+	level: string;
+	status: AuditStatus;
+}

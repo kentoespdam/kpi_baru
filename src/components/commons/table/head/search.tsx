@@ -3,13 +3,15 @@ import TableRow from "@mui/material/TableRow";
 import { MyTableHead } from "@myTypes/table";
 import SearchTypeText from "./searchType/text";
 import SearchTypeAuditStatus from "./searchType/audit.status";
+import { AuditStatus } from "@myTypes/index";
 
 type HeaderSearchCellBuilderProps = {
 	header: MyTableHead;
 	handleSearch: (field: string, value: string | number | null) => void;
+	status?: AuditStatus;
 };
 const HeaderSearchCellBuilder = (props: HeaderSearchCellBuilderProps) => {
-	const { header, handleSearch } = props;
+	const { header, handleSearch, status } = props;
 
 	if (header.searchable === "false") return <TableCell></TableCell>;
 
@@ -20,6 +22,7 @@ const HeaderSearchCellBuilder = (props: HeaderSearchCellBuilderProps) => {
 					<SearchTypeAuditStatus
 						field={header.field!}
 						handleSearch={handleSearch}
+						status={status}
 					/>
 				</TableCell>
 			);
@@ -39,9 +42,10 @@ const HeaderSearchCellBuilder = (props: HeaderSearchCellBuilderProps) => {
 type HeaderSearchBuilderProps = {
 	headers: MyTableHead[];
 	handleSearch: (field: string, value: string | number | null) => void;
+	status?: AuditStatus;
 };
 const HeaderSearchBuilder = (props: HeaderSearchBuilderProps) => {
-	const { headers, handleSearch } = props;
+	const { headers, handleSearch, status } = props;
 	return (
 		<TableRow>
 			{headers.map((header, index) => (
@@ -49,6 +53,7 @@ const HeaderSearchBuilder = (props: HeaderSearchBuilderProps) => {
 					key={index}
 					header={header}
 					handleSearch={handleSearch}
+					status={status}
 				/>
 			))}
 		</TableRow>

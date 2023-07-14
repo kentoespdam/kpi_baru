@@ -1,14 +1,16 @@
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import FormLabel from "@mui/material/FormLabel";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import React from "react";
 import { SearchTypeProps } from ".";
+import { AUDIT_STATUS } from "@myTypes/index";
 
 const SearchTypeAuditStatus = (props: SearchTypeProps) => {
-	const { field, handleSearch } = props;
-	const [value, setValue] = React.useState("Enabled");
+	const { field, handleSearch, status } = props;
+	const [value, setValue] = React.useState(
+		status === AUDIT_STATUS.DISABLED ? "Disabled" : "Enabled"
+	);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const val = (event.target as HTMLInputElement).value;
@@ -18,7 +20,6 @@ const SearchTypeAuditStatus = (props: SearchTypeProps) => {
 
 	return (
 		<FormControl>
-			<FormLabel id="auditStatus">Status</FormLabel>
 			<RadioGroup
 				row
 				aria-labelledby="auditStatus"

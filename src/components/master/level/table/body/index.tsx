@@ -7,6 +7,7 @@ import { LevelWithAudit, LevelWithPagination } from "@myTypes/entity/level";
 import { useQueryClient } from "@tanstack/react-query";
 import { useLevelStore } from "src/store/filter/master/level";
 import { shallow } from "zustand/shallow";
+import LevelActionBtn from "./action";
 
 const LevelTableBody = () => {
 	const { pageRequest, sortRequest, status, level } = useLevelStore(
@@ -24,7 +25,6 @@ const LevelTableBody = () => {
 		{ pageRequest, sortRequest, status, level },
 	]) as LevelWithPagination | undefined;
 	if (!data) return null;
-	// const pages = data.data satisfies LevelWithPagination;
 	let urut = data.number * data.size + 1;
 
 	return (
@@ -34,6 +34,7 @@ const LevelTableBody = () => {
 					<CellBuilder value={urut++} />
 					<CellBuilder value={level.level} />
 					<CellBuilder value={level.status} chip />
+					<LevelActionBtn row={level} />
 				</TableRow>
 			))}
 		</TableBody>

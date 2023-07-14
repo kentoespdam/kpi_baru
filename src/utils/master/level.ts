@@ -1,8 +1,10 @@
-import { LOCAL_LEVEL } from "@myTypes/entity/level";
+import { LOCAL_LEVEL, LevelData } from "@myTypes/entity/level";
 import axios from "axios";
 
 export const getPage = async (props: any) => {
-	const { pageRequest, sortRequest, level, status } = props[1];
+	const { queryKey } = props;
+
+	const { pageRequest, sortRequest, level, status } = queryKey[1];
 	const params = new URLSearchParams();
 	params.set("page", pageRequest.page);
 	params.set("size", pageRequest.size);
@@ -23,7 +25,51 @@ export const getPage = async (props: any) => {
 			new Date().toISOString(),
 			e.response.data
 		);
+		throw new Error(e.response.data.message);
 	}
+};
 
-	return [];
+export const getById = async (props: any) => {
+	const id = props[1];
+	try {
+		const { data } = await axios.get(`${LOCAL_LEVEL}/${id}`);
+		return data.data;
+	} catch (e: any) {
+		console.log(
+			"utils.master.level.getById",
+			new Date().toISOString(),
+			e.response.data
+		);
+		throw new Error(e.response.data.message);
+	}
+};
+
+export const doSave = async (data: LevelData) => {
+	try {
+		const result = data.id
+			? await axios.put(`${LOCAL_LEVEL}/${data.id}`, data)
+			: await axios.post(LOCAL_LEVEL, data);
+		return result.data;
+	} catch (e: any) {
+		console.log(
+			"utils.master.level.save",
+			new Date().toISOString(),
+			e.response.data
+		);
+		throw new Error(e.response.data.message);
+	}
+};
+
+export const doDelete = async (id: number) => {
+	try {
+		const result = await axios.delete(`${LOCAL_LEVEL}/${id}`);
+		return result.data;
+	} catch (e: any) {
+		console.log(
+			"utils.master.level.delete",
+			new Date().toISOString(),
+			e.response.data
+		);
+		throw new Error(e.response.data.message);
+	}
 };

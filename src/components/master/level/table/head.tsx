@@ -6,11 +6,12 @@ import { useLevelStore } from "src/store/filter/master/level";
 import { shallow } from "zustand/shallow";
 
 const LevelTableHead = () => {
-	const { sortRequest, setSortRequest, setKeyVal } = useLevelStore(
+	const { sortRequest, setSortRequest, setKeyVal, status } = useLevelStore(
 		(state) => ({
 			sortRequest: state.sortRequest,
 			setSortRequest: state.setSortRequest,
 			setKeyVal: state.setKeyVal,
+			status: state.status,
 		}),
 		shallow
 	);
@@ -25,10 +26,15 @@ const LevelTableHead = () => {
 
 	return (
 		<TableHead>
-			<HeaderSortBuilder headers={levelHeader} handleSort={handleSort} />
+			<HeaderSortBuilder
+				headers={levelHeader}
+				handleSort={handleSort}
+				sortRequest={sortRequest}
+			/>
 			<HeaderSearchBuilder
 				headers={levelHeader}
 				handleSearch={handleSearch}
+				status={status}
 			/>
 		</TableHead>
 	);
