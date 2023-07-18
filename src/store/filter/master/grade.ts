@@ -1,11 +1,13 @@
-import { GradeData } from "@myTypes/entity/grade";
+import { GradeData, GradeFilter } from "@myTypes/entity/grade";
 import { AUDIT_STATUS, Nullable } from "@myTypes/index";
 import { create } from "zustand";
 import { BaseStore } from "..";
 
-interface GradeStore extends BaseStore, Nullable<GradeData> {}
+interface GradeStore extends BaseStore, Nullable<GradeFilter> {}
 
 export const useGradeStore = create<GradeStore>((set) => ({
+	loading: false,
+	setLoading: (loading) => set({ loading }),
 	pageRequest: {
 		page: 0,
 		size: 10,

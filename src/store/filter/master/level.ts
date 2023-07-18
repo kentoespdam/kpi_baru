@@ -2,9 +2,9 @@ import { PageRequest, SortRequest } from "@myTypes/table";
 import { create } from "zustand";
 import { BaseStore } from "..";
 import { AUDIT_STATUS, Nullable } from "@myTypes/index";
-import { LevelData } from "@myTypes/entity/level";
+import { LevelData, LevelFilter } from "@myTypes/entity/level";
 
-interface LevelStore extends BaseStore, Nullable<LevelData> {}
+interface LevelStore extends BaseStore, Nullable<LevelFilter> {}
 
 export const useLevelStore = create<LevelStore>((set) => ({
 	pageRequest: {

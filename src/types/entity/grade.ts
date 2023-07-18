@@ -15,6 +15,13 @@ export interface GradeData {
 	id?: number;
 	grade: number;
 	tukin: number;
+	levelId: number;
+	status: AuditStatus;
+}
+
+export interface GradeFilter {
+	grade: number;
+	tukin: number;
 	level: Level;
 	status: AuditStatus;
 }

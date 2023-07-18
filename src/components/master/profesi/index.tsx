@@ -9,9 +9,11 @@ import { getPage } from "src/utils/master/profesi";
 import ProfesiTableBody from "./table/body";
 import ProfesiTableHead from "./table/head";
 import ProfesiPagination from "./table/pagination";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const ProfesiComponent = () => {
-	const { pageRequest, sortRequest, status, name, level } = useProfesiStore();
+	const { loading, pageRequest, sortRequest, status, name, level } =
+		useProfesiStore();
 	const queries = useQueries({
 		queries: [
 			{
@@ -26,6 +28,7 @@ const ProfesiComponent = () => {
 	});
 	return (
 		<TableContainer>
+			{loading ? <LinearProgress /> : null}
 			<Table>
 				<ProfesiTableHead />
 				{queries[0].isLoading ? (

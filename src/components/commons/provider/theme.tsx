@@ -1,13 +1,18 @@
 "use client";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { myTheme } from "../theme";
 import CssBaseline from "@mui/material/CssBaseline";
-import Box from "@mui/material/Box";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { ChildrenProps } from "@myTypes/index";
 import { SnackbarProvider } from "notistack";
+import { useMemo } from "react";
+import { myTheme } from "../theme";
 
 const TemplateProvider = ({ children }: ChildrenProps) => {
-	const theme = createTheme(myTheme());
+	const mode = "light";
+	const theme = useMemo(() => {
+		return createTheme(myTheme());
+	}, [mode]);
+	const isDesktop = useMediaQuery("(min-width:600px)");
 	return (
 		<>
 			<ThemeProvider theme={theme}>

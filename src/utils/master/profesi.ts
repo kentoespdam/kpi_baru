@@ -1,4 +1,5 @@
 import { LOCAL_PROFESI, ProfesiData } from "@myTypes/entity/profesi";
+import { useProfesiStore } from "@store/filter/master/profesi";
 import axios from "axios";
 
 export const getPage = async (props: any) => {
@@ -18,10 +19,12 @@ export const getPage = async (props: any) => {
 	if (profesiData.status) params.set("status", profesiData.status);
 	if (profesiData.level) params.set("levelId", profesiData.level.id);
 
+	useProfesiStore.setState({ loading: true });
 	try {
 		const { data } = await axios.get(
 			`${LOCAL_PROFESI}?${params.toString()}`
 		);
+		useProfesiStore.setState({ loading: false });
 		return data.data;
 	} catch (e: any) {
 		console.log(
@@ -29,14 +32,17 @@ export const getPage = async (props: any) => {
 			new Date().toISOString(),
 			e.response.data
 		);
+		useProfesiStore.setState({ loading: false });
 		throw new Error(e.response.data.message);
 	}
 };
 
 export const getById = async (props: any) => {
 	const id = props[1];
+	useProfesiStore.setState({ loading: true });
 	try {
 		const { data } = await axios.get(`${LOCAL_PROFESI}/${id}`);
+		useProfesiStore.setState({ loading: false });
 		return data.data;
 	} catch (e: any) {
 		console.log(
@@ -44,15 +50,18 @@ export const getById = async (props: any) => {
 			new Date().toISOString(),
 			e.response.data
 		);
+		useProfesiStore.setState({ loading: false });
 		throw new Error(e.response.data.message);
 	}
 };
 
 export const doSave = async (data: ProfesiData) => {
+	useProfesiStore.setState({ loading: true });
 	try {
 		const result = data.id
 			? await axios.put(`${LOCAL_PROFESI}/${data.id}`, data)
 			: await axios.post(LOCAL_PROFESI, data);
+		useProfesiStore.setState({ loading: false });
 		return result.data;
 	} catch (e: any) {
 		console.log(
@@ -60,13 +69,16 @@ export const doSave = async (data: ProfesiData) => {
 			new Date().toISOString(),
 			e.response.data
 		);
+		useProfesiStore.setState({ loading: false });
 		throw new Error(e.response.data.message);
 	}
 };
 
 export const doDelete = async (id: number) => {
+	useProfesiStore.setState({ loading: true });
 	try {
 		const result = await axios.delete(`${LOCAL_PROFESI}/${id}`);
+		useProfesiStore.setState({ loading: false });
 		return result.data;
 	} catch (e: any) {
 		console.log(
@@ -74,6 +86,7 @@ export const doDelete = async (id: number) => {
 			new Date().toISOString(),
 			e.response.data
 		);
+		useProfesiStore.setState({ loading: false });
 		throw new Error(e.response.data.message);
 	}
 };

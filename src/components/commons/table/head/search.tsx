@@ -4,10 +4,15 @@ import { MyTableHead } from "@myTypes/table";
 import SearchTypeText from "./searchType/text";
 import SearchTypeAuditStatus from "./searchType/audit.status";
 import { AuditStatus } from "@myTypes/index";
+import SearchTypeLevel from "./searchType/level";
+import { Level } from "@myTypes/entity/level";
 
 type HeaderSearchCellBuilderProps = {
 	header: MyTableHead;
-	handleSearch: (field: string, value: string | number | null) => void;
+	handleSearch: (
+		field: string,
+		value: string | number | Level | null
+	) => void;
 	status?: AuditStatus | null;
 };
 const HeaderSearchCellBuilder = (props: HeaderSearchCellBuilderProps) => {
@@ -20,6 +25,16 @@ const HeaderSearchCellBuilder = (props: HeaderSearchCellBuilderProps) => {
 			return (
 				<TableCell sx={{ p: 1 }}>
 					<SearchTypeAuditStatus
+						field={header.field!}
+						handleSearch={handleSearch}
+						status={status}
+					/>
+				</TableCell>
+			);
+		case "level":
+			return (
+				<TableCell sx={{ p: 1 }}>
+					<SearchTypeLevel
 						field={header.field!}
 						handleSearch={handleSearch}
 						status={status}
@@ -41,7 +56,10 @@ const HeaderSearchCellBuilder = (props: HeaderSearchCellBuilderProps) => {
 
 type HeaderSearchBuilderProps = {
 	headers: MyTableHead[];
-	handleSearch: (field: string, value: string | number | null) => void;
+	handleSearch: (
+		field: string,
+		value: string | number | Level | null
+	) => void;
 	status?: AuditStatus | null;
 };
 const HeaderSearchBuilder = (props: HeaderSearchBuilderProps) => {

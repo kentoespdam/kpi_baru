@@ -17,9 +17,11 @@ import TabOverrides from "./tab";
 import TableCellOverrides from "./tableCell";
 import TabsOverrides from "./tabs";
 import TypographyOverrides from "./typography";
+import AutocompleteOverrides from "./autocomplete";
 
 export default function OverridesComponent(theme: Theme) {
 	return merge(
+		AutocompleteOverrides(),
 		IconButtonOverrides(theme),
 		PaperOverrides(theme),
 		TypographyOverrides(),

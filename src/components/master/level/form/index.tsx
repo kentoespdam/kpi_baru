@@ -17,8 +17,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
 import React from "react";
-import { getById, doSave } from "src/utils/master/level";
-import { shallow } from "zustand/shallow";
+import { doSave, getById } from "src/utils/master/level";
 
 type LevelFormProps = {
 	id?: number;
@@ -27,22 +26,13 @@ const LevelForm = (props: LevelFormProps) => {
 	const { id } = props;
 	const levelRef = React.useRef<HTMLInputElement>(null);
 	const [checked, setChecked] = React.useState(true);
-	const [loading, setLoading] = React.useState(false);
 	const router = useRouter();
-	const { pageRequest, sortRequest, status, level } = useLevelStore(
-		(state) => ({
-			pageRequest: state.pageRequest,
-			sortRequest: state.sortRequest,
-			status: state.status,
-			level: state.level,
-		}),
-		shallow
-	);
+	const { pageRequest, sortRequest, status, level } = useLevelStore();
 	const qc = useQueryClient();
 	const { enqueueSnackbar } = useSnackbar();
 
 	const { status: qStatus, data } = useQuery({
-		queryKey: ["level-form", id],
+		queryKey: ["master.level.form", id],
 		queryFn: async ({ queryKey }) => {
 			const response = await getById(queryKey);
 			if (response)
@@ -58,11 +48,9 @@ const LevelForm = (props: LevelFormProps) => {
 	const mutation = useMutation({
 		mutationFn: doSave,
 		onError: (error) => {
-			setLoading(false);
 			enqueueSnackbar(`${error}`, { variant: "error" });
 		},
 		onSuccess: () => {
-			setLoading(false);
 			qc.invalidateQueries({
 				queryKey: [
 					"master.level",
@@ -86,7 +74,6 @@ const LevelForm = (props: LevelFormProps) => {
 			level: levelRef.current!.value,
 			status: checked ? AUDIT_STATUS.ENABLED : AUDIT_STATUS.DISABLED,
 		};
-		setLoading(true);
 
 		mutation.mutate(level);
 	};
@@ -130,7 +117,7 @@ const LevelForm = (props: LevelFormProps) => {
 					CANCEL
 				</Button>
 				<LoadingButton
-					loading={loading}
+					loading={mutation.isLoading}
 					variant="contained"
 					color="primary"
 					startIcon={<SaveIcon />}

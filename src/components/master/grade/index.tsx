@@ -9,9 +9,10 @@ import GradeTableBody from "./table/body";
 import TableLoading from "@components/commons/table/loading";
 import GradePagination from "./table/pagination";
 import { gradeHeader } from "@myTypes/entity/grade";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const GradeComponent = () => {
-	const { pageRequest, sortRequest, status, grade, tukin, level } =
+	const { loading, pageRequest, sortRequest, status, grade, tukin, level } =
 		useGradeStore();
 	const queries = useQueries({
 		queries: [
@@ -27,6 +28,7 @@ const GradeComponent = () => {
 	});
 	return (
 		<TableContainer>
+			{loading ? <LinearProgress /> : null}
 			<Table>
 				<GradeTableHead />
 				{queries[0].isLoading ? (

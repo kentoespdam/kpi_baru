@@ -35,8 +35,6 @@ export const middleware = async (req: NextRequest) => {
 			httpOnly:true,
 			
 		});
-
-		console.log(response.cookies.getAll());
 	}
 
 	return response;
@@ -102,7 +100,7 @@ const createToken = async (cookies: RequestCookies) => {
 			method: "POST",
 			headers: headers,
 		});
-		console.log(req.status);
+
 		if (req.status !== 201) throw Error(req.statusText);
 
 		const data = await req.json();

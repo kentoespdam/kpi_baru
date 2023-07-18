@@ -1,4 +1,5 @@
-import { LOCAL_GRADE, GradeData } from "@myTypes/entity/grade";
+import { GradeData, LOCAL_GRADE } from "@myTypes/entity/grade";
+import { useGradeStore } from "@store/filter/master/grade";
 import axios from "axios";
 
 export const getPage = async (props: any) => {
@@ -19,8 +20,11 @@ export const getPage = async (props: any) => {
 	if (gradeData.tukin) params.set("tukin", gradeData.tukin);
 	if (gradeData.level) params.set("levelId", gradeData.level.id);
 
+	useGradeStore.setState({ loading: true });
+
 	try {
 		const { data } = await axios.get(`${LOCAL_GRADE}?${params.toString()}`);
+		useGradeStore.setState({ loading: false });
 		return data.data;
 	} catch (e: any) {
 		console.log(
@@ -28,14 +32,17 @@ export const getPage = async (props: any) => {
 			new Date().toISOString(),
 			e.response.data
 		);
+		useGradeStore.setState({ loading: false });
 		throw new Error(e.response.data.message);
 	}
 };
 
 export const getById = async (props: any) => {
 	const id = props[1];
+	useGradeStore.setState({ loading: true });
 	try {
 		const { data } = await axios.get(`${LOCAL_GRADE}/${id}`);
+		useGradeStore.setState({ loading: false });
 		return data.data;
 	} catch (e: any) {
 		console.log(
@@ -43,15 +50,18 @@ export const getById = async (props: any) => {
 			new Date().toISOString(),
 			e.response.data
 		);
+		useGradeStore.setState({ loading: false });
 		throw new Error(e.response.data.message);
 	}
 };
 
 export const doSave = async (data: GradeData) => {
+	useGradeStore.setState({ loading: true });
 	try {
 		const result = data.id
 			? await axios.put(`${LOCAL_GRADE}/${data.id}`, data)
 			: await axios.post(LOCAL_GRADE, data);
+		useGradeStore.setState({ loading: false });
 		return result.data;
 	} catch (e: any) {
 		console.log(
@@ -59,13 +69,16 @@ export const doSave = async (data: GradeData) => {
 			new Date().toISOString(),
 			e.response.data
 		);
+		useGradeStore.setState({ loading: false });
 		throw new Error(e.response.data.message);
 	}
 };
 
 export const doDelete = async (id: number) => {
+	useGradeStore.setState({ loading: true });
 	try {
 		const result = await axios.delete(`${LOCAL_GRADE}/${id}`);
+		useGradeStore.setState({ loading: false });
 		return result.data;
 	} catch (e: any) {
 		console.log(
@@ -73,6 +86,7 @@ export const doDelete = async (id: number) => {
 			new Date().toISOString(),
 			e.response.data
 		);
+		useGradeStore.setState({ loading: false });
 		throw new Error(e.response.data.message);
 	}
 };

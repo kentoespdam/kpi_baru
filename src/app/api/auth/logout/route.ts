@@ -11,8 +11,6 @@ export const GET = async (req: NextRequest) => {
 		await axios.delete(`${APPWRITE_ENDPOINT}/v1/account/sessions/current`, {
 			headers: appwriteHeader(cookies),
 		});
-		// console.log(status);
-		// return new Response(setExpiredCookie(cookies));
 		return NextResponse.redirect(new URL("/auth", req.url), {
 			headers: {
 				"Set-Cookie": setExpiredCookie(cookies),

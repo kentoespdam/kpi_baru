@@ -13,6 +13,12 @@ export interface Profesi extends BaseId {
 export interface ProfesiData {
 	id?: number;
 	name: string;
+	levelId: number;
+	status: AuditStatus;
+}
+
+export interface ProfesiFilter {
+	name: string;
 	level: Level;
 	status: AuditStatus;
 }

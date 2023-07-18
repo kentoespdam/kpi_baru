@@ -18,6 +18,9 @@ export const GET = async (req: NextRequest) => {
 		return new Response(JSON.stringify(data), { status: status });
 	} catch (e: any) {
 		console.log("api.level.get", new Date().toString(), e.response.data);
+		return new Response(JSON.stringify(e.response.data), {
+			status: e.response.status,
+		});
 	}
 };
 export const POST = async (req: NextRequest) => {

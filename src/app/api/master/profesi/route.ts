@@ -31,7 +31,7 @@ export const POST = async (req: NextRequest) => {
 		return new Response(JSON.stringify(data), { status: status });
 	} catch (e: any) {
 		console.log(
-			"api.profesi.put.id",
+			"api.profesi.post.id",
 			new Date().toString(),
 			e.response.data
 		);

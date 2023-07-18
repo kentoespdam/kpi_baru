@@ -6,10 +6,19 @@ import { useProfesiStore } from "@store/filter/master/profesi";
 import { shallow } from "zustand/shallow";
 
 const ProfesiTableHead = () => {
-	const { sortRequest, setSortRequest, setKeyVal, status } = useProfesiStore(
+	const {
+		sortRequest,
+		setSortRequest,
+		pageRequest,
+		setPageRequest,
+		setKeyVal,
+		status,
+	} = useProfesiStore(
 		(state) => ({
 			sortRequest: state.sortRequest,
 			setSortRequest: state.setSortRequest,
+			pageRequest: state.pageRequest,
+			setPageRequest: state.setPageRequest,
 			setKeyVal: state.setKeyVal,
 			status: state.status,
 		}),
@@ -20,7 +29,11 @@ const ProfesiTableHead = () => {
 		setSortRequest({ sort, direction });
 	};
 
-	const handleSearch = (field: string, value: string | number | null) => {
+	const handleSearch = (field: string, value: any) => {
+		setPageRequest({
+			page: 0,
+			size: pageRequest.size,
+		});
 		setKeyVal(field, value);
 	};
 

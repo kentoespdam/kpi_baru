@@ -8,6 +8,17 @@ export interface Level extends BaseId {
 	level: string;
 }
 
+export interface LevelData {
+	id?: number;
+	level: string;
+	status: AuditStatus;
+}
+
+export interface LevelFilter {
+	level: string;
+	status: AuditStatus;
+}
+
 export const isLevel = (obj: any): obj is Level => {
 	return obj && obj.level;
 };
@@ -37,9 +48,3 @@ export const levelHeader: MyTableHead[] = [
 	},
 	{ field: null, title: "Action", searchable: "false" },
 ];
-
-export interface LevelData {
-	id?: number;
-	level: string;
-	status: AuditStatus;
-}

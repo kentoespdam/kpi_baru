@@ -10,7 +10,15 @@ export interface SortRequest {
 	direction: "asc" | "desc";
 }
 
-export type SearchType = "text" | "number" | "auditStatus" | "level";
+export type SearchType =
+	| "text"
+	| "number"
+	| "auditStatus"
+	| "level"
+	| "organization"
+	| "position"
+	| "profesi"
+	| "grade";
 
 type Searchacble =
 	| {

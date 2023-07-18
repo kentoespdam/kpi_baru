@@ -29,6 +29,20 @@ export const getPage = async (props: any) => {
 	}
 };
 
+export const getLevelList = async () => {
+	try {
+		const { data } = await axios.get(`${LOCAL_LEVEL}/list?status=Enabled`);
+		return data.data;
+	} catch (e: any) {
+		console.log(
+			"utils.master.level.list",
+			new Date().toISOString(),
+			e.response.data
+		);
+		throw new Error(e.response.data.message);
+	}
+};
+
 export const getById = async (props: any) => {
 	const id = props[1];
 	try {
