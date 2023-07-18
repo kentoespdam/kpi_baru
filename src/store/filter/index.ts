@@ -1,3 +1,4 @@
+import { SearchValueProps } from "@components/commons/table/head/search";
 import { Level } from "@myTypes/entity/level";
 import { AuditStatus } from "@myTypes/index";
 import { PageRequest, SortRequest } from "@myTypes/table";
@@ -8,5 +9,5 @@ export interface BaseStore {
 	setPageRequest: (pageRequest: PageRequest) => void;
 	sortRequest: SortRequest;
 	setSortRequest: (sortRequest: SortRequest) => void;
-	setKeyVal: (field: string, value: string | number | Level | null) => void;
+	setKeyVal: (field: string, value: SearchValueProps) => void;
 }

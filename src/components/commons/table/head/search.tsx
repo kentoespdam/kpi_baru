@@ -7,12 +7,11 @@ import { AuditStatus } from "@myTypes/index";
 import SearchTypeLevel from "./searchType/level";
 import { Level } from "@myTypes/entity/level";
 
+export type SearchValueProps = string | number | Level | null;
+
 type HeaderSearchCellBuilderProps = {
 	header: MyTableHead;
-	handleSearch: (
-		field: string,
-		value: string | number | Level | null
-	) => void;
+	handleSearch: (field: string, value: SearchValueProps) => void;
 	status?: AuditStatus | null;
 };
 const HeaderSearchCellBuilder = (props: HeaderSearchCellBuilderProps) => {
@@ -56,10 +55,7 @@ const HeaderSearchCellBuilder = (props: HeaderSearchCellBuilderProps) => {
 
 type HeaderSearchBuilderProps = {
 	headers: MyTableHead[];
-	handleSearch: (
-		field: string,
-		value: string | number | Level | null
-	) => void;
+	handleSearch: (field: string, value: SearchValueProps) => void;
 	status?: AuditStatus | null;
 };
 const HeaderSearchBuilder = (props: HeaderSearchBuilderProps) => {

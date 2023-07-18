@@ -2,12 +2,12 @@ import { GradeData, GradeFilter } from "@myTypes/entity/grade";
 import { AUDIT_STATUS, Nullable } from "@myTypes/index";
 import { create } from "zustand";
 import { BaseStore } from "..";
+import { SearchValueProps } from "@components/commons/table/head/search";
 
 interface GradeStore extends BaseStore, Nullable<GradeFilter> {}
 
 export const useGradeStore = create<GradeStore>((set) => ({
 	loading: false,
-	setLoading: (loading) => set({ loading }),
 	pageRequest: {
 		page: 0,
 		size: 10,
@@ -24,7 +24,7 @@ export const useGradeStore = create<GradeStore>((set) => ({
 		field: null,
 		value: null,
 	},
-	setKeyVal: (field: string, value: string | number | null) => {
+	setKeyVal: (field: string, value: SearchValueProps) => {
 		set((state) => ({ ...state, [field]: value }));
 	},
 	status: AUDIT_STATUS.ENABLED,

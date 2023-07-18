@@ -1,4 +1,6 @@
-import HeaderSearchBuilder from "@components/commons/table/head/search";
+import HeaderSearchBuilder, {
+	SearchValueProps,
+} from "@components/commons/table/head/search";
 import HeaderSortBuilder from "@components/commons/table/head/sort";
 import TableHead from "@mui/material/TableHead";
 import { perilakuHeader } from "@myTypes/entity/perilaku";
@@ -20,7 +22,7 @@ const PerilakuTableHead = () => {
 		setSortRequest({ sort, direction });
 	};
 
-	const handleSearch = (field: string, value: string | number | null) => {
+	const handleSearch = (field: string, value: SearchValueProps) => {
 		setKeyVal(field, value);
 	};
 

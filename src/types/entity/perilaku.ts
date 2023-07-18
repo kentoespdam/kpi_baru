@@ -18,6 +18,13 @@ export interface PerilakuData {
 	status: AuditStatus;
 }
 
+export interface PerilakuFilter {
+	kompetensi: string;
+	urut: number;
+	uraian: string;
+	status: AuditStatus;
+}
+
 export interface PerilakuWithAudit extends Perilaku, Audit {}
 
 export interface PerilakuWithPagination extends Pages<PerilakuWithAudit> {}

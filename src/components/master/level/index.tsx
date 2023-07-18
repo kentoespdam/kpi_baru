@@ -1,26 +1,19 @@
 "use client";
 
+import TableLoading from "@components/commons/table/loading";
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
-import LevelTableHead from "./table/head";
 import { useLevelStore } from "@store/filter/master/level";
-import { shallow } from "zustand/shallow";
-import { useQueries, useQuery } from "@tanstack/react-query";
+import { useQueries } from "@tanstack/react-query";
 import { getPage } from "src/utils/master/level";
-import TableLoading from "@components/commons/table/loading";
 import LevelTableBody from "./table/body";
+import LevelTableHead from "./table/head";
 import LevelPagination from "./table/pagination";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const LevelComponent = () => {
-	const { pageRequest, sortRequest, status, level } = useLevelStore(
-		(state) => ({
-			pageRequest: state.pageRequest,
-			sortRequest: state.sortRequest,
-			status: state.status,
-			level: state.level,
-		}),
-		shallow
-	);
+	const { loading, pageRequest, sortRequest, status, level } =
+		useLevelStore();
 	const queries = useQueries({
 		queries: [
 			{
@@ -35,6 +28,7 @@ const LevelComponent = () => {
 
 	return (
 		<TableContainer>
+			{loading ? <LinearProgress /> : null}
 			<Table>
 				<LevelTableHead />
 				{queries[0].isLoading ? (

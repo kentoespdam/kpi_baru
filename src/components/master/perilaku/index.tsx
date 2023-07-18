@@ -9,9 +9,10 @@ import { getPage } from "src/utils/master/perilaku";
 import PerilakuTableBody from "./table/body";
 import PerilakuTableHead from "./table/head";
 import PerilakuPagination from "./table/pagination";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const PerilakuComponent = () => {
-	const { pageRequest, sortRequest, status, kompetensi, uraian } =
+	const { loading, pageRequest, sortRequest, status, kompetensi, uraian } =
 		usePerilakuStore();
 	const queries = useQueries({
 		queries: [
@@ -27,6 +28,7 @@ const PerilakuComponent = () => {
 	});
 	return (
 		<TableContainer>
+			{loading ? <LinearProgress /> : null}
 			<Table>
 				<PerilakuTableHead />
 				{queries[0].isLoading ? (

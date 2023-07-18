@@ -1,4 +1,5 @@
 import { LOCAL_PERILAKU, PerilakuData } from "@myTypes/entity/perilaku";
+import { useGradeStore } from "@store/filter/master/grade";
 import axios from "axios";
 
 export const getPage = async (props: any) => {
@@ -16,13 +17,16 @@ export const getPage = async (props: any) => {
 	}
 	if (perilakuData.status) params.set("status", perilakuData.status);
 	if (perilakuData.kompetensi)
-		params.set("perilaku", perilakuData.kompetensi);
-	if (perilakuData.uraian) params.set("status", perilakuData.uraian);
+		params.set("kompetensi", perilakuData.kompetensi);
+	if (perilakuData.uraian) params.set("uraian", perilakuData.uraian);
+
+	useGradeStore.setState({ loading: true });
 
 	try {
 		const { data } = await axios.get(
 			`${LOCAL_PERILAKU}?${params.toString()}`
 		);
+		useGradeStore.setState({ loading: false });
 		return data.data;
 	} catch (e: any) {
 		console.log(
@@ -30,14 +34,17 @@ export const getPage = async (props: any) => {
 			new Date().toISOString(),
 			e.response.data
 		);
+		useGradeStore.setState({ loading: false });
 		throw new Error(e.response.data.message);
 	}
 };
 
 export const getById = async (props: any) => {
 	const id = props[1];
+	console.log(props);
 	try {
 		const { data } = await axios.get(`${LOCAL_PERILAKU}/${id}`);
+		useGradeStore.setState({ loading: false });
 		return data.data;
 	} catch (e: any) {
 		console.log(
@@ -45,15 +52,18 @@ export const getById = async (props: any) => {
 			new Date().toISOString(),
 			e.response.data
 		);
+		useGradeStore.setState({ loading: false });
 		throw new Error(e.response.data.message);
 	}
 };
 
 export const doSave = async (data: PerilakuData) => {
+	useGradeStore.setState({ loading: true });
 	try {
 		const result = data.id
 			? await axios.put(`${LOCAL_PERILAKU}/${data.id}`, data)
 			: await axios.post(LOCAL_PERILAKU, data);
+		useGradeStore.setState({ loading: false });
 		return result.data;
 	} catch (e: any) {
 		console.log(
@@ -61,13 +71,16 @@ export const doSave = async (data: PerilakuData) => {
 			new Date().toISOString(),
 			e.response.data
 		);
+		useGradeStore.setState({ loading: false });
 		throw new Error(e.response.data.message);
 	}
 };
 
 export const doDelete = async (id: number) => {
+	useGradeStore.setState({ loading: true });
 	try {
 		const result = await axios.delete(`${LOCAL_PERILAKU}/${id}`);
+		useGradeStore.setState({ loading: false });
 		return result.data;
 	} catch (e: any) {
 		console.log(
@@ -75,6 +88,7 @@ export const doDelete = async (id: number) => {
 			new Date().toISOString(),
 			e.response.data
 		);
+		useGradeStore.setState({ loading: false });
 		throw new Error(e.response.data.message);
 	}
 };
