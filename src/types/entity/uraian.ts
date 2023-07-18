@@ -1,4 +1,4 @@
-import { ApiResponse, Audit, BaseId, Pages } from "..";
+import { ApiResponse, Audit, AuditStatus, BaseId, Pages } from "..";
 import { Indikator } from "./indikator";
 
 export const LOCAL_URAIAN = "/api/master/uraian";
@@ -9,8 +9,29 @@ export interface Uraian extends BaseId {
 	uraian: string;
 	volume: number;
 	satuan: string;
+	target: "MIN" | "MAX";
 	waktu: string;
 	bobot: number;
+}
+
+export interface UraianData {
+	id?: number;
+	indikatorId: number;
+	uraian: string;
+	volume: number;
+	satuan: string;
+	waktu: string;
+	bobot: number;
+	status: AuditStatus;
+}
+
+export interface UraianFilter {
+	indikatorId: number | null;
+	uraian: string | null;
+	kpiId: number | null;
+	profesiId: number | null;
+	levelId: number | null;
+	status: AuditStatus;
 }
 
 export interface UraianWithAudit extends Uraian, Audit {}

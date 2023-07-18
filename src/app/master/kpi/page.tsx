@@ -1,4 +1,5 @@
 import CardBuilder from "@components/commons/card";
+import KpiComponent from "@components/master/kpi";
 
 export const metadata = {
 	title: "Master KPI",
@@ -6,7 +7,7 @@ export const metadata = {
 const MasterKpi = () => {
 	return (
 		<CardBuilder title={metadata.title} isLink={true}>
-			hahaha
+			<KpiComponent />
 		</CardBuilder>
 	);
 };

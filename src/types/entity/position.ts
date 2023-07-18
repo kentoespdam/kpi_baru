@@ -1,9 +1,9 @@
-import { ApiResponse } from "..";
+import { ApiResponse, BaseId } from "..";
 
 export const LOCAL_POSITION = "/api/eo/position";
 export const REMOTE_POSITION = `${process.env.EO_API}/positions`;
 
-export interface Position {
+export interface Position extends BaseId {
 	name: string;
 	code: string;
 	level: number;

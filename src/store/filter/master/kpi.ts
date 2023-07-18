@@ -1,10 +1,14 @@
-import { KpiData } from "@myTypes/entity/kpi";
+import { SearchValueProps } from "@components/commons/table/head/search";
+import { KpiFilter } from "@myTypes/entity/kpi";
 import { AUDIT_STATUS, Nullable } from "@myTypes/index";
 import { create } from "zustand";
 import { BaseStore } from "..";
-import { SearchValueProps } from "@components/commons/table/head/search";
 
-interface KpiStore extends BaseStore, Nullable<KpiData> {}
+export interface AccordionStore {
+	expanded: string | false;
+	setExpanded: (expanded: string | false) => void;
+}
+interface KpiStore extends BaseStore, Nullable<KpiFilter>, AccordionStore {}
 
 export const useKpiStore = create<KpiStore>((set) => ({
 	loading: false,
@@ -29,10 +33,10 @@ export const useKpiStore = create<KpiStore>((set) => ({
 	},
 	status: AUDIT_STATUS.ENABLED,
 	organization: null,
-	organizationId: null,
 	position: null,
-	positionId: null,
 	profesi: null,
 	name: null,
 	grade: null,
+	expanded: false,
+	setExpanded: (expanded) => set({ expanded }),
 }));

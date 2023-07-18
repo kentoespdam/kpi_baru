@@ -63,17 +63,18 @@ const cardSx = (theme: Theme, color?: string) => {
 type CardBuilderProps = {
 	title: string;
 	color?: string;
+	square?: boolean;
 } & ChildrenProps &
 	({ isLink: true; href?: string } | { isLink: false });
 
 const CardBuilder = (props: CardBuilderProps) => {
-	const { children, title, color, isLink } = props;
+	const { children, title, color, square, isLink } = props;
 	const pathname = usePathname();
 	const link = isLink && props.href ? props.href : `${pathname}/add`;
 	const theme = useTheme();
 
 	return (
-		<Card>
+		<Card sx={{ borderRadius: square ? 0 : undefined }}>
 			<CardHeader
 				title={title}
 				action={
@@ -90,7 +91,7 @@ const CardBuilder = (props: CardBuilderProps) => {
 						</Tooltip>
 					) : null
 				}
-				sx={cardSx(theme, color)}
+				sx={{ ...cardSx(theme, color) }}
 			/>
 			<CardContent>{children}</CardContent>
 		</Card>

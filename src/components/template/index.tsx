@@ -10,8 +10,6 @@ const TemplateComponent = ({ children }: ChildrenProps) => {
 		<TemplateProvider>
 			<QueryProvider>
 				<TopBarComponent />
-				{/* <MenuDrawerComponent />
-				<ContentComponent>{children}</ContentComponent> */}
 				{children}
 			</QueryProvider>
 		</TemplateProvider>
@@ -19,15 +17,3 @@ const TemplateComponent = ({ children }: ChildrenProps) => {
 };
 
 export default TemplateComponent;
-
-/**
- * return (
-		<QueryProvider>
-			<TemplateProvider>
-				<TopBarComponent />
-				<MenuDrawerComponent />
-				<ContentComponent>{children}</ContentComponent>
-			</TemplateProvider>
-		</QueryProvider>
-	);
- */

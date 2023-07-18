@@ -20,10 +20,17 @@ export interface Kpi extends BaseId {
 
 export interface KpiData {
 	id?: number;
-	organization: Organization;
 	organizationId: number;
-	position: Position;
 	positionId: number;
+	profesiId: number;
+	name: string;
+	gradeId: number;
+	status: AuditStatus;
+}
+
+export interface KpiFilter {
+	organization: Organization;
+	position: Position;
 	profesi: Profesi;
 	name: string;
 	grade: Grade;

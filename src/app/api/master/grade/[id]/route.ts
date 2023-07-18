@@ -25,6 +25,7 @@ export const GET = async (
 		});
 	}
 };
+
 export const PUT = async (
 	req: NextRequest,
 	{ params }: { params: { id: number } }
