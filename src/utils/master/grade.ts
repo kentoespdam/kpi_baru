@@ -37,6 +37,22 @@ export const getPage = async (props: any) => {
 	}
 };
 
+export const getList = async () => {
+	try {
+		const { data } = await axios.get(`${LOCAL_GRADE}/list`);
+		useGradeStore.setState({ loading: false });
+		return data.data;
+	} catch (e: any) {
+		console.log(
+			"utils.master.grade.list",
+			new Date().toISOString(),
+			e.response.data
+		);
+		useGradeStore.setState({ loading: false });
+		throw new Error(e.response.data.message);
+	}
+};
+
 export const getById = async (props: any) => {
 	const id = props[1];
 	useGradeStore.setState({ loading: true });

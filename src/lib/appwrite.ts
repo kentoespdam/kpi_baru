@@ -1,7 +1,7 @@
-import { appwriteHeader, getExpToken } from "@helper/index";
+import { appwriteHeader } from "@helper/index";
 import axios from "axios";
 import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
-import { APPWRITE_ENDPOINT, APP_HOSTNAME, sessionNames } from ".";
+import { APPWRITE_ENDPOINT } from ".";
 
 export const getSession = async (sessCookie: RequestCookies) => {
 	try {

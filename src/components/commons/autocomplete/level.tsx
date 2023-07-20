@@ -1,6 +1,5 @@
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-import { useTheme } from "@mui/material/styles";
 import { Level } from "@myTypes/entity/level";
 import { useQuery } from "@tanstack/react-query";
 import { getLevelList } from "src/utils/master/level";
@@ -30,10 +29,7 @@ const LevelAutocomplete = (props: LevelAutocompleteProps) => {
 			options={data!}
 			getOptionLabel={(option: Level) => option.level}
 			renderInput={(params) => (
-				<TextField
-					{...params}
-					label="Search Level"
-				/>
+				<TextField {...params} label="Search Level" />
 			)}
 			renderOption={(props, option) => {
 				return (

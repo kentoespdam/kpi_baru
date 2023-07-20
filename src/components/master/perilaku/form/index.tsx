@@ -97,7 +97,7 @@ const PerilakuForm = (props: PerilakuFormProps) => {
 					id="kompetensi"
 					label="Kompetensi"
 					variant="outlined"
-					defaultValue={data?.kompetensi ?? ""}
+					defaultValue={data ? data.kompetensi : ""}
 					inputRef={kompetensiRef}
 					multiline
 					rows={2}
@@ -109,7 +109,7 @@ const PerilakuForm = (props: PerilakuFormProps) => {
 					id="uraian"
 					label="Uraian"
 					variant="outlined"
-					defaultValue={data?.uraian ?? ""}
+					defaultValue={data ? data.uraian : ""}
 					inputRef={uraianRef}
 					multiline
 					rows={5}
@@ -121,7 +121,7 @@ const PerilakuForm = (props: PerilakuFormProps) => {
 					id="urut"
 					label="Urut"
 					variant="outlined"
-					defaultValue={data?.urut ?? 1}
+					defaultValue={data ? data.urut : 1}
 					inputRef={urutRef}
 					type="number"
 					required

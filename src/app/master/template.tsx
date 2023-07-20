@@ -7,6 +7,7 @@ const Template = ({ children }: ChildrenProps) => {
 	return (
 		<>
 			<TopBarComponent />
+			<div></div>
 			<MenuDrawerComponent />
 			<ContentComponent>{children}</ContentComponent>
 		</>

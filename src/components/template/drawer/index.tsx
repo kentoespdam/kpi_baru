@@ -12,6 +12,7 @@ import { useTemplateStore } from "@store/main/template";
 import { shallow } from "zustand/shallow";
 import Logo from "./logo";
 import DrawerContent from "./content";
+import { useEffect, useState } from "react";
 
 const openedMixin = (theme: Theme) => ({
 	width: drawerWidth,
@@ -45,51 +46,58 @@ const MenuDrawerComponent = () => {
 		}),
 		shallow
 	);
+	const [variant, setVariant] = useState<
+		"permanent" | "persistent" | "temporary" | undefined
+	>("permanent");
 
-	const variant = isDesktop ? "permanent" : "temporary";
+	useEffect(() => {
+		setVariant(isDesktop ? "permanent" : "temporary");
+	}, [isDesktop]);
 
 	return (
-		<Drawer
-			anchor="left"
-			open={isMenuOpen}
-			onClose={toggleDrawer}
-			variant={variant}
-			sx={{
-				flexShrink: 0,
-				whiteSpace: "nowrap",
-				boxSizing: "border-box",
-				...(isMenuOpen && {
-					...openedMixin(theme),
-					"& .MuiDrawer-paper": openedMixin(theme),
-				}),
-				...(!isMenuOpen && {
-					...closedMixin(theme),
-					"& .MuiDrawer-paper": closedMixin(theme),
-				}),
-			}}
-		>
-			<Box
+		<div>
+			<Drawer
+				anchor="left"
+				open={isMenuOpen}
+				onClose={toggleDrawer}
+				variant={variant}
 				sx={{
-					display: "flex",
-					borderBottom: `1px solid ${theme.palette.divider}`,
+					flexShrink: 0,
+					whiteSpace: "nowrap",
+					boxSizing: "border-box",
+					...(isMenuOpen && {
+						...openedMixin(theme),
+						"& .MuiDrawer-paper": openedMixin(theme),
+					}),
+					...(!isMenuOpen && {
+						...closedMixin(theme),
+						"& .MuiDrawer-paper": closedMixin(theme),
+					}),
 				}}
 			>
-				<Toolbar>
-					<Stack
-						direction="row"
-						spacing={1}
-						sx={{ alignItems: "center" }}
-					>
-						<Logo />
-						<Typography variant="h5" sx={{ flexGrow: 1 }}>
-							Perumdam Tirta Satria
-						</Typography>
-					</Stack>
-				</Toolbar>
-			</Box>
+				<Box
+					sx={{
+						display: "flex",
+						borderBottom: `1px solid ${theme.palette.divider}`,
+					}}
+				>
+					<Toolbar>
+						<Stack
+							direction="row"
+							spacing={1}
+							sx={{ alignItems: "center" }}
+						>
+							<Logo />
+							<Typography variant="h5" sx={{ flexGrow: 1 }}>
+								Perumdam Tirta Satria
+							</Typography>
+						</Stack>
+					</Toolbar>
+				</Box>
 
-			{isMenuOpen ? <DrawerContent /> : null}
-		</Drawer>
+				{/* {isMenuOpen ? <DrawerContent /> : null} */}
+			</Drawer>
+		</div>
 	);
 };
 

@@ -11,7 +11,9 @@ export const GET = async (
 	const { id } = params;
 	try {
 		const token = await getCurrentToken(cookie);
-		const { status, data } = await axios.get(`${REMOTE_LEVEL}/${id}`);
+		const { status, data } = await axios.get(`${REMOTE_LEVEL}/${id}`, {
+			headers: appwriteHeader(cookie, token),
+		});
 		return new Response(JSON.stringify(data), { status: status });
 	} catch (e: any) {
 		console.log("api.level.get.id", new Date().toString(), e.response.data);

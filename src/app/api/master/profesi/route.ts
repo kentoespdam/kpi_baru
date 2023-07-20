@@ -20,6 +20,7 @@ export const GET = async (req: NextRequest) => {
 		console.log("api.profesi.get", new Date().toString(), e.response.data);
 	}
 };
+
 export const POST = async (req: NextRequest) => {
 	const cookie = req.cookies;
 	const body = req.body;

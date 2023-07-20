@@ -1,6 +1,7 @@
 import {
 	IndikatorData,
 	IndikatorFilter,
+	IndikatorWithAudit,
 	LOCAL_INDIKATOR,
 } from "@myTypes/entity/indikator";
 import { useIndikatorStore } from "@store/filter/master/indikator";
@@ -44,7 +45,24 @@ export const getPage = async (props: any) => {
 	}
 };
 
-export const getById = async (props: any) => {
+export const getList = async (props: any) => {
+	const kpiId = props[1];
+	try {
+		const { data } = await axios.get(`${LOCAL_INDIKATOR}/list`);
+		useIndikatorStore.setState({ loading: false });
+		return data.data;
+	} catch (e: any) {
+		console.log(
+			"utils.master.indikator.page",
+			new Date().toISOString(),
+			e.response.data
+		);
+		useIndikatorStore.setState({ loading: false });
+		throw new Error(e.response.data.message);
+	}
+};
+
+export const getById = async (props: any): Promise<IndikatorWithAudit> => {
 	const id = props[1];
 	useIndikatorStore.setState({ loading: true });
 	try {

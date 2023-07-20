@@ -117,7 +117,7 @@ const GradeForm = (props: GradeFormProps) => {
 					type="number"
 					label="Grade"
 					variant="standard"
-					value={data?.grade || ""}
+					defaultValue={data ? data.grade : ""}
 					required
 				/>
 			</FormControl>
@@ -128,7 +128,7 @@ const GradeForm = (props: GradeFormProps) => {
 					label="Tukin"
 					variant="standard"
 					type="number"
-					value={data?.tukin || ""}
+					defaultValue={data ? data.tukin : ""}
 					required
 				/>
 			</FormControl>

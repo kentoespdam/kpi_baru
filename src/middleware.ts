@@ -10,7 +10,8 @@ export const middleware = async (req: NextRequest) => {
 
 	if (
 		(!cookies.has(sessionNames[0]) || !cookies.has(sessionNames[1])) &&
-		!currPath.startsWith("/auth")
+		!currPath.startsWith("/auth") &&
+		!currPath.startsWith("/api/auth")
 	)
 		return NextResponse.redirect(new URL("/auth", req.url));
 
@@ -31,9 +32,8 @@ export const middleware = async (req: NextRequest) => {
 			path: "/",
 			expires: new Date(getExpToken(token)),
 			domain: newHostname,
-			secure:true,
-			httpOnly:true,
-			
+			secure: true,
+			httpOnly: true,
 		});
 	}
 
@@ -49,7 +49,7 @@ export const config = {
 		 * - _next/image (image optimization files)
 		 * - favicon.ico (favicon file)
 		 */
-		"/((?!api|_next/static|_next/image|favicon.ico|images).*)",
+		"/((?!_next/static|_next/image|favicon.ico|images).*)",
 	],
 };
 

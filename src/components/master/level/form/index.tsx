@@ -78,7 +78,7 @@ const LevelForm = (props: LevelFormProps) => {
 		mutation.mutate(level);
 	};
 
-	if (qStatus === "loading") return <>Loading for data....</>;
+	if (id && qStatus === "loading") return <>Loading for data....</>;
 	return (
 		<Stack component="form" spacing={2} onSubmit={handleSubmit}>
 			<FormControl fullWidth>
@@ -87,7 +87,7 @@ const LevelForm = (props: LevelFormProps) => {
 					inputRef={levelRef}
 					label="Level"
 					variant="standard"
-					value={data?.level || ""}
+					defaultValue={data ? data.level : ""}
 					required
 				/>
 			</FormControl>

@@ -25,6 +25,7 @@ export const GET = async (req: NextRequest) => {
 		});
 	}
 };
+
 export const POST = async (req: NextRequest) => {
 	const cookie = req.cookies;
 	const body = await req.json();
@@ -35,7 +36,7 @@ export const POST = async (req: NextRequest) => {
 		});
 		return new Response(JSON.stringify(data), { status: status });
 	} catch (e: any) {
-		console.log("api.grade.put.id", new Date().toString(), e.response.data);
+		console.log("api.grade.post", new Date().toString(), e.response.data);
 		return new Response(JSON.stringify(e.response.data), {
 			status: e.response.status,
 		});

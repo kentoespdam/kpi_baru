@@ -37,6 +37,20 @@ export const getPage = async (props: any) => {
 	}
 };
 
+export const getList = async () => {
+	try {
+		const { data } = await axios.get(`${LOCAL_PROFESI}/list`);
+		return data.data;
+	} catch (e: any) {
+		console.log(
+			"utils.master.profesi.list",
+			new Date().toISOString(),
+			e.response
+		);
+		throw new Error(e.response.data);
+	}
+};
+
 export const getById = async (props: any) => {
 	const id = props[1];
 	useProfesiStore.setState({ loading: true });

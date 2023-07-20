@@ -99,7 +99,7 @@ const ProfesiForm = (props: ProfesiFormProps) => {
 					label="Profesi"
 					variant="standard"
 					inputRef={profesiRef}
-					defaultValue={data?.name || ""}
+					defaultValue={data ? data.name : ""}
 					required
 				/>
 			</FormControl>

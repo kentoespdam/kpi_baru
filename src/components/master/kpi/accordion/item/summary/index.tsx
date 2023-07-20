@@ -40,11 +40,21 @@ const KpiItemSummary = (props: KpiItemSummaryProps) => {
 			>
 				<Typography variant="subtitle1">{urut}.</Typography>
 				<Stack direction="column" sx={{ flex: 2 }}>
-					<Typography variant="subtitle1">{kpi.name}</Typography>
+					<Stack direction="row" spacing={1}>
+						<Typography variant="subtitle1">{kpi.name}</Typography>
+						<Typography
+							variant="caption"
+							color="text.secondary"
+							fontSize={10}
+						>
+							GRADE {kpi.grade.grade}
+						</Typography>
+					</Stack>
 					<Typography variant="body2" color="text.secondary">
 						{kpi.profesi.name}
 					</Typography>
 				</Stack>
+
 				<Stack direction="column" sx={{ flex: 2 }}>
 					<Typography variant="body1">
 						{kpi.organization?.name}

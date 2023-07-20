@@ -1,5 +1,5 @@
-const Loading = () => {
+const RootLoading = () => {
 	return <div>Rendering page...</div>;
 };
 
-export default Loading;
+export default RootLoading;

@@ -62,6 +62,7 @@ export const getCurrentToken = async (cookies: RequestCookies) => {
 };
 
 export const getExpToken = (token: string) => {
+	if (!token) return 0;
 	const tokenParts = token.split(".");
 	const tokenBody = JSON.parse(atob(tokenParts[1]));
 	return tokenBody.exp * 1000;

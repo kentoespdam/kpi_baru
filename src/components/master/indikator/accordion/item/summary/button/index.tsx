@@ -29,7 +29,7 @@ const IndikatorMenuItemButton = (props: IndikatorMenuItemButtonProps) => {
 	const mutation = useMutation({
 		mutationKey: [`master.indikator.delete`, indikatorWithAudit.id],
 		mutationFn: (id: number) => doDelete(id),
-		onSuccess: (data, indikator, context) => {
+		onSuccess: (data) => {
 			qc.invalidateQueries([
 				"master.indikator",
 				{ pageRequest, sortRequest },
@@ -43,7 +43,7 @@ const IndikatorMenuItemButton = (props: IndikatorMenuItemButtonProps) => {
 	});
 
 	const handleDelete = async () => {
-		const c = confirm("Apakah anda yakin ingin menghapus data ini?");
+		const c = confirm(`Apakah anda yakin ingin data indikator ini?`);
 		if (!c) return;
 		setAnchorEl(null);
 		mutation.mutate(indikatorWithAudit.id);

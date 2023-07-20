@@ -1,4 +1,5 @@
 import { ApiResponse, BaseId } from "..";
+import { Organization } from "./organization";
 
 export const LOCAL_POSITION = "/api/eo/position";
 export const REMOTE_POSITION = `${process.env.EO_API}/positions`;
@@ -9,6 +10,7 @@ export interface Position extends BaseId {
 	level: number;
 	parent: number;
 	golongan: string;
+	organization: Organization;
 }
 
 export interface PositionSingleResponse extends ApiResponse<Position> {}
