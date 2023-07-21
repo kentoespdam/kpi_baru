@@ -57,7 +57,7 @@ const UraianMenuItem = (props: UraianMenuItemProps) => {
 		setAnchorEl(null);
 		mutation.mutate(item.id);
 	};
-    
+
 	return (
 		<Menu
 			id="long-menu"
@@ -67,16 +67,18 @@ const UraianMenuItem = (props: UraianMenuItemProps) => {
 			anchorEl={anchorEl}
 			open={open}
 			onClose={() => setAnchorEl(null)}
-			PaperProps={{
-				style: {
-					maxHeight: ITEM_HEIGHT * 4.5,
-					width: "20ch",
+			slotProps={{
+				paper: {
+					style: {
+						maxHeight: ITEM_HEIGHT * 4.5,
+						width: "20ch",
+					},
 				},
 			}}
 		>
 			<ListItemButton
 				LinkComponent={Link}
-				href={`/master/uraian/edit/${item.id}`}
+				href={`/master/uraian/edit/${item.id}/${kpiId}`}
 			>
 				<ListItemIcon>
 					<EditIcon color="primary" />

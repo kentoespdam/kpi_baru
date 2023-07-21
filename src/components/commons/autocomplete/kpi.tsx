@@ -3,6 +3,7 @@ import TextField from "@mui/material/TextField";
 import { Kpi } from "@myTypes/entity/kpi";
 import { useQuery } from "@tanstack/react-query";
 import { getList } from "@utils/master/kpi";
+import { useState } from "react";
 import LoadingAutocomplete from "./loading";
 
 type KpiAutocompleteProps = {
@@ -18,9 +19,21 @@ type KpiAutocompleteProps = {
 const KpiAutocomplete = (props: KpiAutocompleteProps) => {
 	const { search, setSearchValue, required, variant, label, size, kpiId } =
 		props;
+
+	const [curKpi, setCurKpi] = useState<Kpi | null>(null);
+
 	const { status, error, data } = useQuery({
 		queryKey: ["kpi.autocomplete"],
-		queryFn: getList,
+		queryFn: async () => {
+			const result = await getList();
+			const kpiini = search
+				? search
+				: result.find((item: Kpi) => item.id === Number(kpiId));
+			console.log(kpiini);
+			setCurKpi(kpiini);
+			setSearchValue(kpiini);
+			return result;
+		},
 	});
 
 	if (status === "loading") return <LoadingAutocomplete />;
@@ -45,12 +58,7 @@ const KpiAutocomplete = (props: KpiAutocompleteProps) => {
 					</li>
 				);
 			}}
-			value={
-				search
-					? search
-					: data.find((item: Kpi) => item.id === Number(kpiId)) ||
-					  null
-			}
+			value={curKpi}
 			isOptionEqualToValue={(option, value) => option.id === value.id}
 			onChange={(e, v) => {
 				setSearchValue(v);

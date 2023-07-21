@@ -58,10 +58,9 @@ const IndikatorMenuItemButton = (props: IndikatorMenuItemButtonProps) => {
 			anchorEl={anchorEl}
 			open={open}
 			onClose={() => setAnchorEl(null)}
-			PaperProps={{
-				style: {
-					maxHeight: ITEM_HEIGHT * 4.5,
-					width: "20ch",
+			slotProps={{
+				paper: {
+					style: { maxHeight: ITEM_HEIGHT * 4.5, width: "20ch" },
 				},
 			}}
 		>

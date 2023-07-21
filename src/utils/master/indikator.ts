@@ -1,4 +1,5 @@
 import {
+	Indikator,
 	IndikatorData,
 	IndikatorFilter,
 	IndikatorWithAudit,
@@ -45,10 +46,10 @@ export const getPage = async (props: any) => {
 	}
 };
 
-export const getList = async (props: any) => {
+export const getList = async (props: any): Promise<Indikator[]> => {
 	const kpiId = props[1];
 	try {
-		const { data } = await axios.get(`${LOCAL_INDIKATOR}/list`);
+		const { data } = await axios.get(`${LOCAL_INDIKATOR}/list/${kpiId}`);
 		useIndikatorStore.setState({ loading: false });
 		return data.data;
 	} catch (e: any) {

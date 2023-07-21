@@ -36,7 +36,7 @@ const UraianComponents = () => {
 		<CardBuilder
 			title="Master Uraian"
 			isLink={true}
-			href={`/master/uraian/add/${indikatorId}`}
+			href={`/master/uraian/add/${indikatorId}/${kpiId}`}
 			color="primary"
 			square={true}
 		>

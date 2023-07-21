@@ -1,15 +1,16 @@
-import { Indikator } from "@myTypes/entity/indikator";
 import Autocomplete from "@mui/material/Autocomplete";
-import LoadingAutocomplete from "./loading";
 import TextField from "@mui/material/TextField";
+import { Indikator } from "@myTypes/entity/indikator";
 import { useQuery } from "@tanstack/react-query";
 import { getList } from "@utils/master/indikator";
+import { useRef, useState } from "react";
+import LoadingAutocomplete from "./loading";
 
 type IndikatorAutocompleteProps = {
-	kpiId: number;
-	indikatorId?: number;
 	search: Indikator | null;
 	setSearchValue: (value: Indikator | null) => void;
+	kpiId?: number;
+	indikatorId?: number;
 	label?: string;
 	variant?: "standard" | "filled" | "outlined";
 	required?: boolean;
@@ -25,14 +26,30 @@ const IndikatorAutocomplete = (props: IndikatorAutocompleteProps) => {
 		variant,
 		required,
 	} = props;
+	const autoRef = useRef(null);
 
-	const { status, error, data } = useQuery({
+	const [val, setVal] = useState<Indikator | null>(null);
+
+	const { isFetching, error, data } = useQuery({
 		queryKey: ["indikator.autocomplete", kpiId],
-		queryFn: async ({ queryKey }) => await getList(queryKey),
+		queryFn: async ({ queryKey }) => {
+			const result = await getList(queryKey);
+			const curIndikator = search
+				? search
+				: indikatorId
+				? result.find((indikator) => indikator.id === indikatorId) ||
+				  null
+				: null;
+			setVal(curIndikator);
+			setSearchValue(curIndikator);
+			return result;
+		},
+		enabled: !!kpiId,
 	});
 
-	if (status === "loading") return <LoadingAutocomplete />;
-	if (status === "error") return <div>{JSON.stringify(error)}</div>;
+	if (isFetching) return <LoadingAutocomplete />;
+	if (error || kpiId === undefined)
+		return <TextField value="Pilih KPI!" error disabled />;
 
 	return (
 		<Autocomplete
@@ -53,18 +70,13 @@ const IndikatorAutocomplete = (props: IndikatorAutocompleteProps) => {
 					</li>
 				);
 			}}
-			value={
-				search
-					? search
-					: indikatorId
-					? data.find((item: Indikator) => item.id === indikatorId)
-					: null
-			}
+			defaultValue={val}
 			isOptionEqualToValue={(option, value) => option.id === value.id}
 			onChange={(e, v) => {
 				setSearchValue(v);
 			}}
 			aria-required={required}
+			ref={autoRef}
 		/>
 	);
 };

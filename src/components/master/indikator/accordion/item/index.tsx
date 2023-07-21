@@ -15,19 +15,12 @@ type IndikatorAccordionItemProps = {
 };
 const IndikatorAccordionItem = (props: IndikatorAccordionItemProps) => {
 	const { indikatorWithAudit } = props;
-	const {
-		pageRequest,
-		sortRequest,
-		kpiId,
-		indikator,
-		status,
-		expanded,
-		setExpanded,
-	} = useIndikatorStore();
+	const { expanded, setExpanded } = useIndikatorStore();
 	const setKeyVal = useUraianStore((state) => state.setKeyVal);
 
 	const expandHandler = () => {
 		setKeyVal("indikatorId", indikatorWithAudit.id);
+		setKeyVal("kpiId", indikatorWithAudit.kpi!.id);
 		setExpanded(
 			expanded === `panel-indikator${indikatorWithAudit.id}`
 				? false

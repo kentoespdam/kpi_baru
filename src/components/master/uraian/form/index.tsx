@@ -18,6 +18,7 @@ import Switch from "@mui/material/Switch";
 import TextField from "@mui/material/TextField";
 import { Indikator } from "@myTypes/entity/indikator";
 import { Kpi } from "@myTypes/entity/kpi";
+import { UraianData } from "@myTypes/entity/uraian";
 import { AUDIT_STATUS } from "@myTypes/index";
 import { useUraianStore } from "@store/filter/master/uraian";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -27,12 +28,13 @@ import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
 import { useRef, useState } from "react";
 
-type UraianFormProps = {
+type UraianFormComponentProps = {
 	idIndikator?: number;
+	idKpi?: number;
 	uraianId?: number;
 };
-const UraianForm = (props: UraianFormProps) => {
-	const { idIndikator, uraianId } = props;
+const UraianFormComponent = (props: UraianFormComponentProps) => {
+	const { idIndikator, idKpi, uraianId } = props;
 	const router = useRouter();
 	const { enqueueSnackbar } = useSnackbar();
 	const [kpis, setKpis] = useState<Kpi | null>(null);
@@ -58,15 +60,10 @@ const UraianForm = (props: UraianFormProps) => {
 		status,
 	} = useUraianStore();
 
-	const {
-		status: qStatus,
-		error,
-		data,
-	} = useQuery({
+	const { isFetching, error, data } = useQuery({
 		queryKey: ["uraian.form", uraianId],
 		queryFn: async ({ queryKey }) => {
 			const result = await getById(queryKey);
-			setKpis(result.kpi);
 			setIndikators(result.indikator);
 			setTargets(result.target);
 			setWaktus(result.waktu);
@@ -74,6 +71,7 @@ const UraianForm = (props: UraianFormProps) => {
 			return result;
 		},
 		enabled: !!uraianId,
+		refetchOnMount: true,
 	});
 
 	const mutation = useMutation({
@@ -94,7 +92,9 @@ const UraianForm = (props: UraianFormProps) => {
 		},
 	});
 
-	const handleChangeKpi = (value: Kpi | null) => setKpis(value);
+	const handleChangeKpi = (value: Kpi | null) => {
+		setKpis(value);
+	};
 	const handleChangeIndikator = (value: Indikator | null) =>
 		setIndikators(value);
 	const handleChangeTarget = (event: React.ChangeEvent<HTMLInputElement>) =>
@@ -106,7 +106,23 @@ const UraianForm = (props: UraianFormProps) => {
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
+		const formData: UraianData = {
+			id: data?.id,
+			indikatorId: Number(indikators?.id),
+			uraian: String(uraianRef.current?.value),
+			volume: Number(volumeRef.current?.value),
+			satuan: String(satuanRef.current?.value),
+			target: targets,
+			waktu: String(waktus),
+			bobot: Number(bobotRef.current?.value),
+			status: checked ? AUDIT_STATUS.ENABLED : AUDIT_STATUS.DISABLED,
+		};
+
+		mutation.mutate(formData);
 	};
+
+	if (uraianId && isFetching) return <>Loading for data...</>;
+	if (error) return <>{JSON.stringify(error)}</>;
 
 	return (
 		<Stack spacing={2} component="form" onSubmit={handleSubmit}>
@@ -116,21 +132,21 @@ const UraianForm = (props: UraianFormProps) => {
 					setSearchValue={handleChangeKpi}
 					label="KPI"
 					variant="outlined"
+					kpiId={Number(idKpi)}
+					required
 				/>
 			</FormControl>
 			<FormControl fullWidth>
 				<IndikatorAutocomplete
-					// kpiId={
-					// 	indikatorData
-					// 		? indikatorData.kpi.id
-					// 		: data.indikator.kpi.id
-					// }
 					search={indikators}
 					setSearchValue={handleChangeIndikator}
 					label="Indikator"
 					variant="outlined"
+					kpiId={idKpi ? idKpi : kpis?.id}
+					indikatorId={Number(idIndikator)}
+					required
 				/>
-			</FormControl>{" "}
+			</FormControl>
 			<FormControl fullWidth>
 				<TextField
 					id="uraian"
@@ -236,3 +252,5 @@ const UraianForm = (props: UraianFormProps) => {
 		</Stack>
 	);
 };
+
+export default UraianFormComponent;

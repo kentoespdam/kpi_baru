@@ -20,6 +20,7 @@ export interface UraianData {
 	uraian: string;
 	volume: number;
 	satuan: string;
+	target: "MIN" | "MAX";
 	waktu: string;
 	bobot: number;
 	status: AuditStatus;
