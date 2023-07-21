@@ -78,18 +78,18 @@ export const menuList: IMenuList = [
 				icon: <CarryOutOutlinedIcon />,
 				role: "staff",
 			},
-			{
-				path: "/master/indikator",
-				name: "Indikator",
-				icon: <ControlOutlinedIcon />,
-				role: "staff",
-			},
-			{
-				path: "/master/uraian-indikator",
-				name: "Uraian Indikator",
-				icon: <PartitionOutlinedIcon />,
-				role: "staff",
-			},
+			// {
+			// 	path: "/master/indikator",
+			// 	name: "Indikator",
+			// 	icon: <ControlOutlinedIcon />,
+			// 	role: "staff",
+			// },
+			// {
+			// 	path: "/master/uraian-indikator",
+			// 	name: "Uraian Indikator",
+			// 	icon: <PartitionOutlinedIcon />,
+			// 	role: "staff",
+			// },
 			{
 				path: "/master/perilaku",
 				name: "Perilaku",
@@ -105,13 +105,13 @@ export const menuList: IMenuList = [
 		role: "staff",
 		subMenu: [
 			{
-				path: "bridge/kpi-pegawai",
+				path: "/bridge/kpi",
 				name: "KPI Pegawai",
 				icon: <TeamOutlinedIcon />,
 				role: "staff",
 			},
 			{
-				path: "bridge/level-perilaku",
+				path: "/bridge/perilaku",
 				name: "Level Perilaku",
 				icon: <UserSwitchOutlinedIcon />,
 				role: "staff",

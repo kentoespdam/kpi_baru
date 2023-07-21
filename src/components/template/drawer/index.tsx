@@ -95,7 +95,7 @@ const MenuDrawerComponent = () => {
 					</Toolbar>
 				</Box>
 
-				{/* {isMenuOpen ? <DrawerContent /> : null} */}
+				{isMenuOpen ? <DrawerContent /> : null}
 			</Drawer>
 		</div>
 	);

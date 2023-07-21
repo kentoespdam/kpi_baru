@@ -1,3 +1,4 @@
+import BridgeKpiComponent from "@components/bridge/kpi";
 import CardBuilder from "@components/commons/card";
 
 export const metadata = {
@@ -6,7 +7,7 @@ export const metadata = {
 const BridgeKpi = () => {
 	return (
 		<CardBuilder title={metadata.title} isLink={true}>
-			hahaha
+			<BridgeKpiComponent />
 		</CardBuilder>
 	);
 };
