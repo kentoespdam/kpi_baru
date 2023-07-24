@@ -34,10 +34,10 @@ export interface BridgeKpiData {
 export interface BridgeKpiFilter {
 	nipam: string | null;
 	name: string | null;
-	positionId: number | null;
-	organizationId: number | null;
-	levelId: number | null;
-	kpiId: number | null;
+	position: Position | null;
+	organization: Organization | null;
+	level: Level | null;
+	kpi: Kpi | null;
 	status: AuditStatus;
 }
 
@@ -58,6 +58,7 @@ export const bridgeKpiHead: MyTableHead[] = [
 		searchable: "true",
 		type: "text",
 		sortable: "true",
+		minWidth: 150,
 	},
 	{
 		field: "name",
@@ -65,21 +66,37 @@ export const bridgeKpiHead: MyTableHead[] = [
 		searchable: "true",
 		type: "text",
 		sortable: "true",
+		minWidth: 250,
+	},
+	{
+		field: "kpi",
+		title: "KPI",
+		searchable: "true",
+		type: "kpi",
+		sortable: "true",
+		minWidth: 250,
 	},
 	{
 		field: "position",
 		title: "Posisi",
-		searchable: "false",
+		searchable: "true",
+		type: "position",
 		sortable: "true",
 	},
 	{
 		field: "organization",
 		title: "Organisasi",
-		searchable: "false",
+		searchable: "true",
+		type: "organization",
 		sortable: "true",
 	},
-	{ field: "level", title: "Level", searchable: "false", sortable: "true" },
-	{ field: "kpi", title: "KPI", searchable: "false", sortable: "true" },
+	{
+		field: "level",
+		title: "Level",
+		searchable: "true",
+		type: "level",
+		sortable: "true",
+	},
 	{
 		field: "status",
 		title: "Status",

@@ -14,7 +14,7 @@ type HeaderCellBuilderProps = {
 };
 const HeaderCellBuilder = (props: HeaderCellBuilderProps) => {
 	const { header, handleSort, sortRequest } = props;
-	const { field, title, sortable, ...other } = header;
+	const { field, title, sortable, minWidth, ...other } = header;
 	const [direction, setDirection] = React.useState<"asc" | "desc">(
 		sortRequest !== undefined && sortRequest.sort === field
 			? sortRequest.direction
@@ -37,6 +37,7 @@ const HeaderCellBuilder = (props: HeaderCellBuilderProps) => {
 				"&:active": {
 					backgroundColor: "rgba(0, 0, 0, 0.1)",
 				},
+				"minWidth": minWidth,
 			}}
 			sortDirection="asc"
 			{...other}

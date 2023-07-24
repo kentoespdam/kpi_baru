@@ -43,12 +43,12 @@ export const GET = async (req: NextRequest) => {
 			`${REMOTE_POSITION}/in/${postsId}`
 		);
 		kpiPage.content = kpiPage.content.map((kpi: KpiWithAudit) => {
-			kpi.organization = orgData.data.filter(
+			kpi.organization = orgData.data.find(
 				(org: Organization) => org.id === kpi.organizationId
-			)[0];
-			kpi.position = posData.data.filter(
+			);
+			kpi.position = posData.data.find(
 				(pos: Position) => pos.id === kpi.positionId
-			)[0];
+			);
 
 			return kpi;
 		});

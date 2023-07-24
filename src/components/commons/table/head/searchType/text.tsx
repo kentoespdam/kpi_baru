@@ -25,6 +25,7 @@ const SearchTypeText = (props: SearchTypeProps) => {
 			inputRef={inputRef}
 			onChange={changeHandler}
 			onKeyUp={keyUpHandler}
+			size="small"
 		/>
 	);
 };

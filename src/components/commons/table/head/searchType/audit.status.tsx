@@ -28,12 +28,12 @@ const SearchTypeAuditStatus = (props: SearchTypeProps) => {
 			>
 				<FormControlLabel
 					value="Enabled"
-					control={<Radio size="small" />}
+					control={<Radio size="small" sx={{ padding: "4px" }} />}
 					label="Enabled"
 				/>
 				<FormControlLabel
 					value="Disabled"
-					control={<Radio size="small" />}
+					control={<Radio size="small" sx={{ padding: "4px" }} />}
 					label="Disabled"
 				/>
 			</RadioGroup>

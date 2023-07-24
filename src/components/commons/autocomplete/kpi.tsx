@@ -64,6 +64,7 @@ const KpiAutocomplete = (props: KpiAutocompleteProps) => {
 				setSearchValue(v);
 			}}
 			aria-required={required}
+			size={size}
 		/>
 	);
 };

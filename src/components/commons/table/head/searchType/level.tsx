@@ -20,7 +20,7 @@ const SearchTypeLevel = (props: SearchTypeProps) => {
 			setSearchValue={handleChange}
 			required
 			variant="outlined"
-			size="medium"
+			size="small"
 		/>
 	);
 };

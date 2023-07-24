@@ -1,40 +1,41 @@
 import Autocomplete from "@mui/material/Autocomplete";
-import TextField from "@mui/material/TextField";
-import { Level } from "@myTypes/entity/level";
+import { Organization } from "@myTypes/entity/organization";
 import { useQuery } from "@tanstack/react-query";
-import { getLevelList } from "src/utils/master/level";
+import { getList } from "@utils/eo/organization";
 import LoadingAutocomplete from "./loading";
+import TextField from "@mui/material/TextField";
 
-type LevelAutocompleteProps = {
-	search: Level | null;
-	setSearchValue: (value: Level | null) => void;
+type OrganizationAutcompleteProps = {
+	search: Organization | null;
+	setSearchValue: (value: Organization | null) => void;
 	required?: boolean;
 	variant?: "standard" | "filled" | "outlined";
 	size?: "small" | "medium";
 };
-
-const LevelAutocomplete = (props: LevelAutocompleteProps) => {
+const OrganizationAutcomplete = (props: OrganizationAutcompleteProps) => {
 	const { search, setSearchValue, required, variant, size } = props;
-	const queryKey = "level.autocomplete";
 	const { status, error, data } = useQuery({
-		queryKey: [queryKey],
-		queryFn: getLevelList,
+		queryKey: ["organization.autocomplete"],
+		queryFn: getList,
 	});
+
 	if (status === "loading") return <LoadingAutocomplete />;
 	if (status === "error") return <div>{JSON.stringify(error)}</div>;
-
 	return (
 		<Autocomplete
-			id="level-autocomplete"
 			options={data!}
-			getOptionLabel={(option: Level) => option.level}
+			getOptionLabel={(option: Organization) => option.name}
 			renderInput={(params) => (
-				<TextField {...params} label="Search Level" />
+				<TextField
+					{...params}
+					label="Search Organization"
+					variant={variant}
+				/>
 			)}
 			renderOption={(props, option) => {
 				return (
 					<li {...props} key={option.id}>
-						{option.level}
+						{option.name}
 					</li>
 				);
 			}}
@@ -50,4 +51,4 @@ const LevelAutocomplete = (props: LevelAutocompleteProps) => {
 	);
 };
 
-export default LevelAutocomplete;
+export default OrganizationAutcomplete;

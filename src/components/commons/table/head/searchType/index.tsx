@@ -2,6 +2,9 @@ import { Level } from "@myTypes/entity/level";
 import { AuditStatus } from "@myTypes/index";
 import { SearchType } from "@myTypes/table";
 import { SearchValueProps } from "../search";
+import { Position } from "@myTypes/entity/position";
+import { Organization } from "@myTypes/entity/organization";
+import { Kpi } from "@myTypes/entity/kpi";
 
 export type SearchTypeProps = {
 	field: string;
@@ -9,4 +12,7 @@ export type SearchTypeProps = {
 	handleSearch: (field: string, value: SearchValueProps) => void;
 	status?: AuditStatus | null;
 	level?: Level | null;
+	position?: Position | null;
+	organization?: Organization | null;
+	kpi?: Kpi | null;
 };

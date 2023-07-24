@@ -29,7 +29,7 @@ const PositionAutcomplete = (props: PositionAutcompleteProps) => {
 				<TextField
 					{...params}
 					label="Search Position"
-					variant="standard"
+					variant={variant}
 				/>
 			)}
 			renderOption={(props, option) => {
@@ -44,8 +44,9 @@ const PositionAutcomplete = (props: PositionAutcompleteProps) => {
 			onChange={(e, v) => {
 				setSearchValue(v);
 			}}
-            aria-required={required}
-            sx={{ minWidth: 200 }}
+			aria-required={required}
+			sx={{ minWidth: 200 }}
+			size={size}
 		/>
 	);
 };

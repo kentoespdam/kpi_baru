@@ -18,7 +18,8 @@ export type SearchType =
 	| "organization"
 	| "position"
 	| "profesi"
-	| "grade";
+	| "grade"
+	| "kpi";
 
 type Searchacble =
 	| {
@@ -31,5 +32,6 @@ export type MyTableHead = {
 	field: string | null;
 	title: string;
 	sortable?: "true" | "false";
+	minWidth?: number;
 } & TableCellProps &
 	Searchacble;
