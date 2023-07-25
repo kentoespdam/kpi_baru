@@ -28,8 +28,10 @@ const KpiAutocomplete = (props: KpiAutocompleteProps) => {
 			const result = await getList();
 			const kpiini = search
 				? search
-				: result.find((item: Kpi) => item.id === Number(kpiId));
-			console.log(kpiini);
+				: kpiId
+				? result.find((item: Kpi) => item.id === Number(kpiId))
+				: null;
+
 			setCurKpi(kpiini);
 			setSearchValue(kpiini);
 			return result;
@@ -48,7 +50,7 @@ const KpiAutocomplete = (props: KpiAutocompleteProps) => {
 				<TextField
 					{...params}
 					label={label ?? "Search KPI"}
-					variant={variant ?? "standard"}
+					variant={variant}
 				/>
 			)}
 			renderOption={(props, option) => {

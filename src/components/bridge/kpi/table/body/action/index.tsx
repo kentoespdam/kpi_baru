@@ -17,10 +17,10 @@ const BridgeKpiActionButtons = (props: BridgeKpiActionButtonsProps) => {
 		sortRequest,
 		nipam,
 		name,
-		positionId,
-		organizationId,
-		levelId,
-		kpiId,
+		position,
+		organization,
+		level,
+		kpi,
 		status,
 	} = useBridgeKpiStore();
 	const qc = useQueryClient();
@@ -42,20 +42,20 @@ const BridgeKpiActionButtons = (props: BridgeKpiActionButtonsProps) => {
 					{
 						nipam,
 						name,
-						positionId,
-						organizationId,
-						levelId,
-						kpiId,
+						position,
+						organization,
+						level,
+						kpi,
 						status,
 					},
 				],
 			});
 			enqueueSnackbar("Data berhasil dihapus", { variant: "success" });
-			router.push("/master/grade");
+			router.push("/bridge/kpi");
 		},
 	});
 
-	const editHandler = async () => router.push(`/master/grade/edit/${row.id}`);
+	const editHandler = async () => router.push(`/bridge/kpi/edit/${row.id}`);
 
 	const deleteHandler = async () => {
 		const x = confirm("Apakah anda yakin ingin menghapus data ini?");

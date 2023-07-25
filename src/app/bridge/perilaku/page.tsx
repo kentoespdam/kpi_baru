@@ -1,3 +1,4 @@
+import BridgePerilakuComponent from "@components/bridge/perilaku";
 import CardBuilder from "@components/commons/card";
 
 export const metadata = {
@@ -6,7 +7,7 @@ export const metadata = {
 const BridgePerilaku = () => {
 	return (
 		<CardBuilder title={metadata.title} isLink={true}>
-			hahaha
+			<BridgePerilakuComponent />
 		</CardBuilder>
 	);
 };

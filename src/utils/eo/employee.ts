@@ -3,7 +3,6 @@ import axios from "axios";
 
 export const getList = async (props: any) => {
 	const orgCode = props[1].orgCode;
-	console.log(orgCode);
 	try {
 		const { data } = await axios.get(
 			`${LOCAL_EMPLOYEE}/organization/${orgCode}`

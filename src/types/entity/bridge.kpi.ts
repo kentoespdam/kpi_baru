@@ -24,6 +24,7 @@ export interface BridgeKpi extends BaseId {
 export interface BridgeKpiData {
 	id?: number;
 	nipam: string;
+	name: string;
 	positionId: number;
 	organizationId: number;
 	levelId: number;

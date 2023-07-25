@@ -84,9 +84,7 @@ export const doSave = async (data: BridgeKpiData) => {
 	}
 };
 
-export const doDelete = async (props: any) => {
-	const { queryKey } = props;
-	const id = queryKey[1];
+export const doDelete = async (id: number) => {
 	try {
 		const { data } = await axios.delete(`${LOCAL_BRIDGE_KPI}/${id}`);
 		return data.data;

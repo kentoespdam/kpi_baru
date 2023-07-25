@@ -52,7 +52,9 @@ const BridgeKpiComponent = () => {
 
 	return (
 		<TableContainer>
-			{queries[0].isFetching ? <LinearProgress /> : null}
+			{queries[0].isFetching ? (
+				<LinearProgress sx={{ width: "100%" }} />
+			) : null}
 			<Table>
 				<BridgeKpiTableHead />
 				{queries[0].isLoading ? (

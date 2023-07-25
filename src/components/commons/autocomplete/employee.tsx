@@ -5,7 +5,7 @@ import TextField from "@mui/material/TextField";
 import { Employee } from "@myTypes/entity/employee";
 import { useQuery } from "@tanstack/react-query";
 import { getList } from "@utils/eo/employee";
-import { use, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import LoadingAutocomplete from "./loading";
 
 type EmployeeAutocompleteProps = {
@@ -30,7 +30,7 @@ const EmployeeAutocomplete = (props: EmployeeAutocompleteProps) => {
 			const curEmp = search
 				? search
 				: nipam
-				? result.data.find((e: Employee) => e.nipam === nipam)
+				? result.find((e: Employee) => e.nipam === nipam)
 				: null;
 			setVal(curEmp);
 			setSearchValue(curEmp);

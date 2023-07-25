@@ -1,5 +1,5 @@
 import { responseNoContent } from "@helper/error/nocontent";
-import { getCurrentToken, appwriteHeader } from "@helper/index";
+import { appwriteHeader, getCurrentToken } from "@helper/index";
 import {
 	BridgeKpiWithAudit,
 	BridgeKpiWithPagination,
@@ -69,4 +69,24 @@ export const GET = async (req: NextRequest) => {
 		});
 	}
 };
-export const POST = async (req: NextRequest) => {};
+export const POST = async (req: NextRequest) => {
+	const cookie = req.cookies;
+	const body = await req.json();
+
+	try {
+		const token = await getCurrentToken(cookie);
+		const { status, data } = await axios.post(REMOTE_BRIDGE_KPI, body, {
+			headers: appwriteHeader(cookie, token),
+		});
+		return new Response(JSON.stringify(data), { status: status });
+	} catch (e: any) {
+		console.log(
+			"api.bridge.kpi.post",
+			new Date().toString(),
+			e.response.data
+		);
+		return new Response(JSON.stringify(e.response.data), {
+			status: e.response.status,
+		});
+	}
+};
