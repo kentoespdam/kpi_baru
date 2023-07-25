@@ -5,6 +5,7 @@ import { SearchValueProps } from "../search";
 import { Position } from "@myTypes/entity/position";
 import { Organization } from "@myTypes/entity/organization";
 import { Kpi } from "@myTypes/entity/kpi";
+import { Perilaku } from "@myTypes/entity/perilaku";
 
 export type SearchTypeProps = {
 	field: string;
@@ -15,4 +16,5 @@ export type SearchTypeProps = {
 	position?: Position | null;
 	organization?: Organization | null;
 	kpi?: Kpi | null;
+	perilaku?: Perilaku | null;
 };

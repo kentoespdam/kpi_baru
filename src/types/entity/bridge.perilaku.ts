@@ -1,4 +1,5 @@
-import { ApiResponse, Audit, BaseId, Pages } from "..";
+import { MyTableHead } from "@myTypes/table";
+import { ApiResponse, Audit, AuditStatus, BaseId, Pages } from "..";
 import { Level } from "./level";
 import { Perilaku } from "./perilaku";
 
@@ -10,10 +11,55 @@ export interface BridgePerilaku extends BaseId {
 	level?: Level;
 }
 
-export interface BridgePerilakuWithAudit extends BridgePerilaku, Audit{}
+export interface BridgePerilakuData {
+	id?: number;
+	levelId: number;
+	status: AuditStatus;
+}
 
-export interface BridgePerilakuWithPagination extends Pages<BridgePerilakuWithAudit>{}
+export interface BridgePerilakuFilter {
+	perilaku: Perilaku | null;
+	level: Level | null;
+	status: AuditStatus;
+}
 
-export interface BridgePerilakuResponse extends ApiResponse<BridgePerilaku[]>{}
+export interface BridgePerilakuWithAudit extends BridgePerilaku, Audit {}
 
-export interface BridgePerilakuPageResponse extends ApiResponse<BridgePerilakuWithPagination>{}
+export interface BridgePerilakuWithPagination
+	extends Pages<BridgePerilakuWithAudit> {}
+
+export interface BridgePerilakuResponse extends ApiResponse<BridgePerilaku[]> {}
+
+export interface BridgePerilakuPageResponse
+	extends ApiResponse<BridgePerilakuWithPagination> {}
+
+export const bridgePerilakuHead: MyTableHead[] = [
+	{
+		field: "id",
+		title: "No",
+		searchable: "false",
+		sortable: "true",
+		width: 80,
+	},
+	{
+		field: "perilaku",
+		title: "Perilaku",
+		searchable: "true",
+		type: "perilaku",
+		sortable: "true",
+	},
+	{
+		field: "level",
+		title: "Level",
+		searchable: "true",
+		type: "level",
+		sortable: "true",
+	},
+	{
+		field: "status",
+		title: "Status",
+		searchable: "true",
+		type: "auditStatus",
+	},
+	{ field: null, title: "Action", searchable: "false", width: 100 },
+];

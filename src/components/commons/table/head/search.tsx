@@ -12,6 +12,8 @@ import SearchTypePosition from "./searchType/position";
 import SearchTypeOrganization from "./searchType/organization";
 import { Kpi } from "@myTypes/entity/kpi";
 import SearchTypeKpi from "./searchType/kpi";
+import { Perilaku } from "@myTypes/entity/perilaku";
+import SearchtypePerilaku from "./searchType/perilaku";
 
 export type SearchValueProps =
 	| string
@@ -20,6 +22,7 @@ export type SearchValueProps =
 	| Position
 	| Organization
 	| Kpi
+	| Perilaku
 	| null;
 
 type HeaderSearchCellBuilderProps = {
@@ -30,10 +33,19 @@ type HeaderSearchCellBuilderProps = {
 	position?: Position | null;
 	organization?: Organization | null;
 	kpi?: Kpi | null;
+	perilaku?: Perilaku | null;
 };
 const HeaderSearchCellBuilder = (props: HeaderSearchCellBuilderProps) => {
-	const { header, handleSearch, status, level, position, organization, kpi } =
-		props;
+	const {
+		header,
+		handleSearch,
+		status,
+		level,
+		position,
+		organization,
+		kpi,
+		perilaku,
+	} = props;
 
 	if (header.searchable === "false") return <TableCell></TableCell>;
 
@@ -88,6 +100,16 @@ const HeaderSearchCellBuilder = (props: HeaderSearchCellBuilderProps) => {
 					/>
 				</TableCell>
 			);
+		case "perilaku":
+			return (
+				<TableCell sx={{ p: 1 }}>
+					<SearchtypePerilaku
+						field={header.field!}
+						handleSearch={handleSearch}
+						perilaku={perilaku}
+					/>
+				</TableCell>
+			);
 		default:
 			return (
 				<TableCell sx={{ p: 1 }}>
@@ -109,9 +131,10 @@ type HeaderSearchBuilderProps = {
 	position?: Position | null;
 	organization?: Organization | null;
 	kpi?: Kpi | null;
+	perilaku?: Perilaku | null;
 };
 const HeaderSearchBuilder = (props: HeaderSearchBuilderProps) => {
-	const { headers, handleSearch, status } = props;
+	const { headers, handleSearch, ...other } = props;
 	return (
 		<TableRow>
 			{headers.map((header, index) => (
@@ -119,7 +142,7 @@ const HeaderSearchBuilder = (props: HeaderSearchBuilderProps) => {
 					key={index}
 					header={header}
 					handleSearch={handleSearch}
-					status={status}
+					{...other}
 				/>
 			))}
 		</TableRow>

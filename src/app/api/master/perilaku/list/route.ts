@@ -1,26 +1,24 @@
 import { responseNoContent } from "@helper/error/nocontent";
 import { appwriteHeader, getCurrentToken } from "@helper/index";
-import { REMOTE_BRIDGE_PERILAKU } from "@myTypes/entity/bridge.perilaku";
+import { REMOTE_PERILAKU } from "@myTypes/entity/perilaku";
 import axios from "axios";
 import { NextRequest } from "next/server";
 
 export const GET = async (req: NextRequest) => {
 	const cookie = req.cookies;
-	const search = req.nextUrl.search;
 
 	try {
 		const token = await getCurrentToken(cookie);
-		const { status, data } = await axios.get(
-			`${REMOTE_BRIDGE_PERILAKU}/page${search}`,
-			{
-				headers: appwriteHeader(cookie, token),
-			}
-		);
+		const { status, data } = await axios.get(`${REMOTE_PERILAKU}`, {
+			headers: appwriteHeader(cookie, token),
+		});
 		if (status === 204) return responseNoContent();
-		return new Response(JSON.stringify(data), { status: status });
+		return new Response(JSON.stringify(data), {
+			status,
+		});
 	} catch (e: any) {
 		console.log(
-			"api.bridge.perilaku.get",
+			"api.master.perilaku.list",
 			new Date().toString(),
 			e.response.data
 		);
@@ -29,4 +27,3 @@ export const GET = async (req: NextRequest) => {
 		});
 	}
 };
-export const POST = async (req: NextRequest) => {};

@@ -19,7 +19,8 @@ export type SearchType =
 	| "position"
 	| "profesi"
 	| "grade"
-	| "kpi";
+	| "kpi"
+	| "perilaku";
 
 type Searchacble =
 	| {
