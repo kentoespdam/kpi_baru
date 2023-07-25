@@ -28,7 +28,7 @@ const PerilakuAutocomplete = (props: PerilakuAutocompleteProps) => {
 			options={data!}
 			getOptionLabel={(option: Perilaku) => option.kompetensi}
 			renderInput={(params) => (
-				<TextField {...params} label="Search Level" />
+				<TextField {...params} label="Search Perilaku" />
 			)}
 			renderOption={(props, option) => {
 				return (

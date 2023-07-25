@@ -13,6 +13,7 @@ export interface BridgePerilaku extends BaseId {
 
 export interface BridgePerilakuData {
 	id?: number;
+	perilakuId: number;
 	levelId: number;
 	status: AuditStatus;
 }

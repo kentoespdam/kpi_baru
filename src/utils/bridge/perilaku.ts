@@ -35,6 +35,45 @@ export const getPage = async (props: any) => {
 	}
 };
 export const getList = async () => {};
-export const getById = async (props: any) => {};
-export const doSave = async (data: BridgePerilakuData) => {};
-export const doDelete = async (id: number) => {};
+export const getById = async (props: any) => {
+	const id = props[1];
+	try {
+		const { data } = await axios.get(`${LOCAL_BRIDGE_PERILAKU}/${id}`);
+		return data.data;
+	} catch (e: any) {
+		console.log(
+			"utils.bridge.perilaku.id",
+			new Date().toISOString(),
+			e.response.data
+		);
+		throw new Error(e.response.data.message);
+	}
+};
+export const doSave = async (data: BridgePerilakuData) => {
+	try {
+		const result = data.id
+			? await axios.put(`${LOCAL_BRIDGE_PERILAKU}/${data.id}`, data)
+			: await axios.post(LOCAL_BRIDGE_PERILAKU, data);
+		return result.data;
+	} catch (e: any) {
+		console.log(
+			"utils.bridge.kpi.save",
+			new Date().toISOString(),
+			e.response.data
+		);
+		throw new Error(e.response.data.message);
+	}
+};
+export const doDelete = async (id: number) => {
+	try {
+		const { data } = await axios.delete(`${LOCAL_BRIDGE_PERILAKU}/${id}`);
+		return data.data;
+	} catch (e: any) {
+		console.log(
+			"utils.bridge.kpi.getById",
+			new Date().toISOString(),
+			e.response.data
+		);
+		throw new Error(e.response.data.message);
+	}
+};

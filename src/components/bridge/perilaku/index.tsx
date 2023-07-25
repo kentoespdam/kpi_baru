@@ -1,15 +1,16 @@
 "use client";
 
+import TableLoading from "@components/commons/table/loading";
+import LinearProgress from "@mui/material/LinearProgress";
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
+import { bridgePerilakuHead } from "@myTypes/entity/bridge.perilaku";
 import { useBridgePerilakuStore } from "@store/filter/bridge/perilaku";
 import { useQueries } from "@tanstack/react-query";
 import { getPage } from "@utils/bridge/perilaku";
-import BridgePerilakuTableHead from "./table/head";
-import { bridgePerilakuHead } from "@myTypes/entity/bridge.perilaku";
-import TableLoading from "@components/commons/table/loading";
-import BridgePerilakuTableBody from "./table/body";
 import BridgePerilakuPagination from "./pagination";
+import BridgePerilakuTableBody from "./table/body";
+import BridgePerilakuTableHead from "./table/head";
 
 const BridgePerilakuComponent = () => {
 	const { pageRequest, sortRequest, perilaku, level, status } =
@@ -30,6 +31,9 @@ const BridgePerilakuComponent = () => {
 
 	return (
 		<TableContainer>
+			{queries[0].isFetching ? (
+				<LinearProgress sx={{ width: "100%" }} />
+			) : null}
 			<Table>
 				<BridgePerilakuTableHead />
 				{queries[0].isLoading ? (

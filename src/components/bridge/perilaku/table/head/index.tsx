@@ -36,6 +36,8 @@ const BridgePerilakuTableHead = () => {
 			<HeaderSearchBuilder
 				headers={bridgePerilakuHead}
 				handleSearch={handleSearch}
+				perilaku={perilaku}
+				level={level}
 				status={status}
 			/>
 		</TableHead>
