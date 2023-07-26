@@ -1,10 +1,5 @@
 import { create } from "zustand";
-import {
-	createJSONStorage,
-	devtools,
-	persist,
-	subscribeWithSelector,
-} from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 export interface SessionUser {
 	$id: string;

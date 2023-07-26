@@ -125,7 +125,7 @@ export const menuList: IMenuList = [
 		role: "staff",
 		subMenu: [
 			{
-				path: "/penilaian-kpi",
+				path: "/trans/kpi",
 				name: "Penilaian KPI",
 				icon: <CheckCircleOutlinedIcon />,
 				role: "staff",

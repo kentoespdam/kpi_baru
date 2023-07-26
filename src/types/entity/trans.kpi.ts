@@ -1,8 +1,8 @@
 import { ApiResponse, Audit, BaseId, Pages } from "..";
-import { Indikator } from "./indikator";
+import { IndikatorWithUraianList } from "./indikator";
 import { Profesi } from "./profesi";
 
-export const LOCAL_TRANS_KPI = "/api/trans/kpi-pegawai";
+export const LOCAL_TRANS_KPI = "/api/trans/kpi";
 export const REMOTE_TRANS_KPI = `${process.env.KPI_API}/transaction/kpi`;
 
 export interface TransKpi extends BaseId {
@@ -13,7 +13,7 @@ export interface TransKpi extends BaseId {
 	periode: string;
 	name: string;
 	nilaiTotal: number;
-	indikatorList: Indikator[];
+	indikatorList: IndikatorWithUraianList[];
 }
 
 export interface TransKpiWithAudit extends TransKpi, Audit {}

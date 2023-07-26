@@ -1,5 +1,6 @@
 import { ApiResponse, Audit, AuditStatus, BaseId, Pages } from "..";
 import { Kpi } from "./kpi";
+import { UraianWithAudit, UraianWithFile } from "./uraian";
 
 export const LOCAL_INDIKATOR = "/api/master/indikator";
 export const REMOTE_INDIKATOR = `${process.env.KPI_API}/master/indikator`;
@@ -26,6 +27,10 @@ export interface IndikatorFilter {
 }
 
 export interface IndikatorWithAudit extends Indikator, Audit {}
+
+export interface IndikatorWithUraianList extends IndikatorWithAudit {
+	uraianList: UraianWithFile[];
+}
 
 export interface IndikatorWithPagination extends Pages<IndikatorWithAudit> {}
 

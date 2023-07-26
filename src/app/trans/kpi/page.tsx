@@ -1,12 +1,13 @@
 import CardBuilder from "@components/commons/card";
+import TransRoot from "@components/trans";
 
 export const metadata = {
-	title: "Transaksi KPI",
+	title: "Penilaian Pencapaian Kinerja Individu",
 };
 const TransKpi = () => {
 	return (
-		<CardBuilder title={metadata.title} isLink={true}>
-			hahaha
+		<CardBuilder title={metadata.title} isLink={false}>
+			<TransRoot />
 		</CardBuilder>
 	);
 };
