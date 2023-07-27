@@ -1,16 +1,15 @@
 "use client";
 
-import { useSessionStore } from "@store/main/session";
-import { useQueries } from "@tanstack/react-query";
-import { getEmpDetails } from "@utils/eo/employee";
-import EmployeeComponent from "./employee";
-import KpiStaffComponents from "./kpi/staff";
-import KpiCard from "./kpi";
 import Stack from "@mui/material/Stack";
 import { useTransKpiStore } from "@store/filter/trans/kpi";
-import { getStaffKpi } from "@utils/trans/kpi";
+import { useSessionStore } from "@store/main/session";
+import { useQueries } from "@tanstack/react-query";
 import { getByNipam } from "@utils/bridge/kpi";
+import { getEmpDetails } from "@utils/eo/employee";
+import { getStaffKpi } from "@utils/trans/kpi";
 import { shallow } from "zustand/shallow";
+import EmployeeComponent from "./employee";
+import KpiCard from "./kpi";
 
 const TransRoot = () => {
 	const curNipam = useSessionStore.getState().user?.userId;

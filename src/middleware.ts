@@ -1,7 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
-import { APPWRITE_ENDPOINT, APPWRITE_PROJECT_ID, sessionNames } from "./lib";
-import { getExpToken, getSessionCookie, newHostname } from "./helpers";
 import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
+import { NextRequest, NextResponse } from "next/server";
+import { getExpToken, getSessionCookie, newHostname } from "./helpers";
+import { APPWRITE_ENDPOINT, APPWRITE_PROJECT_ID, sessionNames } from "./lib";
+import { useSessionStore } from "@store/main/session";
 
 export const middleware = async (req: NextRequest) => {
 	const response = NextResponse.next();
@@ -68,16 +69,19 @@ const getSession = async (cookies: RequestCookies) => {
 			"X-Fallback-Cookies": xfallback,
 		};
 		const req = await fetch(
-			`${APPWRITE_ENDPOINT}/v1/account/sessions/current`,
+			`${process.env.PROTOCOL}://${process.env.NEXT_PUBLIC_URL}/api/auth/session`,
 			{
-				method: "GET",
 				headers: headers,
 			}
 		);
 
+		const data = await req.json();
+		if (useSessionStore.getState().user === null)
+			useSessionStore.setState({ user: data });
+
 		return req.status === 200 ? true : false;
 	} catch (e: any) {
-		console.log("middleware error", e);
+		console.log("middleware error:", e);
 		return false;
 	}
 };

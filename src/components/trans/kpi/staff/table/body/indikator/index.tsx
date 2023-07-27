@@ -19,11 +19,18 @@ const TransKpiIndikatorComponent = (props: TransKpiIndikatorComponentProps) => {
 				<CellBuilder rowSpan={rowSpan} value={urut} />
 				<CellBuilder rowSpan={rowSpan} value={indikator.indikator} />
 				{uraianSize > 0 ? (
-					<TransKpiUraianComponent uraianList={uraianList} first />
+					<TransKpiUraianComponent
+						indikatorId={indikator.id}
+						uraianList={uraianList}
+						first
+					/>
 				) : null}
 			</TableRow>
 			{rowSpan > 1 ? (
-				<TransKpiUraianComponent uraianList={uraianList} />
+				<TransKpiUraianComponent
+					indikatorId={indikator.id}
+					uraianList={uraianList}
+				/>
 			) : null}
 		</>
 	);
