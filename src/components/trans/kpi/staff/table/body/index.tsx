@@ -1,11 +1,10 @@
 import TableBody from "@mui/material/TableBody";
-import { TransKpi, TransKpiWithAudit } from "@myTypes/entity/trans.kpi";
+import { TransKpiWithAudit } from "@myTypes/entity/trans.kpi";
 import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useSessionStore } from "@store/main/session";
 import { useQueryClient } from "@tanstack/react-query";
 import { shallow } from "zustand/shallow";
 import TransKpiIndikatorComponent from "./indikator";
-import CellBuilder from "@components/commons/table/cell.builder";
 
 const KpiStaffTableBody = () => {
 	const { periode, bridgeKpi } = useTransKpiStore(

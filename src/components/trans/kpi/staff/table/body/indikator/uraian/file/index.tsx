@@ -1,9 +1,9 @@
 import CellBuilder from "@components/commons/table/cell.builder";
+import UploadBtn from "@components/trans/kpi/staff/button/upload";
+import ViewBtn from "@components/trans/kpi/staff/button/view";
 import Stack from "@mui/material/Stack";
 import TableCell from "@mui/material/TableCell";
 import { UraianFile } from "@myTypes/entity/uraian.file";
-import ViewBtn from "./button/view";
-import UploadBtn from "./button/upload";
 
 type TransKpiFileComponentProps = {
 	fileList: UraianFile[];
