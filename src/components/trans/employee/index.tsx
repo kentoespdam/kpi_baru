@@ -15,7 +15,6 @@ const EmployeeComponent = () => {
 		<Stack
 			direction={direction ? "row" : "row"}
 			justifyContent={direction ? "space-between" : "center"}
-			// alignItems="center"
 			spacing={2}
 		>
 			<DetailEmployeeComponent />

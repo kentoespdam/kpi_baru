@@ -10,6 +10,8 @@ import { getStaffKpi } from "@utils/trans/kpi";
 import { shallow } from "zustand/shallow";
 import EmployeeComponent from "./employee";
 import KpiCard from "./kpi";
+import DetailEmployeeSkeleton from "./employee/detail/skeleton";
+import TransKpiSkeleton from "./kpi/skeleton";
 
 const TransRoot = () => {
 	const curNipam = useSessionStore.getState().user?.userId;
@@ -51,10 +53,13 @@ const TransRoot = () => {
 
 	return (
 		<>
-			{queries[0].isFetching ? <>Loading for data...</> : null}
 			<Stack direction="column" spacing={2}>
-				<EmployeeComponent />
-				<KpiCard />
+				{queries[0].isFetching ? (
+					<DetailEmployeeSkeleton />
+				) : (
+					<EmployeeComponent />
+				)}
+				{queries[1].isFetching ? <TransKpiSkeleton /> : <KpiCard />}
 			</Stack>
 		</>
 	);

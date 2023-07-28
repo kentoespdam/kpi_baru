@@ -6,7 +6,6 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import Chip from "@mui/material/Chip";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
-import { UraianFileData } from "@myTypes/entity/uraian.file";
 import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useSessionStore } from "@store/main/session";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -37,20 +36,19 @@ const TransKpiStaffUploadComponent = (
 		onError: (error) => {
 			enqueueSnackbar(`${error}`, { variant: "error" });
 		},
-		onSuccess: (result) => {
-			// 	qc.invalidateQueries({
-			// 		queryKey: [
-			// 			"trans.kpi.staff",
-			// 			{
-			// 				nipam: user!.userId,
-			// 				kpiId: bridgeKpi!.id,
-			// 				periode: periode!.periode,
-			// 			},
-			// 		],
-			// 	});
-			console.log(result);
+		onSuccess: () => {
+			qc.invalidateQueries({
+				queryKey: [
+					"trans.kpi.staff",
+					{
+						nipam: user!.userId,
+						kpiId: bridgeKpi!.id,
+						periode: periode!.periode,
+					},
+				],
+			});
 			enqueueSnackbar("Data berhasil disimpan", { variant: "success" });
-			// 	router.push("/trans/kpi");
+			router.push("/trans/kpi");
 		},
 	});
 
@@ -59,12 +57,6 @@ const TransKpiStaffUploadComponent = (
 	};
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		// const data: UraianFileData = {
-		// 	periode: periode!.periode,
-		// 	nipam: user!.userId,
-		// 	transKpiUraianId: uraianId,
-		// 	file: fileRef.current!.files![0],
-		// };
 		const formData = new FormData();
 		formData.set("periode", String(periode?.periode));
 		formData.set("nipam", String(user?.userId));

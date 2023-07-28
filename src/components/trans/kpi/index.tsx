@@ -3,6 +3,9 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import PeriodeComponent from "./periode";
 import KpiStaffComponents from "./staff";
+import ViewFileDialog from "./dialog/file";
+import ViewPdfDialog from "./dialog/pdf";
+import ViewUploadDialog from "./dialog/upload";
 
 const KpiCard = () => {
 	return (
@@ -13,6 +16,9 @@ const KpiCard = () => {
 					<KpiStaffComponents />
 				</Box>
 			</CardContent>
+			<ViewFileDialog />
+			<ViewPdfDialog />
+			<ViewUploadDialog />
 		</Card>
 	);
 };

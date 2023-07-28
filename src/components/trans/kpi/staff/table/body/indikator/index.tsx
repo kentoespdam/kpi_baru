@@ -16,15 +16,25 @@ const TransKpiIndikatorComponent = (props: TransKpiIndikatorComponentProps) => {
 	return (
 		<>
 			<TableRow>
-				<CellBuilder rowSpan={rowSpan} value={urut} />
-				<CellBuilder rowSpan={rowSpan} value={indikator.indikator} />
+				<CellBuilder bordered rowSpan={rowSpan} value={urut} />
+				<CellBuilder
+					bordered
+					rowSpan={rowSpan}
+					value={indikator.indikator}
+				/>
 				{uraianSize > 0 ? (
 					<TransKpiUraianComponent
 						indikatorId={indikator.id}
 						uraianList={uraianList}
 						first
 					/>
-				) : null}
+				) : (
+					<>
+						<CellBuilder bordered value="" />
+						<CellBuilder bordered value="" />
+						<CellBuilder bordered value="" />
+					</>
+				)}
 			</TableRow>
 			{rowSpan > 1 ? (
 				<TransKpiUraianComponent

@@ -14,7 +14,7 @@ const TransKpiFileComponent = (props: TransKpiFileComponentProps) => {
 	const { indikatorId, fileList, uraianId } = props;
 	return fileList.length > 0 ? (
 		<>
-			<CellBuilder value="Sudah Upload" chip />
+			<CellBuilder bordered value="Sudah Upload" chip />
 			<TableCell>
 				<Stack direction="row" spacing={1}>
 					<ViewBtn
@@ -28,7 +28,12 @@ const TransKpiFileComponent = (props: TransKpiFileComponentProps) => {
 		</>
 	) : (
 		<>
-			<CellBuilder value="Tidak ada file" chip chipColor="error" />
+			<CellBuilder
+				bordered
+				value="Tidak ada file"
+				chip
+				chipColor="error"
+			/>
 			<TableCell>
 				<Stack direction="row" spacing={1}>
 					<UploadBtn uraianId={uraianId} />

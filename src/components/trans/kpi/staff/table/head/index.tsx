@@ -6,11 +6,11 @@ const KpiStaffTableHead = () => {
 	return (
 		<TableHead>
 			<TableRow>
-				<CellBuilder value="NO" />
-				<CellBuilder value="INDIKATOR KINJERJA KUNCI (KPI)" />
-				<CellBuilder value="PENJELASAN / RUMUSAN KPI" />
-				<CellBuilder value="STATUS" />
-				<CellBuilder value="ACTION" />
+				<CellBuilder bordered value="NO" />
+				<CellBuilder bordered value="INDIKATOR KINJERJA KUNCI (KPI)" />
+				<CellBuilder bordered value="PENJELASAN / RUMUSAN KPI" />
+				<CellBuilder bordered value="STATUS" />
+				<CellBuilder bordered value="ACTION" />
 			</TableRow>
 		</TableHead>
 	);

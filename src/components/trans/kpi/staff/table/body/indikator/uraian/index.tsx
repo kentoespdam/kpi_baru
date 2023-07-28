@@ -13,7 +13,7 @@ const UraianCell = (props: UraianCellProps) => {
 
 	return (
 		<>
-			<CellBuilder value={uraian.uraian} />
+			<CellBuilder bordered value={uraian.uraian} />
 			<TransKpiFileComponent
 				fileList={fileList}
 				uraianId={uraian.id}
