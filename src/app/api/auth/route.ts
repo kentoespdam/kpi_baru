@@ -1,12 +1,25 @@
 import { newSetCookies } from "@helper/index";
+import { SessionUser } from "@store/main/session";
 import axios from "axios";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT_ID, sessionNames } from "src/lib";
 import { createToken, getAccount } from "src/lib/appwrite";
-import { SessionUser } from "@store/main/session";
+import { getUserByNipam } from "src/lib/appwrite/user";
 
 export const POST = async (req: Request) => {
 	const body = await req.json();
 	try {
+		const userNipam = await getUserByNipam(body.email.split("@")[0]);
+		if (!userNipam.emailVerification) {
+			return new Response(
+				JSON.stringify({
+					message:
+						"Akun anda tidak ditemukan / belum aktif, silahkan hubungi Administrator.",
+				}),
+				{
+					status: 400,
+				}
+			);
+		}
 		const { data, status, headers } = await axios.post(
 			`${APPWRITE_ENDPOINT}/v1/account/sessions/email`,
 			body,
@@ -17,6 +30,7 @@ export const POST = async (req: Request) => {
 				},
 			}
 		);
+
 		const setCookie = headers["set-cookie"];
 		const fallbackCookie = JSON.parse(headers["x-fallback-cookies"]);
 		const token = await createToken(fallbackCookie[sessionNames[0]]);

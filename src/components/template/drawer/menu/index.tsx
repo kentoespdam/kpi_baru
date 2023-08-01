@@ -3,8 +3,12 @@ import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import { IMenu } from "@template/menu.list";
 import MenuItemBuilder from "./item.builder";
+import { useSessionStore } from "@store/main/session";
 
 const MenuBuilder = ({ item }: { item: IMenu }) => {
+	const user = useSessionStore.getState().user;
+	const isAdmin = user?.prefs.roles?.includes("admin");
+
 	return item.type === "group" ? (
 		<List
 			subheader={
@@ -15,9 +19,13 @@ const MenuBuilder = ({ item }: { item: IMenu }) => {
 				</Box>
 			}
 		>
-			{item.subMenu?.map((sub, index) => (
-				<MenuItemBuilder key={index} item={sub} />
-			))}
+			{item.subMenu?.map((sub, index) => {
+				return isAdmin ? (
+					<MenuItemBuilder key={index} item={sub} />
+				) : sub.role === "staff" ? (
+					<MenuItemBuilder key={index} item={sub} />
+				) : null;
+			})}
 		</List>
 	) : null;
 };

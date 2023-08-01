@@ -3,7 +3,7 @@ import TextField from "@mui/material/TextField";
 import { Kpi } from "@myTypes/entity/kpi";
 import { useQuery } from "@tanstack/react-query";
 import { getList } from "@utils/master/kpi";
-import { useState } from "react";
+import { SyntheticEvent, useState } from "react";
 import LoadingAutocomplete from "./loading";
 
 type KpiAutocompleteProps = {
@@ -21,6 +21,11 @@ const KpiAutocomplete = (props: KpiAutocompleteProps) => {
 		props;
 
 	const [curKpi, setCurKpi] = useState<Kpi | null>(null);
+
+	const handleChange = (e: SyntheticEvent<Element, Event>, v: Kpi | null) => {
+		setCurKpi(v);
+		setSearchValue(v);
+	};
 
 	const { status, error, data } = useQuery({
 		queryKey: ["kpi.autocomplete"],
@@ -51,6 +56,7 @@ const KpiAutocomplete = (props: KpiAutocompleteProps) => {
 					{...params}
 					label={label ?? "Search KPI"}
 					variant={variant}
+					required={required}
 				/>
 			)}
 			renderOption={(props, option) => {
@@ -62,9 +68,7 @@ const KpiAutocomplete = (props: KpiAutocompleteProps) => {
 			}}
 			value={curKpi}
 			isOptionEqualToValue={(option, value) => option.id === value.id}
-			onChange={(e, v) => {
-				setSearchValue(v);
-			}}
+			onChange={handleChange}
 			aria-required={required}
 			size={size}
 		/>

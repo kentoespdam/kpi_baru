@@ -12,6 +12,15 @@ import { useRouter } from "next/navigation";
 import { useProfileStore } from "@store/main/menu";
 import { useSessionStore } from "@store/main/session";
 import { shallow } from "zustand/shallow";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import KeyIcon from "@mui/icons-material/Key";
+import ListItemButton from "@mui/material/ListItemButton";
+import Tooltip from "@mui/material/Tooltip";
+import Link from "next/link";
 
 const ProfileContent = () => {
 	const { user, setUser } = useSessionStore(
@@ -32,7 +41,7 @@ const ProfileContent = () => {
 	async function handleLogout() {
 		setUser(null);
 		toggleProfileMenu();
-		// router.push("/api/auth/logout");
+		router.push("/api/auth/logout");
 		// console.log(user);
 	}
 
@@ -60,8 +69,77 @@ const ProfileContent = () => {
 					},
 				}}
 			>
-				<CardContent sx={{ px: 2.5, pt: 3 }}>
-					<Grid
+				<CardContent sx={{ px: 0, py: 0 }}>
+					<List>
+						<ListItem alignItems="flex-start" sx={{ py: 0 }}>
+							<ListItemAvatar>
+								<Avatar
+									alt="user"
+									src="/images/avatars/avatar_1.png"
+									sx={{
+										bgcolor: "white",
+										width: 32,
+										height: 32,
+									}}
+								/>
+							</ListItemAvatar>
+							<ListItemText
+								primary={
+									<Typography variant="subtitle1">
+										{user?.name}
+									</Typography>
+								}
+								secondary={
+									user?.prefs.roles?.includes("admin")
+										? "ADMIN"
+										: user?.prefs.roles &&
+										  user.prefs.roles.length > 0
+										? user?.prefs.roles[0]
+										: ""
+								}
+							/>
+						</ListItem>
+						<ListItem
+							alignItems="flex-start"
+							secondaryAction={
+								<Tooltip title="Change Password">
+									<IconButton
+										edge="end"
+										aria-label="key"
+										LinkComponent={Link}
+										href="/profile/update/password"
+										onClick={toggleProfileMenu}
+									>
+										<KeyIcon />
+									</IconButton>
+								</Tooltip>
+							}
+							sx={{ py: 0 }}
+						>
+							<ListItemText>Change Password</ListItemText>
+						</ListItem>
+						<ListItemButton
+							alignItems="center"
+							sx={{ textAlign: "center" }}
+							onClick={handleLogout}
+						>
+							<ListItemText>
+								<Typography variant="subtitle1" color="error">
+									Logout <LogoutOutlinedIcon />
+								</Typography>
+							</ListItemText>
+						</ListItemButton>
+					</List>
+				</CardContent>
+			</Card>
+		</Paper>
+	);
+};
+
+export default ProfileContent;
+
+/**
+ * <Grid
 						container
 						justifyContent="space-between"
 						alignContent="center"
@@ -89,7 +167,9 @@ const ProfileContent = () => {
 										variant="body2"
 										color="textSecondary"
 									>
-										UI/UX Designer
+										{user?.prefs.roles?.includes("admin")
+											? "ADMIN"
+											: user?.prefs.roles![0]}
 									</Typography>
 								</Stack>
 							</Stack>
@@ -109,10 +189,4 @@ const ProfileContent = () => {
 							</IconButton>
 						</Grid>
 					</Grid>
-				</CardContent>
-			</Card>
-		</Paper>
-	);
-};
-
-export default ProfileContent;
+ */

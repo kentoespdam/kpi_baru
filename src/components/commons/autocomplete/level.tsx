@@ -29,7 +29,11 @@ const LevelAutocomplete = (props: LevelAutocompleteProps) => {
 			options={data!}
 			getOptionLabel={(option: Level) => option.level}
 			renderInput={(params) => (
-				<TextField {...params} label="Search Level" />
+				<TextField
+					{...params}
+					label="Search Level"
+					required={required}
+				/>
 			)}
 			renderOption={(props, option) => {
 				return (

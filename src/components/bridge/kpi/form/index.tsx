@@ -4,6 +4,7 @@ import EmployeeAutocomplete from "@components/commons/autocomplete/employee";
 import KpiAutocomplete from "@components/commons/autocomplete/kpi";
 import LevelAutocomplete from "@components/commons/autocomplete/level";
 import OrganizationAutcomplete from "@components/commons/autocomplete/organization";
+import RolesAutocomple from "@components/commons/autocomplete/roles";
 import DoDisturbIcon from "@mui/icons-material/DoDisturb";
 import SaveIcon from "@mui/icons-material/Save";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -52,6 +53,7 @@ const BridgeKpiForm = (props: BridgeKpiFormProps) => {
 	const [_nipam, setNipam] = React.useState<string | undefined>();
 	const [lvl, setLvl] = React.useState<Level | null>(null);
 	const [_kpi, setKpi] = React.useState<Kpi | null>(null);
+	const [_roles, setRoles] = React.useState<string[]>(["staff"]);
 	const [checked, setChecked] = React.useState(true);
 
 	const setSearchOrganization = (value: Organization | null) => setOrg(value);
@@ -61,6 +63,7 @@ const BridgeKpiForm = (props: BridgeKpiFormProps) => {
 	};
 	const setSearchLvl = (value: Level | null) => setLvl(value);
 	const setSearchKpi = (value: Kpi | null) => setKpi(value);
+	const setSearchRoles = (value: string[]) => setRoles(value);
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
 		setChecked(event.target.checked);
 
@@ -106,8 +109,10 @@ const BridgeKpiForm = (props: BridgeKpiFormProps) => {
 			organizationId: Number(org?.id),
 			levelId: Number(lvl?.id),
 			kpiId: Number(_kpi?.id),
+			roles: _roles,
 			status: checked ? AUDIT_STATUS.ENABLED : AUDIT_STATUS.DISABLED,
 		};
+		// console.log(formData);
 		mutation.mutate(formData);
 	};
 
@@ -125,6 +130,7 @@ const BridgeKpiForm = (props: BridgeKpiFormProps) => {
 				<OrganizationAutcomplete
 					search={org}
 					setSearchValue={setSearchOrganization}
+					required
 				/>
 			</FormControl>
 			<FormControl variant="standard" fullWidth>
@@ -133,13 +139,29 @@ const BridgeKpiForm = (props: BridgeKpiFormProps) => {
 					setSearchValue={setSearchEmployee}
 					orgCode={org?.code}
 					nipam={_nipam}
+					required
 				/>
 			</FormControl>
 			<FormControl variant="standard" fullWidth>
-				<LevelAutocomplete search={lvl} setSearchValue={setSearchLvl} />
+				<LevelAutocomplete
+					search={lvl}
+					setSearchValue={setSearchLvl}
+					required
+				/>
 			</FormControl>
 			<FormControl variant="standard" fullWidth>
-				<KpiAutocomplete search={_kpi} setSearchValue={setSearchKpi} />
+				<KpiAutocomplete
+					search={_kpi}
+					setSearchValue={setSearchKpi}
+					required
+				/>
+			</FormControl>
+			<FormControl variant="standard" fullWidth>
+				<RolesAutocomple
+					search={_roles}
+					setSearchValue={setSearchRoles}
+					required
+				/>
 			</FormControl>
 			<FormGroup>
 				<FormControlLabel

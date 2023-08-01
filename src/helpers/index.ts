@@ -1,5 +1,6 @@
 import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
 import {
+	APPWRITE_API_KEY,
 	APPWRITE_HOSTNAME,
 	APPWRITE_PROJECT_ID,
 	APP_HOSTNAME,
@@ -30,6 +31,7 @@ export const appwriteHeader = (
 				"Content-Type": "application/json",
 				"Cookie": sessCookie.toString(),
 				"X-Fallback-Cookies": xfallback,
+				"X-Appwrite-key": APPWRITE_API_KEY,
 			};
 			break;
 		default:
@@ -38,6 +40,7 @@ export const appwriteHeader = (
 				"Content-Type": "application/json",
 				"Cookie": `${sessionNames[0]}=${sessCookie}`,
 				"X-Fallback-Cookies": sessCookie,
+				"X-Appwrite-key": APPWRITE_API_KEY,
 			};
 			break;
 	}

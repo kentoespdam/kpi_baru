@@ -2,12 +2,18 @@ import axios from "axios";
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
+type AccountRole = "admin" | "direksi" | "manajer" | "supervisor" | "staff";
+
+interface AccountPref {
+	roles?: AccountRole[];
+}
+
 export interface SessionUser {
 	$id: string;
 	userId: string;
 	name: string;
 	email: string;
-	prefs: {};
+	prefs: AccountPref;
 }
 
 interface SessionStore {

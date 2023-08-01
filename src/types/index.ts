@@ -123,3 +123,8 @@ export interface ApiResponse<Data> {
 	error?: string;
 	data: Data;
 }
+
+export const roles:string[]=[
+	"admin",
+	"staff",
+]

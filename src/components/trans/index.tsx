@@ -12,6 +12,8 @@ import EmployeeComponent from "./employee";
 import KpiCard from "./kpi";
 import DetailEmployeeSkeleton from "./employee/detail/skeleton";
 import TransKpiSkeleton from "./kpi/skeleton";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
 
 const TransRoot = () => {
 	const curNipam = useSessionStore.getState().user?.userId;
@@ -54,12 +56,15 @@ const TransRoot = () => {
 	return (
 		<>
 			<Stack direction="column" spacing={2}>
-				{queries[0].isFetching ? (
-					<DetailEmployeeSkeleton />
-				) : (
-					<EmployeeComponent />
-				)}
-				{queries[1].isFetching ? <TransKpiSkeleton /> : <KpiCard />}
+				<Box>
+					{queries[0].isFetching ? (
+						<DetailEmployeeSkeleton />
+					) : (
+						<EmployeeComponent />
+					)}
+				</Box>
+
+				<KpiCard />
 			</Stack>
 		</>
 	);

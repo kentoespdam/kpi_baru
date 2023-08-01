@@ -30,6 +30,7 @@ const OrganizationAutcomplete = (props: OrganizationAutcompleteProps) => {
 					{...params}
 					label="Search Organization"
 					variant={variant}
+					required={required}
 				/>
 			)}
 			renderOption={(props, option) => {

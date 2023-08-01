@@ -5,6 +5,7 @@ import { useSessionStore } from "@store/main/session";
 import { useQueryClient } from "@tanstack/react-query";
 import { shallow } from "zustand/shallow";
 import TransKpiIndikatorComponent from "./indikator";
+import TableLoading from "@components/commons/table/loading";
 
 const KpiStaffTableBody = () => {
 	const { periode, bridgeKpi } = useTransKpiStore(

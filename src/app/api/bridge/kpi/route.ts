@@ -12,6 +12,9 @@ import {
 import { Position, REMOTE_POSITION } from "@myTypes/entity/position";
 import axios from "axios";
 import { NextRequest } from "next/server";
+import { DEFAULT_MAIL_DOMAIN } from "src/lib";
+import { createAccount } from "src/lib/appwrite";
+import { getAllUser } from "src/lib/appwrite/user";
 
 export const GET = async (req: NextRequest) => {
 	const cookie = req.cookies;
@@ -39,7 +42,12 @@ export const GET = async (req: NextRequest) => {
 			`${REMOTE_POSITION}/in/${postsId}`
 		);
 
-		bridgeKpis.content.map((kpi: BridgeKpiWithAudit) => {
+		const prefsList = await getAllUser();
+
+		const content: BridgeKpiWithAudit[] = [];
+		bridgeKpis.content.forEach((item) => content.push(item));
+
+		content.map(async (kpi: BridgeKpiWithAudit) => {
 			const organization = orgData.data.find(
 				(org: Organization) => org.id === kpi.organizationId
 			);
@@ -50,11 +58,14 @@ export const GET = async (req: NextRequest) => {
 
 			kpi.organization = organization;
 			kpi.position = position;
+			kpi.roles = prefsList.users.find(
+				(user: Record<string, unknown>) => user.$id === kpi.nipam
+			)?.prefs.roles;
 
 			return kpi;
 		});
 
-		data.data = bridgeKpis;
+		data.data.content = content;
 
 		if (status === 204) return responseNoContent();
 		return new Response(JSON.stringify(data), { status: status });
@@ -69,6 +80,7 @@ export const GET = async (req: NextRequest) => {
 		});
 	}
 };
+
 export const POST = async (req: NextRequest) => {
 	const cookie = req.cookies;
 	const body = await req.json();
@@ -78,6 +90,13 @@ export const POST = async (req: NextRequest) => {
 		const { status, data } = await axios.post(REMOTE_BRIDGE_KPI, body, {
 			headers: appwriteHeader(cookie, token),
 		});
+		if (status === 201)
+			await createAccount(cookie, {
+				userId: body.nipam,
+				email: `${body.nipam}@${DEFAULT_MAIL_DOMAIN}`,
+				name: body.name,
+				password: `${process.env.DEFAULT_PASSWORD}`,
+			});
 		return new Response(JSON.stringify(data), { status: status });
 	} catch (e: any) {
 		console.log(

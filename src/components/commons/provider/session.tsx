@@ -3,11 +3,7 @@ import { useSessionStore } from "@store/main/session";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-type SessionProviderProps = {
-	isLogin: boolean;
-};
-const SessionProvider = (props: SessionProviderProps) => {
-	const { isLogin } = props;
+const SessionProvider = () => {
 	const { user, setUser } = useSessionStore();
 
 	const { status, data } = useQuery({
@@ -21,7 +17,6 @@ const SessionProvider = (props: SessionProviderProps) => {
 			const { status, data } = await axios.options("/api/auth/token");
 			return status;
 		},
-		enabled: !!isLogin,
 		refetchInterval: 60 * 1000,
 	});
 

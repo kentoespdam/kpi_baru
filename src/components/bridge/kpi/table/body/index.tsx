@@ -50,6 +50,9 @@ const BridgeKpiTableBody = () => {
 					<CellBuilder value={String(item.position?.name)} />
 					<CellBuilder value={String(item.organization?.name)} />
 					<CellBuilder value={item.level.level} />
+					<CellBuilder
+						value={item.roles ? item.roles.join(" | ") : ""}
+					/>
 					<CellBuilder value={item.status} chip />
 					<BridgeKpiActionButtons row={item} />
 				</TableRow>

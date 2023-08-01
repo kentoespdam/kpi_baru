@@ -8,6 +8,9 @@ import { REMOTE_ORGANIZATION } from "@myTypes/entity/organization";
 import { REMOTE_POSITION } from "@myTypes/entity/position";
 import axios from "axios";
 import { NextRequest } from "next/server";
+import { DEFAULT_MAIL_DOMAIN } from "src/lib";
+import { createAccount } from "src/lib/appwrite";
+import { updateRoleUser } from "src/lib/appwrite/user";
 
 export const GET = async (
 	req: NextRequest,
@@ -70,6 +73,13 @@ export const PUT = async (
 				headers: appwriteHeader(cookie, token),
 			}
 		);
+		const account = await createAccount(cookie, {
+			userId: body.nipam,
+			email: `${body.nipam}@${DEFAULT_MAIL_DOMAIN}`,
+			name: body.name,
+			password: `${process.env.DEFAULT_PASSWORD}`,
+		});
+		await updateRoleUser(account.nipam, body.roles);
 		return new Response(JSON.stringify(data), { status: status });
 	} catch (e: any) {
 		console.log(

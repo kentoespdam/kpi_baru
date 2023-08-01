@@ -3,10 +3,9 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Divider from "@mui/material/Divider";
 import Skeleton from "@mui/material/Skeleton";
-import AccountCircleSharpIcon from "@mui/icons-material/AccountCircleSharp";
-import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import { useTemplateStore } from "@store/main/template";
+import { useState, useEffect } from "react";
 
 const CardEmployeeSkeleton = () => {
 	return (
@@ -39,15 +38,15 @@ const CardEmployeeSkeleton = () => {
 };
 
 const DetailEmployeeSkeleton = () => {
-	const isDesktop = useTemplateStore.getState().isDesktop;
-	// const [direction, setDirection] = useState(false);
-	// useEffect(() => {
-	// 	setDirection(isDesktop);
-	// }, [isDesktop]);
+	const isDesktop = useTemplateStore((state) => state.isDesktop);
+	const [direction, setDirection] = useState(false);
+	useEffect(() => {
+		setDirection(isDesktop);
+	}, [isDesktop]);
 	return (
 		<Stack
-			direction={isDesktop ? "row" : "row"}
-			justifyContent={isDesktop ? "space-between" : "center"}
+			direction={direction ? "row" : "row"}
+			justifyContent={direction ? "space-between" : "center"}
 			spacing={2}
 		>
 			<CardEmployeeSkeleton />

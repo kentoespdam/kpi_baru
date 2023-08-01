@@ -12,63 +12,64 @@ import { useTheme } from "@mui/material/styles";
 const TransKpiSkeleton = () => {
 	const theme = useTheme();
 	return (
-		<Card>
+		<Card raised sx={{ width: "100%" }}>
 			<CardContent>
-				<Box>
-					<Skeleton
-						variant="rounded"
-						width={210}
-						height={40}
-						sx={{ mb: 2 }}
-					/>
-					<TableContainer>
-						<Table>
-							<TableHead>
-								<TableRow>
-									<TableCell
-										sx={{
-											border: `1px solid ${theme.palette.divider}`,
-										}}
-										width={50}
-									>
-										<Skeleton variant="text" />
-									</TableCell>
-									<TableCell
-										sx={{
-											border: `1px solid ${theme.palette.divider}`,
-										}}
-									>
-										<Skeleton variant="text" width={210} />
-									</TableCell>
-									<TableCell
-										sx={{
-											border: `1px solid ${theme.palette.divider}`,
-										}}
-									>
-										<Skeleton variant="text" width={210} />
-									</TableCell>
-									<TableCell
-										sx={{
-											border: `1px solid ${theme.palette.divider}`,
-										}}
-									>
-										<Skeleton variant="text" width={100} />
-									</TableCell>
-									<TableCell
-										sx={{
-											border: `1px solid ${theme.palette.divider}`,
-										}}
-									>
-										<Skeleton variant="text" width={100} />
-									</TableCell>
-								</TableRow>
-							</TableHead>
-						</Table>
-					</TableContainer>
-				</Box>
+				{/* <Skeleton
+					variant="rounded"
+					width={210}
+					height={40}
+					sx={{ mb: 2 }}
+				/> */}
 			</CardContent>
 		</Card>
 	);
 };
 
 export default TransKpiSkeleton;
+
+/**
+ * <TableContainer>
+				<Table>
+					<TableHead>
+						<TableRow>
+							<TableCell
+								sx={{
+									border: `1px solid ${theme.palette.divider}`,
+								}}
+								width={50}
+							>
+								<Skeleton variant="text" />
+							</TableCell>
+							<TableCell
+								sx={{
+									border: `1px solid ${theme.palette.divider}`,
+								}}
+							>
+								<Skeleton variant="text" width={210} />
+							</TableCell>
+							<TableCell
+								sx={{
+									border: `1px solid ${theme.palette.divider}`,
+								}}
+							>
+								<Skeleton variant="text" width={210} />
+							</TableCell>
+							<TableCell
+								sx={{
+									border: `1px solid ${theme.palette.divider}`,
+								}}
+							>
+								<Skeleton variant="text" width={100} />
+							</TableCell>
+							<TableCell
+								sx={{
+									border: `1px solid ${theme.palette.divider}`,
+								}}
+							>
+								<Skeleton variant="text" width={100} />
+							</TableCell>
+						</TableRow>
+					</TableHead>
+				</Table>
+			</TableContainer>
+ */

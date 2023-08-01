@@ -2,9 +2,12 @@ import Box from "@mui/material/Box";
 import { useMenuStore } from "@store/main/menu";
 import { menuList } from "../menu.list";
 import MenuBuilder from "./menu";
+import { useSessionStore } from "@store/main/session";
 
 const DrawerContent = () => {
 	const toggleDrawer = useMenuStore((state) => state.toggleDrawer);
+	const user = useSessionStore.getState().user;
+	const isAdmin = user?.prefs.roles?.includes("admin");
 
 	return (
 		<Box
@@ -27,9 +30,13 @@ const DrawerContent = () => {
 				},
 			}}
 		>
-			{menuList.map((item, index) => (
-				<MenuBuilder key={index} item={item} />
-			))}
+			{menuList.map((item, index) =>
+				isAdmin ? (
+					<MenuBuilder key={index} item={item} />
+				) : item.role === "staff" ? (
+					<MenuBuilder key={index} item={item} />
+				) : null
+			)}
 		</Box>
 	);
 };

@@ -6,11 +6,11 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import Chip from "@mui/material/Chip";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
+import { useViewUploadDialogStore } from "@store/dialog/view.upload";
 import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useSessionStore } from "@store/main/session";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { doUpload } from "@utils/trans/file";
-import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
 import { FormEvent, useRef, useState } from "react";
 
@@ -22,14 +22,15 @@ const TransKpiStaffUploadComponent = (
 ) => {
 	const { uraianId } = props;
 	const { periode, bridgeKpi } = useTransKpiStore();
-	const user = useSessionStore.getState().user;
+	const user = useSessionStore((state) => state.user);
 	const { enqueueSnackbar } = useSnackbar();
-	const router = useRouter();
 	const qc = useQueryClient();
 
 	const fileRef = useRef<HTMLInputElement>(null);
 	const [fileName, setFileName] = useState<string>("");
-	const [loading, setLoading] = useState(false);
+	const toggleViewUploadOpen = useViewUploadDialogStore(
+		(state) => state.toggleViewUploadOpen
+	);
 
 	const mutation = useMutation({
 		mutationFn: doUpload,
@@ -48,13 +49,14 @@ const TransKpiStaffUploadComponent = (
 				],
 			});
 			enqueueSnackbar("Data berhasil disimpan", { variant: "success" });
-			router.push("/trans/kpi");
+			toggleViewUploadOpen();
+			setFileName("");
+			// router.push("/trans/kpi");
 		},
 	});
 
-	const handleDelete = () => {
-		setFileName("");
-	};
+	const handleDelete = () => setFileName("");
+
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		const formData = new FormData();
@@ -110,7 +112,7 @@ const TransKpiStaffUploadComponent = (
 				sx={{ display: fileName.length > 0 ? undefined : "none" }}
 			/>
 			<LoadingButton
-				loading={loading}
+				loading={mutation.isLoading}
 				variant="contained"
 				type="submit"
 				sx={{ display: fileName.length > 0 ? undefined : "none" }}

@@ -19,6 +19,7 @@ export interface BridgeKpi extends BaseId {
 	positionId: number;
 	level: Level;
 	kpi: Kpi;
+	roles?: string[];
 }
 
 export interface BridgeKpiData {
@@ -29,6 +30,7 @@ export interface BridgeKpiData {
 	organizationId: number;
 	levelId: number;
 	kpiId: number;
+	roles: string[];
 	status: AuditStatus;
 }
 
@@ -97,6 +99,13 @@ export const bridgeKpiHead: MyTableHead[] = [
 		searchable: "true",
 		type: "level",
 		sortable: "true",
+	},
+	{
+		field: "roles",
+		title: "Roles",
+		searchable: "false",
+		sortable: "false",
+		minWidth: 100,
 	},
 	{
 		field: "status",

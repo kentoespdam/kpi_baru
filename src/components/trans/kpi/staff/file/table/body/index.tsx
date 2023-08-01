@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { shallow } from "zustand/shallow";
 import TransKpiFileListItemCell from "./file.cell";
 import TableCell from "@mui/material/TableCell";
+import TableLoading from "@components/commons/table/loading";
 
 type TransKpiFileListTableBodyProps = {
 	indikatorId: number;
@@ -26,6 +27,14 @@ const TransKpiFileListTableBody = (props: TransKpiFileListTableBodyProps) => {
 	);
 	const routes = useRouter();
 	const qc = useQueryClient();
+	const qStatus = qc.getQueryState([
+		"trans.kpi.staff",
+		{
+			nipam: curNipam,
+			kpiId: bridgeKpi?.id,
+			periode: periode?.periode,
+		},
+	]);
 	const data = qc.getQueryData<TransKpi>([
 		"trans.kpi.staff",
 		{
@@ -35,10 +44,7 @@ const TransKpiFileListTableBody = (props: TransKpiFileListTableBodyProps) => {
 		},
 	]);
 
-	if (!data) {
-		routes.push("/trans/kpi");
-		return;
-	}
+	if (!data) return null;
 
 	const indikator = data.indikatorList.find(
 		(item) => item.id === Number(indikatorId)
@@ -51,14 +57,15 @@ const TransKpiFileListTableBody = (props: TransKpiFileListTableBodyProps) => {
 	const fileList = uraian?.fileList;
 
 	let urut = 1;
-	return (
+	return qStatus?.status === "loading" ||
+		qStatus?.fetchStatus === "fetching" ? (
+		<TableLoading colSpan={2} />
+	) : (
 		<TableBody>
 			{fileList?.map((item) => (
-				<TableRow>
+				<TableRow key={item.id}>
 					<CellBuilder value={urut++} />
-					<TableCell>
-						<TransKpiFileListItemCell uraianFile={item} />
-					</TableCell>
+					<TransKpiFileListItemCell uraianFile={item} />
 				</TableRow>
 			))}
 		</TableBody>

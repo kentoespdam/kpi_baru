@@ -53,6 +53,7 @@ const EmployeeAutocomplete = (props: EmployeeAutocompleteProps) => {
 					{...params}
 					label={label ?? "Search Employee"}
 					variant={variant}
+					required={required}
 				/>
 			)}
 			renderOption={(props, option) => {

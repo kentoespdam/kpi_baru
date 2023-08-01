@@ -1,4 +1,5 @@
 export const APP_PORT: string = `${process.env.PORT}`;
+export const APPWRITE_API_KEY = `${process.env.APPWRITE_API_KEY}`;
 export const APPWRITE_PROJECT_ID: string = `${process.env.APPWRITE_PROJECT_ID}`;
 export const APPWRITE_ENDPOINT: string = `${process.env.APPWRITE_ENDPOINT}`;
 
@@ -11,3 +12,7 @@ export const sessionNames = [
 	"a_session_" + APPWRITE_PROJECT_ID.toLowerCase() + "_legacy",
 	"a_session_" + APPWRITE_PROJECT_ID.toLowerCase() + "_token",
 ];
+
+export const defaultRoles: string[] = ["staff"];
+export const DEFAULT_PASSWORD = `${process.env.DEFAULT_PASSWORD}`;
+export const DEFAULT_MAIL_DOMAIN = `${process.env.DEFAULT_MAIL_DOMAIN}`;
