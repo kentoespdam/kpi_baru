@@ -21,8 +21,8 @@ const TransKpiStaffUploadComponent = (
 	props: TransKpiStaffUploadComponentProps
 ) => {
 	const { uraianId } = props;
-	const { periode, bridgeKpi } = useTransKpiStore();
-	const user = useSessionStore((state) => state.user);
+	const { periode, bridgeKpi: bridgeKpi } = useTransKpiStore();
+	const userId = useSessionStore.getState().user?.userId;
 	const { enqueueSnackbar } = useSnackbar();
 	const qc = useQueryClient();
 
@@ -42,16 +42,20 @@ const TransKpiStaffUploadComponent = (
 				queryKey: [
 					"trans.kpi.staff",
 					{
-						nipam: user!.userId,
-						kpiId: bridgeKpi!.id,
-						periode: periode!.periode,
+						nipam: String(userId),
+						kpiId: Number(bridgeKpi?.kpi.id),
+						periode: Number(periode?.periode),
 					},
 				],
+			});
+			console.log({
+				nipam: String(userId),
+				kpiId: Number(bridgeKpi?.kpi.id),
+				periode: Number(periode?.periode),
 			});
 			enqueueSnackbar("Data berhasil disimpan", { variant: "success" });
 			toggleViewUploadOpen();
 			setFileName("");
-			// router.push("/trans/kpi");
 		},
 	});
 
@@ -61,7 +65,7 @@ const TransKpiStaffUploadComponent = (
 		e.preventDefault();
 		const formData = new FormData();
 		formData.set("periode", String(periode?.periode));
-		formData.set("nipam", String(user?.userId));
+		formData.set("nipam", String(userId));
 		formData.set("transKpiUraianId", String(uraianId));
 		formData.set("file", fileRef.current!.files![0]);
 		mutation.mutate(formData);

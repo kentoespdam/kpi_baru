@@ -6,7 +6,6 @@ import KpiAccordionItem from "./item";
 const KpiAccordion = () => {
 	const qc = useQueryClient();
 	const {
-		loading,
 		pageRequest,
 		sortRequest,
 		organization,
@@ -14,7 +13,6 @@ const KpiAccordion = () => {
 		profesi,
 		name,
 		grade,
-		expanded,
 		setExpanded,
 	} = useKpiStore();
 	const data = qc.getQueryData([
@@ -32,7 +30,6 @@ const KpiAccordion = () => {
 	if (!data) return null;
 	let urut = data.number * data.size + 1;
 
-	const expandHandler = (value: string | false) => setExpanded(value);
 	return (
 		<>
 			{data.content.map((item) => (

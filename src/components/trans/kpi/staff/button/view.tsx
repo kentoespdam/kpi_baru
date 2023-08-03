@@ -2,21 +2,19 @@ import CloudDoneIcon from "@mui/icons-material/CloudDone";
 import Badge from "@mui/material/Badge";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
+import { TransFile } from "@myTypes/entity/trans.file";
 import { UraianFile } from "@myTypes/entity/uraian.file";
 import { useViewFileDialogStore } from "@store/dialog/view.file";
 
 type ViewBtnProps = {
-	indikatorId: number;
-	fileList: UraianFile[];
+	fileList: UraianFile[] | TransFile[];
 	uraianId: number;
 };
 const ViewBtn = (props: ViewBtnProps) => {
-	const { indikatorId, fileList, uraianId } = props;
-	const { toggleViewOpen, setIdIndikator, setIdUraian } =
-		useViewFileDialogStore();
+	const { fileList, uraianId } = props;
+	const { toggleViewOpen, setIdUraian } = useViewFileDialogStore();
 
 	const handleClick = () => {
-		setIdIndikator(indikatorId);
 		setIdUraian(uraianId);
 		toggleViewOpen();
 	};

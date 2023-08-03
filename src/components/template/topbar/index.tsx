@@ -3,6 +3,7 @@
 import MenuFoldOutlined from "@ant-design/icons/MenuFoldOutlined";
 import MenuUnfoldOutlined from "@ant-design/icons/MenuUnfoldOutlined";
 import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -12,8 +13,6 @@ import { useMenuStore } from "@store/main/menu";
 import { useTemplateStore } from "@store/main/template";
 import { shallow } from "zustand/shallow";
 import ProfileComponent from "./profile";
-import { useSessionStore } from "@store/main/session";
-import Box from "@mui/material/Box";
 
 const appBarSx = (theme: Theme, isOpen: boolean, isDesktop: boolean) => {
 	return {
@@ -35,7 +34,6 @@ const appBarSx = (theme: Theme, isOpen: boolean, isDesktop: boolean) => {
 };
 
 const TopBarComponent = () => {
-	const user = useSessionStore((state) => state.user, shallow);
 	const theme = useTheme();
 	const { isMenuOpen, toggleDrawer } = useMenuStore(
 		(state) => ({

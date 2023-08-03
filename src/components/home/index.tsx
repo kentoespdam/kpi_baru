@@ -1,14 +1,16 @@
 "use client";
-import Container from "@mui/material/Container";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-const HomeComponent = () => {
-	return (
-		<Container maxWidth="xs" sx={{ textAlign: "center" }}>
-			Welcome to the Jungle
-			<Link href={"/master/level"}>Level</Link>
-		</Container>
-	);
+type HomeComponentProps = {
+	isLogin: boolean;
+};
+const HomeComponent = (props: HomeComponentProps) => {
+	const { isLogin } = props;
+	const routes = useRouter();
+
+	if (isLogin) routes.push("/trans/kpi");
+	else routes.push("/auth");
+	return null;
 };
 
 export default HomeComponent;

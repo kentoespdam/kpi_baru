@@ -1,3 +1,4 @@
+import IndikatorComponent from "@components/master/indikator";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -5,11 +6,9 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import { KpiWithAudit } from "@myTypes/entity/kpi";
-import { useKpiStore } from "@store/filter/master/kpi";
-import { shallow } from "zustand/shallow";
-import KpiItemSummary from "./summary";
-import IndikatorComponent from "@components/master/indikator";
 import { useIndikatorStore } from "@store/filter/master/indikator";
+import { useKpiStore } from "@store/filter/master/kpi";
+import KpiItemSummary from "./summary";
 
 type KpiAccordionItemProps = {
 	kpi: KpiWithAudit;

@@ -13,6 +13,7 @@ interface CellBuilderProps extends TableCellProps {
 	currency?: boolean;
 	percent?: boolean;
 	bordered?: boolean;
+	noWrap?: boolean;
 }
 const CellBuilder = (props: CellBuilderProps) => {
 	const {
@@ -22,7 +23,9 @@ const CellBuilder = (props: CellBuilderProps) => {
 		currency,
 		percent,
 		bordered,
+		noWrap,
 		sx,
+		align,
 		...other
 	} = props;
 	const theme = useTheme();
@@ -30,9 +33,18 @@ const CellBuilder = (props: CellBuilderProps) => {
 	const borderedSx = {
 		border: bordered ? `1px solid ${theme.palette.divider}` : undefined,
 	};
+
+	const myStyle = { whiteSpace: noWrap ? "nowrap" : undefined };
+
 	if (chip)
 		return (
-			<TableCell align="center" sx={{ ...borderedSx }}>
+			<TableCell
+				align={align ? align : "center"}
+				sx={{
+					...borderedSx,
+					whiteSpace: noWrap ? "nowrap" : undefined,
+				}}
+			>
 				<Chip
 					variant="outlined"
 					label={String(value)}
@@ -46,7 +58,12 @@ const CellBuilder = (props: CellBuilderProps) => {
 		case "number":
 			return (
 				<TableCell
-					sx={{ ...sx, ...borderedSx, textAlign: "right" }}
+					sx={{
+						...sx,
+						...borderedSx,
+						whiteSpace: noWrap ? "nowrap" : undefined,
+					}}
+					align={align ? align : "right"}
 					{...other}
 				>
 					{numberBuilder(value, currency, percent)}
@@ -55,7 +72,12 @@ const CellBuilder = (props: CellBuilderProps) => {
 		case "string":
 			return (
 				<TableCell
-					sx={{ ...sx, ...borderedSx, textAlign: "left" }}
+					sx={{
+						...sx,
+						...borderedSx,
+						whiteSpace: noWrap ? "nowrap" : undefined,
+					}}
+					align={align ? align : "left"}
 					{...other}
 				>
 					{value}
@@ -64,7 +86,12 @@ const CellBuilder = (props: CellBuilderProps) => {
 		default:
 			return (
 				<TableCell
-					sx={{ ...sx, ...borderedSx, textAlign: "left" }}
+					sx={{
+						...sx,
+						...borderedSx,
+						whiteSpace: noWrap ? "nowrap" : undefined,
+					}}
+					align={align ? align : "left"}
 					{...other}
 				>
 					{value}

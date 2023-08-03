@@ -1,11 +1,11 @@
 import CellBuilder from "@components/commons/table/cell.builder";
 import TableRow from "@mui/material/TableRow";
-import { UraianWithFile } from "@myTypes/entity/uraian";
+import { TransUraian } from "@myTypes/entity/trans.uraian";
 import TransKpiFileComponent from "./file";
 
 type UraianCellProps = {
 	indikatorId: number;
-	uraian: UraianWithFile;
+	uraian: TransUraian;
 };
 const UraianCell = (props: UraianCellProps) => {
 	const { indikatorId, uraian } = props;
@@ -25,7 +25,7 @@ const UraianCell = (props: UraianCellProps) => {
 
 type TransKpiUraianComponentProps = {
 	indikatorId: number;
-	uraianList: UraianWithFile[];
+	uraianList: TransUraian[];
 	first?: boolean;
 };
 const TransKpiUraianComponent = (props: TransKpiUraianComponentProps) => {

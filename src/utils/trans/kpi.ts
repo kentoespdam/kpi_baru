@@ -1,4 +1,9 @@
+import {
+	BridgeKpiWithAudit,
+	LOCAL_BRIDGE_KPI,
+} from "@myTypes/entity/bridge.kpi";
 import { LOCAL_TRANS_KPI } from "@myTypes/entity/trans.kpi";
+import { useTransKpiBawahanStore } from "@store/filter/trans/bawahan";
 import axios from "axios";
 
 export const getStaffKpi = async (props: any) => {
@@ -16,6 +21,24 @@ export const getStaffKpi = async (props: any) => {
 			new Date().toISOString(),
 			e.response.data
 		);
+		throw new Error(e.response.data.message);
+	}
+};
+
+export const getBridgeKpi = async (props: any): Promise<BridgeKpiWithAudit> => {
+	const { queryKey } = props;
+	const nipam = queryKey[1];
+	try {
+		const { data } = await axios.get(`${LOCAL_BRIDGE_KPI}/nipam/${nipam}`);
+		useTransKpiBawahanStore.setState({ bridgeKpiBawahan: data.data });
+		return data.data;
+	} catch (e: any) {
+		console.log(
+			"utils.bridge.kpi.getByNipam",
+			new Date().toISOString(),
+			e.response.data
+		);
+		useTransKpiBawahanStore.setState({ bridgeKpiBawahan: null });
 		throw new Error(e.response.data.message);
 	}
 };

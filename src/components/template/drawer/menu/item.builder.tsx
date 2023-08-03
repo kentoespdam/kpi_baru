@@ -3,6 +3,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
+import { useMenuStore } from "@store/main/menu";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -11,6 +12,7 @@ const selectedCheck = (pathname: string, itemPath: string) => {
 };
 
 const MenuItemBuilder = ({ item }: { item: IMenu | ISubMenu }) => {
+	const toggleDrawer = useMenuStore.getState().toggleDrawer;
 	const pathname = usePathname();
 	const isSelected = selectedCheck(pathname, item.path);
 
@@ -26,6 +28,7 @@ const MenuItemBuilder = ({ item }: { item: IMenu | ISubMenu }) => {
 				pl: 3,
 			}}
 			selected={isSelected}
+			onClick={toggleDrawer}
 		>
 			<ListItemIcon
 				sx={{

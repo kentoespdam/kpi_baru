@@ -1,69 +1,34 @@
 import CellBuilder from "@components/commons/table/cell.builder";
+import TableLoading from "@components/commons/table/loading";
 import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
-import { TransKpi } from "@myTypes/entity/trans.kpi";
-import { useTransKpiStore } from "@store/filter/trans/kpi";
-import { useSessionStore } from "@store/main/session";
-import { useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
-import { shallow } from "zustand/shallow";
+import { useViewFileDialogStore } from "@store/dialog/view.file";
+import { useQueries, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getFiles } from "@utils/trans/file";
 import TransKpiFileListItemCell from "./file.cell";
-import TableCell from "@mui/material/TableCell";
-import TableLoading from "@components/commons/table/loading";
+import { TransFile } from "@myTypes/entity/trans.file";
 
 type TransKpiFileListTableBodyProps = {
-	indikatorId: number;
 	uraianId: number;
 };
 const TransKpiFileListTableBody = (props: TransKpiFileListTableBodyProps) => {
-	const { indikatorId, uraianId } = props;
-	const curNipam = useSessionStore.getState().user?.userId;
-	const { periode, bridgeKpi } = useTransKpiStore(
-		(state) => ({
-			periode: state.periode,
-			bridgeKpi: state.bridgeKpi,
-		}),
-		shallow
-	);
-	const routes = useRouter();
-	const qc = useQueryClient();
-	const qStatus = qc.getQueryState([
-		"trans.kpi.staff",
-		{
-			nipam: curNipam,
-			kpiId: bridgeKpi?.id,
-			periode: periode?.periode,
-		},
-	]);
-	const data = qc.getQueryData<TransKpi>([
-		"trans.kpi.staff",
-		{
-			nipam: curNipam,
-			kpiId: bridgeKpi?.id,
-			periode: periode?.periode,
-		},
-	]);
+	const idUraian = useViewFileDialogStore.getState().idUraian;
+	const { isFetching, data, error } = useQuery<TransFile[]>({
+		queryKey: ["trans.file.los", Number(idUraian)],
+		queryFn: getFiles,
+		enabled: !!idUraian,
+	});
 
-	if (!data) return null;
-
-	const indikator = data.indikatorList.find(
-		(item) => item.id === Number(indikatorId)
-	);
-
-	const uraian = indikator?.uraianList.find(
-		(item) => item.id === Number(uraianId)
-	);
-
-	const fileList = uraian?.fileList;
-
+	if (!data) return <TableLoading colSpan={2} error />;
 	let urut = 1;
-	return qStatus?.status === "loading" ||
-		qStatus?.fetchStatus === "fetching" ? (
+	return isFetching ? (
 		<TableLoading colSpan={2} />
+	) : error ? (
+		<TableLoading colSpan={2} error />
 	) : (
 		<TableBody>
-			{fileList?.map((item) => (
-				<TableRow key={item.id}>
+			{data.map((item, index) => (
+				<TableRow key={index}>
 					<CellBuilder value={urut++} />
 					<TransKpiFileListItemCell uraianFile={item} />
 				</TableRow>

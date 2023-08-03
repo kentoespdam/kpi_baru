@@ -10,18 +10,16 @@ type TransKpiFileComponentProps = {
 	fileList: UraianFile[];
 	uraianId: number;
 };
+
 const TransKpiFileComponent = (props: TransKpiFileComponentProps) => {
-	const { indikatorId, fileList, uraianId } = props;
+	const { fileList, uraianId } = props;
+	
 	return fileList.length > 0 ? (
 		<>
 			<CellBuilder bordered value="Sudah Upload" chip />
 			<TableCell>
 				<Stack direction="row" spacing={1}>
-					<ViewBtn
-						indikatorId={indikatorId}
-						fileList={fileList}
-						uraianId={uraianId}
-					/>
+					<ViewBtn fileList={fileList} uraianId={uraianId} />
 					<UploadBtn uraianId={uraianId} />
 				</Stack>
 			</TableCell>

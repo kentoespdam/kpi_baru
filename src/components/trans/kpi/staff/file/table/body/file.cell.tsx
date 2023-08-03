@@ -21,7 +21,7 @@ type TransKpiFileListItemCellProps = {
 };
 const TransKpiFileListItemCell = (props: TransKpiFileListItemCellProps) => {
 	const { uraianFile } = props;
-	const { periode, bridgeKpi } = useTransKpiStore();
+	const { periode, bridgeKpi: bridgeKpi } = useTransKpiStore();
 	const user = useSessionStore((state) => state.user);
 	const toggleViewOpen = useViewFileDialogStore(
 		(state) => state.toggleViewOpen

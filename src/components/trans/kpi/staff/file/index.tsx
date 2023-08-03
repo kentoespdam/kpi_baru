@@ -6,20 +6,16 @@ import TransKpiFileListTableBody from "./table/body";
 import TransKpiFileListTableHead from "./table/head";
 
 type TransKpiFileListComponentProps = {
-	indikatorId: number;
 	uraianId: number;
 };
 const TransKpiFileListComponent = (props: TransKpiFileListComponentProps) => {
-	const { indikatorId, uraianId } = props;
+	const { uraianId } = props;
 
 	return (
 		<TableContainer>
 			<Table>
 				<TransKpiFileListTableHead />
-				<TransKpiFileListTableBody
-					indikatorId={indikatorId}
-					uraianId={uraianId}
-				/>
+				<TransKpiFileListTableBody uraianId={uraianId} />
 			</Table>
 		</TableContainer>
 	);

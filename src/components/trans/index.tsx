@@ -1,22 +1,29 @@
 "use client";
 
+import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useSessionStore } from "@store/main/session";
 import { useQueries } from "@tanstack/react-query";
 import { getByNipam } from "@utils/bridge/kpi";
 import { getEmpDetails } from "@utils/eo/employee";
-import { getStaffKpi } from "@utils/trans/kpi";
+import { getBridgeKpi, getStaffKpi } from "@utils/trans/kpi";
 import { shallow } from "zustand/shallow";
 import EmployeeComponent from "./employee";
-import KpiCard from "./kpi";
 import DetailEmployeeSkeleton from "./employee/detail/skeleton";
-import TransKpiSkeleton from "./kpi/skeleton";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
+import KpiCard from "./kpi";
+import KpiBawahanComponent from "./kpi/bawahan";
+import { useTransKpiBawahanStore } from "@store/filter/trans/bawahan";
 
 const TransRoot = () => {
 	const curNipam = useSessionStore.getState().user?.userId;
+	const { nipamStaff, bridgeKpiBawahan } = useTransKpiBawahanStore(
+		(state) => ({
+			nipamStaff: state.nipamStaff,
+			bridgeKpiBawahan: state.bridgeKpiBawahan,
+		}),
+		shallow
+	);
 	const { periode, bridgeKpi } = useTransKpiStore(
 		(state) => ({
 			periode: state.periode,
@@ -41,7 +48,7 @@ const TransRoot = () => {
 					"trans.kpi.staff",
 					{
 						nipam: curNipam,
-						kpiId: bridgeKpi?.id,
+						kpiId: bridgeKpi?.kpi.id,
 						periode: periode?.periode,
 					},
 				],
@@ -49,6 +56,25 @@ const TransRoot = () => {
 				enabled:
 					periode?.periode !== undefined &&
 					bridgeKpi?.id !== undefined,
+			},
+			{
+				queryKey: ["trans.kpi.bawahan.bridge", nipamStaff],
+				queryFn: getBridgeKpi,
+				enabled: !!nipamStaff,
+				retry: 2,
+			},
+			{
+				queryKey: [
+					"trans.kpi.bawahan",
+					{
+						nipam: nipamStaff,
+						kpiId: bridgeKpiBawahan?.kpi.id,
+						periode: periode?.periode,
+					},
+				],
+				queryFn: getStaffKpi,
+				enabled:
+					!!nipamStaff && !!bridgeKpiBawahan?.kpi.id && !!periode,
 			},
 		],
 	});
@@ -65,6 +91,8 @@ const TransRoot = () => {
 				</Box>
 
 				<KpiCard />
+
+				{queries[0].data?.staff ? <KpiBawahanComponent /> : null}
 			</Stack>
 		</>
 	);

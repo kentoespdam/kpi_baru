@@ -2,7 +2,7 @@ import { Periode, getCurrentPeriode } from "@helper/periode";
 import { BridgeKpiWithAudit } from "@myTypes/entity/bridge.kpi";
 import { create } from "zustand";
 
-interface TransKpiStore {
+export interface TransKpiStore {
 	periode: Periode | null;
 	setPeriode: (periode: Periode | null) => void;
 	bridgeKpi: BridgeKpiWithAudit | null;
@@ -13,5 +13,6 @@ export const useTransKpiStore = create<TransKpiStore>((set) => ({
 	periode: getCurrentPeriode(-1),
 	setPeriode: (periode) => set(() => ({ periode })),
 	bridgeKpi: null,
-	setBridgeKpi: (bridgeKpi) => set(() => ({ bridgeKpi })),
+	setBridgeKpi: (bridgeKpi) =>
+		set(() => ({ bridgeKpi: bridgeKpi })),
 }));

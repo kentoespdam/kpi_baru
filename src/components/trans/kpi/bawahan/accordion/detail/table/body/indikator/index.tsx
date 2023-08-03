@@ -1,13 +1,13 @@
 import CellBuilder from "@components/commons/table/cell.builder";
 import TableRow from "@mui/material/TableRow";
 import { TransIndikator } from "@myTypes/entity/trans.indikator";
-import TransKpiUraianComponent from "./uraian";
+import DetailKpiBawahanUraian from "./uraian";
 
-type TransKpiIndikatorComponentProps = {
+type DetailKpiBawahanIndikatorProps = {
 	indikator: TransIndikator;
 	urut: number;
 };
-const TransKpiIndikatorComponent = (props: TransKpiIndikatorComponentProps) => {
+const DetailKpiBawahanIndikator = (props: DetailKpiBawahanIndikatorProps) => {
 	const { indikator, urut } = props;
 	const uraianList = indikator.uraianList;
 	const uraianSize = uraianList.length;
@@ -16,18 +16,14 @@ const TransKpiIndikatorComponent = (props: TransKpiIndikatorComponentProps) => {
 	return (
 		<>
 			<TableRow>
-				<CellBuilder bordered rowSpan={rowSpan} value={urut} />
+				<CellBuilder value={urut} rowSpan={rowSpan} bordered />
 				<CellBuilder
-					bordered
-					rowSpan={rowSpan}
 					value={indikator.indikator}
+					rowSpan={rowSpan}
+					bordered
 				/>
 				{uraianSize > 0 ? (
-					<TransKpiUraianComponent
-						indikatorId={indikator.id}
-						uraianList={uraianList}
-						first
-					/>
+					<DetailKpiBawahanUraian uraianList={uraianList} first />
 				) : (
 					<>
 						<CellBuilder bordered value="" />
@@ -37,13 +33,10 @@ const TransKpiIndikatorComponent = (props: TransKpiIndikatorComponentProps) => {
 				)}
 			</TableRow>
 			{rowSpan > 1 ? (
-				<TransKpiUraianComponent
-					indikatorId={indikator.id}
-					uraianList={uraianList}
-				/>
+				<DetailKpiBawahanUraian uraianList={uraianList} first />
 			) : null}
 		</>
 	);
 };
 
-export default TransKpiIndikatorComponent;
+export default DetailKpiBawahanIndikator;

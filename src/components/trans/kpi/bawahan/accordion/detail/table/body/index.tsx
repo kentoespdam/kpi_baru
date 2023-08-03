@@ -1,23 +1,20 @@
 import TableBody from "@mui/material/TableBody";
 import { TransKpiWithAudit } from "@myTypes/entity/trans.kpi";
+import { useTransKpiBawahanStore } from "@store/filter/trans/bawahan";
 import { useTransKpiStore } from "@store/filter/trans/kpi";
-import { useSessionStore } from "@store/main/session";
 import { useQueryClient } from "@tanstack/react-query";
 import { shallow } from "zustand/shallow";
-import TransKpiIndikatorComponent from "./indikator";
+import DetailKpiBawahanIndikator from "./indikator";
 
-const KpiStaffTableBody = () => {
-	const { periode, bridgeKpi } = useTransKpiStore(
-		(state) => ({ periode: state.periode, bridgeKpi: state.bridgeKpi }),
-		shallow
-	);
-	const curNipam = useSessionStore.getState().user?.userId;
+const DetailKpiBawahanTableBody = () => {
+	const periode = useTransKpiStore((state) => state.periode, shallow);
+	const { nipamStaff, bridgeKpiBawahan } = useTransKpiBawahanStore();
 	const qc = useQueryClient();
 	const data = qc.getQueryData<TransKpiWithAudit>([
-		"trans.kpi.staff",
+		"trans.kpi.bawahan",
 		{
-			nipam: curNipam,
-			kpiId: bridgeKpi?.kpi.id,
+			nipam: nipamStaff,
+			kpiId: bridgeKpiBawahan?.kpi.id,
 			periode: periode?.periode,
 		},
 	]);
@@ -27,14 +24,14 @@ const KpiStaffTableBody = () => {
 	return (
 		<TableBody>
 			{data.indikatorList.map((row) => (
-				<TransKpiIndikatorComponent
-					indikator={row}
+				<DetailKpiBawahanIndikator
 					key={row.id}
 					urut={urut++}
+					indikator={row}
 				/>
 			))}
 		</TableBody>
 	);
 };
 
-export default KpiStaffTableBody;
+export default DetailKpiBawahanTableBody;

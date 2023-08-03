@@ -8,10 +8,9 @@ import IconButton from "@mui/material/IconButton";
 import { useViewFileDialogStore } from "@store/dialog/view.file";
 
 const ViewFileDialog = () => {
-	const { isViewOpen, toggleViewOpen, idIndikator, idUraian } =
-		useViewFileDialogStore();
+	const { isViewOpen, toggleViewOpen, idUraian } = useViewFileDialogStore();
 
-	return idIndikator && idUraian ? (
+	return idUraian ? (
 		<Dialog
 			fullScreen
 			open={isViewOpen}
@@ -28,10 +27,7 @@ const ViewFileDialog = () => {
 						<CloseIcon />
 					</IconButton>
 				</DialogActions>
-				<TransKpiFileListComponent
-					indikatorId={idIndikator}
-					uraianId={idUraian}
-				/>
+				<TransKpiFileListComponent uraianId={idUraian} />
 			</DialogContent>
 		</Dialog>
 	) : null;
