@@ -5,7 +5,6 @@ import HeaderSortBuilder from "@components/commons/table/head/sort";
 import TableHead from "@mui/material/TableHead";
 import { levelHeader } from "@myTypes/entity/level";
 import { useLevelStore } from "@store/filter/master/level";
-import { shallow } from "zustand/shallow";
 
 const LevelTableHead = () => {
 	const { sortRequest, setSortRequest, setKeyVal, status } = useLevelStore(
@@ -14,8 +13,7 @@ const LevelTableHead = () => {
 			setSortRequest: state.setSortRequest,
 			setKeyVal: state.setKeyVal,
 			status: state.status,
-		}),
-		shallow
+		})
 	);
 
 	const handleSort = (sort: string | null, direction: "asc" | "desc") => {

@@ -4,21 +4,17 @@ import TablePagination from "@mui/material/TablePagination";
 import { LevelWithPagination } from "@myTypes/entity/level";
 import { useLevelStore } from "@store/filter/master/level";
 import { useQueryClient } from "@tanstack/react-query";
-import { shallow } from "zustand/shallow";
 
 const LevelPagination = () => {
 	const qc = useQueryClient();
 	const { pageRequest, setPageRequest, sortRequest, status, level } =
-		useLevelStore(
-			(state) => ({
-				pageRequest: state.pageRequest,
-				setPageRequest: state.setPageRequest,
-				sortRequest: state.sortRequest,
-				status: state.status,
-				level: state.level,
-			}),
-			shallow
-		);
+		useLevelStore((state) => ({
+			pageRequest: state.pageRequest,
+			setPageRequest: state.setPageRequest,
+			sortRequest: state.sortRequest,
+			status: state.status,
+			level: state.level,
+		}));
 	const data = qc.getQueryData([
 		"master.level",
 		{ pageRequest, sortRequest, status, level },

@@ -1,48 +1,36 @@
 import LogoutOutlinedIcon from "@ant-design/icons/LogoutOutlined";
+import KeyIcon from "@mui/icons-material/Key";
 import Avatar from "@mui/material/Avatar";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
-import Paper from "@mui/material/Paper";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-import { buttonHovered } from "@myConfig/index";
-import { useRouter } from "next/navigation";
-import { useProfileStore } from "@store/main/menu";
-import { useSessionStore } from "@store/main/session";
-import { shallow } from "zustand/shallow";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import KeyIcon from "@mui/icons-material/Key";
 import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import Paper from "@mui/material/Paper";
 import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import { useProfileStore } from "@store/main/menu";
+import { useSessionStore } from "@store/main/session";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const ProfileContent = () => {
-	const { user, setUser } = useSessionStore(
-		(state) => ({
-			user: state.user,
-			setUser: state.setUser,
-		}),
-		shallow
-	);
-	const { setAnchorEl, toggleProfileMenu } = useProfileStore(
-		(state) => ({
-			setAnchorEl: state.setAnchorEl,
-			toggleProfileMenu: state.toggleProfileMenu,
-		}),
-		shallow
-	);
+	const { user, setUser } = useSessionStore((state) => ({
+		user: state.user,
+		setUser: state.setUser,
+	}));
+	const { setAnchorEl, toggleProfileMenu } = useProfileStore((state) => ({
+		setAnchorEl: state.setAnchorEl,
+		toggleProfileMenu: state.toggleProfileMenu,
+	}));
 	const router = useRouter();
 	async function handleLogout() {
 		setUser(null);
 		toggleProfileMenu();
 		router.push("/api/auth/logout");
-		// console.log(user);
 	}
 
 	return (

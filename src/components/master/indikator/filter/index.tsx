@@ -5,7 +5,6 @@ import Switch from "@mui/material/Switch";
 import { AUDIT_STATUS } from "@myTypes/index";
 import { useIndikatorStore } from "@store/filter/master/indikator";
 import { useState } from "react";
-import { shallow } from "zustand/shallow";
 
 const IndikatorFilter = () => {
 	const { pageRequest, sortRequest, kpiId, indikator, status, setKeyVal } =

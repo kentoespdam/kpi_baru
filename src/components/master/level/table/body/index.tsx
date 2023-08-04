@@ -3,10 +3,9 @@
 import CellBuilder from "@components/commons/table/cell.builder";
 import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
-import { LevelWithAudit, LevelWithPagination } from "@myTypes/entity/level";
-import { useQueryClient } from "@tanstack/react-query";
+import { LevelWithPagination } from "@myTypes/entity/level";
 import { useLevelStore } from "@store/filter/master/level";
-import { shallow } from "zustand/shallow";
+import { useQueryClient } from "@tanstack/react-query";
 import LevelActionBtn from "./action";
 
 const LevelTableBody = () => {
@@ -16,8 +15,7 @@ const LevelTableBody = () => {
 			sortRequest: state.sortRequest,
 			status: state.status,
 			level: state.level,
-		}),
-		shallow
+		})
 	);
 	const qc = useQueryClient();
 	const data = qc.getQueryData([

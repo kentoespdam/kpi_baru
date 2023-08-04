@@ -5,6 +5,7 @@ import ViewPdfDialog from "./dialog/pdf";
 import ViewUploadDialog from "./dialog/upload";
 import PeriodeComponent from "./periode";
 import KpiStaffComponents from "./staff";
+import ViewFormDialog from "./dialog/form";
 
 const KpiCard = () => {
 	return (
@@ -16,6 +17,7 @@ const KpiCard = () => {
 			<ViewFileDialog />
 			<ViewPdfDialog />
 			<ViewUploadDialog />
+			<ViewFormDialog />
 		</Card>
 	);
 };

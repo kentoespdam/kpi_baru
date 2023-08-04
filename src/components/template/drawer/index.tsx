@@ -9,10 +9,9 @@ import { Theme, useTheme } from "@mui/material/styles";
 import { drawerWidth } from "@myConfig/index";
 import { useMenuStore } from "@store/main/menu";
 import { useTemplateStore } from "@store/main/template";
-import { shallow } from "zustand/shallow";
-import Logo from "./logo";
-import DrawerContent from "./content";
 import { useEffect, useState } from "react";
+import DrawerContent from "./content";
+import Logo from "./logo";
 
 const openedMixin = (theme: Theme) => ({
 	width: drawerWidth,
@@ -39,13 +38,10 @@ const closedMixin = (theme: Theme) => ({
 const MenuDrawerComponent = () => {
 	const theme = useTheme();
 	const isDesktop = useTemplateStore((state) => state.isDesktop);
-	const { isMenuOpen, toggleDrawer } = useMenuStore(
-		(state) => ({
-			isMenuOpen: state.isMenuOpen,
-			toggleDrawer: state.toggleDrawer,
-		}),
-		shallow
-	);
+	const { isMenuOpen, toggleDrawer } = useMenuStore((state) => ({
+		isMenuOpen: state.isMenuOpen,
+		toggleDrawer: state.toggleDrawer,
+	}));
 	const [variant, setVariant] = useState<
 		"permanent" | "persistent" | "temporary" | undefined
 	>("permanent");

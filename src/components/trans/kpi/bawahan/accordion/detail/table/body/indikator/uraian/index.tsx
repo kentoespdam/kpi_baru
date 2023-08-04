@@ -8,16 +8,27 @@ import TableRow from "@mui/material/TableRow";
 import Tooltip from "@mui/material/Tooltip";
 import { useTheme } from "@mui/material/styles";
 import { TransUraian } from "@myTypes/entity/trans.uraian";
+import { useViewFormDialogStore } from "@store/dialog/view.form";
 
 type UraianCellProps = {
+	nipamStaff: string | null;
+	idKpi: number;
 	uraian: TransUraian;
 };
 const UraianCell = (props: UraianCellProps) => {
-	const { uraian } = props;
+	const { nipamStaff, idKpi, uraian } = props;
 	const theme = useTheme();
 	const { fileList } = uraian;
 
-	const editHandler = () => {};
+	const editHandler = () => {
+		console.log(uraian);
+		useViewFormDialogStore.setState({
+			isFormOpen: true,
+			staffNipam: nipamStaff,
+			idKpi: idKpi,
+			idUraian: uraian.id,
+		});
+	};
 
 	return (
 		<>
@@ -58,20 +69,30 @@ const UraianCell = (props: UraianCellProps) => {
 };
 
 type DetailKpiBawahanUraianProps = {
+	nipamStaff: string | null;
+	idKpi: number;
 	uraianList: TransUraian[];
 	first?: boolean;
 };
 const DetailKpiBawahanUraian = (props: DetailKpiBawahanUraianProps) => {
-	const { uraianList, first } = props;
+	const { nipamStaff, idKpi, uraianList, first } = props;
 
 	return first ? (
-		<UraianCell uraian={uraianList[0]} />
+		<UraianCell
+			nipamStaff={nipamStaff}
+			idKpi={idKpi}
+			uraian={uraianList[0]}
+		/>
 	) : (
 		<>
 			{uraianList.map((uraian, index) =>
 				index === 0 ? null : (
 					<TableRow key={index}>
-						<UraianCell uraian={uraian} />
+						<UraianCell
+							nipamStaff={nipamStaff}
+							idKpi={idKpi}
+							uraian={uraian}
+						/>
 					</TableRow>
 				)
 			)}

@@ -7,7 +7,6 @@ import { IndikatorWithAudit } from "@myTypes/entity/indikator";
 import { useTemplateStore } from "@store/main/template";
 import { useState } from "react";
 import IndikatorMenuItemButton from "./button";
-import { shallow } from "zustand/shallow";
 
 type IndikatorItemSummaryProps = {
 	indikatorWithAudit: IndikatorWithAudit;
@@ -15,7 +14,7 @@ type IndikatorItemSummaryProps = {
 };
 const IndikatorItemSummary = (props: IndikatorItemSummaryProps) => {
 	const { indikatorWithAudit, urut } = props;
-	const isDesktop = useTemplateStore((state) => state.isDesktop, shallow);
+	const isDesktop = useTemplateStore((state) => state.isDesktop);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
 

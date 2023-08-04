@@ -1,5 +1,4 @@
 import { ApiResponse, Audit, BaseId, Pages } from "..";
-import { IndikatorWithUraianList } from "./indikator";
 import { Profesi } from "./profesi";
 import { TransIndikator } from "./trans.indikator";
 

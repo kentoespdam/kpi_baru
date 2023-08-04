@@ -1,16 +1,13 @@
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import IconButton from "@mui/material/IconButton";
-import TransKpiStaffUploadComponent from "@components/trans/kpi/staff/upload";
-import { useViewUploadDialogStore } from "@store/dialog/view.upload";
 import { DialogSlideTransition } from "@components/commons/effect/transition/dialog";
+import TransKpiStaffUploadComponent from "@components/trans/kpi/staff/upload";
 import CloseIcon from "@mui/icons-material/Close";
 import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import Tooltip from "@mui/material/Tooltip";
 import CardContent from "@mui/material/CardContent";
+import CardHeader from "@mui/material/CardHeader";
+import Dialog from "@mui/material/Dialog";
+import IconButton from "@mui/material/IconButton";
 import { useTheme } from "@mui/material/styles";
+import { useViewUploadDialogStore } from "@store/dialog/view.upload";
 
 const ViewUploadDialog = () => {
 	const { isViewUploadOpen, toggleViewUploadOpen, uploadUraianId } =

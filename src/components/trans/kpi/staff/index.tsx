@@ -1,25 +1,21 @@
-import TableContainer from "@mui/material/TableContainer";
+import TableLoading from "@components/commons/table/loading";
 import LinearProgress from "@mui/material/LinearProgress";
 import Table from "@mui/material/Table";
-import KpiStaffTableHead from "./table/head";
-import TableLoading from "@components/commons/table/loading";
-import KpiStaffTableBody from "./table/body";
+import TableContainer from "@mui/material/TableContainer";
 import { useTheme } from "@mui/material/styles";
-import { useSessionStore } from "@store/main/session";
 import { useTransKpiStore } from "@store/filter/trans/kpi";
-import { shallow } from "zustand/shallow";
+import { useSessionStore } from "@store/main/session";
 import { useQueryClient } from "@tanstack/react-query";
+import KpiStaffTableBody from "./table/body";
+import KpiStaffTableHead from "./table/head";
 
 const KpiStaffComponents = () => {
 	const theme = useTheme();
 	const curNipam = useSessionStore.getState().user?.userId;
-	const { periode, bridgeKpi } = useTransKpiStore(
-		(state) => ({
-			periode: state.periode,
-			bridgeKpi: state.bridgeKpi,
-		}),
-		shallow
-	);
+	const { periode, bridgeKpi } = useTransKpiStore((state) => ({
+		periode: state.periode,
+		bridgeKpi: state.bridgeKpi,
+	}));
 	const qc = useQueryClient();
 	const state = qc.getQueryState([
 		"trans.kpi.staff",
@@ -29,14 +25,21 @@ const KpiStaffComponents = () => {
 			periode: periode?.periode,
 		},
 	]);
-	console.log(state);
 
 	return (
 		<TableContainer>
-			{qc.isFetching() ? <LinearProgress sx={{ mb: 1 }} /> : null}
+			{state?.fetchStatus === "fetching" ? (
+				<LinearProgress sx={{ mb: 1 }} />
+			) : null}
 			<Table sx={{ border: `solid 1px ${theme.palette.divider}` }}>
 				<KpiStaffTableHead />
-				<KpiStaffTableBody />
+				{state?.fetchStatus === "fetching" ? (
+					<TableLoading />
+				) : state?.error ? (
+					<TableLoading error />
+				) : (
+					<KpiStaffTableBody />
+				)}
 			</Table>
 		</TableContainer>
 	);

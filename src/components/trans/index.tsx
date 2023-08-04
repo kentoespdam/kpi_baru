@@ -2,18 +2,17 @@
 
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
+import { useTransKpiBawahanStore } from "@store/filter/trans/bawahan";
 import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useSessionStore } from "@store/main/session";
 import { useQueries } from "@tanstack/react-query";
 import { getByNipam } from "@utils/bridge/kpi";
 import { getEmpDetails } from "@utils/eo/employee";
 import { getBridgeKpi, getStaffKpi } from "@utils/trans/kpi";
-import { shallow } from "zustand/shallow";
 import EmployeeComponent from "./employee";
 import DetailEmployeeSkeleton from "./employee/detail/skeleton";
 import KpiCard from "./kpi";
 import KpiBawahanComponent from "./kpi/bawahan";
-import { useTransKpiBawahanStore } from "@store/filter/trans/bawahan";
 
 const TransRoot = () => {
 	const curNipam = useSessionStore.getState().user?.userId;
@@ -21,16 +20,12 @@ const TransRoot = () => {
 		(state) => ({
 			nipamStaff: state.nipamStaff,
 			bridgeKpiBawahan: state.bridgeKpiBawahan,
-		}),
-		shallow
+		})
 	);
-	const { periode, bridgeKpi } = useTransKpiStore(
-		(state) => ({
-			periode: state.periode,
-			bridgeKpi: state.bridgeKpi,
-		}),
-		shallow
-	);
+	const { periode, bridgeKpi } = useTransKpiStore((state) => ({
+		periode: state.periode,
+		bridgeKpi: state.bridgeKpi,
+	}));
 
 	const queries = useQueries({
 		queries: [

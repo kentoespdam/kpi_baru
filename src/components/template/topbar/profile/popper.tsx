@@ -2,7 +2,6 @@ import Box from "@mui/material/Box";
 import Fade from "@mui/material/Fade";
 import Popper from "@mui/material/Popper";
 import { useProfileStore } from "@store/main/menu";
-import { shallow } from "zustand/shallow";
 import ProfileContent from "./content";
 
 type ProfilePopperProps = {
@@ -11,13 +10,10 @@ type ProfilePopperProps = {
 
 const ProfilePopper = (props: ProfilePopperProps) => {
 	const { id } = props;
-	const { anchorEl, isOpen } = useProfileStore(
-		(state) => ({
-			anchorEl: state.anchorEl,
-			isOpen: state.isOpen,
-		}),
-		shallow
-	);
+	const { anchorEl, isOpen } = useProfileStore((state) => ({
+		anchorEl: state.anchorEl,
+		isOpen: state.isOpen,
+	}));
 
 	return isOpen ? (
 		<Popper

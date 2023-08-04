@@ -1,20 +1,20 @@
+import TableLoading from "@components/commons/table/loading";
 import AccordionDetails from "@mui/material/AccordionDetails";
+import LinearProgress from "@mui/material/LinearProgress";
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
 import { Employee } from "@myTypes/entity/employee";
-import DetailKpiBawahanTableBody from "./table/body";
-import DetailKpiBawahanTableHead from "./table/head";
-import { useQueryClient } from "@tanstack/react-query";
 import { useTransKpiBawahanStore } from "@store/filter/trans/bawahan";
 import { useTransKpiStore } from "@store/filter/trans/kpi";
-import { shallow } from "zustand/shallow";
-import TableLoading from "@components/commons/table/loading";
+import { useQueryClient } from "@tanstack/react-query";
+import DetailKpiBawahanTableBody from "./table/body";
+import DetailKpiBawahanTableHead from "./table/head";
 
 type KpiBawahanAccordionDetailProps = {
 	currStaff: Employee;
 };
 const KpiBawahanAccordionDetail = (props: KpiBawahanAccordionDetailProps) => {
-	const periode = useTransKpiStore((state) => state.periode, shallow);
+	const periode = useTransKpiStore((state) => state.periode);
 	const { nipamStaff, bridgeKpiBawahan } = useTransKpiBawahanStore();
 	const qc = useQueryClient();
 	const qStatus = qc.getQueryState([
@@ -28,6 +28,10 @@ const KpiBawahanAccordionDetail = (props: KpiBawahanAccordionDetailProps) => {
 	return (
 		<AccordionDetails>
 			<TableContainer>
+				{qStatus?.status === "loading" ||
+				qStatus?.fetchStatus === "fetching" ? (
+					<LinearProgress />
+				) : null}
 				<Table width="100%">
 					<DetailKpiBawahanTableHead />
 					{qStatus?.status === "loading" ||

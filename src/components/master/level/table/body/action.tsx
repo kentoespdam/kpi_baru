@@ -5,7 +5,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
 import { doDelete } from "src/utils/master/level";
-import { shallow } from "zustand/shallow";
 
 type LevelActionBtnProps = {
 	row: LevelWithAudit;
@@ -20,8 +19,7 @@ const LevelActionBtn = (props: LevelActionBtnProps) => {
 			sortRequest: state.sortRequest,
 			status: state.status,
 			level: state.level,
-		}),
-		shallow
+		})
 	);
 	const qc = useQueryClient();
 	const { enqueueSnackbar } = useSnackbar();

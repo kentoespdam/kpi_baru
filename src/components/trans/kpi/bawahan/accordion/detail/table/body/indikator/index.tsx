@@ -4,11 +4,12 @@ import { TransIndikator } from "@myTypes/entity/trans.indikator";
 import DetailKpiBawahanUraian from "./uraian";
 
 type DetailKpiBawahanIndikatorProps = {
+	nipamStaff: string | null;
 	indikator: TransIndikator;
 	urut: number;
 };
 const DetailKpiBawahanIndikator = (props: DetailKpiBawahanIndikatorProps) => {
-	const { indikator, urut } = props;
+	const { nipamStaff, indikator, urut } = props;
 	const uraianList = indikator.uraianList;
 	const uraianSize = uraianList.length;
 	const rowSpan = uraianSize <= 1 ? 1 : uraianSize;
@@ -23,7 +24,12 @@ const DetailKpiBawahanIndikator = (props: DetailKpiBawahanIndikatorProps) => {
 					bordered
 				/>
 				{uraianSize > 0 ? (
-					<DetailKpiBawahanUraian uraianList={uraianList} first />
+					<DetailKpiBawahanUraian
+						nipamStaff={nipamStaff}
+						idKpi={Number(indikator.kpi?.id)}
+						uraianList={uraianList}
+						first
+					/>
 				) : (
 					<>
 						<CellBuilder bordered value="" />
@@ -33,7 +39,11 @@ const DetailKpiBawahanIndikator = (props: DetailKpiBawahanIndikatorProps) => {
 				)}
 			</TableRow>
 			{rowSpan > 1 ? (
-				<DetailKpiBawahanUraian uraianList={uraianList} first />
+				<DetailKpiBawahanUraian
+					nipamStaff={nipamStaff}
+					idKpi={Number(indikator.kpi?.id)}
+					uraianList={uraianList}
+				/>
 			) : null}
 		</>
 	);

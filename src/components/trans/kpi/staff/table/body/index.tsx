@@ -3,14 +3,13 @@ import { TransKpiWithAudit } from "@myTypes/entity/trans.kpi";
 import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useSessionStore } from "@store/main/session";
 import { useQueryClient } from "@tanstack/react-query";
-import { shallow } from "zustand/shallow";
 import TransKpiIndikatorComponent from "./indikator";
 
 const KpiStaffTableBody = () => {
-	const { periode, bridgeKpi } = useTransKpiStore(
-		(state) => ({ periode: state.periode, bridgeKpi: state.bridgeKpi }),
-		shallow
-	);
+	const { periode, bridgeKpi } = useTransKpiStore((state) => ({
+		periode: state.periode,
+		bridgeKpi: state.bridgeKpi,
+	}));
 	const curNipam = useSessionStore.getState().user?.userId;
 	const qc = useQueryClient();
 	const data = qc.getQueryData<TransKpiWithAudit>([

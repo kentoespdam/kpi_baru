@@ -11,7 +11,6 @@ import { Theme, useTheme } from "@mui/material/styles";
 import { buttonSelectedColor, drawerWidth } from "@myConfig/index";
 import { useMenuStore } from "@store/main/menu";
 import { useTemplateStore } from "@store/main/template";
-import { shallow } from "zustand/shallow";
 import ProfileComponent from "./profile";
 
 const appBarSx = (theme: Theme, isOpen: boolean, isDesktop: boolean) => {
@@ -35,14 +34,11 @@ const appBarSx = (theme: Theme, isOpen: boolean, isDesktop: boolean) => {
 
 const TopBarComponent = () => {
 	const theme = useTheme();
-	const { isMenuOpen, toggleDrawer } = useMenuStore(
-		(state) => ({
-			isMenuOpen: state.isMenuOpen,
-			toggleDrawer: state.toggleDrawer,
-		}),
-		shallow
-	);
-	const isDesktop = useTemplateStore((state) => state.isDesktop, shallow);
+	const { isMenuOpen, toggleDrawer } = useMenuStore((state) => ({
+		isMenuOpen: state.isMenuOpen,
+		toggleDrawer: state.toggleDrawer,
+	}));
+	const isDesktop = useTemplateStore((state) => state.isDesktop);
 	const sx = appBarSx(theme, isMenuOpen, isDesktop);
 
 	return (
