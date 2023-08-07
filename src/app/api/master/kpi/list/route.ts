@@ -4,6 +4,8 @@ import { REMOTE_KPI } from "@myTypes/entity/kpi";
 import axios from "axios";
 import { NextRequest } from "next/server";
 
+export const revalidate = 0;
+
 export const GET = async (req: NextRequest) => {
 	const cookie = req.cookies;
 	const search = new URLSearchParams();

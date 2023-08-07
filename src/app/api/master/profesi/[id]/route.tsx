@@ -3,6 +3,8 @@ import { REMOTE_PROFESI } from "@myTypes/entity/profesi";
 import axios from "axios";
 import { NextRequest } from "next/server";
 
+export const revalidate = 0;
+
 export const GET = async (
 	req: NextRequest,
 	{ params }: { params: { id: number } }

@@ -63,6 +63,7 @@ export const PUT = async (
 	const { id } = params;
 	const cookie = req.cookies;
 	const body = await req.json();
+	console.log("api.bridge.kpi.put", body);
 
 	try {
 		const token = await getCurrentToken(cookie);
@@ -79,7 +80,8 @@ export const PUT = async (
 			name: body.name,
 			password: `${process.env.DEFAULT_PASSWORD}`,
 		});
-		await updateRoleUser(account.nipam, body.roles);
+		console.log(account);
+		await updateRoleUser(account.userId, body.roles);
 		return new Response(JSON.stringify(data), { status: status });
 	} catch (e: any) {
 		console.log(

@@ -13,6 +13,8 @@ import { REMOTE_POSITION, Position } from "@myTypes/entity/position";
 import axios from "axios";
 import { NextRequest } from "next/server";
 
+export const revalidate = 0;
+
 export const GET = async (req: NextRequest) => {
 	const cookie = req.cookies;
 	const search = req.nextUrl.search;

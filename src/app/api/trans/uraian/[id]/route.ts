@@ -4,6 +4,8 @@ import { REMOTE_TRANS_URAIAN } from "@myTypes/entity/trans.uraian";
 import axios from "axios";
 import { NextRequest } from "next/server";
 
+export const revalidate = 0;
+
 export const GET = async (
 	req: NextRequest,
 	{ params }: { params: { id: number } }

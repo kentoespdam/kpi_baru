@@ -1,10 +1,6 @@
 import { responseNoContent } from "@helper/error/nocontent";
 import { appwriteHeader, getCurrentToken } from "@helper/index";
-import {
-	KpiWithAudit,
-	KpiWithPagination,
-	REMOTE_KPI,
-} from "@myTypes/entity/kpi";
+import { KpiWithAudit, REMOTE_KPI } from "@myTypes/entity/kpi";
 import {
 	Organization,
 	REMOTE_ORGANIZATION,
@@ -12,6 +8,8 @@ import {
 import { Position, REMOTE_POSITION } from "@myTypes/entity/position";
 import axios from "axios";
 import { NextRequest } from "next/server";
+
+export const revalidate = 0;
 
 export const GET = async (
 	req: NextRequest,

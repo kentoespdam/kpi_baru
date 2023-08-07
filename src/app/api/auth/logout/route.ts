@@ -3,6 +3,8 @@ import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 import { APPWRITE_ENDPOINT } from "src/lib";
 
+export const revalidate = false
+
 export const GET = async (req: NextRequest) => {
 	const cookies = req.cookies;
 	try {

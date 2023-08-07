@@ -3,6 +3,8 @@ import { REMOTE_URAIAN_FILE } from "@myTypes/entity/uraian.file";
 import axios from "axios";
 import { NextRequest } from "next/server";
 
+export const revalidate = 0;
+
 export const POST = async (req: NextRequest) => {
 	const cookie = req.cookies;
 	const body = await req.formData();

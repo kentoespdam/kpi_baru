@@ -68,6 +68,7 @@ export const getPrefs = async (id: string) => {
 };
 
 export const updateRoleUser = async (id: string, roles: string[]) => {
+	console.log("appwrite.user.update.role", id, roles);
 	try {
 		const { status, data } = await axios.patch(
 			`${APPWRITE_ENDPOINT}/v1/users/${id}/prefs`,
@@ -77,6 +78,7 @@ export const updateRoleUser = async (id: string, roles: string[]) => {
 			},
 			{
 				headers: {
+					"Content-Type": "application/json",
 					"X-Appwrite-Response-Format": "1.0.0",
 					"X-Appwrite-Project": APPWRITE_PROJECT_ID,
 					"X-Appwrite-Key": APPWRITE_API_KEY,

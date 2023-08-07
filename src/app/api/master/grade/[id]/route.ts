@@ -4,6 +4,8 @@ import { REMOTE_GRADE } from "@myTypes/entity/grade";
 import axios from "axios";
 import { NextRequest } from "next/server";
 
+export const revalidate = 0;
+
 export const GET = async (
 	req: NextRequest,
 	{ params }: { params: { id: number } }
