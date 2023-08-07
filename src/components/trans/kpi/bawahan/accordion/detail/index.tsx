@@ -9,6 +9,7 @@ import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useQueryClient } from "@tanstack/react-query";
 import DetailKpiBawahanTableBody from "./table/body";
 import DetailKpiBawahanTableHead from "./table/head";
+import DetailKpiBawahanTableFooter from "./table/footer";
 
 type KpiBawahanAccordionDetailProps = {
 	currStaff: Employee;
@@ -40,6 +41,7 @@ const KpiBawahanAccordionDetail = (props: KpiBawahanAccordionDetailProps) => {
 					) : (
 						<DetailKpiBawahanTableBody />
 					)}
+					<DetailKpiBawahanTableFooter />
 				</Table>
 			</TableContainer>
 		</AccordionDetails>

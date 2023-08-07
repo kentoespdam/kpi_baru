@@ -4,6 +4,7 @@ export const LOCAL_URAIAN_FILE = "/api/trans/kpi/staff/file";
 export const REMOTE_URAIAN_FILE = `${process.env.KPI_API}/transaction/kpi-uraian-file`;
 
 export interface UraianFile extends BaseId {
+	nipam: string;
 	fileName: string;
 	fileType: string;
 }

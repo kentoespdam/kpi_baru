@@ -1,20 +1,19 @@
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import TableCell from "@mui/material/TableCell";
+import Tooltip from "@mui/material/Tooltip";
 import { LOCAL_URAIAN_FILE, UraianFile } from "@myTypes/entity/uraian.file";
 import { useViewFileDialogStore } from "@store/dialog/view.file";
 import { useViewPdfDialogStore } from "@store/dialog/view.pdf";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import Tooltip from "@mui/material/Tooltip";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useSnackbar } from "notistack";
 import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useSessionStore } from "@store/main/session";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { doDelete } from "@utils/trans/file";
+import Link from "next/link";
+import { useSnackbar } from "notistack";
 
 type TransKpiFileListItemCellProps = {
 	uraianFile: UraianFile;
@@ -61,17 +60,17 @@ const TransKpiFileListItemCell = (props: TransKpiFileListItemCellProps) => {
 		mutation.mutate(uraianFile.id);
 	};
 
-	const handleDownload = () => {};
-
 	switch (uraianFile.fileType) {
 		case "pdf":
 			return (
 				<TableCell>
-					<Tooltip title="Delete File">
-						<IconButton color="error" onClick={handleDelete}>
-							<DeleteForeverIcon />
-						</IconButton>
-					</Tooltip>
+					{uraianFile.nipam === user!.userId ? (
+						<Tooltip title="Delete File">
+							<IconButton color="error" onClick={handleDelete}>
+								<DeleteForeverIcon />
+							</IconButton>
+						</Tooltip>
+					) : null}
 					<Tooltip title="View File">
 						<Button
 							onClick={showPdf}

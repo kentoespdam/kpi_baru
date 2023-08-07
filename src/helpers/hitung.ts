@@ -7,8 +7,9 @@ export const hitungNilaiProdukKerja = (
 	target: string
 ) => {
 	let hitung = 0;
-	if (satuan === "dokumen") {
+	if (satuan.toLowerCase() === "dokumen") {
 		if (capaianVolume >= volume) hitung = bobot;
+		else hitung = (capaianVolume / volume) * bobot;
 	} else {
 		hitung =
 			target === "MIN"

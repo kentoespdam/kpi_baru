@@ -1,24 +1,24 @@
 import WaktuAutocomplete from "@components/commons/autocomplete/waktu";
-import LoadingButton from "@mui/lab/LoadingButton";
-import Button from "@mui/material/Button";
-import FormControl from "@mui/material/FormControl";
-import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
-import DoDisturbIcon from "@mui/icons-material/DoDisturb";
-import SaveIcon from "@mui/icons-material/Save";
-import React from "react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { doSave, getById } from "@utils/trans/uraian";
-import { useSnackbar } from "notistack";
-import { useViewFormDialogStore } from "@store/dialog/view.form";
-import { useTransKpiStore } from "@store/filter/trans/kpi";
-import { TransUraian, TransUraianData } from "@myTypes/entity/trans.uraian";
 import {
 	hitungNilaiProdukKerja,
 	hitungNilaiTotalUraian,
 	hitungNilaiWaktu,
 } from "@helper/hitung";
+import DoDisturbIcon from "@mui/icons-material/DoDisturb";
+import SaveIcon from "@mui/icons-material/Save";
+import LoadingButton from "@mui/lab/LoadingButton";
+import Button from "@mui/material/Button";
+import FormControl from "@mui/material/FormControl";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
+import { TransUraian, TransUraianData } from "@myTypes/entity/trans.uraian";
 import { AUDIT_STATUS } from "@myTypes/index";
+import { useViewFormDialogStore } from "@store/dialog/view.form";
+import { useTransKpiStore } from "@store/filter/trans/kpi";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { doSave, getById } from "@utils/trans/uraian";
+import { useSnackbar } from "notistack";
+import React from "react";
 
 const KpiBawahanForm = () => {
 	const { toggleFormOpen, staffNipam, idKpi, idUraian, reset } =
@@ -33,6 +33,7 @@ const KpiBawahanForm = () => {
 		queryKey: ["trans.kpi.form", idUraian],
 		queryFn: async ({ queryKey }) => {
 			const result = await getById(queryKey);
+			setWaktu(result?.capaianWaktu ? result.capaianWaktu : result.waktu);
 			return result;
 		},
 		enabled: !!idUraian,
@@ -77,31 +78,29 @@ const KpiBawahanForm = () => {
 			Number(data?.bobot),
 			String(waktu),
 			String(data?.target)
-		);
+		).toFixed(2);
 		const nilaiWaktu = hitungNilaiWaktu(
 			Number(capaianVolumeRef.current?.value),
 			String(waktu),
 			String(data?.waktu),
 			String(periode?.periode)
-		);
-
+		).toFixed(2);
 		const nilaiTotalUraian = hitungNilaiTotalUraian(
-			nilaiProdukKerja,
-			nilaiWaktu
-		);
+			Number(nilaiProdukKerja),
+			Number(nilaiWaktu)
+		).toFixed(2);
 
 		const formData: TransUraianData = {
 			id: Number(data?.id),
 			capaianVolume: Number(capaianVolumeRef.current?.value),
 			capaianSatuan: String(data?.capaianSatuan),
 			capaianWaktu: String(waktu),
-			nilaiProdukKerja: nilaiProdukKerja,
-			nilaiWaktu: nilaiWaktu,
-			nilaiTotalUraian: nilaiTotalUraian,
+			nilaiProdukKerja: Number(nilaiProdukKerja),
+			nilaiWaktu: Number(nilaiWaktu),
+			nilaiTotalUraian: Number(nilaiTotalUraian),
 			status: AUDIT_STATUS.ENABLED,
 		};
-		console.log(formData);
-		// mutation.mutate(formData)
+		mutation.mutate(formData);
 	};
 
 	if (idUraian && isFetching) return <>Loading for data...</>;
@@ -124,6 +123,9 @@ const KpiBawahanForm = () => {
 					inputRef={capaianVolumeRef}
 					sx={{ minWidth: 100 }}
 					defaultValue={data?.capaianVolume ?? ""}
+					inputProps={{
+						step: 0.1,
+					}}
 				/>
 			</FormControl>
 			<FormControl fullWidth>

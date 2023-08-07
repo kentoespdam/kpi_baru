@@ -165,6 +165,9 @@ const UraianFormComponent = (props: UraianFormComponentProps) => {
 					label="Volume"
 					defaultValue={data?.volume ?? 0}
 					type="number"
+					inputProps={{
+						step: 0.1,
+					}}
 					required
 				/>
 			</FormControl>
@@ -211,6 +214,9 @@ const UraianFormComponent = (props: UraianFormComponentProps) => {
 					inputRef={bobotRef}
 					defaultValue={data?.bobot ?? 0}
 					type="number"
+					inputProps={{
+						step: 0.1,
+					}}
 					required
 				/>
 			</FormControl>

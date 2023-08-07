@@ -30,3 +30,32 @@ export const GET = async (
 		});
 	}
 };
+
+export const PUT = async (
+	req: NextRequest,
+	{ params }: { params: { id: number } }
+) => {
+	const cookies = req.cookies;
+	const { id } = params;
+	const body = await req.json();
+
+	try {
+		const token = await getCurrentToken(cookies);
+		const { status, data } = await axios.put(
+			`${REMOTE_TRANS_URAIAN}/${id}`,
+			body,
+			{ headers: appwriteHeader(cookies, token) }
+		);
+		if (status === 204) return responseNoContent();
+		return new Response(JSON.stringify(data), { status });
+	} catch (e: any) {
+		console.log(
+			"api.trans.uraian.put",
+			new Date().toISOString(),
+			e.response.data.message
+		);
+		return new Response(JSON.stringify(e.response.data), {
+			status: e.response.status,
+		});
+	}
+};

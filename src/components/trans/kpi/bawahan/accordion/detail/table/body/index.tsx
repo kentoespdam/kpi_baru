@@ -28,6 +28,7 @@ const DetailKpiBawahanTableBody = () => {
 					urut={urut++}
 					nipamStaff={nipamStaff}
 					indikator={row}
+					idKpi={Number(bridgeKpiBawahan?.kpi.id)}
 				/>
 			))}
 		</TableBody>

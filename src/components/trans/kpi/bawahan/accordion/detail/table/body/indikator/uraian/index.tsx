@@ -21,7 +21,6 @@ const UraianCell = (props: UraianCellProps) => {
 	const { fileList } = uraian;
 
 	const editHandler = () => {
-		console.log(uraian);
 		useViewFormDialogStore.setState({
 			isFormOpen: true,
 			staffNipam: nipamStaff,
@@ -35,8 +34,8 @@ const UraianCell = (props: UraianCellProps) => {
 			<CellBuilder value={uraian.uraian} bordered noWrap />
 			<CellBuilder value={uraian.volume} bordered />
 			<CellBuilder value={uraian.satuan} bordered />
-			<CellBuilder value={uraian.bobot} bordered />
-			<CellBuilder value={uraian.capaianVolume} bordered />
+			<CellBuilder value={uraian.waktu} bordered />
+			<CellBuilder value={`${uraian.bobot}%`} align="right" bordered />
 			<CellBuilder
 				value={uraian.capaianVolume}
 				sx={{ bgcolor: "yellow" }}

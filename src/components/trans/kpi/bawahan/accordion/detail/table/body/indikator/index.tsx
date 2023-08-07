@@ -7,9 +7,10 @@ type DetailKpiBawahanIndikatorProps = {
 	nipamStaff: string | null;
 	indikator: TransIndikator;
 	urut: number;
+	idKpi: number;
 };
 const DetailKpiBawahanIndikator = (props: DetailKpiBawahanIndikatorProps) => {
-	const { nipamStaff, indikator, urut } = props;
+	const { nipamStaff, indikator, urut, idKpi } = props;
 	const uraianList = indikator.uraianList;
 	const uraianSize = uraianList.length;
 	const rowSpan = uraianSize <= 1 ? 1 : uraianSize;
@@ -26,7 +27,7 @@ const DetailKpiBawahanIndikator = (props: DetailKpiBawahanIndikatorProps) => {
 				{uraianSize > 0 ? (
 					<DetailKpiBawahanUraian
 						nipamStaff={nipamStaff}
-						idKpi={Number(indikator.kpi?.id)}
+						idKpi={idKpi}
 						uraianList={uraianList}
 						first
 					/>
@@ -41,7 +42,7 @@ const DetailKpiBawahanIndikator = (props: DetailKpiBawahanIndikatorProps) => {
 			{rowSpan > 1 ? (
 				<DetailKpiBawahanUraian
 					nipamStaff={nipamStaff}
-					idKpi={Number(indikator.kpi?.id)}
+					idKpi={idKpi}
 					uraianList={uraianList}
 				/>
 			) : null}

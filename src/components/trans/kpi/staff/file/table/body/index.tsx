@@ -12,22 +12,23 @@ type TransKpiFileListTableBodyProps = {
 	uraianId: number;
 };
 const TransKpiFileListTableBody = (props: TransKpiFileListTableBodyProps) => {
-	const idUraian = useViewFileDialogStore.getState().idUraian;
-	const { isFetching, data, error } = useQuery<TransFile[]>({
-		queryKey: ["trans.file.los", Number(idUraian)],
-		queryFn: getFiles,
-		enabled: !!idUraian,
-	});
+	const { uraianId } = props;
+	const qc = useQueryClient();
+	const state = qc.getQueryState<TransFile[]>([
+		"trans.file.list",
+		Number(uraianId),
+	]);
 
-	if (!data) return <TableLoading colSpan={2} error />;
+	if (state?.fetchStatus === "fetching" || state?.status === "loading")
+		return <TableLoading colSpan={2} />;
+	if (state?.error) return <TableLoading colSpan={2} error />;
+
+	if (!state?.data) return <TableLoading colSpan={2} error />;
 	let urut = 1;
-	return isFetching ? (
-		<TableLoading colSpan={2} />
-	) : error ? (
-		<TableLoading colSpan={2} error />
-	) : (
+
+	return (
 		<TableBody>
-			{data.map((item, index) => (
+			{state?.data.map((item, index) => (
 				<TableRow key={index}>
 					<CellBuilder value={urut++} />
 					<TransKpiFileListItemCell uraianFile={item} />

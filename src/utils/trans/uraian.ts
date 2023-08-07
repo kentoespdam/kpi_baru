@@ -21,7 +21,10 @@ export const getById = async (props: any) => {
 
 export const doSave = async (formData: TransUraianData) => {
 	try {
-		const { data } = await axios.post(LOCAL_TRANS_URAIAN, formData);
+		const { data } = await axios.put(
+			`${LOCAL_TRANS_URAIAN}/${formData.id}`,
+			formData
+		);
 		return data.data;
 	} catch (e: any) {
 		console.log(

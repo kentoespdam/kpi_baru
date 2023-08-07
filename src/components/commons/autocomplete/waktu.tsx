@@ -55,6 +55,13 @@ const WaktuAutocomplete = (props: WaktuAutocompleteProps) => {
 					label="Waktu"
 				/>
 			)}
+			renderOption={(props, option) => {
+				return (
+					<li {...props} key={option}>
+						{option}
+					</li>
+				);
+			}}
 			value={search ? search : null}
 			onChange={(e, v) => {
 				setSearchValue(v);
