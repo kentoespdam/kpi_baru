@@ -18,6 +18,26 @@ const nextConfig = {
 				permanent: true,
 			},
 			{
+				source: "/master/indikator",
+				destination: "/master/kpi",
+				permanent: true,
+			},
+			{
+				source: "/master/indikator/:slug",
+				destination: "/master/kpi",
+				permanent: true,
+			},
+			{
+				source: "/master/uraian",
+				destination: "/master/kpi",
+				permanent: true,
+			},
+			{
+				source: "/master/uraian/:slug",
+				destination: "/master/kpi",
+				permanent: true,
+			},
+			{
 				source: "/bridge",
 				destination: "/bridge/kpi",
 				permanent: true,
