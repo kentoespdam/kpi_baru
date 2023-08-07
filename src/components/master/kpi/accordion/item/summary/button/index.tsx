@@ -6,7 +6,11 @@ import ListItemText from "@mui/material/ListItemText";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { ITEM_HEIGHT } from "@myConfig/index";
+import { useKpiStore } from "@store/filter/master/kpi";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { doDelete } from "@utils/master/kpi";
 import Link from "next/link";
+import { useSnackbar } from "notistack";
 import { Dispatch, SetStateAction } from "react";
 
 type KpiMenuItemButtonProps = {
@@ -17,9 +21,42 @@ type KpiMenuItemButtonProps = {
 };
 const KpiMenuItemButton = (props: KpiMenuItemButtonProps) => {
 	const { kpiId, anchorEl, setAnchorEl, open } = props;
+	const { enqueueSnackbar } = useSnackbar();
+	const qc = useQueryClient();
+	const {
+		pageRequest,
+		sortRequest,
+		organization,
+		position,
+		profesi,
+		name,
+		grade,
+		status,
+	} = useKpiStore();
 
-	const handleEdit = () => {};
-	const handleDelete = () => {};
+	const mutation = useMutation({
+		mutationFn: doDelete,
+		onError: (error) => {
+			enqueueSnackbar(`${error}`, { variant: "error" });
+		},
+		onSuccess: () => {
+			qc.invalidateQueries({
+				queryKey: [
+					"master.kpi",
+					{ pageRequest, sortRequest },
+					{ organization, position, profesi, name, grade, status },
+				],
+			});
+			enqueueSnackbar("Data berhasil dihapus", { variant: "success" });
+		},
+	});
+
+	const handleDelete = () => {
+		const x = confirm("Apakah anda yakin ingin menghapus KPI ini?");
+		if (!x) return;
+		mutation.mutate(kpiId);
+		setAnchorEl(null);
+	};
 
 	return (
 		<Menu

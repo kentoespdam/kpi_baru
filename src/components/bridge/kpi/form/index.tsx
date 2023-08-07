@@ -19,7 +19,7 @@ import { Employee } from "@myTypes/entity/employee";
 import { Kpi } from "@myTypes/entity/kpi";
 import { Level } from "@myTypes/entity/level";
 import { Organization } from "@myTypes/entity/organization";
-import { AUDIT_STATUS } from "@myTypes/index";
+import { AUDIT_STATUS, roles } from "@myTypes/index";
 import { useBridgeKpiStore } from "@store/filter/bridge/kpi";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { doSave, getById } from "@utils/bridge/kpi";
@@ -76,6 +76,7 @@ const BridgeKpiForm = (props: BridgeKpiFormProps) => {
 			setLvl(result.level);
 			setKpi(result.kpi);
 			setChecked(result.status === AUDIT_STATUS.DISABLED ? false : true);
+			setRoles(result.roles);
 			return result;
 		},
 		enabled: !!id,

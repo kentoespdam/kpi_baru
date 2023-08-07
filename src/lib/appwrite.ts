@@ -43,40 +43,6 @@ export const createToken = async (cookieString: RequestCookies | string) => {
 	}
 };
 
-export const createAccount = async (
-	cookieString: RequestCookies | string,
-	account: {
-		userId: string;
-		email: string;
-		password: string;
-		name: string;
-	}
-) => {
-	try {
-		const user = await getUserByNipam(account.userId);
-		if (user) return user;
-
-		const { data } = await axios.post(
-			`${APPWRITE_ENDPOINT}/v1/account`,
-			account,
-			{
-				headers: appwriteHeader(cookieString),
-			}
-		);
-
-		data.prefs = await updateRoleUser(data.$id, defaultRoles);
-
-		return data;
-	} catch (e: any) {
-		console.log(
-			"api.auth.create.account:",
-			new Date().toLocaleString(),
-			e.response.data
-		);
-		throw Error(e.response.data.message);
-	}
-};
-
 export const getAccount = async (cookieString: RequestCookies | string) => {
 	try {
 		const { status, data } = await axios.get(

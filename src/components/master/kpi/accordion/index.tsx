@@ -13,7 +13,7 @@ const KpiAccordion = () => {
 		profesi,
 		name,
 		grade,
-		setExpanded,
+		status,
 	} = useKpiStore();
 	const data = qc.getQueryData([
 		"master.kpi",
@@ -24,6 +24,7 @@ const KpiAccordion = () => {
 			profesi,
 			name,
 			grade,
+			status,
 		},
 	]) satisfies KpiWithPagination | undefined;
 

@@ -19,6 +19,7 @@ const KpiComponent = () => {
 		profesi,
 		name,
 		grade,
+		status,
 	} = useKpiStore();
 	const queries = useQueries({
 		queries: [
@@ -32,6 +33,7 @@ const KpiComponent = () => {
 						profesi,
 						name,
 						grade,
+						status,
 					},
 				],
 				queryFn: getPage,
@@ -43,7 +45,9 @@ const KpiComponent = () => {
 		<>
 			<KpiFilter />
 			<Divider sx={{ my: 1 }} />
-			{loading ? <LinearProgress sx={{ mb: 1 }} /> : null}
+			{queries[0].isLoading || queries[0].isFetching ? (
+				<LinearProgress sx={{ mb: 1 }} />
+			) : null}
 			{queries[0].error ? (
 				<>KPI Not Found!</>
 			) : (

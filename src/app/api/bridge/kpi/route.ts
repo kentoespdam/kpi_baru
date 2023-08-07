@@ -13,8 +13,9 @@ import { Position, REMOTE_POSITION } from "@myTypes/entity/position";
 import axios from "axios";
 import { NextRequest } from "next/server";
 import { DEFAULT_MAIL_DOMAIN } from "src/lib";
-import { createAccount } from "src/lib/appwrite";
-import { getAllUser } from "src/lib/appwrite/user";
+import { createUserAccount, getAllUser } from "src/lib/appwrite/user";
+
+export const revalidate = 0;
 
 export const GET = async (req: NextRequest) => {
 	const cookie = req.cookies;
@@ -91,7 +92,7 @@ export const POST = async (req: NextRequest) => {
 			headers: appwriteHeader(cookie, token),
 		});
 		if (status === 201)
-			await createAccount(cookie, {
+			await createUserAccount({
 				userId: body.nipam,
 				email: `${body.nipam}@${DEFAULT_MAIL_DOMAIN}`,
 				name: body.name,

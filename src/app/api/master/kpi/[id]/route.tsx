@@ -73,3 +73,25 @@ export const PUT = async (
 		});
 	}
 };
+
+export const DELETE = async (
+	req: NextRequest,
+	{ params }: { params: { id: number } }
+) => {
+	const { id } = params;
+	const cookie = req.cookies;
+
+	try {
+		const token = await getCurrentToken(cookie);
+		const { status, data } = await axios.delete(`${REMOTE_KPI}/${id}`, {
+			headers: appwriteHeader(cookie, token),
+		});
+
+		return new Response(JSON.stringify(data), { status });
+	} catch (e: any) {
+		console.log("api.kpi.get.id", new Date().toString(), e);
+		return new Response(JSON.stringify(e.response.data), {
+			status: e.response.status,
+		});
+	}
+};

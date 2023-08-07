@@ -34,12 +34,16 @@ const KpiFilter = () => {
 	);
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setChecked(event.target.checked);
+		setKeyVal(
+			"status",
+			event.target.checked ? AUDIT_STATUS.ENABLED : AUDIT_STATUS.DISABLED
+		);
 	};
 	const enterHandler = (
 		e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>
 	) => {
 		if (e.key === "Enter") {
-			// setKeyVal(e.currentTarget.value);
+			setKeyVal("name", e.currentTarget.value);
 		}
 	};
 

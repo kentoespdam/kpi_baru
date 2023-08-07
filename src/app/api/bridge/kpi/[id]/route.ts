@@ -9,8 +9,13 @@ import { REMOTE_POSITION } from "@myTypes/entity/position";
 import axios from "axios";
 import { NextRequest } from "next/server";
 import { DEFAULT_MAIL_DOMAIN } from "src/lib";
-import { createAccount } from "src/lib/appwrite";
-import { updateRoleUser } from "src/lib/appwrite/user";
+import {
+	createUserAccount,
+	getPrefs,
+	updateRoleUser,
+} from "src/lib/appwrite/user";
+
+export const revalidate = 0;
 
 export const GET = async (
 	req: NextRequest,
@@ -37,9 +42,12 @@ export const GET = async (
 			`${REMOTE_POSITION}/${posId}`,
 			{ headers: appwriteHeader(cookie, token) }
 		);
+		const roles = await getPrefs(bridgeKpis.nipam);
+
 		bridgeKpis.organization = orgData.data;
 		bridgeKpis.position = posData.data;
-
+		bridgeKpis.roles = roles.roles;
+		
 		data.data = bridgeKpis;
 
 		if (status === 204) return responseNoContent();
@@ -74,14 +82,13 @@ export const PUT = async (
 				headers: appwriteHeader(cookie, token),
 			}
 		);
-		const account = await createAccount(cookie, {
+		const account = await createUserAccount({
 			userId: body.nipam,
 			email: `${body.nipam}@${DEFAULT_MAIL_DOMAIN}`,
 			name: body.name,
 			password: `${process.env.DEFAULT_PASSWORD}`,
 		});
-		console.log(account);
-		await updateRoleUser(account.userId, body.roles);
+		await updateRoleUser(account.$id, body.roles);
 		return new Response(JSON.stringify(data), { status: status });
 	} catch (e: any) {
 		console.log(

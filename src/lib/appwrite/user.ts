@@ -1,5 +1,45 @@
 import axios from "axios";
-import { APPWRITE_ENDPOINT, APPWRITE_PROJECT_ID, APPWRITE_API_KEY } from "..";
+import {
+	APPWRITE_ENDPOINT,
+	APPWRITE_PROJECT_ID,
+	APPWRITE_API_KEY,
+	defaultRoles,
+} from "..";
+
+export const createUserAccount = async (account: {
+	userId: string;
+	email: string;
+	password: string;
+	name: string;
+}) => {
+	try {
+		const user = await getUserByNipam(account.userId);
+		if (user) return user;
+
+		const { data } = await axios.post(
+			`${APPWRITE_ENDPOINT}/v1/account`,
+			account,
+			{
+				headers: {
+					"Content-Type": "Application/json",
+					"X-Appwrite-Response-Format": "1.0.0",
+					"X-Appwrite-Project": APPWRITE_PROJECT_ID,
+					"X-Appwrite-Key": APPWRITE_API_KEY,
+				},
+			}
+		);
+
+		data.prefs = await updateRoleUser(data.$id, defaultRoles);
+		return data;
+	} catch (e: any) {
+		console.log(
+			"lib.appwrite.create.user.account",
+			new Date().toISOString(),
+			e.response.data
+		);
+		return null;
+	}
+};
 
 export const getAllUser = async () => {
 	try {

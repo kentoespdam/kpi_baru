@@ -4,6 +4,8 @@ import { REMOTE_BRIDGE_KPI } from "@myTypes/entity/bridge.kpi";
 import axios from "axios";
 import { NextRequest } from "next/server";
 
+export const revalidate = 0;
+
 export const GET = async (
 	req: NextRequest,
 	{ params }: { params: { nipam: number } }
