@@ -13,10 +13,7 @@ const FilePage = ({
 	return (
 		<Suspense fallback={<>Rendering Page...</>}>
 			<CardBuilder title={metadata.title} isLink={false} color="success">
-				<TransKpiFileListComponent
-					indikatorId={indikatorId}
-					uraianId={uraianId}
-				/>
+				<TransKpiFileListComponent uraianId={uraianId} />
 			</CardBuilder>
 		</Suspense>
 	);

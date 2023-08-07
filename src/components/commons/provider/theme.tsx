@@ -9,10 +9,10 @@ import { myTheme } from "../theme";
 import { useTemplateStore } from "@store/main/template";
 
 const TemplateProvider = ({ children }: ChildrenProps) => {
-	const mode = "light";
+	// const mode = "light";
 	const theme = useMemo(() => {
 		return createTheme(myTheme());
-	}, [mode]);
+	}, []);
 	const isDesktop = useMediaQuery("(min-width:600px)");
 
 	useEffect(() => useTemplateStore.setState({ isDesktop }), [isDesktop]);

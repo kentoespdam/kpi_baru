@@ -8,20 +8,20 @@ export const GET = async (req: NextRequest) => {
 	try {
 		if (cookies.size === 0)
 			return NextResponse.redirect(new URL("/auth", req.url));
-		await axios.delete(`${APPWRITE_ENDPOINT}/v1/account/sessions/current`, {
-			headers: appwriteHeader(cookies),
-		});
-		return NextResponse.redirect(new URL("/auth", req.url), {
-			headers: {
-				"Set-Cookie": setExpiredCookie(cookies),
-			},
-		});
-	} catch (e: any) {
-		console.log(
-			"api.auth.logout.get",
-			new Date().toISOString(),
-			e.response.data
+		const { status, data } = await axios.delete(
+			`${APPWRITE_ENDPOINT}/v1/account/sessions/current`,
+			{
+				headers: appwriteHeader(cookies),
+			}
 		);
+		if (status === 204)
+			return NextResponse.redirect(new URL("/auth", req.url), {
+				headers: {
+					"Set-Cookie": setExpiredCookie(cookies),
+				},
+			});
+	} catch (e: any) {
+		console.log("api.auth.logout.delete", new Date().toISOString());
 		return NextResponse.redirect(new URL("/auth", req.url), {
 			headers: {
 				"Set-Cookie": setExpiredCookie(cookies),

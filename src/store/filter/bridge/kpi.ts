@@ -30,8 +30,8 @@ export const useBridgeKpiStore = create<BridgeKpiStore>((set) => ({
 	status: AUDIT_STATUS.ENABLED,
 	nipam: null,
 	name: null,
-	positionId: null,
-	organizationId: null,
-	levelId: null,
-	kpiId: null,
+	position: null,
+	organization: null,
+	level: null,
+	kpi: null,
 }));
