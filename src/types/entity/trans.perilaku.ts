@@ -9,6 +9,5 @@ export interface TransPerilaku extends BaseId{
 	organizationId: number;
 	positionId: number;
 	periode: string;
-	totalNilai: number;
 	perilakuList: TransPerilakuNilai[];
 }

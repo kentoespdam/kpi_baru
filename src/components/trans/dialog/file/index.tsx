@@ -1,11 +1,11 @@
 import { DialogSlideTransition } from "@components/commons/effect/transition/dialog";
-import TransKpiFileListComponent from "@trans/kpi/staff/file";
 import CloseIcon from "@mui/icons-material/Close";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import IconButton from "@mui/material/IconButton";
 import { useViewFileDialogStore } from "@store/dialog/view.file";
+import TransKpiFileListComponent from "@trans/kpi/staff/file";
 
 const ViewFileDialog = () => {
 	const { isViewOpen, toggleViewOpen, idUraian } = useViewFileDialogStore();

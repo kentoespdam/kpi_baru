@@ -1,27 +1,22 @@
+import { findStaff } from "@helper/employee";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
+import IconButton from "@mui/material/IconButton";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import { DetEmployee } from "@myTypes/entity/det.employee";
+import { useTransKinerjaStore } from "@store/filter/trans/kinerja";
 import { useSessionStore } from "@store/main/session";
 import { useQueryClient } from "@tanstack/react-query";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-import { useTransKpiBawahanStore } from "@store/filter/trans/bawahan";
-import IconButton from "@mui/material/IconButton";
-import KpiBawahanAccordionDetail from "./detail";
+import TransKpiBawahanTabs from "@components/trans/bawahan/accordion/tabs";
 
-const findStaff = (staffList: DetEmployee, nipam: string) => {
-	if (staffList.staff === undefined) return null;
-	return staffList.staff.find((item) => item.nipam === nipam);
-};
-
-type BawahanAccordionComponentProps = {
+type AccordionBawahanProps = {
 	staffNipam: string;
 };
-
-const BawahanAccordionComponent = (props: BawahanAccordionComponentProps) => {
+const AccordionBawahan = (props: AccordionBawahanProps) => {
 	const { staffNipam } = props;
-	const { expanded, setExpanded, setNipamStaff } = useTransKpiBawahanStore();
+	const { expanded, setExpanded, setNipamStaff } = useTransKinerjaStore();
 	const curNipam = useSessionStore.getState().user?.userId;
 	const qc = useQueryClient();
 	const data = qc.getQueryData<DetEmployee>(["employee-detail", curNipam]);
@@ -65,11 +60,9 @@ const BawahanAccordionComponent = (props: BawahanAccordionComponentProps) => {
 					</Typography>
 				</Stack>
 			</AccordionSummary>
-			{expanded ? (
-				<KpiBawahanAccordionDetail currStaff={currStaff!} />
-			) : null}
+			{expanded ? <TransKpiBawahanTabs /> : null}
 		</Accordion>
 	);
 };
 
-export default BawahanAccordionComponent;
+export default AccordionBawahan;

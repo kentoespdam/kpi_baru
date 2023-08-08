@@ -1,13 +1,13 @@
 import TableBody from "@mui/material/TableBody";
 import { TransKpiWithAudit } from "@myTypes/entity/trans.kpi";
-import { useTransKpiBawahanStore } from "@store/filter/trans/bawahan";
+import { useTransKinerjaStore } from "@store/filter/trans/kinerja";
 import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useQueryClient } from "@tanstack/react-query";
 import DetailKpiBawahanIndikator from "./indikator";
 
 const DetailKpiBawahanTableBody = () => {
 	const periode = useTransKpiStore((state) => state.periode);
-	const { nipamStaff, bridgeKpiBawahan } = useTransKpiBawahanStore();
+	const { nipamStaff, bridgeKpiBawahan } = useTransKinerjaStore();
 	const qc = useQueryClient();
 	const data = qc.getQueryData<TransKpiWithAudit>([
 		"trans.kpi.bawahan",

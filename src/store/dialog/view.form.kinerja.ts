@@ -1,8 +1,8 @@
 import { create } from "zustand";
 
-interface ViewFormDialogStore {
-	isFormOpen: boolean;
-	toggleFormOpen: () => void;
+interface ViewFormKinerjaDialogStore {
+	isFormKinerjaOpen: boolean;
+	toggleFormKinerjaOpen: () => void;
 	staffNipam: string | null;
 	setStaffNipam: (nipam: string | null) => void;
 	idKpi: number | null;
@@ -12,9 +12,9 @@ interface ViewFormDialogStore {
 	reset: () => void;
 }
 
-export const useViewFormDialogStore = create<ViewFormDialogStore>((set) => ({
-	isFormOpen: false,
-	toggleFormOpen: () => set((state) => ({ isFormOpen: !state.isFormOpen })),
+export const useViewFormKinerjaDialogStore = create<ViewFormKinerjaDialogStore>((set) => ({
+	isFormKinerjaOpen: false,
+	toggleFormKinerjaOpen: () => set((state) => ({ isFormKinerjaOpen: !state.isFormKinerjaOpen })),
 	staffNipam: null,
 	setStaffNipam: (nipam) => set({ staffNipam: nipam }),
 	idKpi: null,

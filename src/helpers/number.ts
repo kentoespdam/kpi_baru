@@ -5,3 +5,5 @@ export const rupiah = (rp: number, fraction?: number) => {
 		maximumFractionDigits: fraction ? fraction : 0,
 	}).format(rp);
 };
+
+export const isDecimal = (nilai: number) => nilai % 1 !== 0;

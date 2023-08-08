@@ -2,12 +2,14 @@ import { rupiah } from "@helper/number";
 import Chip from "@mui/material/Chip";
 import TableCell, { TableCellProps } from "@mui/material/TableCell";
 import { useTheme } from "@mui/material/styles";
+import { ReactNode } from "react";
 
 const numberBuilder = (num: number, currency?: boolean, percent?: boolean) =>
 	currency ? rupiah(num) : percent ? `${num}%` : num;
 
 interface CellBuilderProps extends TableCellProps {
-	value: number | string;
+	children?: ReactNode;
+	value?: number | string;
 	chip?: boolean;
 	chipColor?: "success" | "error";
 	currency?: boolean;
@@ -17,6 +19,7 @@ interface CellBuilderProps extends TableCellProps {
 }
 const CellBuilder = (props: CellBuilderProps) => {
 	const {
+		children,
 		value,
 		chip,
 		chipColor,
@@ -35,6 +38,20 @@ const CellBuilder = (props: CellBuilderProps) => {
 	};
 
 	const myStyle = { whiteSpace: noWrap ? "nowrap" : undefined };
+	if (children)
+		return (
+			<TableCell
+				sx={{
+					...sx,
+					...borderedSx,
+					whiteSpace: noWrap ? "nowrap" : undefined,
+				}}
+				align={align ? align : "left"}
+				{...other}
+			>
+				{children}
+			</TableCell>
+		);
 
 	if (chip)
 		return (

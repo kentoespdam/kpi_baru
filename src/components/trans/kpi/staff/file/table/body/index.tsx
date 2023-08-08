@@ -2,11 +2,9 @@ import CellBuilder from "@components/commons/table/cell.builder";
 import TableLoading from "@components/commons/table/loading";
 import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
-import { useViewFileDialogStore } from "@store/dialog/view.file";
-import { useQueries, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getFiles } from "@utils/trans/file";
-import TransKpiFileListItemCell from "./file.cell";
 import { TransFile } from "@myTypes/entity/trans.file";
+import { useQueryClient } from "@tanstack/react-query";
+import TransKpiFileListItemCell from "./file.cell";
 
 type TransKpiFileListTableBodyProps = {
 	uraianId: number;

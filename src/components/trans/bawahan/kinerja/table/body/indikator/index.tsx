@@ -23,6 +23,7 @@ const DetailKpiBawahanIndikator = (props: DetailKpiBawahanIndikatorProps) => {
 					value={indikator.indikator}
 					rowSpan={rowSpan}
 					bordered
+					noWrap
 				/>
 				{uraianSize > 0 ? (
 					<DetailKpiBawahanUraian

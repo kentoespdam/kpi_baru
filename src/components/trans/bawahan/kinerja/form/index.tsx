@@ -13,7 +13,7 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { TransUraian, TransUraianData } from "@myTypes/entity/trans.uraian";
 import { AUDIT_STATUS } from "@myTypes/index";
-import { useViewFormDialogStore } from "@store/dialog/view.form";
+import { useViewFormKinerjaDialogStore } from "@store/dialog/view.form.kinerja";
 import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { doSave, getById } from "@utils/trans/uraian";
@@ -21,8 +21,8 @@ import { useSnackbar } from "notistack";
 import React from "react";
 
 const KpiKinerjaForm = () => {
-	const { toggleFormOpen, staffNipam, idKpi, idUraian, reset } =
-		useViewFormDialogStore();
+	const { toggleFormKinerjaOpen: toggleFormOpen, staffNipam, idKpi, idUraian, reset } =
+		useViewFormKinerjaDialogStore();
 	const periode = useTransKpiStore((state) => state.periode);
 	const { enqueueSnackbar } = useSnackbar();
 	const qc = useQueryClient();

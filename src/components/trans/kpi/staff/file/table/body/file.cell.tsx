@@ -12,6 +12,7 @@ import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useSessionStore } from "@store/main/session";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { doDelete } from "@utils/trans/file";
+import axios from "axios";
 import Link from "next/link";
 import { useSnackbar } from "notistack";
 
@@ -97,6 +98,7 @@ const TransKpiFileListItemCell = (props: TransKpiFileListItemCellProps) => {
 							href={`${LOCAL_URAIAN_FILE}/download/${uraianFile.id}`}
 							color="info"
 							size="small"
+							target="blank"
 							startIcon={<FileDownloadIcon />}
 						>
 							{uraianFile.fileName}

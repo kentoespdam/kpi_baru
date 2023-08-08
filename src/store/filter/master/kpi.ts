@@ -3,11 +3,8 @@ import { KpiFilter } from "@myTypes/entity/kpi";
 import { AUDIT_STATUS, Nullable } from "@myTypes/index";
 import { create } from "zustand";
 import { BaseStore } from "..";
+import { AccordionStore } from "@store/main/accordion";
 
-export interface AccordionStore {
-	expanded: string | false;
-	setExpanded: (expanded: string | false) => void;
-}
 interface KpiStore extends BaseStore, Nullable<KpiFilter>, AccordionStore {}
 
 export const useKpiStore = create<KpiStore>((set) => ({

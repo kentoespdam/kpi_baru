@@ -1,15 +1,21 @@
 import CellBuilder from "@components/commons/table/cell.builder";
+import {
+	hitungTotalBobot,
+	hitungTotalNilaiProdukKerja,
+	hitungTotalNilaiWaktu,
+} from "@helper/nilaiKinerja";
+import TableBody from "@mui/material/TableBody";
 import TableFooter from "@mui/material/TableFooter";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { TransKpiWithAudit } from "@myTypes/entity/trans.kpi";
-import { useTransKpiBawahanStore } from "@store/filter/trans/bawahan";
+import { useTransKinerjaStore } from "@store/filter/trans/kinerja";
 import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useQueryClient } from "@tanstack/react-query";
 
 const DetailKpiBawahanTableFooter = () => {
 	const periode = useTransKpiStore((state) => state.periode);
-	const { nipamStaff, bridgeKpiBawahan } = useTransKpiBawahanStore();
+	const { nipamStaff, bridgeKpiBawahan } = useTransKinerjaStore();
 	const qc = useQueryClient();
 	const data = qc.getQueryData<TransKpiWithAudit>([
 		"trans.kpi.bawahan",
@@ -32,21 +38,48 @@ const DetailKpiBawahanTableFooter = () => {
 				</TableRow>
 			</TableFooter>
 		);
-	const totalBobot = data.indikatorList
-		.map((item) => item.uraianList.map((item2) => item2.bobot))
-		.flat()
-		.reduce((a, b) => a + b, 0);
 
 	return (
-		<TableHead>
+		<TableFooter>
 			<TableRow>
-				<CellBuilder colSpan={6} align="right" value="Total" bordered />
-				<CellBuilder value={`${totalBobot}%`} align="right" bordered />
-				<CellBuilder colSpan={5} value="" bordered />
-				<CellBuilder value={data.nilaiTotal} bordered />
+				<CellBuilder
+					colSpan={6}
+					align="right"
+					value="Total"
+					bordered
+					sx={{ fontWeight: "bold" }}
+				/>
+				<CellBuilder
+					value={hitungTotalBobot(data.indikatorList)}
+					align="right"
+					bordered
+					percent
+					sx={{ fontWeight: "bold" }}
+				/>
+				<CellBuilder colSpan={3} value="" bordered />
+				<CellBuilder
+					value={hitungTotalNilaiProdukKerja(data.indikatorList)}
+					bordered
+					percent
+					align="right"
+					sx={{ fontWeight: "bold" }}
+				/>
+				<CellBuilder
+					value={hitungTotalNilaiWaktu(data.indikatorList)}
+					bordered
+					percent
+					align="right"
+					sx={{ fontWeight: "bold" }}
+				/>
+				<CellBuilder
+					value={data.nilaiTotal}
+					bordered
+					percent
+					sx={{ fontWeight: "bold" }}
+				/>
 				<CellBuilder value="" bordered />
 			</TableRow>
-		</TableHead>
+		</TableFooter>
 	);
 };
 

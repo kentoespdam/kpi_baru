@@ -8,7 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import Tooltip from "@mui/material/Tooltip";
 import { useTheme } from "@mui/material/styles";
 import { TransUraian } from "@myTypes/entity/trans.uraian";
-import { useViewFormDialogStore } from "@store/dialog/view.form";
+import { useViewFormKinerjaDialogStore } from "@store/dialog/view.form.kinerja";
 
 type UraianCellProps = {
 	nipamStaff: string | null;
@@ -21,8 +21,8 @@ const UraianCell = (props: UraianCellProps) => {
 	const { fileList } = uraian;
 
 	const editHandler = () => {
-		useViewFormDialogStore.setState({
-			isFormOpen: true,
+		useViewFormKinerjaDialogStore.setState({
+			isFormKinerjaOpen: true,
 			staffNipam: nipamStaff,
 			idKpi: idKpi,
 			idUraian: uraian.id,
@@ -50,9 +50,9 @@ const UraianCell = (props: UraianCellProps) => {
 				}}
 				bordered
 			/>
-			<CellBuilder value={uraian.nilaiProdukKerja} bordered />
-			<CellBuilder value={uraian.nilaiWaktu} bordered />
-			<CellBuilder value={uraian.nilaiTotalUraian} bordered />
+			<CellBuilder value={uraian.nilaiProdukKerja} bordered percent/>
+			<CellBuilder value={uraian.nilaiWaktu} bordered percent />
+			<CellBuilder value={uraian.nilaiTotalUraian} bordered percent />
 			<TableCell sx={{ border: `1px solid ${theme.palette.divider}` }}>
 				<Stack direction="row">
 					<Tooltip title="Edit Uraian KPI Bawahan" followCursor>

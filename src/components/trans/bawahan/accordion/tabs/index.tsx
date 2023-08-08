@@ -1,11 +1,12 @@
 import Box from "@mui/material/Box";
-import Tab from "@mui/material/Tab";
-import Tabs from "@mui/material/Tabs";
-import { SyntheticEvent, useState } from "react";
-import TransKpiTabPanel from "./panel";
-import TransKpiKinerja from "@trans/bawahan/kinerja";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
+import TransKinerjaTable from "@trans/bawahan/kinerja/table";
+import { SyntheticEvent, useState } from "react";
+import TransKpiTabPanel from "./panel";
+import TransPerilakuTable from "../../perilaku/table";
 
 const tabProps = (index: number) => {
 	return { "id": `tab-${index}`, "aria-controls": `tabpanel-${index}` };
@@ -31,10 +32,10 @@ const TransKpiBawahanTabs = () => {
 					</Tabs>
 				</Box>
 				<TransKpiTabPanel value={tabIndex} index={0}>
-					<TransKpiKinerja />
+					<TransKinerjaTable />
 				</TransKpiTabPanel>
 				<TransKpiTabPanel value={tabIndex} index={1}>
-					Perilaku
+					<TransPerilakuTable />
 				</TransKpiTabPanel>
 			</CardContent>
 		</Card>

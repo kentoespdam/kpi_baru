@@ -4,11 +4,14 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import IconButton from "@mui/material/IconButton";
-import { useViewFormDialogStore } from "@store/dialog/view.form";
+import { useViewFormKinerjaDialogStore } from "@store/dialog/view.form.kinerja";
 import KpiKinerjaForm from "@trans/bawahan/kinerja/form";
 
-const ViewFormDialog = () => {
-	const { isFormOpen, toggleFormOpen } = useViewFormDialogStore();
+const ViewFormKinerjaDialog = () => {
+	const {
+		isFormKinerjaOpen: isFormOpen,
+		toggleFormKinerjaOpen: toggleFormOpen,
+	} = useViewFormKinerjaDialogStore();
 	return (
 		<Dialog
 			open={isFormOpen}
@@ -17,7 +20,7 @@ const ViewFormDialog = () => {
 			maxWidth="xs"
 		>
 			<DialogTitle>
-				Form Bawahan
+				Form Kinerja Staff
 				<IconButton
 					edge="start"
 					onClick={toggleFormOpen}
@@ -38,4 +41,4 @@ const ViewFormDialog = () => {
 	);
 };
 
-export default ViewFormDialog;
+export default ViewFormKinerjaDialog;

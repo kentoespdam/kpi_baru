@@ -1,13 +1,13 @@
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import CardHeader from "@mui/material/CardHeader";
+import Divider from "@mui/material/Divider";
 import { DetEmployee } from "@myTypes/entity/det.employee";
 import { useSessionStore } from "@store/main/session";
 import { useQueryClient } from "@tanstack/react-query";
-import BawahanAccordionComponent from "./accordion";
-import CardHeader from "@mui/material/CardHeader";
-import Divider from "@mui/material/Divider";
+import AccordionBawahan from "./accordion";
 
-const TransKpiKinerja = () => {
+const BawahanComponent = () => {
 	const curNipam = useSessionStore.getState().user?.userId;
 	const qc = useQueryClient();
 	const data = qc.getQueryData<DetEmployee>(["employee-detail", curNipam]);
@@ -23,7 +23,7 @@ const TransKpiKinerja = () => {
 			<Divider />
 			<CardContent>
 				{data?.staff.map((item) => (
-					<BawahanAccordionComponent
+					<AccordionBawahan
 						key={item.nipam}
 						staffNipam={item.nipam}
 					/>
@@ -33,4 +33,4 @@ const TransKpiKinerja = () => {
 	);
 };
 
-export default TransKpiKinerja;
+export default BawahanComponent;
