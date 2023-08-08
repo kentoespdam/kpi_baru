@@ -1,4 +1,4 @@
-import OrganizationAutcomplete from "@components/commons/autocomplete/organization";
+import OrganizationAutcomplete from "@autocomplete/organization";
 import { Organization } from "@myTypes/entity/organization";
 import { useState } from "react";
 import { SearchTypeProps } from ".";

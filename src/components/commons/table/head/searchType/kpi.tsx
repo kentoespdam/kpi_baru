@@ -1,4 +1,4 @@
-import KpiAutocomplete from "@components/commons/autocomplete/kpi";
+import KpiAutocomplete from "@autocomplete/kpi";
 import { Kpi } from "@myTypes/entity/kpi";
 import { useState } from "react";
 import { SearchTypeProps } from ".";

@@ -1,7 +1,7 @@
 "use client";
 
-import LevelAutocomplete from "@components/commons/autocomplete/level";
-import PerilakuAutocomplete from "@components/commons/autocomplete/perilaku";
+import LevelAutocomplete from "@autocomplete/level";
+import PerilakuAutocomplete from "@autocomplete/perilaku";
 import DoDisturbIcon from "@mui/icons-material/DoDisturb";
 import SaveIcon from "@mui/icons-material/Save";
 import LoadingButton from "@mui/lab/LoadingButton";

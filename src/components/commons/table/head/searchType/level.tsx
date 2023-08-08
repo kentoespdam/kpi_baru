@@ -1,4 +1,4 @@
-import LevelAutocomplete from "@components/commons/autocomplete/level";
+import LevelAutocomplete from "@autocomplete/level";
 import { Level } from "@myTypes/entity/level";
 import { useState } from "react";
 import { SearchTypeProps } from ".";

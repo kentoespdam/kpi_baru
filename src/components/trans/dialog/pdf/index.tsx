@@ -1,36 +1,46 @@
 import { DialogSlideTransition } from "@components/commons/effect/transition/dialog";
-import TransKpiFileListComponent from "@components/trans/kpi/staff/file";
+import ViewPdfComponent from "@trans/view/pdf/index";
 import CloseIcon from "@mui/icons-material/Close";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import IconButton from "@mui/material/IconButton";
 import { useViewFileDialogStore } from "@store/dialog/view.file";
+import { useViewPdfDialogStore } from "@store/dialog/view.pdf";
 
-const ViewFileDialog = () => {
-	const { isViewOpen, toggleViewOpen, idUraian } = useViewFileDialogStore();
+const ViewPdfDialog = () => {
+	const toggleViewOpen = useViewFileDialogStore(
+		(state) => state.toggleViewOpen
+	);
+	const { isViewPdfOpen, toggleViewPdfOpen, fileId } =
+		useViewPdfDialogStore();
 
-	return idUraian ? (
+	const handleClick = () => {
+		toggleViewOpen();
+		toggleViewPdfOpen();
+	};
+
+	return fileId ? (
 		<Dialog
 			fullScreen
-			open={isViewOpen}
-			onClose={toggleViewOpen}
+			open={isViewPdfOpen}
+			onClose={handleClick}
 			TransitionComponent={DialogSlideTransition}
 		>
 			<DialogContent sx={{ px: 4, py: 1 }}>
 				<DialogActions>
 					<IconButton
 						edge="start"
-						onClick={toggleViewOpen}
+						onClick={handleClick}
 						aria-label="close"
 					>
 						<CloseIcon />
 					</IconButton>
 				</DialogActions>
-				<TransKpiFileListComponent uraianId={idUraian} />
+				<ViewPdfComponent id={fileId} />
 			</DialogContent>
 		</Dialog>
 	) : null;
 };
 
-export default ViewFileDialog;
+export default ViewPdfDialog;

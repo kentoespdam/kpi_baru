@@ -7,7 +7,7 @@ import BawahanAccordionComponent from "./accordion";
 import CardHeader from "@mui/material/CardHeader";
 import Divider from "@mui/material/Divider";
 
-const KpiBawahanComponent = () => {
+const TransKpiKinerja = () => {
 	const curNipam = useSessionStore.getState().user?.userId;
 	const qc = useQueryClient();
 	const data = qc.getQueryData<DetEmployee>(["employee-detail", curNipam]);
@@ -33,4 +33,4 @@ const KpiBawahanComponent = () => {
 	);
 };
 
-export default KpiBawahanComponent;
+export default TransKpiKinerja;

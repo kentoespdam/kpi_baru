@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { SearchTypeProps } from ".";
 import { Perilaku } from "@myTypes/entity/perilaku";
-import PerilakuAutocomplete from "@components/commons/autocomplete/perilaku";
+import PerilakuAutocomplete from "@autocomplete/perilaku";
 
 const SearchtypePerilaku = (props: SearchTypeProps) => {
 	const { field, handleSearch, perilaku } = props;

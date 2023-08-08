@@ -12,7 +12,7 @@ import { getBridgeKpi, getStaffKpi } from "@utils/trans/kpi";
 import EmployeeComponent from "./employee";
 import DetailEmployeeSkeleton from "./employee/detail/skeleton";
 import KpiCard from "./kpi";
-import KpiBawahanComponent from "./kpi/bawahan";
+import TransKpiBawahanTabs from "./tabs";
 
 const TransRoot = () => {
 	const curNipam = useSessionStore.getState().user?.userId;
@@ -87,7 +87,7 @@ const TransRoot = () => {
 
 				<KpiCard />
 
-				{queries[0].data?.staff ? <KpiBawahanComponent /> : null}
+				{queries[0].data?.staff ? <TransKpiBawahanTabs /> : null}
 			</Stack>
 		</>
 	);

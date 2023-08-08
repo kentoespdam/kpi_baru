@@ -1,10 +1,6 @@
 import { NextRequest } from "next/server";
-import {
-	createAccount,
-	updateEmail,
-	updateName,
-	updatePassword,
-} from "src/lib/appwrite";
+import { updateEmail, updateName, updatePassword } from "src/lib/appwrite";
+import { createUserAccount } from "src/lib/appwrite/user";
 
 export const PATCH = async (
 	req: NextRequest,
@@ -16,7 +12,7 @@ export const PATCH = async (
 
 	switch (slug) {
 		case "create":
-			return createAccount(cookies, body);
+			return createUserAccount(body);
 		case "password":
 			return updatePassword(cookies, body?.newPass, body?.oldPass);
 		case "name":

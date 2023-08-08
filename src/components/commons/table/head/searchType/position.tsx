@@ -1,4 +1,4 @@
-import PositionAutcomplete from "@components/commons/autocomplete/position";
+import PositionAutcomplete from "@autocomplete/position";
 import { Position } from "@myTypes/entity/position";
 import { useState } from "react";
 import { SearchTypeProps } from ".";

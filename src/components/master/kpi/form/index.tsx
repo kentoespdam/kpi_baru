@@ -1,8 +1,8 @@
 "use client";
 
-import GradeAutocomplete from "@components/commons/autocomplete/grade";
-import PositionAutcomplete from "@components/commons/autocomplete/position";
-import ProfesiAutocomplete from "@components/commons/autocomplete/profesi";
+import GradeAutocomplete from "@autocomplete/grade";
+import PositionAutcomplete from "@autocomplete/position";
+import ProfesiAutocomplete from "@autocomplete/profesi";
 import DoDisturbIcon from "@mui/icons-material/DoDisturb";
 import SaveIcon from "@mui/icons-material/Save";
 import LoadingButton from "@mui/lab/LoadingButton";

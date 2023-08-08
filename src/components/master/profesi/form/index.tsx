@@ -1,5 +1,5 @@
 "use client";
-import LevelAutocomplete from "@components/commons/autocomplete/level";
+import LevelAutocomplete from "@autocomplete/level";
 import BlockIcon from "@mui/icons-material/Block";
 import SaveIcon from "@mui/icons-material/Save";
 import LoadingButton from "@mui/lab/LoadingButton";

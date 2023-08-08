@@ -1,11 +1,11 @@
 import { DialogSlideTransition } from "@components/commons/effect/transition/dialog";
-import KpiBawahanForm from "@components/trans/kpi/bawahan/form";
 import CloseIcon from "@mui/icons-material/Close";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import IconButton from "@mui/material/IconButton";
 import { useViewFormDialogStore } from "@store/dialog/view.form";
+import KpiKinerjaForm from "@trans/bawahan/kinerja/form";
 
 const ViewFormDialog = () => {
 	const { isFormOpen, toggleFormOpen } = useViewFormDialogStore();
@@ -32,7 +32,7 @@ const ViewFormDialog = () => {
 				</IconButton>
 			</DialogTitle>
 			<DialogContent>
-				<KpiBawahanForm />
+				<KpiKinerjaForm />
 			</DialogContent>
 		</Dialog>
 	);

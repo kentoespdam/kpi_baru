@@ -1,10 +1,10 @@
 "use client";
 
-import EmployeeAutocomplete from "@components/commons/autocomplete/employee";
-import KpiAutocomplete from "@components/commons/autocomplete/kpi";
-import LevelAutocomplete from "@components/commons/autocomplete/level";
-import OrganizationAutcomplete from "@components/commons/autocomplete/organization";
-import RolesAutocomple from "@components/commons/autocomplete/roles";
+import EmployeeAutocomplete from "@autocomplete/employee";
+import KpiAutocomplete from "@autocomplete/kpi";
+import LevelAutocomplete from "@autocomplete/level";
+import OrganizationAutcomplete from "@autocomplete/organization";
+import RolesAutocomple from "@autocomplete/roles";
 import DoDisturbIcon from "@mui/icons-material/DoDisturb";
 import SaveIcon from "@mui/icons-material/Save";
 import LoadingButton from "@mui/lab/LoadingButton";

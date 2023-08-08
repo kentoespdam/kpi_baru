@@ -1,5 +1,5 @@
 import CardBuilder from "@components/commons/card";
-import ViewPdfComponent from "@components/trans/kpi/view/pdf";
+import ViewPdfComponent from "@trans/view/pdf";
 
 export const metadata = { title: "View Pdf File" };
 const TransKpiViewPdf = ({ params }: { params: { id: number } }) => {

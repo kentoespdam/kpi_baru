@@ -1,8 +1,8 @@
 "use client";
 
-import IndikatorAutocomplete from "@components/commons/autocomplete/indikator";
-import KpiAutocomplete from "@components/commons/autocomplete/kpi";
-import WaktuAutocomplete from "@components/commons/autocomplete/waktu";
+import IndikatorAutocomplete from "@autocomplete/indikator";
+import KpiAutocomplete from "@autocomplete/kpi";
+import WaktuAutocomplete from "@autocomplete/waktu";
 import DoDisturbIcon from "@mui/icons-material/DoDisturb";
 import SaveIcon from "@mui/icons-material/Save";
 import LoadingButton from "@mui/lab/LoadingButton";

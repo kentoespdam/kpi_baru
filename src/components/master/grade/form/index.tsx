@@ -1,6 +1,6 @@
 "use client";
 
-import LevelAutocomplete from "@components/commons/autocomplete/level";
+import LevelAutocomplete from "@autocomplete/level";
 import DoDisturbIcon from "@mui/icons-material/DoDisturb";
 import SaveIcon from "@mui/icons-material/Save";
 import LoadingButton from "@mui/lab/LoadingButton";

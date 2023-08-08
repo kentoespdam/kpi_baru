@@ -1,4 +1,4 @@
-import WaktuAutocomplete from "@components/commons/autocomplete/waktu";
+import WaktuAutocomplete from "@autocomplete/waktu";
 import {
 	hitungNilaiProdukKerja,
 	hitungNilaiTotalUraian,
@@ -20,7 +20,7 @@ import { doSave, getById } from "@utils/trans/uraian";
 import { useSnackbar } from "notistack";
 import React from "react";
 
-const KpiBawahanForm = () => {
+const KpiKinerjaForm = () => {
 	const { toggleFormOpen, staffNipam, idKpi, idUraian, reset } =
 		useViewFormDialogStore();
 	const periode = useTransKpiStore((state) => state.periode);
@@ -161,4 +161,4 @@ const KpiBawahanForm = () => {
 	);
 };
 
-export default KpiBawahanForm;
+export default KpiKinerjaForm;

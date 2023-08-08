@@ -23,13 +23,16 @@
 		"paths": {
 			// "@/*": ["./src/*"]
 			"@myConfig/*": ["./src/config/*"],
+			"@autocomplete/*": ["./src/components/commons/autocomplete/*"],
 			"@components/*": ["./src/components/*"],
 			"@myTypes/*": ["./src/types/*"],
 			"@myMui/*": ["src/components/commons/mui/*"],
 			"@template/*": ["./src/components/template/*"],
 			"@helper/*": ["./src/helpers/*"],
 			"@store/*": ["./src/store/*"],
-			"@utils/*": ["./src/utils/*"]
+			"@utils/*": ["./src/utils/*"],
+			"@transDialog/*": ["./src/components/trans/dialog/*"],
+			"@trans/*": ["./src/components/trans/*"]
 		}
 	},
 	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
