@@ -1,9 +1,9 @@
 import { UraianFilter } from "@myTypes/entity/uraian";
 import { AUDIT_STATUS, Nullable } from "@myTypes/index";
 import { BaseStore } from "..";
-import { AccordionStore } from "./kpi";
 import { create } from "zustand";
 import { SearchValueProps } from "@components/commons/table/head/search";
+import { AccordionStore } from "@store/main/accordion";
 
 interface UraianStore
 	extends BaseStore,

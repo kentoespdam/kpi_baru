@@ -1,9 +1,9 @@
 import { AUDIT_STATUS, Nullable } from "@myTypes/index";
 import { BaseStore } from "..";
 import { IndikatorFilter } from "@myTypes/entity/indikator";
-import { AccordionStore } from "./kpi";
 import { create } from "zustand";
 import { SearchValueProps } from "@components/commons/table/head/search";
+import { AccordionStore } from "@store/main/accordion";
 interface IndikatorStore
 	extends BaseStore,
 		Nullable<IndikatorFilter>,
