@@ -1,9 +1,9 @@
+import { SearchValueProps } from "@components/commons/table/head/search";
+import { LevelFilter } from "@myTypes/entity/level";
+import { AUDIT_STATUS, Nullable } from "@myTypes/index";
 import { PageRequest, SortRequest } from "@myTypes/table";
 import { create } from "zustand";
 import { BaseStore } from "..";
-import { AUDIT_STATUS, Nullable } from "@myTypes/index";
-import { LevelData, LevelFilter } from "@myTypes/entity/level";
-import { SearchValueProps } from "@components/commons/table/head/search";
 
 interface LevelStore extends BaseStore, Nullable<LevelFilter> {}
 

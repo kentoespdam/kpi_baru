@@ -1,4 +1,4 @@
-import { ProfesiData, ProfesiFilter } from "@myTypes/entity/profesi";
+import { ProfesiFilter } from "@myTypes/entity/profesi";
 import { AUDIT_STATUS, Nullable } from "@myTypes/index";
 import { create } from "zustand";
 import { BaseStore } from "..";

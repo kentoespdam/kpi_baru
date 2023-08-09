@@ -1,8 +1,8 @@
-import { GradeData, GradeFilter } from "@myTypes/entity/grade";
+import { SearchValueProps } from "@components/commons/table/head/search";
+import { GradeFilter } from "@myTypes/entity/grade";
 import { AUDIT_STATUS, Nullable } from "@myTypes/index";
 import { create } from "zustand";
 import { BaseStore } from "..";
-import { SearchValueProps } from "@components/commons/table/head/search";
 
 interface GradeStore extends BaseStore, Nullable<GradeFilter> {}
 

@@ -1,9 +1,9 @@
 import { SearchValueProps } from "@components/commons/table/head/search";
 import { KpiFilter } from "@myTypes/entity/kpi";
 import { AUDIT_STATUS, Nullable } from "@myTypes/index";
+import { AccordionStore } from "@store/main/accordion";
 import { create } from "zustand";
 import { BaseStore } from "..";
-import { AccordionStore } from "@store/main/accordion";
 
 interface KpiStore extends BaseStore, Nullable<KpiFilter>, AccordionStore {}
 
