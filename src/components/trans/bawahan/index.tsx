@@ -6,6 +6,8 @@ import { DetEmployee } from "@myTypes/entity/det.employee";
 import { useSessionStore } from "@store/main/session";
 import { useQueryClient } from "@tanstack/react-query";
 import AccordionBawahan from "./accordion";
+import ViewFormKinerjaDialog from "@transDialog/form/kinerja";
+import ViewFormPerilakuDialog from "@transDialog/form/perilaku";
 
 const BawahanComponent = () => {
 	const curNipam = useSessionStore.getState().user?.userId;
@@ -29,6 +31,8 @@ const BawahanComponent = () => {
 					/>
 				))}
 			</CardContent>
+			<ViewFormKinerjaDialog />
+			<ViewFormPerilakuDialog />
 		</Card>
 	);
 };

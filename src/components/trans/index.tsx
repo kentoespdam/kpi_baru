@@ -12,14 +12,12 @@ import { getEmpDetails } from "@utils/eo/employee";
 import { getBridgeKpi, getStaffKpi } from "@utils/trans/kpi";
 import { getBridgePerilaku, getTransPerilaku } from "@utils/trans/perilaku";
 import BawahanComponent from "./bawahan";
+import ViewFileDialog from "./dialog/file";
+import ViewPdfDialog from "./dialog/pdf";
+import ViewUploadDialog from "./dialog/upload";
 import EmployeeComponent from "./employee";
 import DetailEmployeeSkeleton from "./employee/detail/skeleton";
 import KpiCard from "./kpi";
-import ViewFileDialog from "./dialog/file";
-import ViewFormKinerjaDialog from "./dialog/form/kinerja";
-import ViewPdfDialog from "./dialog/pdf";
-import ViewUploadDialog from "./dialog/upload";
-import ViewFormPerilakuDialog from "./dialog/form/perilaku";
 
 const TransRoot = () => {
 	const curNipam = useSessionStore.getState().user?.userId;
@@ -112,16 +110,11 @@ const TransRoot = () => {
 
 				<KpiCard />
 
-				{queries[0].data?.staff ? (
-					<>
-						<BawahanComponent />
-						<ViewFileDialog />
-						<ViewPdfDialog />
-						<ViewUploadDialog />
-						<ViewFormKinerjaDialog />
-						<ViewFormPerilakuDialog />
-					</>
-				) : null}
+				{queries[0].data?.staff ? <BawahanComponent /> : null}
+
+				<ViewFileDialog />
+				<ViewPdfDialog />
+				<ViewUploadDialog />
 			</Stack>
 		</>
 	);

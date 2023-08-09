@@ -12,7 +12,6 @@ import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useSessionStore } from "@store/main/session";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { doDelete } from "@utils/trans/file";
-import axios from "axios";
 import Link from "next/link";
 import { useSnackbar } from "notistack";
 
@@ -45,6 +44,9 @@ const TransKpiFileListItemCell = (props: TransKpiFileListItemCellProps) => {
 						periode: periode!.periode,
 					},
 				],
+			});
+			qc.invalidateQueries({
+				queryKey: ["trans.file.list", Number(uraianFile.id)],
 			});
 			enqueueSnackbar("Data berhasil disimpan", { variant: "success" });
 		},

@@ -34,9 +34,9 @@ const KpiStaffComponents = () => {
 			<Table sx={{ border: `solid 1px ${theme.palette.divider}` }}>
 				<KpiStaffTableHead />
 				{state?.fetchStatus === "fetching" ? (
-					<TableLoading />
+					<TableLoading colSpan={5} />
 				) : state?.error ? (
-					<TableLoading error />
+					<TableLoading colSpan={5} error />
 				) : (
 					<KpiStaffTableBody />
 				)}
