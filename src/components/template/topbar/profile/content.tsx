@@ -95,6 +95,7 @@ const ProfileContent = () => {
 										edge="end"
 										aria-label="key"
 										LinkComponent={Link}
+										target="blank"
 										href="/profile/update/password"
 										onClick={toggleProfileMenu}
 									>

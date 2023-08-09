@@ -2,6 +2,7 @@ version: "3.4"
 
 services:
     kpi-staging:
+        container_name: staging-kpi
         build:
             context: ../../
             dockerfile: docker/staging/Dockerfile
