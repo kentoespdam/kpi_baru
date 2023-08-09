@@ -98,7 +98,7 @@ const TransKpiFileListItemCell = (props: TransKpiFileListItemCellProps) => {
 							href={`${LOCAL_URAIAN_FILE}/download/${uraianFile.id}`}
 							color="info"
 							size="small"
-							target="blank"
+							target="_blank"
 							startIcon={<FileDownloadIcon />}
 						>
 							{uraianFile.fileName}

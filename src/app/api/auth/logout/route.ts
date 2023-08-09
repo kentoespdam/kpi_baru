@@ -1,6 +1,6 @@
 import { appwriteHeader, setExpiredCookie } from "@helper/index";
 import axios from "axios";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { APPWRITE_ENDPOINT, sessionNames } from "src/lib";
 
 export const revalidate = false;
@@ -16,19 +16,41 @@ export const GET = async (req: NextRequest) => {
 				}
 			);
 			if (status === 204)
-				return NextResponse.redirect(new URL("/auth", req.url), {
-					headers: {
-						"Set-Cookie": setExpiredCookie(cookies),
-					},
-				});
+				return new Response(
+					JSON.stringify({
+						status: "success",
+						message: "Logout Success",
+					}),
+					{
+						headers: {
+							"Set-Cookie": setExpiredCookie(cookies),
+						},
+					}
+				);
 		}
-		return NextResponse.redirect(new URL("/auth", req.url));
+		return new Response(
+			JSON.stringify({
+				status: "success",
+				message: "Logout Success",
+			}),
+			{
+				headers: {
+					"Set-Cookie": setExpiredCookie(cookies),
+				},
+			}
+		);
 	} catch (e: any) {
 		console.log("api.auth.logout.delete", new Date().toISOString());
-		return NextResponse.redirect(new URL("/auth", req.url), {
-			headers: {
-				"Set-Cookie": setExpiredCookie(cookies),
-			},
-		});
+		return new Response(
+			JSON.stringify({
+				status: "success",
+				message: "Logout Success",
+			}),
+			{
+				headers: {
+					"Set-Cookie": setExpiredCookie(cookies),
+				},
+			}
+		);
 	}
 };

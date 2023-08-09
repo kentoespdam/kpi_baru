@@ -3,10 +3,10 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { ChildrenProps } from "@myTypes/index";
+import { useTemplateStore } from "@store/main/template";
 import { SnackbarProvider } from "notistack";
 import { useEffect, useMemo } from "react";
 import { myTheme } from "../theme";
-import { useTemplateStore } from "@store/main/template";
 
 const TemplateProvider = ({ children }: ChildrenProps) => {
 	// const mode = "light";
@@ -16,6 +16,7 @@ const TemplateProvider = ({ children }: ChildrenProps) => {
 	const isDesktop = useMediaQuery("(min-width:600px)");
 
 	useEffect(() => useTemplateStore.setState({ isDesktop }), [isDesktop]);
+
 	return (
 		<>
 			<ThemeProvider theme={theme}>

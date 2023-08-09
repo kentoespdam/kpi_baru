@@ -14,23 +14,30 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { useProfileStore } from "@store/main/menu";
 import { useSessionStore } from "@store/main/session";
+import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useSnackbar } from "notistack";
 
 const ProfileContent = () => {
-	const { user, setUser } = useSessionStore((state) => ({
-		user: state.user,
-		setUser: state.setUser,
-	}));
-	const { setAnchorEl, toggleProfileMenu } = useProfileStore((state) => ({
-		setAnchorEl: state.setAnchorEl,
-		toggleProfileMenu: state.toggleProfileMenu,
-	}));
+	const { user, setUser } = useSessionStore();
+	const toggleProfileMenu = useProfileStore(
+		(state) => state.toggleProfileMenu
+	);
 	const router = useRouter();
+	const { enqueueSnackbar } = useSnackbar();
+
 	async function handleLogout() {
-		setUser(null);
-		toggleProfileMenu();
-		router.push("/api/auth/logout");
+		enqueueSnackbar("Logging out...", { variant: "info" });
+		axios
+			.get("/api/auth/logout")
+			.then((res) => {
+				setUser(null);
+				toggleProfileMenu();
+			})
+			.finally(() => {
+				router.push("/auth");
+			});
 	}
 
 	return (

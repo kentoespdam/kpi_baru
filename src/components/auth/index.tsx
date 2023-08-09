@@ -1,27 +1,30 @@
 "use client";
 
-import Avatar from "@mui/material/Avatar";
-import Stack from "@mui/material/Stack";
+import { userToEmail } from "@helper/email";
 import LockIcon from "@mui/icons-material/Lock";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import LoadingButton from "@mui/lab/LoadingButton";
+import Avatar from "@mui/material/Avatar";
 import FormControl from "@mui/material/FormControl";
-import TextField from "@mui/material/TextField";
-import React from "react";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
 import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import InputAdornment from "@mui/material/InputAdornment";
-import IconButton from "@mui/material/IconButton";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import LoadingButton from "@mui/lab/LoadingButton";
-import axios from "axios";
-import { userToEmail } from "@helper/email";
-import { useSnackbar } from "notistack";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import { useSessionStore } from "@store/main/session";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { useSnackbar } from "notistack";
+import React from "react";
 
 const AuthComponent = () => {
-	const { user, setUser } = useSessionStore();
+	const [submitText, setSubmitText] = React.useState("LOGIN");
+	const router = useRouter();
+	const { setUser } = useSessionStore();
 	const usernameRef = React.useRef<HTMLInputElement>(null);
 	const passwordRef = React.useRef<HTMLInputElement>(null);
 	const { enqueueSnackbar } = useSnackbar();
@@ -37,25 +40,33 @@ const AuthComponent = () => {
 	const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
 		setLoading(true);
 		e.preventDefault();
-		try {
-			axios
-				.post("/api/auth", {
-					email: userToEmail(usernameRef.current!.value),
-					password: passwordRef.current!.value,
-				})
-				.then((response) => response.data)
-				.then((data) => setUser(data))
-				.then(() => {
-					setLoading(false);
-					enqueueSnackbar("Login Success", { variant: "success" });
-					window.location.href = "/";
-				});
-		} catch (e: any) {
-			setLoading(false);
-			const variant = "error";
-			enqueueSnackbar(e.response.data.message, { variant });
-			console.log("error", e.response.data.message);
-		}
+
+		setSubmitText("Authenticating...");
+
+		axios
+			.post("/api/auth", {
+				email: userToEmail(usernameRef.current!.value),
+				password: passwordRef.current!.value,
+			})
+			.then((response) => response.data)
+			.then((data) => {
+				setSubmitText("Setup User...");
+				setUser(data);
+			})
+			.then(() => {
+				enqueueSnackbar("Login Success", { variant: "success" });
+			})
+			.catch((e: any) => {
+				setLoading(false);
+				const variant = "error";
+				enqueueSnackbar(e.response.data.message, { variant });
+				console.log("error", e.response.data.message);
+				return;
+			})
+			.finally(() => {
+				setSubmitText("Redirecting...");
+				router.push("/");
+			});
 	};
 
 	return (
@@ -120,7 +131,13 @@ const AuthComponent = () => {
 					sx={{ mt: 2 }}
 					size="large"
 				>
-					<span>LOGIN</span>
+					<Typography
+						component="span"
+						variant="subtitle1"
+						color="inherit"
+					>
+						{submitText}
+					</Typography>
 				</LoadingButton>
 			</Stack>
 		</Stack>
