@@ -37,7 +37,7 @@ const TransKpiUraianComponent = (props: TransKpiUraianComponentProps) => {
 		<>
 			{uraianList.map((uraian, index) =>
 				index === 0 ? null : (
-					<TableRow key={uraian.id}>
+					<TableRow hover key={uraian.id}>
 						<UraianCell uraian={uraian} indikatorId={indikatorId} />
 					</TableRow>
 				)

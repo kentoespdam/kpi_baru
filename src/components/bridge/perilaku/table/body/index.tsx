@@ -22,7 +22,7 @@ const BridgePerilakuTableBody = () => {
 	return (
 		<TableBody>
 			{data.content.map((row) => (
-				<TableRow key={row.id}>
+				<TableRow hover key={row.id}>
 					<CellBuilder value={urut++} />
 					<TableCell>
 						<Typography variant="body1">

@@ -28,7 +28,7 @@ const LevelTableBody = () => {
 	return (
 		<TableBody>
 			{data.content.map((level) => (
-				<TableRow key={level.id}>
+				<TableRow hover key={level.id}>
 					<CellBuilder value={urut++} />
 					<CellBuilder value={level.level} />
 					<CellBuilder value={level.status} chip />

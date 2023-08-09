@@ -15,7 +15,7 @@ const TransKpiIndikatorComponent = (props: TransKpiIndikatorComponentProps) => {
 
 	return (
 		<>
-			<TableRow>
+			<TableRow hover>
 				<CellBuilder bordered rowSpan={rowSpan} value={urut} />
 				<CellBuilder
 					bordered

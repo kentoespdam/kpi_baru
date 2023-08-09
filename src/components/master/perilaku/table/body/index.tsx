@@ -23,7 +23,7 @@ const PerilakuTableBody = () => {
 	return (
 		<TableBody>
 			{data.content.map((perilaku) => (
-				<TableRow key={perilaku.id}>
+				<TableRow hover key={perilaku.id}>
 					<CellBuilder value={urut++} />
 					<CellBuilder value={perilaku.kompetensi} />
 					<CellBuilder value={perilaku.uraian} />

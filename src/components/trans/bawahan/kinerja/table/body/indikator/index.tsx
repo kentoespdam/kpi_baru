@@ -17,7 +17,7 @@ const DetailKpiBawahanIndikator = (props: DetailKpiBawahanIndikatorProps) => {
 
 	return (
 		<>
-			<TableRow>
+			<TableRow hover>
 				<CellBuilder value={urut} rowSpan={rowSpan} bordered />
 				<CellBuilder
 					value={indikator.indikator}

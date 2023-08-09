@@ -38,14 +38,18 @@ const AuthComponent = () => {
 		setLoading(true);
 		e.preventDefault();
 		try {
-			const { data } = await axios.post("/api/auth", {
-				email: userToEmail(usernameRef.current!.value),
-				password: passwordRef.current!.value,
-			});
-			setUser(data);
-			setLoading(false);
-			enqueueSnackbar("Login Success", { variant: "success" });
-			window.location.href = "/";
+			axios
+				.post("/api/auth", {
+					email: userToEmail(usernameRef.current!.value),
+					password: passwordRef.current!.value,
+				})
+				.then((response) => response.data)
+				.then((data) => setUser(data))
+				.then(() => {
+					setLoading(false);
+					enqueueSnackbar("Login Success", { variant: "success" });
+					window.location.href = "/";
+				});
 		} catch (e: any) {
 			setLoading(false);
 			const variant = "error";

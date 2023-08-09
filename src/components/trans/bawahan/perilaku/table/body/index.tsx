@@ -54,7 +54,7 @@ const TransPerilakuTableBody = () => {
 	return data ? (
 		<TableBody>
 			{data.perilakuList.map((row) => (
-				<TableRow key={row.id}>
+				<TableRow hover key={row.id}>
 					<CellBuilder value={urut++} bordered />
 					<CellBuilder value={row.kompetensi} width={200} bordered />
 					<CellBuilder value={row.uraian} width={400} bordered />

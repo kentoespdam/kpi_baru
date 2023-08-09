@@ -42,7 +42,7 @@ const BridgeKpiTableBody = () => {
 	return (
 		<TableBody>
 			{data.content.map((item) => (
-				<TableRow key={item.id}>
+				<TableRow hover key={item.id}>
 					<CellBuilder value={urut++} />
 					<CellBuilder value={item.nipam} />
 					<CellBuilder value={String(item.name)} />

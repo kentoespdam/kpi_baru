@@ -22,7 +22,7 @@ const ProfesiTableBody = () => {
 	return (
 		<TableBody>
 			{data.content.map((profesi) => (
-				<TableRow key={profesi.id}>
+				<TableRow hover key={profesi.id}>
 					<CellBuilder value={urut++} />
 					<CellBuilder value={profesi.name} />
 					<CellBuilder value={profesi.level.level} />

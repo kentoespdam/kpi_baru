@@ -23,6 +23,7 @@ const GradeComponent = () => {
 					{ status, grade, tukin, level },
 				],
 				queryFn: getPage,
+				retry: 2,
 			},
 		],
 	});

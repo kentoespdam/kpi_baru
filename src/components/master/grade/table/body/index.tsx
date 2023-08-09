@@ -23,7 +23,7 @@ const GradeTableBody = () => {
 	return (
 		<TableBody>
 			{data.content.map((grade) => (
-				<TableRow key={grade.id}>
+				<TableRow hover key={grade.id}>
 					<CellBuilder value={urut++} />
 					<CellBuilder value={`Grade ${grade.grade}`} />
 					<CellBuilder value={grade.tukin} currency />

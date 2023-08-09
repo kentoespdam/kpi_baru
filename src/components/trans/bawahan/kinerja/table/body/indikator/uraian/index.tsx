@@ -86,7 +86,7 @@ const DetailKpiBawahanUraian = (props: DetailKpiBawahanUraianProps) => {
 		<>
 			{uraianList.map((uraian, index) =>
 				index === 0 ? null : (
-					<TableRow key={index}>
+					<TableRow hover key={index}>
 						<UraianCell
 							nipamStaff={nipamStaff}
 							idKpi={idKpi}
