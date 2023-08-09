@@ -6,14 +6,15 @@ import { useQueryClient } from "@tanstack/react-query";
 const KpiPagination = () => {
 	const qc = useQueryClient();
 	const {
-		pageRequest,
 		setPageRequest,
+		pageRequest,
 		sortRequest,
 		organization,
 		position,
 		profesi,
 		name,
 		grade,
+		status,
 	} = useKpiStore();
 	const data = qc.getQueryData([
 		"master.kpi",
@@ -24,6 +25,7 @@ const KpiPagination = () => {
 			profesi,
 			name,
 			grade,
+			status,
 		},
 	]) satisfies KpiWithPagination | undefined;
 
