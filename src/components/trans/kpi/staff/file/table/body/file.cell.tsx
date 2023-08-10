@@ -16,10 +16,11 @@ import Link from "next/link";
 import { useSnackbar } from "notistack";
 
 type TransKpiFileListItemCellProps = {
+	uraianId: number;
 	uraianFile: UraianFile;
 };
 const TransKpiFileListItemCell = (props: TransKpiFileListItemCellProps) => {
-	const { uraianFile } = props;
+	const { uraianId, uraianFile } = props;
 	const { periode, bridgeKpi: bridgeKpi } = useTransKpiStore();
 	const user = useSessionStore((state) => state.user);
 	const toggleViewOpen = useViewFileDialogStore(
@@ -46,7 +47,7 @@ const TransKpiFileListItemCell = (props: TransKpiFileListItemCellProps) => {
 				],
 			});
 			qc.invalidateQueries({
-				queryKey: ["trans.file.list", Number(uraianFile.id)],
+				queryKey: ["trans.file.list", Number(uraianId)],
 			});
 			enqueueSnackbar("Data berhasil disimpan", { variant: "success" });
 		},

@@ -3,6 +3,7 @@
 import { Viewer, Worker } from "@react-pdf-viewer/core";
 import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
 
+import LinearProgress from "@mui/material/LinearProgress";
 import { LOCAL_URAIAN_FILE } from "@myTypes/entity/uraian.file";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
@@ -14,7 +15,7 @@ const ViewPdfComponent = (props: ViewPdfComponentProps) => {
 	const { id } = props;
 	const defaultPlugin = defaultLayoutPlugin();
 
-	const { status, isFetching, data, error } = useQuery({
+	const { isFetching, data } = useQuery({
 		queryKey: ["uraian.file", id],
 		queryFn: async () => {
 			const result = await axios
@@ -28,7 +29,7 @@ const ViewPdfComponent = (props: ViewPdfComponentProps) => {
 		enabled: !!id,
 	});
 
-	if (isFetching) return <div>Loading...</div>;
+	if (isFetching) return <LinearProgress />;
 	if (!data) return <div>No data</div>;
 
 	return (

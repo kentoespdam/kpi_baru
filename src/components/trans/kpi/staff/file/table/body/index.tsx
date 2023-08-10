@@ -29,7 +29,10 @@ const TransKpiFileListTableBody = (props: TransKpiFileListTableBodyProps) => {
 			{state?.data.map((item, index) => (
 				<TableRow hover key={index}>
 					<CellBuilder value={urut++} />
-					<TransKpiFileListItemCell uraianFile={item} />
+					<TransKpiFileListItemCell
+						uraianId={uraianId}
+						uraianFile={item}
+					/>
 				</TableRow>
 			))}
 		</TableBody>
