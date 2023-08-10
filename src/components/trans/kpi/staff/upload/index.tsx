@@ -48,11 +48,6 @@ const TransKpiStaffUploadComponent = (
 					},
 				],
 			});
-			console.log({
-				nipam: String(userId),
-				kpiId: Number(bridgeKpi?.kpi.id),
-				periode: Number(periode?.periode),
-			});
 			enqueueSnackbar("Data berhasil disimpan", { variant: "success" });
 			toggleViewUploadOpen();
 			setFileName("");
@@ -70,6 +65,7 @@ const TransKpiStaffUploadComponent = (
 		formData.set("file", fileRef.current!.files![0]);
 		mutation.mutate(formData);
 	};
+
 	return (
 		<Stack
 			spacing={1}
