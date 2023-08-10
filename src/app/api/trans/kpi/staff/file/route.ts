@@ -11,9 +11,8 @@ export const POST = async (req: NextRequest) => {
 		const token = await getCurrentToken(cookie);
 		const { status, data } = await axios.post(REMOTE_URAIAN_FILE, body, {
 			headers: {
-				...appwriteHeader(cookie, token),
-				"Accept": "*/*",
-				"Content-Type": "multipart/form-data",
+				...appwriteHeader(cookie, token, "multipart/form-data"),
+				Accept: "*/*",
 			},
 		});
 		return new Response(JSON.stringify(data.data), { status });

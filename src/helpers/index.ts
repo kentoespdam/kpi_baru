@@ -17,7 +17,8 @@ export const getSessionCookie = (cookies: RequestCookies) => {
 
 export const appwriteHeader = (
 	sessCookie: string | RequestCookies,
-	token?: string
+	token?: string,
+	contentType?: string
 ) => {
 	let header;
 	switch (typeof sessCookie) {
@@ -28,7 +29,7 @@ export const appwriteHeader = (
 				"";
 			header = {
 				"X-Appwrite-Project": APPWRITE_PROJECT_ID,
-				"Content-Type": "application/json",
+				"Content-Type": contentType ? contentType : "application/json",
 				"Cookie": sessCookie.toString(),
 				"X-Fallback-Cookies": xfallback,
 				"X-Appwrite-key": APPWRITE_API_KEY,
@@ -37,7 +38,7 @@ export const appwriteHeader = (
 		default:
 			header = {
 				"X-Appwrite-Project": APPWRITE_PROJECT_ID,
-				"Content-Type": "application/json",
+				"Content-Type": contentType ? contentType : "application/json",
 				"Cookie": `${sessionNames[0]}=${sessCookie}`,
 				"X-Fallback-Cookies": sessCookie,
 				"X-Appwrite-key": APPWRITE_API_KEY,

@@ -41,7 +41,7 @@ export const doUpload = async (formData: FormData) => {
 			e.response.data.message
 		);
 
-		throw new Error(e.response.data);
+		throw new Error(e.response.data.message);
 	}
 };
 
