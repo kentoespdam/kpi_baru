@@ -23,8 +23,14 @@ export const doUpload = async (formData: FormData) => {
 	try {
 		const { data } = await axios.post(`${LOCAL_URAIAN_FILE}`, formData, {
 			headers: {
-				"Accept": "multipart/form-data",
+				"Accept": "*/*",
 				"Content-Type": "multipart/form-data",
+			},
+			onUploadProgress: (event) => {
+				console.log(
+					`Current progress:`,
+					Math.round((event.loaded * 100) / event.total!)
+				);
 			},
 		});
 		return data.data;
@@ -35,7 +41,7 @@ export const doUpload = async (formData: FormData) => {
 			e.response.data.message
 		);
 
-		throw new Error(e.response.data.message);
+		throw new Error(e.response.data);
 	}
 };
 
