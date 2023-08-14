@@ -72,8 +72,7 @@ const getSession = async (cookies: RequestCookies) => {
 			"X-Fallback-Cookies": xfallback,
 		};
 		const req = await fetch(
-			// `http://${process.env.HOSTNAME}:3000/api/auth/session`,
-			`http://localhost:3000/api/auth/session`,
+			`http://${process.env.APP_HOSTNAME}:3000/api/auth/session`,
 			{
 				headers: headers,
 			}

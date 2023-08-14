@@ -3,7 +3,6 @@
 import { getCurrentToken } from "@helper/index";
 import { REMOTE_URAIAN_FILE } from "@myTypes/entity/uraian.file";
 import { cookies, headers } from "next/headers";
-import { NextResponse } from "next/server";
 
 export const handleSubmitServer = async (body: FormData) => {
 	const cookie = cookies();

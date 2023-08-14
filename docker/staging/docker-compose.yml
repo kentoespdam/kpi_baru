@@ -9,7 +9,7 @@ services:
         image: kpi-staging
         ports:
             - 3004:3000
-        hostname: staging-kpi.tirtasatria.tech
+        #hostname: staging-kpi.tirtasatria.tech
         networks:
             - back-tier
 
