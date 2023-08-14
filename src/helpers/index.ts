@@ -52,8 +52,8 @@ export const appwriteHeader = (
 };
 
 export const newHostname =
-	// APP_HOSTNAME === "localhost" ? APP_HOSTNAME : "." + APP_HOSTNAME;
-	APP_HOSTNAME === "localhost" ? APP_HOSTNAME : "";
+	APP_HOSTNAME === "localhost" ? APP_HOSTNAME : "." + APP_HOSTNAME;
+	// APP_HOSTNAME === "localhost" ? APP_HOSTNAME : "";
 
 export const newSetCookies = (cookieString: string) => {
 	let cookie = cookieString.split("." + APPWRITE_HOSTNAME).join(newHostname);
