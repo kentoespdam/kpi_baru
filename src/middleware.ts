@@ -24,7 +24,10 @@ export const middleware = async (req: NextRequest) => {
 		// response.cookies.delete(sessionNames[0]);
 		// response.cookies.delete(sessionNames[1]);
 		// response.cookies.delete(sessionNames[2]);
-		if (currPath.startsWith("/auth")) return;
+		if (currPath.startsWith("/auth") || currPath.startsWith("/api/auth"))
+			return;
+
+		return NextResponse.redirect(new URL("/auth", req.url));
 	}
 
 	if (!cookies.has(sessionNames[2])) {
@@ -69,6 +72,7 @@ const getSession = async (cookies: RequestCookies) => {
 			"X-Fallback-Cookies": xfallback,
 		};
 		const req = await fetch(
+			// `http://${process.env.HOSTNAME}:3000/api/auth/session`,
 			`http://localhost:3000/api/auth/session`,
 			{
 				headers: headers,
@@ -81,7 +85,7 @@ const getSession = async (cookies: RequestCookies) => {
 
 		return req.status === 200 ? true : false;
 	} catch (e: any) {
-		console.log("middleware error:", e);
+		console.log("middleware get session:", e);
 		return false;
 	}
 };
@@ -110,6 +114,6 @@ const createToken = async (cookies: RequestCookies) => {
 		const data = await req.json();
 		return data.jwt;
 	} catch (e: any) {
-		console.log("middleware error", e);
+		console.log("middleware create token", e);
 	}
 };

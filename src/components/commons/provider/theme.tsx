@@ -7,6 +7,8 @@ import { useTemplateStore } from "@store/main/template";
 import { SnackbarProvider } from "notistack";
 import { useEffect, useMemo } from "react";
 import { myTheme } from "../theme";
+// import LogRocket from 'logrocket';
+// LogRocket.init('qamvb0/kpi');
 
 const TemplateProvider = ({ children }: ChildrenProps) => {
 	// const mode = "light";

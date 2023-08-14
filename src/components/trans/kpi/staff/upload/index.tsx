@@ -11,6 +11,7 @@ import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useSessionStore } from "@store/main/session";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { doUpload } from "@utils/trans/file";
+import { handleSubmitServer } from "@utils/trans/file.server";
 import { useSnackbar } from "notistack";
 import { FormEvent, useRef, useState } from "react";
 
@@ -63,16 +64,43 @@ const TransKpiStaffUploadComponent = (
 		formData.set("nipam", String(userId));
 		formData.set("transKpiUraianId", String(uraianId));
 		formData.set("file", fileRef.current!.files![0]);
-		mutation.mutate(formData);
+		// mutation.mutate({
+		// 	periode: Number(periode?.periode),
+		// 	nipam: String(userId),
+		// 	transKpiUraianId: Number(uraianId),
+		// 	file: fileRef.current!.files![0],
+		// });
+
+		const aksi = await handleSubmitServer(formData);
+		const json = JSON.parse(aksi!);
+		if (json.code === 201) {
+			qc.invalidateQueries({
+				queryKey: [
+					"trans.kpi.staff",
+					{
+						nipam: String(userId),
+						kpiId: Number(bridgeKpi?.kpi.id),
+						periode: Number(periode?.periode),
+					},
+				],
+			});
+			enqueueSnackbar("Data berhasil disimpan", { variant: "success" });
+			toggleViewUploadOpen();
+			setFileName("");
+		} else {
+			enqueueSnackbar(`${json.message}`, { variant: "error" });
+		}
 	};
 
 	return (
+		// <form action={handleSubmitServer}>
 		<Stack
 			spacing={1}
 			alignContent="center"
 			alignItems="center"
 			component="form"
 			onSubmit={handleSubmit}
+			// action={handleSubmitServer}
 		>
 			<IconButton
 				sx={{
@@ -85,6 +113,7 @@ const TransKpiStaffUploadComponent = (
 				size="large"
 			>
 				<input
+					name="file"
 					ref={fileRef}
 					hidden
 					type="file"
@@ -99,7 +128,6 @@ const TransKpiStaffUploadComponent = (
 					<br />
 				</Stack>
 			</IconButton>
-
 			<Chip
 				label={fileName}
 				onDelete={handleDelete}
@@ -119,7 +147,11 @@ const TransKpiStaffUploadComponent = (
 			>
 				<span>UPLOAD</span>
 			</LoadingButton>
+			<input type="hidden" name="periode" value={periode?.periode} />
+			<input type="hidden" name="nipam" value={userId} />
+			<input type="hidden" name="transKpiUraianId" value={uraianId} />
 		</Stack>
+		// </form>
 	);
 };
 

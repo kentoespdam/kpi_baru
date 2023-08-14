@@ -36,12 +36,9 @@ COPY --from=builder /app/public ./public
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY ./.env.staging.sample ./.env.production
-COPY package.json ./
-COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/node_modules/pdfjs-dist/build ./public/js/pdfjs-dist/build
-COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
-RUN ls -la
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
 
@@ -49,5 +46,4 @@ EXPOSE 3000
 
 ENV PORT 3000
 
-CMD ["yarn", "start"]
-# CMD ["node", "server.js"]
+CMD ["node", "server.js"]

@@ -1,4 +1,5 @@
 import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
+import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import {
 	APPWRITE_API_KEY,
 	APPWRITE_HOSTNAME,
@@ -16,7 +17,7 @@ export const getSessionCookie = (cookies: RequestCookies) => {
 };
 
 export const appwriteHeader = (
-	sessCookie: string | RequestCookies,
+	sessCookie: string | RequestCookies | ReadonlyRequestCookies,
 	token?: string,
 	contentType?: string
 ) => {
@@ -51,14 +52,17 @@ export const appwriteHeader = (
 };
 
 export const newHostname =
-	APP_HOSTNAME === "localhost" ? APP_HOSTNAME : "." + APP_HOSTNAME;
+	// APP_HOSTNAME === "localhost" ? APP_HOSTNAME : "." + APP_HOSTNAME;
+	APP_HOSTNAME === "localhost" ? APP_HOSTNAME : "";
 
 export const newSetCookies = (cookieString: string) => {
 	let cookie = cookieString.split("." + APPWRITE_HOSTNAME).join(newHostname);
 	return cookie;
 };
 
-export const getCurrentToken = async (cookies: RequestCookies) => {
+export const getCurrentToken = async (
+	cookies: RequestCookies | ReadonlyRequestCookies
+) => {
 	const cookieToken = cookies.get(sessionNames[2])?.value;
 	if (cookieToken) return cookieToken;
 	const token = await createToken(cookies);

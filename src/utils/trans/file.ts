@@ -19,20 +19,38 @@ export const getFiles = async (props: any) => {
 	}
 };
 
-export const doUpload = async (formData: FormData) => {
+export const doUpload = async (formData: {
+	periode: number;
+	nipam: string;
+	transKpiUraianId: number;
+	file: File;
+}) => {
+	const { periode, nipam, transKpiUraianId, file } = formData;
 	try {
-		const { data } = await axios.post(`${LOCAL_URAIAN_FILE}`, formData, {
-			headers: {
-				"Accept": "*/*",
-				"Content-Type": "multipart/form-data",
+		const { data } = await axios.post(
+			`${LOCAL_URAIAN_FILE}`,
+			{
+				periode: periode,
+				nipam: nipam,
+				transKpiUraianId: transKpiUraianId,
+				file: file,
 			},
-			onUploadProgress: (event) => {
-				console.log(
-					`Current progress:`,
-					Math.round((event.loaded * 100) / event.total!)
-				);
-			},
-		});
+			{
+				headers: {
+					"Accept": "*/*",
+					"Content-Type": "multipart/form-data",
+					"X-Periode": periode,
+					"X-Nipam": nipam,
+					"X-TransKpiUraianId": transKpiUraianId,
+				},
+				onUploadProgress: (event) => {
+					console.log(
+						`Current progress:`,
+						Math.round((event.loaded * 100) / event.total!)
+					);
+				},
+			}
+		);
 		return data.data;
 	} catch (e: any) {
 		console.log(

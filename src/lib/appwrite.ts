@@ -3,6 +3,7 @@ import axios from "axios";
 import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
 import { APPWRITE_ENDPOINT, DEFAULT_PASSWORD, defaultRoles } from ".";
 import { getUserByNipam, updateRoleUser } from "./appwrite/user";
+import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 
 export const getSession = async (sessCookie: RequestCookies) => {
 	try {
@@ -23,7 +24,9 @@ export const getSession = async (sessCookie: RequestCookies) => {
 	}
 };
 
-export const createToken = async (cookieString: RequestCookies | string) => {
+export const createToken = async (
+	cookieString: RequestCookies | ReadonlyRequestCookies | string
+) => {
 	try {
 		const { data } = await axios.post(
 			`${APPWRITE_ENDPOINT}/v1/account/jwt`,
