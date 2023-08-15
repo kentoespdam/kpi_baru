@@ -16,6 +16,13 @@ export const getSessionCookie = (cookies: RequestCookies) => {
 	return sess;
 };
 
+export const xfallback = (
+	sessCookie: RequestCookies | ReadonlyRequestCookies
+) =>
+	sessCookie.get(sessionNames[0])?.value ||
+	sessCookie.get(sessionNames[1])?.value ||
+	"";
+
 export const appwriteHeader = (
 	sessCookie: string | RequestCookies | ReadonlyRequestCookies,
 	token?: string,
@@ -24,15 +31,11 @@ export const appwriteHeader = (
 	let header;
 	switch (typeof sessCookie) {
 		case "object":
-			const xfallback =
-				sessCookie.get(sessionNames[0])?.value ||
-				sessCookie.get(sessionNames[1])?.value ||
-				"";
 			header = {
 				"X-Appwrite-Project": APPWRITE_PROJECT_ID,
 				"Content-Type": contentType ? contentType : "application/json",
 				"Cookie": sessCookie.toString(),
-				"X-Fallback-Cookies": xfallback,
+				"X-Fallback-Cookies": xfallback(sessCookie),
 				"X-Appwrite-key": APPWRITE_API_KEY,
 			};
 			break;
@@ -53,7 +56,7 @@ export const appwriteHeader = (
 
 export const newHostname =
 	APP_HOSTNAME === "localhost" ? APP_HOSTNAME : "." + APP_HOSTNAME;
-	// APP_HOSTNAME === "localhost" ? APP_HOSTNAME : "";
+// APP_HOSTNAME === "localhost" ? APP_HOSTNAME : "";
 
 export const newSetCookies = (cookieString: string) => {
 	let cookie = cookieString.split("." + APPWRITE_HOSTNAME).join(newHostname);

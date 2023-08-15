@@ -40,6 +40,8 @@ COPY --from=deps /app/node_modules/pdfjs-dist/build ./public/js/pdfjs-dist/build
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
+RUN mkdir tmp && chown nextjs:nodejs tmp
+
 USER nextjs
 
 EXPOSE 3000

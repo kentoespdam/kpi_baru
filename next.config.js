@@ -11,6 +11,9 @@ const nextConfig = {
 		});
 		config.resolve.alias.canvas = false;
 		config.resolve.alias.encoding = false;
+		config.resolve.fallback = {
+			fs: false,
+		};
 		return config;
 	},
 	async redirects() {

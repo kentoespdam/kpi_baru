@@ -64,32 +64,32 @@ const TransKpiStaffUploadComponent = (
 		formData.set("nipam", String(userId));
 		formData.set("transKpiUraianId", String(uraianId));
 		formData.set("file", fileRef.current!.files![0]);
-		// mutation.mutate({
-		// 	periode: Number(periode?.periode),
-		// 	nipam: String(userId),
-		// 	transKpiUraianId: Number(uraianId),
-		// 	file: fileRef.current!.files![0],
-		// });
+		mutation.mutate({
+			periode: Number(periode?.periode),
+			nipam: String(userId),
+			transKpiUraianId: Number(uraianId),
+			file: fileRef.current!.files![0],
+		});
 
-		const aksi = await handleSubmitServer(formData);
-		const json = JSON.parse(aksi!);
-		if (json.code === 201) {
-			qc.invalidateQueries({
-				queryKey: [
-					"trans.kpi.staff",
-					{
-						nipam: String(userId),
-						kpiId: Number(bridgeKpi?.kpi.id),
-						periode: Number(periode?.periode),
-					},
-				],
-			});
-			enqueueSnackbar("Data berhasil disimpan", { variant: "success" });
-			toggleViewUploadOpen();
-			setFileName("");
-		} else {
-			enqueueSnackbar(`${json.message}`, { variant: "error" });
-		}
+		// const aksi = await handleSubmitServer(formData);
+		// const json = JSON.parse(aksi!);
+		// if (json.code === 201) {
+		// 	qc.invalidateQueries({
+		// 		queryKey: [
+		// 			"trans.kpi.staff",
+		// 			{
+		// 				nipam: String(userId),
+		// 				kpiId: Number(bridgeKpi?.kpi.id),
+		// 				periode: Number(periode?.periode),
+		// 			},
+		// 		],
+		// 	});
+		// 	enqueueSnackbar("Data berhasil disimpan", { variant: "success" });
+		// 	toggleViewUploadOpen();
+		// 	setFileName("");
+		// } else {
+		// 	enqueueSnackbar(`${json.message}`, { variant: "error" });
+		// }
 	};
 
 	return (

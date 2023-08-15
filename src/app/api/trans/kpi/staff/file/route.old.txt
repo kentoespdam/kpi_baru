@@ -1,0 +1,162 @@
+import { appwriteHeader, getCurrentToken } from "@helper/index";
+import { REMOTE_URAIAN_FILE } from "@myTypes/entity/uraian.file";
+import axios from "axios";
+import { NextRequest } from "next/server";
+
+export const maxDuration = 30;
+
+export const POST = async (req: NextRequest) => {
+	const cookie = req.cookies;
+	const body = await req.formData();
+	const file: File | null = body.get("file") as unknown as File;
+
+	const formData = new FormData();
+	formData.set("periode", body.get("periode")!);
+	formData.set("nipam", body.get("nipam")!);
+	formData.set("transKpiUraianId", body.get("transKpiUraianId")!);
+	formData.set("file", file);
+
+	try {
+		const token = await getCurrentToken(cookie);
+		const { status, data } = await axios.post(
+			REMOTE_URAIAN_FILE,
+			formData,
+			{
+				headers: {
+					...appwriteHeader(cookie, token, "multipart/form-data"),
+					Accept: "*/*",
+				},
+				onUploadProgress: (e) => {
+					console.log("size: ", file.size, e.bytes, "of", e.total);
+					console.log("rate: ", (e.bytes! / e.total!) * 100);
+					console.log("progress: ", e.progress! * 100);
+				},
+			}
+		);
+		return new Response(JSON.stringify(data.data), { status });
+	} catch (e: any) {
+		console.log(
+			"api.trans.kpi.staff.file.post",
+			new Date().toISOString(),
+			e.response.data.message
+		);
+		return new Response(e.response.data.message, { status: 400 });
+	}
+};
+
+
+export const POST = async (req: Request) => {
+	const cookie = cookies();
+	const body = await req.formData();
+
+	// console.log("formData 1: ", body);
+
+	try {
+		const file = body.get("file") as File;
+		const fileName = file.name;
+		const fileType = file.type;
+		if (!file) return responseFileNotFound();
+
+		const bytes = await file.arrayBuffer();
+		const buffer = Buffer.from(bytes);
+		console.log("uploaded length: ", buffer.length);
+
+		const path = `./tmp/${fileName}`;
+		await writeFile(path, buffer);
+
+		const fileread = await readFile(path);
+		console.log("readed length: ", fileread.length);
+
+		const newBlob = new Blob([fileread], { type: fileType });
+		console.log(newBlob);
+		const newFile = new File([newBlob], fileName);
+		console.log(newFile);
+
+		const formData = new FormData();
+		formData.append("periode", body.get("periode") as string);
+		formData.append("nipam", body.get("nipam") as string);
+		formData.append(
+			"transKpiUraianId",
+			body.get("transKpiUraianId") as string
+		);
+		formData.append("file", newFile);
+
+		// console.log("formData 2: ", formData);
+		// return new Response(JSON.stringify({ message: "ok" }));
+		const token = await getCurrentToken(cookie);
+		// const { status, data } = await axios.post(REMOTE_URAIAN_FILE, body, {
+		// 	headers: {
+		// 		...appwriteHeader(cookie, token, "multipart/form-data"),
+		// 		"Accept": "*/*",
+		// 		"Content-Length": req.headers.get("content-length")!,
+		// 	},
+		// 	onUploadProgress: (e) => {
+		// 		console.log("bytes: ", e.bytes);
+		// 		console.log("rate: ", (e.bytes! / e.total!) * 100);
+		// 		console.log("progress: ", e.progress! * 100);
+		// 	},
+		// });
+
+		const header = {
+			headers: {
+				"X-Appwrite-Project": APPWRITE_PROJECT_ID,
+				"Content-Type": "multipart/form-data",
+				"Cookie": cookie.toString(),
+				"X-Fallback-Cookies":
+					cookie.get(sessionNames[0])?.value ||
+					cookie.get(sessionNames[1])?.value ||
+					"",
+				"X-Appwrite-key": APPWRITE_API_KEY,
+			},
+		};
+		console.log(header);
+
+		const kirim = await fetch(REMOTE_URAIAN_FILE, {
+			method: "POST",
+			body: formData,
+			headers: {
+				"X-Appwrite-Project": APPWRITE_PROJECT_ID,
+				"Content-Type": "multipart/form-data",
+				"Cookie": cookie.toString(),
+				"X-Fallback-Cookies":
+					cookie.get(sessionNames[0])?.value ||
+					cookie.get(sessionNames[1])?.value ||
+					"",
+				"X-Appwrite-key": APPWRITE_API_KEY,
+			},
+		});
+
+		const status = kirim.status;
+		console.log(status, kirim.statusText);
+		const data = await kirim.json();
+		console.log(data);
+		return new Response(JSON.stringify(data), { status });
+	} catch (e: any) {
+		console.log(
+			"api.trans.kpi.staff.file.post",
+			new Date().toISOString(),
+			e
+		);
+		return new Response(JSON.stringify(e.response.data), { status: 400 });
+	}
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

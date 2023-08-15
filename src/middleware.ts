@@ -1,8 +1,8 @@
+import { useSessionStore } from "@store/main/session";
 import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
 import { NextRequest, NextResponse } from "next/server";
 import { getExpToken, getSessionCookie, newHostname } from "./helpers";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT_ID, sessionNames } from "./lib";
-import { useSessionStore } from "@store/main/session";
 
 export const middleware = async (req: NextRequest) => {
 	const response = NextResponse.next();
@@ -14,20 +14,30 @@ export const middleware = async (req: NextRequest) => {
 		!currPath.startsWith("/auth") &&
 		!currPath.startsWith("/api/auth")
 	)
-		return NextResponse.redirect(new URL("/auth", req.url));
+		return NextResponse.redirect(
+			new URL(
+				"/auth",
+				`${process.env.PROTOCOL}://${process.env.NEXT_PUBLIC_URL}`
+			)
+		);
 
 	const sessCookie = getSessionCookie(cookies);
 	if (sessCookie === undefined) if (currPath.startsWith("/auth")) return;
 
 	const sess = await getSession(cookies);
 	if (!sess) {
-		// response.cookies.delete(sessionNames[0]);
-		// response.cookies.delete(sessionNames[1]);
-		// response.cookies.delete(sessionNames[2]);
+		response.cookies.delete(sessionNames[0]);
+		response.cookies.delete(sessionNames[1]);
+		response.cookies.delete(sessionNames[2]);
 		if (currPath.startsWith("/auth") || currPath.startsWith("/api/auth"))
 			return;
 
-		return NextResponse.redirect(new URL("/auth", req.url));
+		return NextResponse.redirect(
+			new URL(
+				"/auth",
+				`${process.env.PROTOCOL}://${process.env.NEXT_PUBLIC_URL}`
+			)
+		);
 	}
 
 	if (!cookies.has(sessionNames[2])) {
@@ -53,7 +63,7 @@ export const config = {
 		 * - _next/image (image optimization files)
 		 * - favicon.ico (favicon file)
 		 */
-		"/((?!_next/static|_next/image|favicon.ico|images).*)",
+		"/((?!_next/static|_next/image|favicon.ico|images|api/trans/kpi/file).*)",
 	],
 };
 
@@ -71,12 +81,9 @@ const getSession = async (cookies: RequestCookies) => {
 			"Cookie": decodedCookie,
 			"X-Fallback-Cookies": xfallback,
 		};
-		const req = await fetch(
-			`http://${process.env.APP_HOSTNAME}:3000/api/auth/session`,
-			{
-				headers: headers,
-			}
-		);
+		const req = await fetch(`http://localhost:3000/api/auth/session`, {
+			headers: headers,
+		});
 
 		const data = await req.json();
 		if (useSessionStore.getState().user === null)
