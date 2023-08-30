@@ -1,5 +1,5 @@
 import { responseNoContent } from "@helper/error/nocontent";
-import { appwriteHeader, getCurrentToken } from "@helper/index";
+import { getCurrentToken } from "@helper/index";
 import { REMOTE_BRIDGE_PERILAKU } from "@myTypes/entity/bridge.perilaku";
 import axios from "axios";
 import { NextRequest } from "next/server";
@@ -16,7 +16,10 @@ export const GET = async (
 		const { status, data } = await axios.get(
 			`${REMOTE_BRIDGE_PERILAKU}/${id}`,
 			{
-				headers: appwriteHeader(cookie, token),
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
 			}
 		);
 		if (status === 204) return responseNoContent();
@@ -47,7 +50,10 @@ export const PUT = async (
 			`${REMOTE_BRIDGE_PERILAKU}/${id}`,
 			body,
 			{
-				headers: appwriteHeader(cookie, token),
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
 			}
 		);
 		if (status === 204) return responseNoContent();
@@ -76,7 +82,10 @@ export const DELETE = async (
 		const { status, data } = await axios.delete(
 			`${REMOTE_BRIDGE_PERILAKU}/${id}`,
 			{
-				headers: appwriteHeader(cookie, token),
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
 			}
 		);
 		if (status === 204) return responseNoContent();

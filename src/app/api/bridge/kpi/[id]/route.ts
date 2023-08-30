@@ -1,5 +1,5 @@
 import { responseNoContent } from "@helper/error/nocontent";
-import { appwriteHeader, getCurrentToken } from "@helper/index";
+import { getCurrentToken } from "@helper/index";
 import {
 	BridgeKpiWithAudit,
 	REMOTE_BRIDGE_KPI,
@@ -27,7 +27,10 @@ export const GET = async (
 	try {
 		const token = await getCurrentToken(cookie);
 		const { status, data } = await axios.get(`${REMOTE_BRIDGE_KPI}/${id}`, {
-			headers: appwriteHeader(cookie, token),
+			headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
 		});
 		const bridgeKpis: BridgeKpiWithAudit = data.data;
 		const orgId = bridgeKpis.organizationId;
@@ -35,7 +38,10 @@ export const GET = async (
 		const { data: orgData } = await axios.get(
 			`${REMOTE_ORGANIZATION}/${orgId}`,
 			{
-				headers: appwriteHeader(cookie, token),
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
 			}
 		);
 		const { data: posData } = await axios.get(
@@ -79,7 +85,10 @@ export const PUT = async (
 			`${REMOTE_BRIDGE_KPI}/${id}`,
 			body,
 			{
-				headers: appwriteHeader(cookie, token),
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
 			}
 		);
 		const account = await createUserAccount({
@@ -114,7 +123,10 @@ export const DELETE = async (
 		const { status, data } = await axios.delete(
 			`${REMOTE_BRIDGE_KPI}/${id}`,
 			{
-				headers: appwriteHeader(cookie, token),
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
 			}
 		);
 

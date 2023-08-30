@@ -12,8 +12,7 @@ import LevelPagination from "./table/pagination";
 import LinearProgress from "@mui/material/LinearProgress";
 
 const LevelComponent = () => {
-	const { loading, pageRequest, sortRequest, status, level } =
-		useLevelStore();
+	const { pageRequest, sortRequest, status, level } = useLevelStore();
 	const queries = useQueries({
 		queries: [
 			{
@@ -28,7 +27,7 @@ const LevelComponent = () => {
 
 	return (
 		<TableContainer>
-			{loading ? <LinearProgress /> : null}
+			{queries[0].isLoading ? <LinearProgress /> : null}
 			<Table>
 				<LevelTableHead />
 				{queries[0].isLoading ? (

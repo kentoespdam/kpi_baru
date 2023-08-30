@@ -1,8 +1,7 @@
 import { appwriteHeader } from "@helper/index";
 import axios from "axios";
 import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
-import { APPWRITE_ENDPOINT, DEFAULT_PASSWORD, defaultRoles } from ".";
-import { getUserByNipam, updateRoleUser } from "./appwrite/user";
+import { APPWRITE_ENDPOINT } from ".";
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 
 export const getSession = async (sessCookie: RequestCookies) => {
@@ -48,7 +47,7 @@ export const createToken = async (
 
 export const getAccount = async (cookieString: RequestCookies | string) => {
 	try {
-		const { status, data } = await axios.get(
+		const { data } = await axios.get(
 			`${APPWRITE_ENDPOINT}/v1/account`,
 			{
 				headers: appwriteHeader(cookieString),

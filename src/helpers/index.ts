@@ -76,7 +76,7 @@ export const getExpToken = (token: string) => {
 	if (!token) return 0;
 	const tokenParts = token.split(".");
 	const tokenBody = JSON.parse(atob(tokenParts[1]));
-	return tokenBody.exp * 1000;
+	return tokenBody.exp * 1000 - 60000;
 };
 
 export const setExpiredCookie = (cookies: RequestCookies) => {
@@ -94,6 +94,6 @@ export const setCookieToken = (token: string) => {
 		sessionNames[2]
 	}=${token}; domain=${newHostname}; expires=${new Date(
 		getExpToken(token)
-	)}; path=/; httponly; SameSite=none; Secure`;
+	).toISOString()}; path=/; httponly; SameSite=none; Secure`;
 	return resCookie;
 };

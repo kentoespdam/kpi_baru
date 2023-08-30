@@ -1,5 +1,5 @@
 import { responseNoContent } from "@helper/error/nocontent";
-import { appwriteHeader, getCurrentToken } from "@helper/index";
+import { getCurrentToken } from "@helper/index";
 import { REMOTE_POSITION } from "@myTypes/entity/position";
 import axios from "axios";
 import { NextRequest } from "next/server";
@@ -14,7 +14,10 @@ export const GET = async (req: NextRequest) => {
 		const { status, data } = await axios.get(
 			`${REMOTE_POSITION}/list?${search.toString()}`,
 			{
-				headers: appwriteHeader(cookie, token),
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
 			}
 		);
 		if (status === 204) return responseNoContent();

@@ -1,5 +1,5 @@
 import { responseNoContent } from "@helper/error/nocontent";
-import { appwriteHeader, getCurrentToken } from "@helper/index";
+import { getCurrentToken } from "@helper/index";
 import {
 	KpiWithAudit,
 	KpiWithPagination,
@@ -24,7 +24,10 @@ export const GET = async (req: NextRequest) => {
 		const { status, data } = await axios.get(
 			`${REMOTE_KPI}/page${search}`,
 			{
-				headers: appwriteHeader(cookie, token),
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
 			}
 		);
 		if (status === 204) return responseNoContent();
@@ -72,7 +75,10 @@ export const POST = async (req: NextRequest) => {
 	try {
 		const token = await getCurrentToken(cookie);
 		const { status, data } = await axios.post(`${REMOTE_KPI}`, body, {
-			headers: appwriteHeader(cookie, token),
+			headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
 		});
 		return new Response(JSON.stringify(data), { status: status });
 	} catch (e: any) {

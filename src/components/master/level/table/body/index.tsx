@@ -1,5 +1,3 @@
-"use client";
-
 import CellBuilder from "@components/commons/table/cell.builder";
 import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
@@ -9,14 +7,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import LevelActionBtn from "./action";
 
 const LevelTableBody = () => {
-	const { pageRequest, sortRequest, status, level } = useLevelStore(
-		(state) => ({
-			pageRequest: state.pageRequest,
-			sortRequest: state.sortRequest,
-			status: state.status,
-			level: state.level,
-		})
-	);
+	const { pageRequest, sortRequest, status, level } = useLevelStore();
+
 	const qc = useQueryClient();
 	const data = qc.getQueryData([
 		"master.level",

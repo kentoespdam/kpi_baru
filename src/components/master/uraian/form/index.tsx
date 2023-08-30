@@ -2,6 +2,7 @@
 
 import IndikatorAutocomplete from "@autocomplete/indikator";
 import KpiAutocomplete from "@autocomplete/kpi";
+import SatuanAutocomplete from "@autocomplete/satuan";
 import WaktuAutocomplete from "@autocomplete/waktu";
 import DoDisturbIcon from "@mui/icons-material/DoDisturb";
 import SaveIcon from "@mui/icons-material/Save";
@@ -18,6 +19,7 @@ import Switch from "@mui/material/Switch";
 import TextField from "@mui/material/TextField";
 import { Indikator } from "@myTypes/entity/indikator";
 import { Kpi } from "@myTypes/entity/kpi";
+import { Satuan } from "@myTypes/entity/satuan";
 import { UraianData } from "@myTypes/entity/uraian";
 import { AUDIT_STATUS } from "@myTypes/index";
 import { useUraianStore } from "@store/filter/master/uraian";
@@ -39,6 +41,7 @@ const UraianFormComponent = (props: UraianFormComponentProps) => {
 	const { enqueueSnackbar } = useSnackbar();
 	const [kpis, setKpis] = useState<Kpi | null>(null);
 	const [indikators, setIndikators] = useState<Indikator | null>(null);
+	const [satuan, setSatuan] = useState<Satuan | null>(null);
 	const [targets, setTargets] = useState<"MIN" | "MAX">("MIN");
 	const [waktus, setWaktus] = useState<string | null | undefined>(
 		"Akhir Bulan"
@@ -46,7 +49,6 @@ const UraianFormComponent = (props: UraianFormComponentProps) => {
 	const [checked, setChecked] = useState(true);
 	const uraianRef = useRef<HTMLInputElement>(null);
 	const volumeRef = useRef<HTMLInputElement>(null);
-	const satuanRef = useRef<HTMLInputElement>(null);
 	const bobotRef = useRef<HTMLInputElement>(null);
 	const qc = useQueryClient();
 	const {
@@ -97,6 +99,7 @@ const UraianFormComponent = (props: UraianFormComponentProps) => {
 	};
 	const handleChangeIndikator = (value: Indikator | null) =>
 		setIndikators(value);
+	const handleChangeSatuan = (value: Satuan | null) => setSatuan(value);
 	const handleChangeTarget = (event: React.ChangeEvent<HTMLInputElement>) =>
 		setTargets(event.target.value as "MIN" | "MAX");
 	const handleChangeWaktu = (value: string | null | undefined) =>
@@ -111,7 +114,7 @@ const UraianFormComponent = (props: UraianFormComponentProps) => {
 			indikatorId: Number(indikators?.id),
 			uraian: String(uraianRef.current?.value),
 			volume: Number(volumeRef.current?.value),
-			satuan: String(satuanRef.current?.value),
+			satuan: String(satuan?.satuan),
 			target: targets,
 			waktu: String(waktus),
 			bobot: Number(bobotRef.current?.value),
@@ -172,11 +175,10 @@ const UraianFormComponent = (props: UraianFormComponentProps) => {
 				/>
 			</FormControl>
 			<FormControl fullWidth>
-				<TextField
-					id="satuan"
-					inputRef={satuanRef}
-					label="Satuan"
-					defaultValue={data?.satuan ?? "%"}
+				<SatuanAutocomplete
+					search={satuan}
+					setSearchValue={handleChangeSatuan}
+					variant="outlined"
 					required
 				/>
 			</FormControl>

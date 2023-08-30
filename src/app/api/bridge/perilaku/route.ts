@@ -1,5 +1,5 @@
 import { responseNoContent } from "@helper/error/nocontent";
-import { appwriteHeader, getCurrentToken } from "@helper/index";
+import { getCurrentToken } from "@helper/index";
 import { REMOTE_BRIDGE_PERILAKU } from "@myTypes/entity/bridge.perilaku";
 import axios from "axios";
 import { NextRequest } from "next/server";
@@ -13,7 +13,10 @@ export const GET = async (req: NextRequest) => {
 		const { status, data } = await axios.get(
 			`${REMOTE_BRIDGE_PERILAKU}/page${search}`,
 			{
-				headers: appwriteHeader(cookie, token),
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
 			}
 		);
 		if (status === 204) return responseNoContent();
@@ -39,7 +42,10 @@ export const POST = async (req: NextRequest) => {
 			`${REMOTE_BRIDGE_PERILAKU}`,
 			body,
 			{
-				headers: appwriteHeader(cookie, token),
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
 			}
 		);
 		if (status === 204) return responseNoContent();

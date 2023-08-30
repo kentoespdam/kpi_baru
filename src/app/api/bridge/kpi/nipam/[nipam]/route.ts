@@ -18,7 +18,10 @@ export const GET = async (
 		const { status, data } = await axios.get(
 			`${REMOTE_BRIDGE_KPI}/${nipam}/nipam`,
 			{
-				headers: appwriteHeader(cookie, token),
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
 			}
 		);
 		if (status === 204) return responseNoContent();

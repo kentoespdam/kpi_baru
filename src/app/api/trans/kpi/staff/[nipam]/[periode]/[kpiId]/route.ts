@@ -1,5 +1,5 @@
 import { responseNoContent } from "@helper/error/nocontent";
-import { appwriteHeader, getCurrentToken } from "@helper/index";
+import { getCurrentToken } from "@helper/index";
 import { REMOTE_TRANS_KPI } from "@myTypes/entity/trans.kpi";
 import axios from "axios";
 import { NextRequest } from "next/server";

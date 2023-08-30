@@ -16,7 +16,10 @@ export const GET = async (
 	try {
 		const token = await getCurrentToken(cookie);
 		const { status, data } = await axios.get(`${REMOTE_INDIKATOR}/${id}`, {
-			headers: appwriteHeader(cookie, token),
+			headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
 		});
 		if (status === 204) return responseNoContent();
 		return new Response(JSON.stringify(data), { status: status });
@@ -45,7 +48,10 @@ export const PUT = async (
 			`${REMOTE_INDIKATOR}/${id}`,
 			body,
 			{
-				headers: appwriteHeader(cookie, token),
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
 			}
 		);
 		return new Response(JSON.stringify(data), { status: status });
@@ -73,7 +79,10 @@ export const DELETE = async (
 		const { status, data } = await axios.delete(
 			`${REMOTE_INDIKATOR}/${id}`,
 			{
-				headers: appwriteHeader(cookie, token),
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
 			}
 		);
 		if (status === 204) return responseNoContent();
