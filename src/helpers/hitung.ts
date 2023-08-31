@@ -49,3 +49,7 @@ export const hitungNilaiTotalUraian = (
 	const nilaiTotal = nilaiProdukKerja + nilaiWaktu;
 	return nilaiTotal;
 };
+
+export const hitungRating = (nilai: number) => {
+	return nilai < 70 ? "D" : nilai < 100 ? "C" : nilai < 130 ? "B" : "A";
+};

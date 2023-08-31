@@ -1,4 +1,7 @@
-import { RequestCookie, RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
+import {
+	RequestCookie,
+	RequestCookies,
+} from "next/dist/compiled/@edge-runtime/cookies";
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { APPWRITE_PROJECT_ID, sessionNames } from "src/lib";
 
@@ -24,9 +27,22 @@ export const tokenChecker = (
 ): tokenCheckerResult => {
 	const cookie = cookies.get(sessionNames[0] || sessionNames[1]);
 	const cookieToken = cookies.get(sessionNames[2]);
+
 	if (!cookie) return { status: tokenStatus.REAUTH, fallback: "" };
+
+	if (!cookieToken)
+		return {
+			status: tokenStatus.REVALIDATE,
+			fallback: cookieToObj(cookie),
+		};
+
+	const tokenObject = tokenDecode(cookieToken.value);
+	if (tokenObject.exp * 1000 < Date.now())
+		return { status: tokenStatus.REVALIDATE, fallback: "" };
+
 	if (cookie && cookieToken)
 		return { status: tokenStatus.OK, fallback: cookieToObj(cookie) };
+	
 	return { status: tokenStatus.REVALIDATE, fallback: cookieToObj(cookie) };
 };
 

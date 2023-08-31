@@ -5,13 +5,33 @@ import { getList } from "@utils/master/satuan";
 import LoadingAutocomplete from "./loading";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
+import { useState } from "react";
 
-const SatuanAutocomplete = (props: AutoCompleteProps<Satuan>) => {
-	const { search, setSearchValue, required, variant, size } = props;
+const findCurrentSatuan = (
+	satuans: Satuan[],
+	satuanValue: string | null | undefined
+) => {
+	return satuans.filter((satuan) => satuan.satuan === satuanValue)[0];
+};
+
+interface SatuanAutocompleteProps extends AutoCompleteProps<Satuan> {
+	satuanValue?: string | null;
+}
+
+const SatuanAutocomplete = (props: SatuanAutocompleteProps) => {
+	const { search, setSearchValue, required, variant, size, satuanValue } =
+		props;
+	const [currentSatuan, setCurrentSatuan] = useState<Satuan | null>(null);
 
 	const { isFetching, isLoading, error, data } = useQuery({
 		queryKey: ["satuan.autocomplete"],
-		queryFn: getList,
+		queryFn: async () => {
+			const result = await getList();
+			const currSat = findCurrentSatuan(result, satuanValue);
+			setCurrentSatuan(currSat);
+			setSearchValue(currSat);
+			return result;
+		},
 	});
 
 	if (isLoading || isFetching) return <LoadingAutocomplete />;
@@ -34,13 +54,11 @@ const SatuanAutocomplete = (props: AutoCompleteProps<Satuan>) => {
 					required={required}
 				/>
 			)}
-			value={search ?? null}
+			value={currentSatuan}
 			onChange={(e, v) => {
 				setSearchValue(v);
 			}}
-			isOptionEqualToValue={(option, value) =>
-				option.satuan === value.satuan
-			}
+			isOptionEqualToValue={(option, value) => option.id === value.id}
 			aria-required={required}
 			sx={{ minWidth: 200 }}
 			size={size}

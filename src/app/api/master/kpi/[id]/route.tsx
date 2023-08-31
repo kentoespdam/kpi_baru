@@ -31,12 +31,22 @@ export const GET = async (
 		const kpi = data.data satisfies KpiWithAudit;
 		const { data: orgData } = await axios.get(
 			`${REMOTE_ORGANIZATION}/${kpi.organizationId}`,
-			{ headers: appwriteHeader(cookie, token) }
+			{
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
+			}
 		);
 		const org: Organization = orgData.data satisfies Organization;
 		const { data: posData } = await axios.get(
 			`${REMOTE_POSITION}/${kpi.positionId}`,
-			{ headers: appwriteHeader(cookie, token) }
+			{
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
+			}
 		);
 		const pos: Position = posData.data satisfies Position;
 

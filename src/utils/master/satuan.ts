@@ -31,7 +31,7 @@ export const getPage = async (props: any) => {
 	}
 };
 
-export const getList = async (props: any) => {
+export const getList = async () => {
 	try {
 		const { data } = await axios.get(`${LOCAL_SATUAN}/list`);
 		return data.data;

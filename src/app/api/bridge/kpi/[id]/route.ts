@@ -28,9 +28,9 @@ export const GET = async (
 		const token = await getCurrentToken(cookie);
 		const { status, data } = await axios.get(`${REMOTE_BRIDGE_KPI}/${id}`, {
 			headers: {
-					"Content-Type": "application/json",
-					"Authorization": token,
-				},
+				"Content-Type": "application/json",
+				"Authorization": token,
+			},
 		});
 		const bridgeKpis: BridgeKpiWithAudit = data.data;
 		const orgId = bridgeKpis.organizationId;
@@ -46,14 +46,19 @@ export const GET = async (
 		);
 		const { data: posData } = await axios.get(
 			`${REMOTE_POSITION}/${posId}`,
-			{ headers: appwriteHeader(cookie, token) }
+			{
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
+			}
 		);
 		const roles = await getPrefs(bridgeKpis.nipam);
 
 		bridgeKpis.organization = orgData.data;
 		bridgeKpis.position = posData.data;
-		bridgeKpis.roles = roles.roles;
-		
+		if (roles !== null) bridgeKpis.roles = roles.roles;
+
 		data.data = bridgeKpis;
 
 		if (status === 204) return responseNoContent();
@@ -62,7 +67,7 @@ export const GET = async (
 		console.log(
 			"api.bridge.kpi.get.id",
 			new Date().toString(),
-			e.response.data
+			e.response.data.message
 		);
 		return new Response(JSON.stringify(e.response.data), {
 			status: e.response.status,
@@ -77,7 +82,6 @@ export const PUT = async (
 	const { id } = params;
 	const cookie = req.cookies;
 	const body = await req.json();
-	console.log("api.bridge.kpi.put", body);
 
 	try {
 		const token = await getCurrentToken(cookie);

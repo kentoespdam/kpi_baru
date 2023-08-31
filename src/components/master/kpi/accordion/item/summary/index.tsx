@@ -1,5 +1,4 @@
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import Chip from "@mui/material/Chip";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
@@ -63,10 +62,6 @@ const KpiItemSummary = (props: KpiItemSummaryProps) => {
 						{kpi.position?.name}
 					</Typography>
 				</Stack>
-				<Chip
-					label={kpi.status}
-					color={kpi.status === "Enabled" ? "info" : "error"}
-				/>
 			</Stack>
 
 			<IconButton

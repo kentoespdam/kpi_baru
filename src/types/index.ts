@@ -1,3 +1,5 @@
+import { QueryKey } from "@tanstack/react-query";
+
 export type ChildrenProps = {
 	children: React.ReactNode;
 };
@@ -133,3 +135,7 @@ export interface AutoCompleteProps<Entity> {
 	variant?: "standard" | "filled" | "outlined";
 	size?: "small" | "medium";
 }
+
+export type QueryKeyType = {
+	queryKey: QueryKey;
+};

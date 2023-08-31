@@ -17,7 +17,10 @@ export const PUT = async (
 		const { status, data } = await axios.put(
 			`${REMOTE_TRANS_PERILAKU_NILAI}/${id}`,
 			body,
-			{ headers: appwriteHeader(cookies, token) }
+			{ headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				}, }
 		);
 		if (status === 204) return responseNoContent();
 		return new Response(JSON.stringify(data), { status });

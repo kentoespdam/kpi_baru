@@ -13,7 +13,7 @@ import Switch from "@mui/material/Switch";
 import Tooltip from "@mui/material/Tooltip";
 import { AUDIT_STATUS } from "@myTypes/index";
 import { useKpiStore } from "@store/filter/master/kpi";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const KpiFilter = () => {
 	const {
@@ -29,6 +29,7 @@ const KpiFilter = () => {
 	} = useKpiStore();
 	const field = "kpi";
 	const title = "KPI Name";
+	const nameRef = useRef<HTMLInputElement>(null);
 	const [checked, setChecked] = useState(
 		status === AUDIT_STATUS.DISABLED ? false : true
 	);
@@ -45,6 +46,11 @@ const KpiFilter = () => {
 		if (e.key === "Enter") {
 			setKeyVal("name", e.currentTarget.value);
 		}
+	};
+	const searchNameClick = () => {
+		if (nameRef.current === null) return;
+		if (nameRef.current.value === "") setKeyVal("name", null);
+		else setKeyVal("name", nameRef.current.value);
 	};
 
 	return (
@@ -64,6 +70,7 @@ const KpiFilter = () => {
 					>{`Search ${title}`}</InputLabel>
 					<OutlinedInput
 						id={`standard-adornment-search-${field}`}
+						inputRef={nameRef}
 						type={"search"}
 						onKeyUp={enterHandler}
 						onChange={(e) => {
@@ -71,7 +78,10 @@ const KpiFilter = () => {
 						}}
 						endAdornment={
 							<Tooltip title="Press Enter for search">
-								<InputAdornment position="end">
+								<InputAdornment
+									position="end"
+									onClick={searchNameClick}
+								>
 									<IconButton size="small">
 										<EnterOutlined />
 									</IconButton>
