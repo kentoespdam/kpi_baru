@@ -3,7 +3,6 @@ import { hitungRating } from "@helper/hitung";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
-import TableFooter from "@mui/material/TableFooter";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { TransKpi } from "@myTypes/entity/trans.kpi";

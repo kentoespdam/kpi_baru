@@ -83,18 +83,6 @@ export const menuList: IMenuList = [
 				icon: <CarryOutOutlinedIcon />,
 				role: USER_ROLE.ADMIN,
 			},
-			// {
-			// 	path: "/master/indikator",
-			// 	name: "Indikator",
-			// 	icon: <ControlOutlinedIcon />,
-			// 	role: USER_ROLE.USER,
-			// },
-			// {
-			// 	path: "/master/uraian-indikator",
-			// 	name: "Uraian Indikator",
-			// 	icon: <PartitionOutlinedIcon />,
-			// 	role: USER_ROLE.USER,
-			// },
 			{
 				path: "/master/perilaku",
 				name: "Perilaku",
