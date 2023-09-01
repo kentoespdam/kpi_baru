@@ -1,5 +1,5 @@
 import { responseNoContent } from "@helper/error/nocontent";
-import { appwriteHeader, getCurrentToken } from "@helper/index";
+import { getCurrentToken } from "@helper/index";
 import {
 	BridgeKpiWithAudit,
 	BridgeKpiWithPagination,
@@ -26,7 +26,10 @@ export const GET = async (req: NextRequest) => {
 		const { status, data } = await axios.get(
 			`${REMOTE_BRIDGE_KPI}/page${search}`,
 			{
-				headers: appwriteHeader(cookie, token),
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
 			}
 		);
 		const bridgeKpis: BridgeKpiWithPagination = data.data;
@@ -89,7 +92,10 @@ export const POST = async (req: NextRequest) => {
 	try {
 		const token = await getCurrentToken(cookie);
 		const { status, data } = await axios.post(REMOTE_BRIDGE_KPI, body, {
-			headers: appwriteHeader(cookie, token),
+			headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
 		});
 		if (status === 201)
 			await createUserAccount({

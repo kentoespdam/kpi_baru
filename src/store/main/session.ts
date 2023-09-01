@@ -1,11 +1,10 @@
+import { UserRole } from "@myTypes/index";
 import axios from "axios";
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
-type AccountRole = "admin" | "direksi" | "manajer" | "supervisor" | "staff";
-
 interface AccountPref {
-	roles?: AccountRole[];
+	roles?: UserRole[];
 }
 
 export interface SessionUser {

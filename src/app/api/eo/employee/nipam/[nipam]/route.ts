@@ -1,5 +1,5 @@
 import { responseNoContent } from "@helper/error/nocontent";
-import { appwriteHeader, getCurrentToken } from "@helper/index";
+import { getCurrentToken } from "@helper/index";
 import { DetEmployee } from "@myTypes/entity/det.employee";
 import { Employee, REMOTE_EMPLOYEE } from "@myTypes/entity/employee";
 import axios from "axios";
@@ -17,7 +17,10 @@ export const GET = async (
 		const { status, data, statusText } = await axios.get(
 			`${REMOTE_EMPLOYEE}/${nipam}/nipam`,
 			{
-				headers: appwriteHeader(cookie, token),
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
 			}
 		);
 		const emp = data.data satisfies Employee;
@@ -26,13 +29,19 @@ export const GET = async (
 		const { data: atasanData } = await axios.get(
 			`${REMOTE_EMPLOYEE}/${posParent}/position`,
 			{
-				headers: appwriteHeader(cookie, token),
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
 			}
 		);
 		const { data: staffData } = await axios.get(
 			`${REMOTE_EMPLOYEE}/${posId}/staff`,
 			{
-				headers: appwriteHeader(cookie, token),
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
 			}
 		);
 		const detEmp: DetEmployee = {

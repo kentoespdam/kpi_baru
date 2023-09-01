@@ -1,5 +1,4 @@
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import Chip from "@mui/material/Chip";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import ListItem from "@mui/material/ListItem";
@@ -113,22 +112,6 @@ const UraianListItem = (props: UraianListItemProps) => {
 							<Typography variant="subtitle1">
 								{uraian.bobot} %
 							</Typography>
-						</Grid>
-						<Grid
-							item
-							sx={{
-								mx: 1,
-							}}
-							textAlign="center"
-						>
-							<Chip
-								label={uraian.status}
-								color={
-									uraian.status === "Enabled"
-										? "primary"
-										: "error"
-								}
-							/>
 						</Grid>
 					</Grid>
 				</Grid>

@@ -1,4 +1,4 @@
-import { appwriteHeader, getCurrentToken, setCookieToken } from "@helper/index";
+import { getCurrentToken } from "@helper/index";
 import { REMOTE_LEVEL } from "@myTypes/entity/level";
 import axios from "axios";
 import { NextRequest } from "next/server";
@@ -11,10 +11,14 @@ export const GET = async (
 ) => {
 	const cookie = req.cookies;
 	const { id } = params;
+
 	try {
 		const token = await getCurrentToken(cookie);
 		const { status, data } = await axios.get(`${REMOTE_LEVEL}/${id}`, {
-			headers: appwriteHeader(cookie, token),
+			headers: {
+				"Content-Type": "application/json",
+				"Authorization": token,
+			},
 		});
 		return new Response(JSON.stringify(data), { status: status });
 	} catch (e: any) {
@@ -29,13 +33,17 @@ export const PUT = async (
 	const cookie = req.cookies;
 	const { id } = params;
 	const body = await req.json();
+
 	try {
 		const token = await getCurrentToken(cookie);
 		const { status, data } = await axios.put(
 			`${REMOTE_LEVEL}/${id}`,
 			body,
 			{
-				headers: appwriteHeader(cookie, token),
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
 			}
 		);
 		return new Response(JSON.stringify(data), { status: status });
@@ -53,10 +61,14 @@ export const DELETE = async (
 ) => {
 	const cookie = req.cookies;
 	const { id } = params;
+
 	try {
 		const token = await getCurrentToken(cookie);
 		const { status, data } = await axios.delete(`${REMOTE_LEVEL}/${id}`, {
-			headers: appwriteHeader(cookie, token),
+			headers: {
+				"Content-Type": "application/json",
+				"Authorization": token,
+			},
 		});
 		return new Response(JSON.stringify(data), { status: status });
 	} catch (e: any) {

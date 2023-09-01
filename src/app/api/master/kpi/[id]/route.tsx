@@ -1,5 +1,5 @@
 import { responseNoContent } from "@helper/error/nocontent";
-import { appwriteHeader, getCurrentToken } from "@helper/index";
+import { getCurrentToken } from "@helper/index";
 import { KpiWithAudit, REMOTE_KPI } from "@myTypes/entity/kpi";
 import {
 	Organization,
@@ -21,19 +21,32 @@ export const GET = async (
 	try {
 		const token = await getCurrentToken(cookie);
 		const { status, data } = await axios.get(`${REMOTE_KPI}/${id}`, {
-			headers: appwriteHeader(cookie, token),
+			headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
 		});
 		if (status === 204) return responseNoContent();
 
 		const kpi = data.data satisfies KpiWithAudit;
 		const { data: orgData } = await axios.get(
 			`${REMOTE_ORGANIZATION}/${kpi.organizationId}`,
-			{ headers: appwriteHeader(cookie, token) }
+			{
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
+			}
 		);
 		const org: Organization = orgData.data satisfies Organization;
 		const { data: posData } = await axios.get(
 			`${REMOTE_POSITION}/${kpi.positionId}`,
-			{ headers: appwriteHeader(cookie, token) }
+			{
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
+			}
 		);
 		const pos: Position = posData.data satisfies Position;
 
@@ -63,7 +76,10 @@ export const PUT = async (
 	try {
 		const token = await getCurrentToken(cookie);
 		const { status, data } = await axios.put(`${REMOTE_KPI}/${id}`, body, {
-			headers: appwriteHeader(cookie, token),
+			headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
 		});
 		return new Response(JSON.stringify(data), { status: status });
 	} catch (e: any) {
@@ -84,7 +100,10 @@ export const DELETE = async (
 	try {
 		const token = await getCurrentToken(cookie);
 		const { status, data } = await axios.delete(`${REMOTE_KPI}/${id}`, {
-			headers: appwriteHeader(cookie, token),
+			headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
 		});
 
 		return new Response(JSON.stringify(data), { status });

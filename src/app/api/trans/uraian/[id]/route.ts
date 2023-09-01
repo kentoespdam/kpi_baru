@@ -17,7 +17,12 @@ export const GET = async (
 		const token = await getCurrentToken(cookies);
 		const { status, data } = await axios.get(
 			`${REMOTE_TRANS_URAIAN}/${id}`,
-			{ headers: appwriteHeader(cookies, token) }
+			{
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
+			}
 		);
 		if (status === 204) return responseNoContent();
 		return new Response(JSON.stringify(data), { status });
@@ -46,7 +51,12 @@ export const PUT = async (
 		const { status, data } = await axios.put(
 			`${REMOTE_TRANS_URAIAN}/${id}`,
 			body,
-			{ headers: appwriteHeader(cookies, token) }
+			{
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
+			}
 		);
 		if (status === 204) return responseNoContent();
 		return new Response(JSON.stringify(data), { status });

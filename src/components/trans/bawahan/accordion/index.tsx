@@ -9,7 +9,13 @@ import { useTransKinerjaStore } from "@store/filter/trans/kinerja";
 import { useSessionStore } from "@store/main/session";
 import { useQueryClient } from "@tanstack/react-query";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import TransKpiBawahanTabs from "@components/trans/bawahan/accordion/tabs";
+import Box from "@mui/material/Box";
+import { useTemplateStore } from "@store/main/template";
+import { Suspense, lazy } from "react";
+
+const TransKpiBawahanTabs = lazy(
+	() => import("@components/trans/bawahan/accordion/tabs")
+);
 
 type AccordionBawahanProps = {
 	staffNipam: string;
@@ -18,6 +24,7 @@ const AccordionBawahan = (props: AccordionBawahanProps) => {
 	const { staffNipam } = props;
 	const { expanded, setExpanded, setNipamStaff } = useTransKinerjaStore();
 	const curNipam = useSessionStore.getState().user?.userId;
+	const isDesktop = useTemplateStore((state) => state.isDesktop);
 	const qc = useQueryClient();
 	const data = qc.getQueryData<DetEmployee>(["employee-detail", curNipam]);
 
@@ -43,9 +50,9 @@ const AccordionBawahan = (props: AccordionBawahanProps) => {
 				}
 			>
 				<Stack
-					direction="row"
+					direction={isDesktop ? "row" : "column"}
 					spacing={1}
-					justifyContent="space-between"
+					justifyContent="space-arround"
 				>
 					<Stack direction="column">
 						<Typography variant="body1">
@@ -55,12 +62,19 @@ const AccordionBawahan = (props: AccordionBawahanProps) => {
 							{currStaff?.nipam}
 						</Typography>
 					</Stack>
-					<Typography variant="body2" color="text.secondary">
-						{currStaff?.position?.name}
-					</Typography>
+
+					<Box>
+						<Typography variant="body2" color="text.secondary">
+							{currStaff?.position?.name}
+						</Typography>
+					</Box>
 				</Stack>
 			</AccordionSummary>
-			{expanded ? <TransKpiBawahanTabs /> : null}
+			{expanded ? (
+				<Suspense fallback={<>Loading view...</>}>
+					<TransKpiBawahanTabs />
+				</Suspense>
+			) : null}
 		</Accordion>
 	);
 };

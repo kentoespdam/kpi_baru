@@ -36,7 +36,7 @@ export const POST = async (req: Request) => {
 			{
 				headers: {
 					...reqHeader,
-					"X-Appwrite-JWT": token,
+					"Authorization": token,
 				},
 				onUploadProgress: (e) => {
 					console.log("bytes: ", e.bytes);

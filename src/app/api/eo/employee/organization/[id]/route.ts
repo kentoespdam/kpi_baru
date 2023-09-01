@@ -1,5 +1,5 @@
 import { responseNoContent } from "@helper/error/nocontent";
-import { appwriteHeader, getCurrentToken } from "@helper/index";
+import { getCurrentToken } from "@helper/index";
 import { REMOTE_EMPLOYEE } from "@myTypes/entity/employee";
 import axios from "axios";
 import { NextRequest } from "next/server";
@@ -16,7 +16,10 @@ export const GET = async (
 		const { status, data } = await axios.get(
 			`${REMOTE_EMPLOYEE}/${id}/organization`,
 			{
-				headers: appwriteHeader(cookie, token),
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
 			}
 		);
 		if (status === 204) return responseNoContent();

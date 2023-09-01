@@ -6,7 +6,7 @@ import axios from "axios";
 const SessionProvider = () => {
 	const { user, setUser } = useSessionStore();
 
-	const { status, data } = useQuery({
+	useQuery({
 		queryKey: ["session"],
 		queryFn: async () => {
 			if (!user) {
@@ -18,6 +18,7 @@ const SessionProvider = () => {
 			return status;
 		},
 		refetchInterval: 60 * 1000,
+		cacheTime: Infinity,
 	});
 
 	return null;

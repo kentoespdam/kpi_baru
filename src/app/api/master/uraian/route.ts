@@ -12,7 +12,10 @@ export const POST = async (req: NextRequest) => {
 	try {
 		const token = await getCurrentToken(cookie);
 		const { status, data } = await axios.post(`${REMOTE_URAIAN}`, body, {
-			headers: appwriteHeader(cookie, token),
+			headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
 		});
 		return new Response(JSON.stringify(data), { status: status });
 	} catch (e: any) {

@@ -1,7 +1,6 @@
 "use client";
 
 import Autocomplete from "@mui/material/Autocomplete";
-import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import TextField from "@mui/material/TextField";
 import { roles } from "@myTypes/index";
@@ -32,6 +31,13 @@ const RolesAutocomple = (props: RolesAutocompleProps) => {
 			renderInput={(params) => (
 				<TextField {...params} label="Search Roles" variant={variant} />
 			)}
+			renderOption={(props, option) => {
+				return (
+					<li {...props} key={option}>
+						{option}
+					</li>
+				);
+			}}
 			renderTags={(value: readonly string[], getTagProps) =>
 				value.map((option: string, index: number) => (
 					<Chip

@@ -1,3 +1,5 @@
+import { QueryKey } from "@tanstack/react-query";
+
 export type ChildrenProps = {
 	children: React.ReactNode;
 };
@@ -36,9 +38,9 @@ export function isObject(
 export function typeCheck(args: "number" | "string" | "boolean") {
 	return typeof args === args;
 }
-const USER_ROLE = {
-	STAFF: "staff",
-	ADMIN: "admin",
+export const USER_ROLE = {
+	USER: "USER",
+	ADMIN: "ADMIN",
 } as const;
 
 export type UserRole = ObjectValues<typeof USER_ROLE>;
@@ -124,7 +126,16 @@ export interface ApiResponse<Data> {
 	data: Data;
 }
 
-export const roles:string[]=[
-	"admin",
-	"staff",
-]
+export const roles: string[] = ["ADMIN", "USER"];
+
+export interface AutoCompleteProps<Entity> {
+	search: Entity | null;
+	setSearchValue: (value: Entity | null) => void;
+	required?: boolean;
+	variant?: "standard" | "filled" | "outlined";
+	size?: "small" | "medium";
+}
+
+export type QueryKeyType = {
+	queryKey: QueryKey;
+};

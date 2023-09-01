@@ -2,34 +2,36 @@
 
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
+import { QueryKeyType } from "@myTypes/index";
 import { useTransKinerjaStore } from "@store/filter/trans/kinerja";
 import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useTransPerilakuStore } from "@store/filter/trans/perilaku";
 import { useSessionStore } from "@store/main/session";
-import { useQueries } from "@tanstack/react-query";
+import { QueryKey, useQueries } from "@tanstack/react-query";
 import { getByNipam } from "@utils/bridge/kpi";
 import { getEmpDetails } from "@utils/eo/employee";
 import { getBridgeKpi, getStaffKpi } from "@utils/trans/kpi";
 import { getBridgePerilaku, getTransPerilaku } from "@utils/trans/perilaku";
-import BawahanComponent from "./bawahan";
-import ViewFileDialog from "./dialog/file";
-import ViewPdfDialog from "./dialog/pdf";
-import ViewUploadDialog from "./dialog/upload";
-import EmployeeComponent from "./employee";
-import DetailEmployeeSkeleton from "./employee/detail/skeleton";
-import KpiCard from "./kpi";
+import { lazy } from "react";
+
+const ViewFileDialog = lazy(() => import("./dialog/file"));
+const ViewPdfDialog = lazy(() => import("./dialog/pdf"));
+const ViewUploadDialog = lazy(() => import("./dialog/upload"));
+const DetailEmployeeSkeleton = lazy(() => import("./employee/detail/skeleton"));
+const BawahanComponent = lazy(() => import("./bawahan"));
+const EmployeeComponent = lazy(() => import("./employee"));
+const KpiCard = lazy(() => import("./kpi"));
+
+const viewEmploye = {
+	0: EmployeeComponent,
+	1: DetailEmployeeSkeleton,
+};
 
 const TransRoot = () => {
 	const curNipam = useSessionStore.getState().user?.userId;
-	const { nipamStaff, bridgeKpiBawahan } = useTransKinerjaStore((state) => ({
-		nipamStaff: state.nipamStaff,
-		bridgeKpiBawahan: state.bridgeKpiBawahan,
-	}));
-	const { levelStaff, bridgePerilakuBawahan } = useTransPerilakuStore();
-	const { periode, bridgeKpi } = useTransKpiStore((state) => ({
-		periode: state.periode,
-		bridgeKpi: state.bridgeKpi,
-	}));
+	const { nipamStaff, bridgeKpiBawahan } = useTransKinerjaStore();
+	const { levelStaff } = useTransPerilakuStore();
+	const { periode, bridgeKpi } = useTransKpiStore();
 
 	const queries = useQueries({
 		queries: [
@@ -96,6 +98,8 @@ const TransRoot = () => {
 			},
 		],
 	});
+
+	const CurrentView = viewEmploye[queries[0].isFetching ? 1 : 0];
 
 	return (
 		<>

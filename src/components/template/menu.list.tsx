@@ -1,15 +1,14 @@
+import DeploymentUnitOutlined from "@ant-design/icons/DeploymentUnitOutlined";
 import HomeOutlinedIcon from "@ant-design/icons/HomeOutlined";
 import OrderedListOutlinedIcon from "@ant-design/icons/OrderedListOutlined";
 import RiseOutlinedIcon from "@ant-design/icons/RiseOutlined";
 import CarryOutOutlinedIcon from "@ant-design/icons/lib/icons/CarryOutOutlined";
 import CheckCircleOutlinedIcon from "@ant-design/icons/lib/icons/CheckCircleOutlined";
-import ControlOutlinedIcon from "@ant-design/icons/lib/icons/ControlOutlined";
 import IdcardOutlinedIcon from "@ant-design/icons/lib/icons/IdcardOutlined";
-import PartitionOutlinedIcon from "@ant-design/icons/lib/icons/PartitionOutlined";
 import PullRequestOutlinedIcon from "@ant-design/icons/lib/icons/PullRequestOutlined";
 import TeamOutlinedIcon from "@ant-design/icons/lib/icons/TeamOutlined";
 import UserSwitchOutlinedIcon from "@ant-design/icons/lib/icons/UserSwitchOutlined";
-import { ObjectValues, UserRole } from "@myTypes/index";
+import { ObjectValues, USER_ROLE, UserRole } from "@myTypes/index";
 
 const MENU_TYPE = {
 	GROUP: "group",
@@ -37,13 +36,13 @@ export const menuList: IMenuList = [
 		path: "#",
 		name: "Navigation",
 		type: "group",
-		role: "staff",
+		role: USER_ROLE.USER,
 		subMenu: [
 			{
 				path: "/",
 				name: "Dashboard",
 				icon: <HomeOutlinedIcon />,
-				role: "staff",
+				role: USER_ROLE.USER,
 			},
 		],
 	},
@@ -52,49 +51,43 @@ export const menuList: IMenuList = [
 		path: "#",
 		name: "Master",
 		type: "group",
-		role: "admin",
+		role: USER_ROLE.ADMIN,
 		subMenu: [
 			{
 				path: "/master/level",
 				name: "Level",
 				icon: <RiseOutlinedIcon />,
-				role: "admin",
+				role: USER_ROLE.ADMIN,
 			},
 			{
 				path: "/master/grade",
 				name: "Grade",
 				icon: <OrderedListOutlinedIcon />,
-				role: "admin",
+				role: USER_ROLE.ADMIN,
 			},
 			{
 				path: "/master/profesi",
 				name: "Profesi",
 				icon: <IdcardOutlinedIcon />,
-				role: "admin",
+				role: USER_ROLE.ADMIN,
+			},
+			{
+				path: "/master/satuan",
+				name: "Satuan",
+				icon: <DeploymentUnitOutlined />,
+				role: USER_ROLE.ADMIN,
 			},
 			{
 				path: "/master/kpi",
 				name: "KPI",
 				icon: <CarryOutOutlinedIcon />,
-				role: "admin",
+				role: USER_ROLE.ADMIN,
 			},
-			// {
-			// 	path: "/master/indikator",
-			// 	name: "Indikator",
-			// 	icon: <ControlOutlinedIcon />,
-			// 	role: "staff",
-			// },
-			// {
-			// 	path: "/master/uraian-indikator",
-			// 	name: "Uraian Indikator",
-			// 	icon: <PartitionOutlinedIcon />,
-			// 	role: "staff",
-			// },
 			{
 				path: "/master/perilaku",
 				name: "Perilaku",
 				icon: <PullRequestOutlinedIcon />,
-				role: "admin",
+				role: USER_ROLE.ADMIN,
 			},
 		],
 	},
@@ -102,19 +95,19 @@ export const menuList: IMenuList = [
 		path: "#",
 		name: "Bridge",
 		type: "group",
-		role: "admin",
+		role: USER_ROLE.ADMIN,
 		subMenu: [
 			{
 				path: "/bridge/kpi",
 				name: "KPI Pegawai",
 				icon: <TeamOutlinedIcon />,
-				role: "admin",
+				role: USER_ROLE.ADMIN,
 			},
 			{
 				path: "/bridge/perilaku",
 				name: "Level Perilaku",
 				icon: <UserSwitchOutlinedIcon />,
-				role: "admin",
+				role: USER_ROLE.ADMIN,
 			},
 		],
 	},
@@ -122,13 +115,13 @@ export const menuList: IMenuList = [
 		path: "#",
 		name: "Penilaian KPI",
 		type: "group",
-		role: "staff",
+		role: USER_ROLE.USER,
 		subMenu: [
 			{
 				path: "/trans/kpi",
 				name: "Penilaian KPI",
 				icon: <CheckCircleOutlinedIcon />,
-				role: "staff",
+				role: USER_ROLE.USER,
 			},
 		],
 	},

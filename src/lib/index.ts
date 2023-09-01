@@ -13,6 +13,6 @@ export const sessionNames = [
 	"a_session_" + APPWRITE_PROJECT_ID.toLowerCase() + "_token",
 ];
 
-export const defaultRoles: string[] = ["staff"];
+export const defaultRoles: string[] = ["USER"];
 export const DEFAULT_PASSWORD = `${process.env.DEFAULT_PASSWORD}`;
 export const DEFAULT_MAIL_DOMAIN = `${process.env.DEFAULT_MAIL_DOMAIN}`;

@@ -7,18 +7,10 @@ import { levelHeader } from "@myTypes/entity/level";
 import { useLevelStore } from "@store/filter/master/level";
 
 const LevelTableHead = () => {
-	const { sortRequest, setSortRequest, setKeyVal, status } = useLevelStore(
-		(state) => ({
-			sortRequest: state.sortRequest,
-			setSortRequest: state.setSortRequest,
-			setKeyVal: state.setKeyVal,
-			status: state.status,
-		})
-	);
+	const { sortRequest, setSortRequest, setKeyVal, status } = useLevelStore();
 
-	const handleSort = (sort: string | null, direction: "asc" | "desc") => {
+	const handleSort = (sort: string | null, direction: "asc" | "desc") =>
 		setSortRequest({ sort, direction });
-	};
 
 	const handleSearch = (field: string, value: SearchValueProps) => {
 		setKeyVal(field, value);

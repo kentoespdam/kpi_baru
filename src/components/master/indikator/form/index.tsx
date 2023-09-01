@@ -52,6 +52,7 @@ const IndikatorFormComponent = (props: IndikatorFormComponentProps) => {
 		},
 		enabled: !!id,
 		refetchOnMount: true,
+		cacheTime: Infinity,
 	});
 
 	const mutation = useMutation({
@@ -115,6 +116,8 @@ const IndikatorFormComponent = (props: IndikatorFormComponentProps) => {
 					variant="standard"
 					inputRef={indikatorRef}
 					defaultValue={data ? data.indikator : ""}
+					multiline
+					rows={5}
 					required
 				/>
 			</FormControl>

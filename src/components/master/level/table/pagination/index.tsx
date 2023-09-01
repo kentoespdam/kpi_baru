@@ -8,13 +8,8 @@ import { useQueryClient } from "@tanstack/react-query";
 const LevelPagination = () => {
 	const qc = useQueryClient();
 	const { pageRequest, setPageRequest, sortRequest, status, level } =
-		useLevelStore((state) => ({
-			pageRequest: state.pageRequest,
-			setPageRequest: state.setPageRequest,
-			sortRequest: state.sortRequest,
-			status: state.status,
-			level: state.level,
-		}));
+		useLevelStore();
+		
 	const data = qc.getQueryData([
 		"master.level",
 		{ pageRequest, sortRequest, status, level },

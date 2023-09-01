@@ -1,5 +1,4 @@
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import Chip from "@mui/material/Chip";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
@@ -49,14 +48,6 @@ const IndikatorItemSummary = (props: IndikatorItemSummaryProps) => {
 						{indikatorWithAudit.indikator}
 					</Typography>
 				</Stack>
-				<Chip
-					label={indikatorWithAudit.status}
-					color={
-						indikatorWithAudit.status === "Enabled"
-							? "success"
-							: "error"
-					}
-				/>
 			</Stack>
 			<IconButton
 				aria-label="more"

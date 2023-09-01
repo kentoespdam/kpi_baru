@@ -12,7 +12,7 @@ const EmployeeComponent = () => {
 	}, [isDesktop]);
 	return (
 		<Stack
-			direction={direction ? "row" : "row"}
+			direction={isDesktop ? "row" : "column"}
 			justifyContent={direction ? "space-between" : "center"}
 			spacing={2}
 		>

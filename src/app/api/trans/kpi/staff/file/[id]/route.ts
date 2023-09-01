@@ -17,7 +17,10 @@ export const DELETE = async (
 		const { status, data } = await axios.delete(
 			`${REMOTE_URAIAN_FILE}/${id}`,
 			{
-				headers: appwriteHeader(cookies, token),
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
 				responseType: "stream",
 			}
 		);

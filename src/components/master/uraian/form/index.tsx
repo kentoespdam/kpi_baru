@@ -2,7 +2,9 @@
 
 import IndikatorAutocomplete from "@autocomplete/indikator";
 import KpiAutocomplete from "@autocomplete/kpi";
+import SatuanAutocomplete from "@autocomplete/satuan";
 import WaktuAutocomplete from "@autocomplete/waktu";
+import { waktuList } from "@helper/tanggal";
 import DoDisturbIcon from "@mui/icons-material/DoDisturb";
 import SaveIcon from "@mui/icons-material/Save";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -16,13 +18,19 @@ import RadioGroup from "@mui/material/RadioGroup";
 import Stack from "@mui/material/Stack";
 import Switch from "@mui/material/Switch";
 import TextField from "@mui/material/TextField";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DateField } from "@mui/x-date-pickers/DateField";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { Indikator } from "@myTypes/entity/indikator";
 import { Kpi } from "@myTypes/entity/kpi";
+import { Satuan } from "@myTypes/entity/satuan";
 import { UraianData } from "@myTypes/entity/uraian";
 import { AUDIT_STATUS } from "@myTypes/index";
 import { useUraianStore } from "@store/filter/master/uraian";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { doSave, getById } from "@utils/master/uraian";
+import dayjs, { Dayjs } from "dayjs";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
@@ -39,14 +47,16 @@ const UraianFormComponent = (props: UraianFormComponentProps) => {
 	const { enqueueSnackbar } = useSnackbar();
 	const [kpis, setKpis] = useState<Kpi | null>(null);
 	const [indikators, setIndikators] = useState<Indikator | null>(null);
+	const [satuan, setSatuan] = useState<Satuan | null>(null);
+	const [_satuan, _setSatuan] = useState<string | null | undefined>(null);
 	const [targets, setTargets] = useState<"MIN" | "MAX">("MIN");
-	const [waktus, setWaktus] = useState<string | null | undefined>(
+	const [_waktu, _setWaktu] = useState<string | null | undefined>(
 		"Akhir Bulan"
 	);
+	const [cusTanggal, setCusTanggal] = useState<Dayjs | null>(null);
 	const [checked, setChecked] = useState(true);
 	const uraianRef = useRef<HTMLInputElement>(null);
 	const volumeRef = useRef<HTMLInputElement>(null);
-	const satuanRef = useRef<HTMLInputElement>(null);
 	const bobotRef = useRef<HTMLInputElement>(null);
 	const qc = useQueryClient();
 	const {
@@ -66,7 +76,13 @@ const UraianFormComponent = (props: UraianFormComponentProps) => {
 			const result = await getById(queryKey);
 			setIndikators(result.indikator);
 			setTargets(result.target);
-			setWaktus(result.waktu);
+			_setSatuan(result.satuan);
+			const currWaktu = waktuList.includes(result.waktu)
+				? result.waktu
+				: "Tanggal Custom";
+			_setWaktu(currWaktu);
+			if (currWaktu === "Tanggal Custom")
+				setCusTanggal(dayjs(result.waktu));
 			setChecked(result.status === AUDIT_STATUS.DISABLED ? false : true);
 			return result;
 		},
@@ -97,10 +113,11 @@ const UraianFormComponent = (props: UraianFormComponentProps) => {
 	};
 	const handleChangeIndikator = (value: Indikator | null) =>
 		setIndikators(value);
+	const handleChangeSatuan = (value: Satuan | null) => setSatuan(value);
 	const handleChangeTarget = (event: React.ChangeEvent<HTMLInputElement>) =>
 		setTargets(event.target.value as "MIN" | "MAX");
 	const handleChangeWaktu = (value: string | null | undefined) =>
-		setWaktus(value);
+		_setWaktu(value);
 	const handleChangeChecked = (event: React.ChangeEvent<HTMLInputElement>) =>
 		setChecked(event.target.checked);
 
@@ -111,9 +128,12 @@ const UraianFormComponent = (props: UraianFormComponentProps) => {
 			indikatorId: Number(indikators?.id),
 			uraian: String(uraianRef.current?.value),
 			volume: Number(volumeRef.current?.value),
-			satuan: String(satuanRef.current?.value),
+			satuan: String(satuan?.satuan),
 			target: targets,
-			waktu: String(waktus),
+			waktu:
+				_waktu === "Tanggal Custom"
+					? dayjs(cusTanggal).format("YYYY-MM-DD")
+					: String(_waktu),
 			bobot: Number(bobotRef.current?.value),
 			status: checked ? AUDIT_STATUS.ENABLED : AUDIT_STATUS.DISABLED,
 		};
@@ -172,11 +192,11 @@ const UraianFormComponent = (props: UraianFormComponentProps) => {
 				/>
 			</FormControl>
 			<FormControl fullWidth>
-				<TextField
-					id="satuan"
-					inputRef={satuanRef}
-					label="Satuan"
-					defaultValue={data?.satuan ?? "%"}
+				<SatuanAutocomplete
+					search={satuan}
+					satuanValue={_satuan}
+					setSearchValue={handleChangeSatuan}
+					variant="outlined"
 					required
 				/>
 			</FormControl>
@@ -202,10 +222,21 @@ const UraianFormComponent = (props: UraianFormComponentProps) => {
 			</FormControl>
 			<FormControl fullWidth>
 				<WaktuAutocomplete
-					search={waktus}
+					search={_waktu}
 					setSearchValue={handleChangeWaktu}
 				/>
 			</FormControl>
+			{_waktu === "Tanggal Custom" ? (
+				<FormControl>
+					<LocalizationProvider dateAdapter={AdapterDayjs}>
+						<DatePicker
+							value={cusTanggal}
+							onChange={(newValue) => setCusTanggal(newValue)}
+							format="YYYY-MM-DD"
+						/>
+					</LocalizationProvider>
+				</FormControl>
+			) : null}
 			<FormControl fullWidth>
 				<TextField
 					id="bobot"

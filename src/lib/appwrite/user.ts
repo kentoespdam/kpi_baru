@@ -1,8 +1,8 @@
 import axios from "axios";
 import {
+	APPWRITE_API_KEY,
 	APPWRITE_ENDPOINT,
 	APPWRITE_PROJECT_ID,
-	APPWRITE_API_KEY,
 	defaultRoles,
 } from "..";
 
@@ -14,14 +14,14 @@ export const createUserAccount = async (account: {
 }) => {
 	try {
 		const user = await getUserByNipam(account.userId);
-		if (user) return user;
+		if (user !== null) return user;
 
-		const { data } = await axios.post(
-			`${APPWRITE_ENDPOINT}/v1/account`,
+		const { status, data } = await axios.post(
+			`${APPWRITE_ENDPOINT}/v1/users`,
 			account,
 			{
 				headers: {
-					"Content-Type": "Application/json",
+					"Content-Type": "application/json",
 					"X-Appwrite-Response-Format": "1.0.0",
 					"X-Appwrite-Project": APPWRITE_PROJECT_ID,
 					"X-Appwrite-Key": APPWRITE_API_KEY,
@@ -35,7 +35,7 @@ export const createUserAccount = async (account: {
 		console.log(
 			"lib.appwrite.create.user.account",
 			new Date().toISOString(),
-			e.response.data
+			e
 		);
 		return null;
 	}
@@ -45,6 +45,7 @@ export const getAllUser = async () => {
 	try {
 		const { data } = await axios.get(`${APPWRITE_ENDPOINT}/v1/users`, {
 			headers: {
+				"Content-Type": "application/json",
 				"X-Appwrite-Response-Format": "1.0.0",
 				"X-Appwrite-Project": APPWRITE_PROJECT_ID,
 				"X-Appwrite-Key": APPWRITE_API_KEY,
@@ -63,16 +64,18 @@ export const getAllUser = async () => {
 
 export const getUserByNipam = async (nipam: string) => {
 	try {
-		const { data } = await axios.get(
+		const { status, data } = await axios.get(
 			`${APPWRITE_ENDPOINT}/v1/users/${nipam}`,
 			{
 				headers: {
+					"Content-Type": "application/json",
 					"X-Appwrite-Response-Format": "1.0.0",
 					"X-Appwrite-Project": APPWRITE_PROJECT_ID,
 					"X-Appwrite-Key": APPWRITE_API_KEY,
 				},
 			}
 		);
+		console.log(status);
 		return data;
 	} catch (e: any) {
 		console.log(
@@ -90,6 +93,7 @@ export const getPrefs = async (id: string) => {
 			`${APPWRITE_ENDPOINT}/v1/users/${id}/prefs`,
 			{
 				headers: {
+					"Content-Type": "application/json",
 					"X-Appwrite-Response-Format": "1.0.0",
 					"X-Appwrite-Project": APPWRITE_PROJECT_ID,
 					"X-Appwrite-Key": APPWRITE_API_KEY,
@@ -103,7 +107,7 @@ export const getPrefs = async (id: string) => {
 			new Date().toLocaleString(),
 			e.response.data
 		);
-		throw new Error(e.response.data.message);
+		return null;
 	}
 };
 

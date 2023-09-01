@@ -1,4 +1,4 @@
-import { appwriteHeader, getCurrentToken } from "@helper/index";
+import { getCurrentToken } from "@helper/index";
 import { REMOTE_INDIKATOR } from "@myTypes/entity/indikator";
 import axios from "axios";
 import { NextRequest } from "next/server";
@@ -9,7 +9,10 @@ export const POST = async (req: NextRequest) => {
 	try {
 		const token = await getCurrentToken(cookie);
 		const { status, data } = await axios.post(`${REMOTE_INDIKATOR}`, body, {
-			headers: appwriteHeader(cookie, token),
+			headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
 		});
 		return new Response(JSON.stringify(data), { status: status });
 	} catch (e: any) {

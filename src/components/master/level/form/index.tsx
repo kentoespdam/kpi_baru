@@ -70,7 +70,7 @@ const LevelForm = (props: LevelFormProps) => {
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		const level: LevelData = {
-			id: data.id,
+			id: data?.id,
 			level: levelRef.current!.value,
 			status: checked ? AUDIT_STATUS.ENABLED : AUDIT_STATUS.DISABLED,
 		};

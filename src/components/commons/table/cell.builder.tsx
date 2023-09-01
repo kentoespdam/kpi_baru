@@ -1,11 +1,17 @@
-import { rupiah } from "@helper/number";
+import { isDecimal, rupiah } from "@helper/number";
 import Chip from "@mui/material/Chip";
 import TableCell, { TableCellProps } from "@mui/material/TableCell";
 import { useTheme } from "@mui/material/styles";
 import { ReactNode } from "react";
 
 const numberBuilder = (num: number, currency?: boolean, percent?: boolean) =>
-	currency ? rupiah(num) : percent ? `${num}%` : num;
+	currency
+		? rupiah(num)
+		: percent
+		? `${num}%`
+		: isDecimal(num)
+		? num.toFixed(2)
+		: num;
 
 interface CellBuilderProps extends TableCellProps {
 	children?: ReactNode;

@@ -3,11 +3,12 @@ import { useMenuStore } from "@store/main/menu";
 import { menuList } from "../menu.list";
 import MenuBuilder from "./menu";
 import { useSessionStore } from "@store/main/session";
+import { USER_ROLE } from "@myTypes/index";
 
 const DrawerContent = () => {
 	const toggleDrawer = useMenuStore((state) => state.toggleDrawer);
 	const user = useSessionStore.getState().user;
-	const isAdmin = user?.prefs.roles?.includes("admin");
+	const isAdmin = user?.prefs.roles?.includes(USER_ROLE.ADMIN);
 
 	return (
 		<Box
@@ -33,7 +34,7 @@ const DrawerContent = () => {
 			{menuList.map((item, index) =>
 				isAdmin ? (
 					<MenuBuilder key={index} item={item} />
-				) : item.role === "staff" ? (
+				) : item.role === USER_ROLE.USER ? (
 					<MenuBuilder key={index} item={item} />
 				) : null
 			)}

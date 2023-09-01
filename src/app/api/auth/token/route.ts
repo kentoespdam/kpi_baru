@@ -3,6 +3,7 @@ import { tokenChecker } from "@helper/token";
 import { NextRequest } from "next/server";
 import { createToken } from "src/lib/appwrite";
 
+export const revalidate = 0;
 export const OPTIONS = async (req: NextRequest) => {
 	const reqCookies = req.cookies;
 	const check = tokenChecker(reqCookies);

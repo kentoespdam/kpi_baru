@@ -17,7 +17,10 @@ export const GET = async (
 		const { status, data } = await axios.get(
 			`${REMOTE_URAIAN_FILE}/${id}/uraian`,
 			{
-				headers: appwriteHeader(cookies, token),
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": token,
+				},
 				responseType: "stream",
 			}
 		);

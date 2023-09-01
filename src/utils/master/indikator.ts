@@ -42,7 +42,7 @@ export const getPage = async (props: any) => {
 			e.response.data
 		);
 		useIndikatorStore.setState({ loading: false });
-		throw new Error(e.response.data.message);
+		throw new Error(e.response.data);
 	}
 };
 
