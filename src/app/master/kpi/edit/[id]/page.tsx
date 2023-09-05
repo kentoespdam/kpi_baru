@@ -1,6 +1,8 @@
-import CardBuilder from "@components/commons/card";
-import MuiContainer from "@components/commons/mui/container";
-import KpiFormComponent from "@components/master/kpi/form";
+import dynamic from "next/dynamic";
+
+const MuiContainer = dynamic(() => import("@components/commons/mui/container"));
+const CardBuilder = dynamic(() => import("@components/commons/card"));
+const KpiFormComponent = dynamic(() => import("@components/master/kpi/form"));
 
 export const metadata = {
 	title: "Edit Master KPI",

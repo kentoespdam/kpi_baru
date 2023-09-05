@@ -1,5 +1,7 @@
-import CardBuilder from "@components/commons/card";
-import PerilakuComponent from "@components/master/perilaku";
+import dynamic from "next/dynamic";
+
+const CardBuilder = dynamic(() => import("@components/commons/card"));
+const PerilakuComponent = dynamic(() => import("@components/master/perilaku"));
 
 export const metadata = {
 	title: "Master Perilaku",

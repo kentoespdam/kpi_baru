@@ -1,25 +1,64 @@
 "use client";
 
 import { userToEmail } from "@helper/email";
-import LockIcon from "@mui/icons-material/Lock";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import LoadingButton from "@mui/lab/LoadingButton";
-import Avatar from "@mui/material/Avatar";
-import FormControl from "@mui/material/FormControl";
-import IconButton from "@mui/material/IconButton";
-import InputAdornment from "@mui/material/InputAdornment";
-import InputLabel from "@mui/material/InputLabel";
-import OutlinedInput from "@mui/material/OutlinedInput";
+// import LockIcon from "@mui/icons-material/Lock";
+// import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+// import VisibilityIcon from "@mui/icons-material/Visibility";
+// import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+// import LoadingButton from "@mui/lab/LoadingButton";
+// import Avatar from "@mui/material/Avatar";
+// import FormControl from "@mui/material/FormControl";
+// import IconButton from "@mui/material/IconButton";
+// import InputAdornment from "@mui/material/InputAdornment";
+// import InputLabel from "@mui/material/InputLabel";
+// import OutlinedInput from "@mui/material/OutlinedInput";
 import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
+// import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useSessionStore } from "@store/main/session";
 import axios from "axios";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
 import React from "react";
+
+const LockIcon = dynamic(() => import("@mui/icons-material/Lock"), {
+	ssr: false,
+});
+const LockOutlinedIcon = dynamic(
+	() => import("@mui/icons-material/LockOutlined"),
+	{ ssr: false }
+);
+const VisibilityIcon = dynamic(() => import("@mui/icons-material/Visibility"), {
+	ssr: false,
+});
+const VisibilityOffIcon = dynamic(
+	() => import("@mui/icons-material/VisibilityOff"),
+	{ ssr: false }
+);
+const LoadingButton = dynamic(() => import("@mui/lab/LoadingButton"), {
+	ssr: false,
+});
+const Avatar = dynamic(() => import("@mui/material/Avatar"), { ssr: false });
+const FormControl = dynamic(() => import("@mui/material/FormControl"), {
+	ssr: false,
+});
+
+const IconButton = dynamic(() => import("@mui/material/IconButton"), {
+	ssr: false,
+});
+const InputAdornment = dynamic(() => import("@mui/material/InputAdornment"), {
+	ssr: false,
+});
+const InputLabel = dynamic(() => import("@mui/material/InputLabel"), {
+	ssr: false,
+});
+const OutlinedInput = dynamic(() => import("@mui/material/OutlinedInput"), {
+	ssr: false,
+});
+const TextField = dynamic(() => import("@mui/material/TextField"), {
+	ssr: false,
+});
 
 const AuthComponent = () => {
 	const [submitText, setSubmitText] = React.useState("LOGIN");

@@ -1,5 +1,7 @@
-import CardBuilder from "@components/commons/card";
-import TransRoot from "@components/trans";
+import dynamic from "next/dynamic";
+
+const CardBuilder = dynamic(() => import("@components/commons/card"));
+const TransRoot = dynamic(() => import("@components/trans"));
 
 export const metadata = {
 	title: "Penilaian Pencapaian Kinerja Individu",

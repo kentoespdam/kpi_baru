@@ -5,6 +5,7 @@ import { APPWRITE_ENDPOINT, APPWRITE_PROJECT_ID, sessionNames } from "src/lib";
 import { createToken, getAccount } from "src/lib/appwrite";
 import { getUserByNipam } from "src/lib/appwrite/user";
 
+export const revalidate = 0;
 export const POST = async (req: Request) => {
 	const body = await req.json();
 	try {

@@ -1,6 +1,10 @@
-import CardBuilder from "@components/commons/card";
-import MuiContainer from "@components/commons/mui/container";
-import IndikatorFormComponent from "@components/master/indikator/form";
+import dynamic from "next/dynamic";
+
+const MuiContainer = dynamic(() => import("@components/commons/mui/container"));
+const CardBuilder = dynamic(() => import("@components/commons/card"));
+const IndikatorFormComponent = dynamic(
+	() => import("@components/master/indikator/form")
+);
 
 export const metadata = { title: "Edit Master Indikator" };
 const EditMasterIndikator = ({ params }: { params: { id: number } }) => {

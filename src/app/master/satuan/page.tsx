@@ -1,5 +1,7 @@
-import CardBuilder from "@components/commons/card";
-import SatuanComponent from "@components/master/satuan";
+import dynamic from "next/dynamic";
+
+const CardBuilder = dynamic(() => import("@components/commons/card"));
+const SatuanComponent = dynamic(() => import("@components/master/satuan"));
 
 export const metadata = {
 	title: "Master Satuan",

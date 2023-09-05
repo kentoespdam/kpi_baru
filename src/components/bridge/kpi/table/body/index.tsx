@@ -1,10 +1,14 @@
-import CellBuilder from "@components/commons/table/cell.builder";
-import TableBody from "@mui/material/TableBody";
-import TableRow from "@mui/material/TableRow";
 import { BridgeKpiWithPagination } from "@myTypes/entity/bridge.kpi";
 import { useBridgeKpiStore } from "@store/filter/bridge/kpi";
 import { useQueryClient } from "@tanstack/react-query";
-import BridgeKpiActionButtons from "./action";
+import dynamic from "next/dynamic";
+
+const CellBuilder = dynamic(
+	() => import("@components/commons/table/cell.builder")
+);
+const TableBody = dynamic(() => import("@mui/material/TableBody"));
+const TableRow = dynamic(() => import("@mui/material/TableRow"));
+const BridgeKpiActionButtons = dynamic(() => import("./action"));
 
 const BridgeKpiTableBody = () => {
 	const {

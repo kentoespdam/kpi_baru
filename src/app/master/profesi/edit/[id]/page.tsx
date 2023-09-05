@@ -1,6 +1,8 @@
-import CardBuilder from "@components/commons/card";
-import MuiContainer from "@components/commons/mui/container";
-import ProfesiForm from "@components/master/profesi/form";
+import dynamic from "next/dynamic";
+
+const MuiContainer = dynamic(() => import("@mui/material/Container"));
+const CardBuilder = dynamic(() => import("@components/commons/card"));
+const ProfesiForm = dynamic(() => import("@components/master/profesi/form"));
 
 export const metadata = { title: "Edit Master Profesi" };
 const EditMasterProfesi = ({ params }: { params: { id: number } }) => {

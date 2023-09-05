@@ -1,5 +1,4 @@
 "use client";
-import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { ChildrenProps } from "@myTypes/index";
@@ -7,6 +6,8 @@ import { useTemplateStore } from "@store/main/template";
 import { SnackbarProvider } from "notistack";
 import { useEffect, useMemo } from "react";
 import { myTheme } from "../theme";
+import dynamic from "next/dynamic";
+const CssBaseline = dynamic(() => import("@mui/material/CssBaseline"));
 // import LogRocket from 'logrocket';
 // LogRocket.init('qamvb0/kpi');
 

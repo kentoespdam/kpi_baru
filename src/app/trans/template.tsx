@@ -1,8 +1,13 @@
-import SessionProvider from "@components/commons/provider/session";
-import ContentComponent from "@components/template/content";
-import MenuDrawerComponent from "@components/template/drawer";
-import TopBarComponent from "@components/template/topbar";
 import { ChildrenProps } from "@myTypes/index";
+import dynamic from "next/dynamic";
+const SessionProvider = dynamic(
+	() => import("@components/commons/provider/session")
+);
+const ContentComponent = dynamic(() => import("@components/template/content"));
+const MenuDrawerComponent = dynamic(
+	() => import("@components/template/drawer")
+);
+const TopBarComponent = dynamic(() => import("@components/template/topbar"));
 
 const Template = ({ children }: ChildrenProps) => {
 	return (

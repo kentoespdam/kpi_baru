@@ -1,6 +1,10 @@
-import BridgePerilakuForm from "@components/bridge/perilaku/form";
-import CardBuilder from "@components/commons/card";
-import MuiContainer from "@components/commons/mui/container";
+import dynamic from "next/dynamic";
+
+const MuiContainer = dynamic(() => import("@mui/material/Container"));
+const CardBuilder = dynamic(() => import("@components/commons/card"));
+const BridgePerilakuForm = dynamic(
+	() => import("@components/bridge/perilaku/form/index")
+);
 
 export const metadata = { title: "Edit Bridge Perilaku" };
 const EditBridgePerilaku = ({ params }: { params: { id: number } }) => {

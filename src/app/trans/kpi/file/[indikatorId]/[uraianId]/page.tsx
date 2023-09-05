@@ -1,6 +1,8 @@
-import CardBuilder from "@components/commons/card";
-import TransKpiFileListComponent from "@components/trans/kpi/staff/file";
-import { Suspense } from "react";
+import dynamic from "next/dynamic";
+const CardBuilder = dynamic(() => import("@components/commons/card"));
+const TransKpiFileListComponent = dynamic(
+	() => import("@components/trans/kpi/staff/file")
+);
 
 export const metadata = { title: "List File" };
 const FilePage = ({
@@ -11,11 +13,9 @@ const FilePage = ({
 	const { indikatorId, uraianId } = params;
 
 	return (
-		<Suspense fallback={<>Rendering Page...</>}>
-			<CardBuilder title={metadata.title} isLink={false} color="success">
-				<TransKpiFileListComponent uraianId={uraianId} />
-			</CardBuilder>
-		</Suspense>
+		<CardBuilder title={metadata.title} isLink={false} color="success">
+			<TransKpiFileListComponent uraianId={uraianId} />
+		</CardBuilder>
 	);
 };
 

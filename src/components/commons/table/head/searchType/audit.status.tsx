@@ -1,10 +1,13 @@
-import FormControl from "@mui/material/FormControl";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
 import React from "react";
 import { SearchTypeProps } from ".";
 import { AUDIT_STATUS } from "@myTypes/index";
+import dynamic from "next/dynamic";
+const FormControl = dynamic(() => import("@mui/material/FormControl"));
+const FormControlLabel = dynamic(
+	() => import("@mui/material/FormControlLabel")
+);
+const Radio = dynamic(() => import("@mui/material/Radio"));
+const RadioGroup = dynamic(() => import("@mui/material/RadioGroup"));
 
 const SearchTypeAuditStatus = (props: SearchTypeProps) => {
 	const { field, handleSearch, status } = props;

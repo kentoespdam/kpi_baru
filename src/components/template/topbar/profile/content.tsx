@@ -1,4 +1,4 @@
-import LogoutOutlinedIcon from "@ant-design/icons/LogoutOutlined";
+// import LogoutOutlinedIcon from "@ant-design/icons/LogoutOutlined";
 import KeyIcon from "@mui/icons-material/Key";
 import Avatar from "@mui/material/Avatar";
 import Card from "@mui/material/Card";
@@ -12,12 +12,21 @@ import ListItemText from "@mui/material/ListItemText";
 import Paper from "@mui/material/Paper";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
+import { USER_ROLE } from "@myTypes/index";
 import { useProfileStore } from "@store/main/menu";
 import { useSessionStore } from "@store/main/session";
 import axios from "axios";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
+import { Suspense, lazy } from "react";
+
+import Avatar1 from "public/images/avatars/avatar_1.png";
+
+const LogoutOutlinedIcon = lazy(
+	() => import("@ant-design/icons/LogoutOutlined")
+);
 
 const ProfileContent = () => {
 	const { user, setUser } = useSessionStore();
@@ -70,13 +79,21 @@ const ProfileContent = () => {
 							<ListItemAvatar>
 								<Avatar
 									alt="user"
-									src="/images/avatars/avatar_1.png"
+									// src="/images/avatars/avatar_1.png"
 									sx={{
 										bgcolor: "white",
 										width: 32,
 										height: 32,
 									}}
-								/>
+								>
+									<Image
+										alt="user"
+										src={Avatar1}
+										width={32}
+										height={32}
+										placeholder="blur"
+									/>
+								</Avatar>
 							</ListItemAvatar>
 							<ListItemText
 								primary={
@@ -85,8 +102,8 @@ const ProfileContent = () => {
 									</Typography>
 								}
 								secondary={
-									user?.prefs.roles?.includes("admin")
-										? "ADMIN"
+									user?.prefs.roles?.includes(USER_ROLE.ADMIN)
+										? USER_ROLE.ADMIN
 										: user?.prefs.roles &&
 										  user.prefs.roles.length > 0
 										? user?.prefs.roles[0]
@@ -121,7 +138,10 @@ const ProfileContent = () => {
 						>
 							<ListItemText>
 								<Typography variant="subtitle1" color="error">
-									Logout <LogoutOutlinedIcon />
+									Logout{" "}
+									<Suspense>
+										<LogoutOutlinedIcon />
+									</Suspense>
 								</Typography>
 							</ListItemText>
 						</ListItemButton>
@@ -133,56 +153,3 @@ const ProfileContent = () => {
 };
 
 export default ProfileContent;
-
-/**
- * <Grid
-						container
-						justifyContent="space-between"
-						alignContent="center"
-					>
-						<Grid item>
-							<Stack
-								direction="row"
-								spacing={1.25}
-								alignItems="center"
-							>
-								<Avatar
-									alt="user"
-									src="/images/avatars/avatar_1.png"
-									sx={{
-										bgcolor: "white",
-										width: 32,
-										height: 32,
-									}}
-								/>
-								<Stack>
-									<Typography variant="subtitle1">
-										{user?.name}
-									</Typography>
-									<Typography
-										variant="body2"
-										color="textSecondary"
-									>
-										{user?.prefs.roles?.includes("admin")
-											? "ADMIN"
-											: user?.prefs.roles![0]}
-									</Typography>
-								</Stack>
-							</Stack>
-						</Grid>
-						<Grid item>
-							<IconButton
-								size="large"
-								color="secondary"
-								onClick={handleLogout}
-								sx={{
-									"&:hover": {
-										bgcolor: buttonHovered,
-									},
-								}}
-							>
-								<LogoutOutlinedIcon />
-							</IconButton>
-						</Grid>
-					</Grid>
- */

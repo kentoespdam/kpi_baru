@@ -1,4 +1,6 @@
-import CardBuilder from "@components/commons/card";
+import dynamic from "next/dynamic";
+
+const CardBuilder = dynamic(() => import("@components/commons/card"));
 
 export const metadata = {
 	title: "Transaksi Perilaku",
