@@ -1,3 +1,5 @@
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
 import { TransFile } from "@myTypes/entity/trans.file";
 import { UraianFile } from "@myTypes/entity/uraian.file";
 import { useViewFileDialogStore } from "@store/dialog/view.file";
@@ -5,8 +7,6 @@ import dynamic from "next/dynamic";
 
 const CloudDoneIcon = dynamic(() => import("@mui/icons-material/CloudDone"));
 const Badge = dynamic(() => import("@mui/material/Badge"));
-const IconButton = dynamic(() => import("@mui/material/IconButton"));
-const Tooltip = dynamic(() => import("@mui/material/Tooltip"));
 
 type ViewBtnProps = {
 	fileList: UraianFile[] | TransFile[];

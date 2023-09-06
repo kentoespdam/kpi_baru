@@ -1,15 +1,15 @@
 "use client";
 
+import IconButton from "@mui/material/IconButton";
+import Stack from "@mui/material/Stack";
+import TableCell from "@mui/material/TableCell";
+import Tooltip from "@mui/material/Tooltip";
 import dynamic from "next/dynamic";
 
-const IconButton = dynamic(() => import("@mui/material/IconButton"));
-const Stack = dynamic(() => import("@mui/material/Stack"));
-const Tooltip = dynamic(() => import("@mui/material/Tooltip"));
 const EditIcon = dynamic(() => import("@mui/icons-material/Edit"));
 const HighlightOffIcon = dynamic(
 	() => import("@mui/icons-material/HighlightOff")
 );
-const TableCell = dynamic(() => import("@mui/material/TableCell"));
 
 export type BtnActionBuilderProps = {
 	deleteHandler: () => void;

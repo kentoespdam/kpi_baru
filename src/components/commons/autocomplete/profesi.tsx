@@ -1,10 +1,9 @@
 import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
 import { Profesi } from "@myTypes/entity/profesi";
 import { useQuery } from "@tanstack/react-query";
 import { getList } from "@utils/master/profesi";
-import dynamic from "next/dynamic";
 import LoadingAutocomplete from "./loading";
-const TextField = dynamic(() => import("@mui/material/TextField"));
 
 type PositionAutcompleteProps = {
 	search: Profesi | null;

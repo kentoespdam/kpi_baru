@@ -1,3 +1,6 @@
+import InputAdornment from "@mui/material/InputAdornment";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import Tooltip from "@mui/material/Tooltip";
 import { AUDIT_STATUS } from "@myTypes/index";
 import { useKpiStore } from "@store/filter/master/kpi";
 import dynamic from "next/dynamic";
@@ -10,12 +13,9 @@ const FormControlLabel = dynamic(
 );
 const FormGroup = dynamic(() => import("@mui/material/FormGroup"));
 const IconButton = dynamic(() => import("@mui/material/IconButton"));
-const InputAdornment = dynamic(() => import("@mui/material/InputAdornment"));
 const InputLabel = dynamic(() => import("@mui/material/InputLabel"));
-const OutlinedInput = dynamic(() => import("@mui/material/OutlinedInput"));
 const Stack = dynamic(() => import("@mui/material/Stack"));
 const Switch = dynamic(() => import("@mui/material/Switch"));
-const Tooltip = dynamic(() => import("@mui/material/Tooltip"));
 
 const KpiFilter = () => {
 	const { setKeyVal, status, name } = useKpiStore();

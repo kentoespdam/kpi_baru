@@ -1,10 +1,8 @@
 import { getListPeriode } from "@helper/periode";
 import Autocomplete from "@mui/material/Autocomplete";
 import FormControl from "@mui/material/FormControl";
+import TextField from "@mui/material/TextField";
 import { useTransKpiStore } from "@store/filter/trans/kpi";
-import dynamic from "next/dynamic";
-
-const TextField=dynamic(()=>import("@mui/material/TextField"))
 
 const PeriodeComponent = () => {
 	const { periode, setPeriode } = useTransKpiStore();

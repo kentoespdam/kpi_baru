@@ -1,8 +1,6 @@
+import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
-import dynamic from "next/dynamic";
 import React from "react";
-
-const Slide = dynamic(() => import("@mui/material/Slide"));
 
 export const DialogSlideTransition = React.forwardRef(function Transition(
 	props: TransitionProps & {

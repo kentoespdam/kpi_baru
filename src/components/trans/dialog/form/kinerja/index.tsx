@@ -1,11 +1,11 @@
 import { DialogSlideTransition } from "@components/commons/effect/transition/dialog";
+import DialogTitle from "@mui/material/DialogTitle";
 import { useViewFormKinerjaDialogStore } from "@store/dialog/view.form.kinerja";
 import dynamic from "next/dynamic";
 
 const CloseIcon = dynamic(() => import("@mui/icons-material/Close"));
 const Dialog = dynamic(() => import("@mui/material/Dialog"));
 const DialogContent = dynamic(() => import("@mui/material/DialogContent"));
-const DialogTitle = dynamic(() => import("@mui/material/DialogTitle"));
 const IconButton = dynamic(() => import("@mui/material/IconButton"));
 const KpiKinerjaForm = dynamic(() => import("@trans/bawahan/kinerja/form"));
 

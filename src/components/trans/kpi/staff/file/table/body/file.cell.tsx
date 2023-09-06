@@ -1,4 +1,7 @@
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import TableCell from "@mui/material/TableCell";
+import Tooltip from "@mui/material/Tooltip";
 import { LOCAL_URAIAN_FILE, UraianFile } from "@myTypes/entity/uraian.file";
 import { useViewFileDialogStore } from "@store/dialog/view.file";
 import { useViewPdfDialogStore } from "@store/dialog/view.pdf";
@@ -17,9 +20,6 @@ const FileDownloadIcon = dynamic(
 	() => import("@mui/icons-material/FileDownload")
 );
 const VisibilityIcon = dynamic(() => import("@mui/icons-material/Visibility"));
-const IconButton = dynamic(() => import("@mui/material/IconButton"));
-const TableCell = dynamic(() => import("@mui/material/TableCell"));
-const Tooltip = dynamic(() => import("@mui/material/Tooltip"));
 
 type TransKpiFileListItemCellProps = {
 	uraianId: number;

@@ -1,9 +1,9 @@
+import Box from "@mui/material/Box";
+import Fade from "@mui/material/Fade";
+import Popper from "@mui/material/Popper";
 import { useProfileStore } from "@store/main/menu";
 import dynamic from "next/dynamic";
 
-const Box = dynamic(() => import("@mui/material/Box"));
-const Fade = dynamic(() => import("@mui/material/Fade"));
-const Popper = dynamic(() => import("@mui/material/Popper"));
 const ProfileContent = dynamic(() => import("./content"));
 
 type ProfilePopperProps = {

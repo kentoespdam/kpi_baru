@@ -1,6 +1,3 @@
-// import HeaderSearchBuilder from "@components/commons/table/head/search";
-// import HeaderSortBuilder from "@components/commons/table/head/sort";
-// const TableHead=dynamic(()=>import("@mui/material/TableHead"))
 import { bridgeKpiHead } from "@myTypes/entity/bridge.kpi";
 import { useBridgeKpiStore } from "@store/filter/bridge/kpi";
 import dynamic from "next/dynamic";

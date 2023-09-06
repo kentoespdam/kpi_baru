@@ -1,4 +1,6 @@
 import IconButton from "@mui/material/IconButton";
+import ListItem from "@mui/material/ListItem";
+import Tooltip from "@mui/material/Tooltip";
 import { USER_ROLE } from "@myTypes/index";
 import { useProfileStore } from "@store/main/menu";
 import { useSessionStore } from "@store/main/session";
@@ -18,12 +20,10 @@ const Avatar = dynamic(() => import("@mui/material/Avatar"));
 const Card = dynamic(() => import("@mui/material/Card"));
 const CardContent = dynamic(() => import("@mui/material/CardContent"));
 const List = dynamic(() => import("@mui/material/List"));
-const ListItem = dynamic(() => import("@mui/material/ListItem"));
 const ListItemAvatar = dynamic(() => import("@mui/material/ListItemAvatar"));
 const ListItemButton = dynamic(() => import("@mui/material/ListItemButton"));
 const ListItemText = dynamic(() => import("@mui/material/ListItemText"));
 const Paper = dynamic(() => import("@mui/material/Paper"));
-const Tooltip = dynamic(() => import("@mui/material/Tooltip"));
 const Typography = dynamic(() => import("@mui/material/Typography"));
 
 const ProfileContent = () => {

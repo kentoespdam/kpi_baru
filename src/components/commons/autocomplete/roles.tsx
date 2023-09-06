@@ -2,10 +2,9 @@
 
 import Autocomplete from "@mui/material/Autocomplete";
 import Chip from "@mui/material/Chip";
+import TextField from "@mui/material/TextField";
 import { roles } from "@myTypes/index";
-import dynamic from "next/dynamic";
 import { SyntheticEvent, useState } from "react";
-const TextField = dynamic(() => import("@mui/material/TextField"));
 
 type RolesAutocompleProps = {
 	search: string[];

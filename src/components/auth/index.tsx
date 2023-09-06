@@ -120,11 +120,11 @@ const AuthComponent = () => {
 					/>
 				</FormControl>
 				<FormControl fullWidth>
-					<InputLabel htmlFor="standard-adornment-password">
+					<InputLabel htmlFor="password">
 						Password
 					</InputLabel>
 					<OutlinedInput
-						id="outlined-adornment-password"
+						id="password"
 						type={showPassword ? "text" : "password"}
 						inputRef={passwordRef}
 						endAdornment={
@@ -144,7 +144,6 @@ const AuthComponent = () => {
 							</InputAdornment>
 						}
 						label="Password"
-						autoComplete="password"
 					/>
 				</FormControl>
 				<LoadingButton

@@ -1,10 +1,9 @@
 import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
 import { Perilaku } from "@myTypes/entity/perilaku";
 import { useQuery } from "@tanstack/react-query";
 import { getList } from "@utils/master/perilaku";
-import dynamic from "next/dynamic";
 import LoadingAutocomplete from "./loading";
-const TextField = dynamic(() => import("@mui/material/TextField"));
 
 type PerilakuAutocompleteProps = {
 	search: Perilaku | null;

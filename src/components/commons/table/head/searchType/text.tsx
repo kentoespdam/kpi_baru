@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-const TextField=dynamic(()=>import("@mui/material/TextField"))
+const TextField = dynamic(() => import("@mui/material/TextField"));
 import { useRef } from "react";
 import { SearchTypeProps } from ".";
 
@@ -19,7 +19,7 @@ const SearchTypeText = (props: SearchTypeProps) => {
 	};
 	return (
 		<TextField
-			id="search-field"
+			id={`search-field-${field}`}
 			label={`Search ${field}`}
 			type={type === "text" ? "search" : "number"}
 			variant="outlined"

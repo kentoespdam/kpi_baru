@@ -1,4 +1,5 @@
 import { DialogSlideTransition } from "@components/commons/effect/transition/dialog";
+import Card from "@mui/material/Card";
 import { useTheme } from "@mui/material/styles";
 import { useViewUploadDialogStore } from "@store/dialog/view.upload";
 import dynamic from "next/dynamic";
@@ -7,7 +8,6 @@ const TransKpiStaffUploadComponent = dynamic(
 	() => import("@components/trans/kpi/staff/upload")
 );
 const CloseIcon = dynamic(() => import("@mui/icons-material/Close"));
-const Card = dynamic(() => import("@mui/material/Card"));
 const CardContent = dynamic(() => import("@mui/material/CardContent"));
 const CardHeader = dynamic(() => import("@mui/material/CardHeader"));
 const Dialog = dynamic(() => import("@mui/material/Dialog"));

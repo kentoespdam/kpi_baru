@@ -1,8 +1,7 @@
 import { waktuList } from "@helper/tanggal";
 import Autocomplete from "@mui/material/Autocomplete";
-import dynamic from "next/dynamic";
+import TextField from "@mui/material/TextField";
 import { SyntheticEvent } from "react";
-const TextField = dynamic(() => import("@mui/material/TextField"));
 
 type WaktuAutocompleteProps = {
 	search?: string | null;

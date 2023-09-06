@@ -1,9 +1,9 @@
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
 import { useViewUploadDialogStore } from "@store/dialog/view.upload";
 import dynamic from "next/dynamic";
 
 const UploadIcon = dynamic(() => import("@mui/icons-material/Upload"));
-const IconButton = dynamic(() => import("@mui/material/IconButton"));
-const Tooltip = dynamic(() => import("@mui/material/Tooltip"));
 
 type UploadBtnProps = {
 	uraianId: number;

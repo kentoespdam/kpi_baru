@@ -1,13 +1,11 @@
 "use client";
 import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
 import { Employee } from "@myTypes/entity/employee";
 import { useQuery } from "@tanstack/react-query";
 import { getList } from "@utils/eo/employee";
-import dynamic from "next/dynamic";
 import { useRef, useState } from "react";
 import LoadingAutocomplete from "./loading";
-
-const TextField = dynamic(() => import("@mui/material/TextField"));
 
 type EmployeeAutocompleteProps = {
 	search: Employee | null;
