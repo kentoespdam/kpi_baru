@@ -78,6 +78,7 @@ const TransRoot = () => {
 				queryFn: getStaffKpi,
 				enabled:
 					!!nipamStaff && !!bridgeKpiBawahan?.kpi.id && !!periode,
+				cacheTime: 0,
 			},
 			{
 				queryKey: [

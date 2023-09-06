@@ -70,30 +70,26 @@ const AuthComponent = () => {
 
 		setSubmitText("Authenticating...");
 
-		axios
-			.post("/api/auth", {
+		try {
+			const { status, data } = await axios.post("/api/auth", {
 				email: userToEmail(usernameRef.current!.value),
 				password: passwordRef.current!.value,
-			})
-			.then((response) => response.data)
-			.then((data) => {
-				setSubmitText("Setup User...");
-				setUser(data);
-			})
-			.then(() => {
-				enqueueSnackbar("Login Success", { variant: "success" });
-			})
-			.catch((e: any) => {
-				setLoading(false);
-				const variant = "error";
-				enqueueSnackbar(e.response.data.message, { variant });
-				console.log("error", e.response.data.message);
-				return;
-			})
-			.finally(() => {
-				setSubmitText("Redirecting...");
-				router.push("/");
 			});
+
+			if (status !== 201) {
+				throw Error(data.message);
+			}
+			setSubmitText("Setup User...");
+			setUser(data);
+			setSubmitText("Redirecting...");
+			router.push("/");
+		} catch (e: any) {
+			setLoading(false);
+			setSubmitText("LOGIN");
+			const variant = "error";
+			enqueueSnackbar("Invalid Username/Password!", { variant });
+			return;
+		}
 	};
 
 	return (
@@ -120,9 +116,7 @@ const AuthComponent = () => {
 					/>
 				</FormControl>
 				<FormControl fullWidth>
-					<InputLabel htmlFor="password">
-						Password
-					</InputLabel>
+					<InputLabel htmlFor="password">Password</InputLabel>
 					<OutlinedInput
 						id="password"
 						type={showPassword ? "text" : "password"}

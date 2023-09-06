@@ -9,7 +9,7 @@ const LevelPagination = () => {
 	const qc = useQueryClient();
 	const { pageRequest, setPageRequest, sortRequest, status, level } =
 		useLevelStore();
-		
+
 	const data = qc.getQueryData([
 		"master.level",
 		{ pageRequest, sortRequest, status, level },
@@ -33,6 +33,7 @@ const LevelPagination = () => {
 
 	return (
 		<TablePagination
+			id="levelPagination"
 			component="div"
 			count={data?.totalElements ?? 0}
 			page={data?.number ?? 0}
