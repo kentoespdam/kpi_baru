@@ -1,13 +1,14 @@
 "use client";
-
-import CardBuilder from "@components/commons/card";
-import LinearProgress from "@mui/material/LinearProgress";
-import Typography from "@mui/material/Typography";
 import { useUraianStore } from "@store/filter/master/uraian";
 import { useQuery } from "@tanstack/react-query";
+import dynamic from "next/dynamic";
 import { getPage } from "src/utils/master/uraian";
-import UraianFilter from "./filter";
-import UraianList from "./list";
+
+const CardBuilder = dynamic(() => import("@components/commons/card"));
+const LinearProgress = dynamic(() => import("@mui/material/LinearProgress"));
+const Typography = dynamic(() => import("@mui/material/Typography"));
+const UraianFilter = dynamic(() => import("./filter"));
+const UraianList = dynamic(() => import("./list"));
 
 const UraianComponents = () => {
 	const {

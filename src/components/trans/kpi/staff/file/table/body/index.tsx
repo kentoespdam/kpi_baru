@@ -1,10 +1,14 @@
-import CellBuilder from "@components/commons/table/cell.builder";
-import TableLoading from "@components/commons/table/loading";
-import TableBody from "@mui/material/TableBody";
-import TableRow from "@mui/material/TableRow";
 import { TransFile } from "@myTypes/entity/trans.file";
 import { useQueryClient } from "@tanstack/react-query";
-import TransKpiFileListItemCell from "./file.cell";
+import dynamic from "next/dynamic";
+
+const TableLoading = dynamic(() => import("@components/commons/table/loading"));
+const TableBody = dynamic(() => import("@mui/material/TableBody"));
+const TransKpiFileListItemCell = dynamic(() => import("./file.cell"));
+const TableRow = dynamic(() => import("@mui/material/TableRow"));
+const CellBuilder = dynamic(
+	() => import("@components/commons/table/cell.builder")
+);
 
 type TransKpiFileListTableBodyProps = {
 	uraianId: number;

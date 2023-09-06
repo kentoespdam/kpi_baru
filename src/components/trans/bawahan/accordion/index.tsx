@@ -1,19 +1,21 @@
 import { findStaff } from "@helper/employee";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import IconButton from "@mui/material/IconButton";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
 import { DetEmployee } from "@myTypes/entity/det.employee";
 import { useTransKinerjaStore } from "@store/filter/trans/kinerja";
 import { useSessionStore } from "@store/main/session";
 import { useQueryClient } from "@tanstack/react-query";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Box from "@mui/material/Box";
 import { useTemplateStore } from "@store/main/template";
-import { Suspense, lazy } from "react";
+import dynamic from "next/dynamic";
 
-const TransKpiBawahanTabs = lazy(
+const Accordion = dynamic(() => import("@mui/material/Accordion"));
+const AccordionSummary = dynamic(
+	() => import("@mui/material/AccordionSummary")
+);
+const IconButton = dynamic(() => import("@mui/material/IconButton"));
+const Stack = dynamic(() => import("@mui/material/Stack"));
+const Typography = dynamic(() => import("@mui/material/Typography"));
+const ExpandMoreIcon = dynamic(() => import("@mui/icons-material/ExpandMore"));
+const Box = dynamic(() => import("@mui/material/Box"));
+const TransKpiBawahanTabs = dynamic(
 	() => import("@components/trans/bawahan/accordion/tabs")
 );
 
@@ -70,11 +72,7 @@ const AccordionBawahan = (props: AccordionBawahanProps) => {
 					</Box>
 				</Stack>
 			</AccordionSummary>
-			{expanded ? (
-				<Suspense fallback={<>Loading view...</>}>
-					<TransKpiBawahanTabs />
-				</Suspense>
-			) : null}
+			{expanded ? <TransKpiBawahanTabs /> : null}
 		</Accordion>
 	);
 };

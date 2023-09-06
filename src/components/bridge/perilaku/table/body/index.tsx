@@ -1,12 +1,16 @@
-import CellBuilder from "@components/commons/table/cell.builder";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableRow from "@mui/material/TableRow";
-import Typography from "@mui/material/Typography";
 import { BridgePerilakuWithPagination } from "@myTypes/entity/bridge.perilaku";
 import { useBridgePerilakuStore } from "@store/filter/bridge/perilaku";
 import { useQueryClient } from "@tanstack/react-query";
-import BridgePerilakuActionButtons from "./action";
+import dynamic from "next/dynamic";
+
+const BridgePerilakuActionButtons = dynamic(() => import("./action"));
+const CellBuilder = dynamic(
+	() => import("@components/commons/table/cell.builder")
+);
+const TableBody = dynamic(() => import("@mui/material/TableBody"));
+const TableCell = dynamic(() => import("@mui/material/TableCell"));
+const TableRow = dynamic(() => import("@mui/material/TableRow"));
+const Typography = dynamic(() => import("@mui/material/Typography"));
 
 const BridgePerilakuTableBody = () => {
 	const { pageRequest, sortRequest, perilaku, level, status } =

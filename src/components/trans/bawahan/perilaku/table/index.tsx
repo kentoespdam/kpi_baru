@@ -1,14 +1,16 @@
-import LinearProgress from "@mui/material/LinearProgress";
-import Table from "@mui/material/Table";
-import TableContainer from "@mui/material/TableContainer";
 import { useTransKinerjaStore } from "@store/filter/trans/kinerja";
 import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useTransPerilakuStore } from "@store/filter/trans/perilaku";
 import { useQueryClient } from "@tanstack/react-query";
-import TransPerilakuTableHead from "./head";
-import TableLoading from "@components/commons/table/loading";
-import TransPerilakuTableBody from "./body";
-import TransPerilakuTableFooter from "./footer";
+import dynamic from "next/dynamic";
+
+const LinearProgress = dynamic(() => import("@mui/material/LinearProgress"));
+const Table = dynamic(() => import("@mui/material/Table"));
+const TableContainer = dynamic(() => import("@mui/material/TableContainer"));
+const TransPerilakuTableHead = dynamic(() => import("./head"));
+const TableLoading = dynamic(() => import("@components/commons/table/loading"));
+const TransPerilakuTableBody = dynamic(() => import("./body"));
+const TransPerilakuTableFooter = dynamic(() => import("./footer"));
 
 const TransPerilakuTable = () => {
 	const periode = useTransKpiStore((state) => state.periode);

@@ -1,23 +1,26 @@
 "use client";
-
-import BlockIcon from "@mui/icons-material/Block";
-import SaveIcon from "@mui/icons-material/Save";
-import LoadingButton from "@mui/lab/LoadingButton";
-import Button from "@mui/material/Button";
-import FormControl from "@mui/material/FormControl";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormGroup from "@mui/material/FormGroup";
 import Stack from "@mui/material/Stack";
-import Switch from "@mui/material/Switch";
-import TextField from "@mui/material/TextField";
 import { SatuanData } from "@myTypes/entity/satuan";
 import { AUDIT_STATUS } from "@myTypes/index";
 import { useSatuanStore } from "@store/filter/master/satuan";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { doSave, getById } from "@utils/master/satuan";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
 import React from "react";
+
+const BlockIcon = dynamic(() => import("@mui/icons-material/Block"));
+const SaveIcon = dynamic(() => import("@mui/icons-material/Save"));
+const LoadingButton = dynamic(() => import("@mui/lab/LoadingButton"));
+const Button = dynamic(() => import("@mui/material/Button"));
+const FormControl = dynamic(() => import("@mui/material/FormControl"));
+const FormControlLabel = dynamic(
+	() => import("@mui/material/FormControlLabel")
+);
+const FormGroup = dynamic(() => import("@mui/material/FormGroup"));
+const Switch = dynamic(() => import("@mui/material/Switch"));
+const TextField = dynamic(() => import("@mui/material/TextField"));
 
 type SatuanFormProps = {
 	id?: number;

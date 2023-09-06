@@ -2,13 +2,14 @@
 
 import { Viewer, Worker } from "@react-pdf-viewer/core";
 import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
-
-import LinearProgress from "@mui/material/LinearProgress";
 import { LOCAL_URAIAN_FILE } from "@myTypes/entity/uraian.file";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import dynamic from "next/dynamic";
+
+const LinearProgress = dynamic(() => import("@mui/material/LinearProgress"));
 
 type ViewPdfComponentProps = { id: number };
 const ViewPdfComponent = (props: ViewPdfComponentProps) => {

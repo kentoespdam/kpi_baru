@@ -2,8 +2,9 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { Position } from "@myTypes/entity/position";
 import { useQuery } from "@tanstack/react-query";
 import { getList } from "@utils/eo/position";
+import dynamic from "next/dynamic";
 import LoadingAutocomplete from "./loading";
-import TextField from "@mui/material/TextField";
+const TextField = dynamic(() => import("@mui/material/TextField"));
 
 type PositionAutcompleteProps = {
 	search: Position | null;

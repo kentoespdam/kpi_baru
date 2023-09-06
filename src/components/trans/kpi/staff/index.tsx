@@ -1,13 +1,15 @@
-import TableLoading from "@components/commons/table/loading";
-import LinearProgress from "@mui/material/LinearProgress";
-import Table from "@mui/material/Table";
-import TableContainer from "@mui/material/TableContainer";
 import { useTheme } from "@mui/material/styles";
 import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useSessionStore } from "@store/main/session";
 import { useQueryClient } from "@tanstack/react-query";
-import KpiStaffTableBody from "./table/body";
-import KpiStaffTableHead from "./table/head";
+import dynamic from "next/dynamic";
+
+const TableLoading = dynamic(() => import("@components/commons/table/loading"));
+const LinearProgress = dynamic(() => import("@mui/material/LinearProgress"));
+const Table = dynamic(() => import("@mui/material/Table"));
+const TableContainer = dynamic(() => import("@mui/material/TableContainer"));
+const KpiStaffTableBody = dynamic(() => import("./table/body"));
+const KpiStaffTableHead = dynamic(() => import("./table/head"));
 
 const KpiStaffComponents = () => {
 	const theme = useTheme();

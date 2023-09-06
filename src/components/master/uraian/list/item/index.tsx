@@ -1,14 +1,16 @@
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import Grid from "@mui/material/Grid";
-import IconButton from "@mui/material/IconButton";
-import ListItem from "@mui/material/ListItem";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Uraian } from "@myTypes/entity/uraian";
+import dynamic from "next/dynamic";
 import { useState } from "react";
-import UraianMenuItem from "../menu";
+
+const UraianMenuItem = dynamic(() => import("../menu"));
+const MoreVertIcon = dynamic(() => import("@mui/icons-material/MoreVert"));
+const Grid = dynamic(() => import("@mui/material/Grid"));
+const IconButton = dynamic(() => import("@mui/material/IconButton"));
+const ListItem = dynamic(() => import("@mui/material/ListItem"));
+const Stack = dynamic(() => import("@mui/material/Stack"));
+const Typography = dynamic(() => import("@mui/material/Typography"));
 
 type UraianListItemProps = {
 	uraian: Uraian;

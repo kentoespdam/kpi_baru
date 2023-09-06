@@ -1,12 +1,16 @@
 "use client";
 
-import CellBuilder from "@components/commons/table/cell.builder";
-import TableBody from "@mui/material/TableBody";
-import TableRow from "@mui/material/TableRow";
 import { PerilakuWithPagination } from "@myTypes/entity/perilaku";
 import { usePerilakuStore } from "@store/filter/master/perilaku";
 import { useQueryClient } from "@tanstack/react-query";
-import PerilakuActionBtn from "./action";
+import dynamic from "next/dynamic";
+
+const CellBuilder = dynamic(
+	() => import("@components/commons/table/cell.builder")
+);
+const TableBody = dynamic(() => import("@mui/material/TableBody"));
+const TableRow = dynamic(() => import("@mui/material/TableRow"));
+const PerilakuActionBtn = dynamic(() => import("./action"));
 
 const PerilakuTableBody = () => {
 	const { pageRequest, sortRequest, status, kompetensi, uraian } =

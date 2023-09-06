@@ -1,10 +1,14 @@
-import BtnActionBuilder from "@components/commons/table/action/button.builder";
 import { PerilakuWithAudit } from "@myTypes/entity/perilaku";
 import { usePerilakuStore } from "@store/filter/master/perilaku";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
 import { doDelete } from "src/utils/master/perilaku";
+
+const BtnActionBuilder = dynamic(
+	() => import("@components/commons/table/action/button.builder")
+);
 
 type PerilakuActionBtnProps = {
 	row: PerilakuWithAudit;

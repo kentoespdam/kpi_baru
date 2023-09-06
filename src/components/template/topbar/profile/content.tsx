@@ -1,32 +1,30 @@
-// import LogoutOutlinedIcon from "@ant-design/icons/LogoutOutlined";
-import KeyIcon from "@mui/icons-material/Key";
-import Avatar from "@mui/material/Avatar";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import IconButton from "@mui/material/IconButton";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import Paper from "@mui/material/Paper";
-import Tooltip from "@mui/material/Tooltip";
-import Typography from "@mui/material/Typography";
 import { USER_ROLE } from "@myTypes/index";
 import { useProfileStore } from "@store/main/menu";
 import { useSessionStore } from "@store/main/session";
 import axios from "axios";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
-import { Suspense, lazy } from "react";
-
 import Avatar1 from "public/images/avatars/avatar_1.png";
 
-const LogoutOutlinedIcon = lazy(
+const LogoutOutlinedIcon = dynamic(
 	() => import("@ant-design/icons/LogoutOutlined")
 );
+const KeyIcon = dynamic(() => import("@mui/icons-material/Key"));
+const Avatar = dynamic(() => import("@mui/material/Avatar"));
+const Card = dynamic(() => import("@mui/material/Card"));
+const CardContent = dynamic(() => import("@mui/material/CardContent"));
+const List = dynamic(() => import("@mui/material/List"));
+const ListItem = dynamic(() => import("@mui/material/ListItem"));
+const ListItemAvatar = dynamic(() => import("@mui/material/ListItemAvatar"));
+const ListItemButton = dynamic(() => import("@mui/material/ListItemButton"));
+const ListItemText = dynamic(() => import("@mui/material/ListItemText"));
+const Paper = dynamic(() => import("@mui/material/Paper"));
+const Tooltip = dynamic(() => import("@mui/material/Tooltip"));
+const Typography = dynamic(() => import("@mui/material/Typography"));
 
 const ProfileContent = () => {
 	const { user, setUser } = useSessionStore();
@@ -138,10 +136,7 @@ const ProfileContent = () => {
 						>
 							<ListItemText>
 								<Typography variant="subtitle1" color="error">
-									Logout{" "}
-									<Suspense>
-										<LogoutOutlinedIcon />
-									</Suspense>
+									Logout <LogoutOutlinedIcon />
 								</Typography>
 							</ListItemText>
 						</ListItemButton>

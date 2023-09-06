@@ -1,11 +1,15 @@
-import TransPerilakuForm from "@components/trans/bawahan/perilaku/form";
-import Dialog from "@mui/material/Dialog";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
-import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
 import { useViewFormPerilakuDialogStore } from "@store/dialog/view.form.perilaku";
 import { DialogSlideTransition } from "@components/commons/effect/transition/dialog";
+import dynamic from "next/dynamic";
+
+const TransPerilakuForm = dynamic(
+	() => import("@components/trans/bawahan/perilaku/form")
+);
+const Dialog = dynamic(() => import("@mui/material/Dialog"));
+const DialogContent = dynamic(() => import("@mui/material/DialogContent"));
+const DialogTitle = dynamic(() => import("@mui/material/DialogTitle"));
+const IconButton = dynamic(() => import("@mui/material/IconButton"));
+const CloseIcon = dynamic(() => import("@mui/icons-material/Close"));
 
 const ViewFormPerilakuDialog = () => {
 	const { isFormPerilakuOpen, toggleFormPerilakuOpen } =

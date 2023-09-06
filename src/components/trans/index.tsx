@@ -1,31 +1,27 @@
 "use client";
 
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
-import { QueryKeyType } from "@myTypes/index";
 import { useTransKinerjaStore } from "@store/filter/trans/kinerja";
 import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useTransPerilakuStore } from "@store/filter/trans/perilaku";
 import { useSessionStore } from "@store/main/session";
-import { QueryKey, useQueries } from "@tanstack/react-query";
+import { useQueries } from "@tanstack/react-query";
 import { getByNipam } from "@utils/bridge/kpi";
 import { getEmpDetails } from "@utils/eo/employee";
 import { getBridgeKpi, getStaffKpi } from "@utils/trans/kpi";
 import { getBridgePerilaku, getTransPerilaku } from "@utils/trans/perilaku";
-import { lazy } from "react";
+import dynamic from "next/dynamic";
 
-const ViewFileDialog = lazy(() => import("./dialog/file"));
-const ViewPdfDialog = lazy(() => import("./dialog/pdf"));
-const ViewUploadDialog = lazy(() => import("./dialog/upload"));
-const DetailEmployeeSkeleton = lazy(() => import("./employee/detail/skeleton"));
-const BawahanComponent = lazy(() => import("./bawahan"));
-const EmployeeComponent = lazy(() => import("./employee"));
-const KpiCard = lazy(() => import("./kpi"));
-
-const viewEmploye = {
-	0: EmployeeComponent,
-	1: DetailEmployeeSkeleton,
-};
+const Box = dynamic(() => import("@mui/material/Box"));
+const Stack = dynamic(() => import("@mui/material/Stack"));
+const ViewFileDialog = dynamic(() => import("./dialog/file"));
+const ViewPdfDialog = dynamic(() => import("./dialog/pdf"));
+const ViewUploadDialog = dynamic(() => import("./dialog/upload"));
+const DetailEmployeeSkeleton = dynamic(
+	() => import("./employee/detail/skeleton")
+);
+const BawahanComponent = dynamic(() => import("./bawahan"));
+const EmployeeComponent = dynamic(() => import("./employee"));
+const KpiCard = dynamic(() => import("./kpi"));
 
 const TransRoot = () => {
 	const curNipam = useSessionStore.getState().user?.userId;
@@ -98,8 +94,6 @@ const TransRoot = () => {
 			},
 		],
 	});
-
-	const CurrentView = viewEmploye[queries[0].isFetching ? 1 : 0];
 
 	return (
 		<>

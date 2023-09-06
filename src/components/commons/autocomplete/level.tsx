@@ -1,9 +1,10 @@
 import Autocomplete from "@mui/material/Autocomplete";
-import TextField from "@mui/material/TextField";
 import { Level } from "@myTypes/entity/level";
 import { useQuery } from "@tanstack/react-query";
+import dynamic from "next/dynamic";
 import { getLevelList } from "src/utils/master/level";
 import LoadingAutocomplete from "./loading";
+const TextField = dynamic(() => import("@mui/material/TextField"));
 
 type LevelAutocompleteProps = {
 	search: Level | null;
@@ -14,7 +15,7 @@ type LevelAutocompleteProps = {
 };
 
 const LevelAutocomplete = (props: LevelAutocompleteProps) => {
-	const { search, setSearchValue, required, variant, size } = props;
+	const { search, setSearchValue, required, size } = props;
 	const queryKey = "level.autocomplete";
 	const { status, error, data } = useQuery({
 		queryKey: [queryKey],

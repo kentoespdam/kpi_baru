@@ -1,9 +1,4 @@
 "use client";
-
-import DeleteIcon from "@mui/icons-material/Delete";
-import UploadFileIcon from "@mui/icons-material/UploadFile";
-import LoadingButton from "@mui/lab/LoadingButton";
-import Chip from "@mui/material/Chip";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import { useViewUploadDialogStore } from "@store/dialog/view.upload";
@@ -11,8 +6,14 @@ import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useSessionStore } from "@store/main/session";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { doUpload } from "@utils/trans/file";
+import dynamic from "next/dynamic";
 import { useSnackbar } from "notistack";
 import { FormEvent, useRef, useState } from "react";
+
+const DeleteIcon = dynamic(() => import("@mui/icons-material/Delete"));
+const UploadFileIcon = dynamic(() => import("@mui/icons-material/UploadFile"));
+const LoadingButton = dynamic(() => import("@mui/lab/LoadingButton"));
+const Chip = dynamic(() => import("@mui/material/Chip"));
 
 type TransKpiStaffUploadComponentProps = {
 	uraianId: number;

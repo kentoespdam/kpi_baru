@@ -1,5 +1,7 @@
-import AutorenewIcon from "@mui/icons-material/Autorenew";
-import LoadingButton from "@mui/lab/LoadingButton";
+import dynamic from "next/dynamic";
+
+const AutorenewIcon = dynamic(() => import("@mui/icons-material/Autorenew"));
+const LoadingButton = dynamic(() => import("@mui/lab/LoadingButton"));
 
 const LoadingAutocomplete = () => {
 	return (

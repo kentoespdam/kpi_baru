@@ -1,9 +1,10 @@
+import Autocomplete from "@mui/material/Autocomplete";
 import { Profesi } from "@myTypes/entity/profesi";
 import { useQuery } from "@tanstack/react-query";
 import { getList } from "@utils/master/profesi";
+import dynamic from "next/dynamic";
 import LoadingAutocomplete from "./loading";
-import Autocomplete from "@mui/material/Autocomplete";
-import TextField from "@mui/material/TextField";
+const TextField = dynamic(() => import("@mui/material/TextField"));
 
 type PositionAutcompleteProps = {
 	search: Profesi | null;
@@ -14,7 +15,7 @@ type PositionAutcompleteProps = {
 };
 
 const ProfesiAutocomplete = (props: PositionAutcompleteProps) => {
-	const { search, setSearchValue, required, variant, size } = props;
+	const { search, setSearchValue } = props;
 	const { status, error, data } = useQuery({
 		queryKey: ["profesi.autocomplete"],
 		queryFn: getList,

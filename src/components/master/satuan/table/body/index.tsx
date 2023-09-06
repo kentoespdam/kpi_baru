@@ -1,10 +1,14 @@
-import CellBuilder from "@components/commons/table/cell.builder";
-import TableBody from "@mui/material/TableBody";
-import TableRow from "@mui/material/TableRow";
 import { SatuanWithPagination } from "@myTypes/entity/satuan";
 import { useSatuanStore } from "@store/filter/master/satuan";
 import { useQueryClient } from "@tanstack/react-query";
-import SatuanActionBtn from "./action";
+import dynamic from "next/dynamic";
+
+const CellBuilder = dynamic(
+	() => import("@components/commons/table/cell.builder")
+);
+const TableBody = dynamic(() => import("@mui/material/TableBody"));
+const TableRow = dynamic(() => import("@mui/material/TableRow"));
+const SatuanActionBtn = dynamic(() => import("./action"));
 
 const SatuanTableBody = () => {
 	const { pageRequest, sortRequest, status, satuan } = useSatuanStore();

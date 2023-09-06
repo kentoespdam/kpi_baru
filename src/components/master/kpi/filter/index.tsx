@@ -1,32 +1,24 @@
-"use client";
-
-import EnterOutlined from "@ant-design/icons/EnterOutlined";
-import FormControl from "@mui/material/FormControl";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormGroup from "@mui/material/FormGroup";
-import IconButton from "@mui/material/IconButton";
-import InputAdornment from "@mui/material/InputAdornment";
-import InputLabel from "@mui/material/InputLabel";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import Stack from "@mui/material/Stack";
-import Switch from "@mui/material/Switch";
-import Tooltip from "@mui/material/Tooltip";
 import { AUDIT_STATUS } from "@myTypes/index";
 import { useKpiStore } from "@store/filter/master/kpi";
+import dynamic from "next/dynamic";
 import { useRef, useState } from "react";
 
+const EnterOutlined = dynamic(() => import("@ant-design/icons/EnterOutlined"));
+const FormControl = dynamic(() => import("@mui/material/FormControl"));
+const FormControlLabel = dynamic(
+	() => import("@mui/material/FormControlLabel")
+);
+const FormGroup = dynamic(() => import("@mui/material/FormGroup"));
+const IconButton = dynamic(() => import("@mui/material/IconButton"));
+const InputAdornment = dynamic(() => import("@mui/material/InputAdornment"));
+const InputLabel = dynamic(() => import("@mui/material/InputLabel"));
+const OutlinedInput = dynamic(() => import("@mui/material/OutlinedInput"));
+const Stack = dynamic(() => import("@mui/material/Stack"));
+const Switch = dynamic(() => import("@mui/material/Switch"));
+const Tooltip = dynamic(() => import("@mui/material/Tooltip"));
+
 const KpiFilter = () => {
-	const {
-		pageRequest,
-		setPageRequest,
-		setKeyVal,
-		status,
-		organization,
-		position,
-		profesi,
-		name,
-		grade,
-	} = useKpiStore();
+	const { setKeyVal, status, name } = useKpiStore();
 	const field = "kpi";
 	const title = "KPI Name";
 	const nameRef = useRef<HTMLInputElement>(null);

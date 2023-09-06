@@ -1,5 +1,6 @@
-import Box from "@mui/material/Box";
 import { ChildrenProps } from "@myTypes/index";
+import dynamic from "next/dynamic";
+const Box = dynamic(() => import("@mui/material/Box"));
 
 type TransKpiTabPanelProps = {
 	index: number;
@@ -9,7 +10,7 @@ const TransKpiTabPanel = (props: TransKpiTabPanelProps) => {
 	const { children, index, value, ...other } = props;
 
 	return (
-		<div
+		<Box
 			role="tabpanel"
 			hidden={value !== index}
 			id={`tabpanel-${index}`}
@@ -17,7 +18,7 @@ const TransKpiTabPanel = (props: TransKpiTabPanelProps) => {
 			{...other}
 		>
 			{value === index && children}
-		</div>
+		</Box>
 	);
 };
 

@@ -1,8 +1,10 @@
-import Stack from "@mui/material/Stack";
 import { useTemplateStore } from "@store/main/template";
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
-import DetailEmployeeComponent from "./detail";
-import DetailAtasanComponent from "./detail/atasan";
+
+const Stack = dynamic(() => import("@mui/material/Stack"));
+const DetailEmployeeComponent = dynamic(() => import("./detail"));
+const DetailAtasanComponent = dynamic(() => import("./detail/atasan"));
 
 const EmployeeComponent = () => {
 	const isDesktop = useTemplateStore((state) => state.isDesktop);

@@ -1,8 +1,10 @@
 import { isDecimal, rupiah } from "@helper/number";
-import Chip from "@mui/material/Chip";
 import TableCell, { TableCellProps } from "@mui/material/TableCell";
 import { useTheme } from "@mui/material/styles";
+import dynamic from "next/dynamic";
 import { ReactNode } from "react";
+
+const Chip = dynamic(() => import("@mui/material/Chip"));
 
 const numberBuilder = (num: number, currency?: boolean, percent?: boolean) =>
 	currency

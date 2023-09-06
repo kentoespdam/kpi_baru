@@ -1,12 +1,13 @@
 "use client";
-import Avatar from "@mui/material/Avatar";
-import Box from "@mui/material/Box";
-import ButtonBase from "@mui/material/ButtonBase";
-import Stack from "@mui/material/Stack";
 import { buttonHovered, buttonSelectedColor } from "@myConfig/index";
-import React from "react";
 import { useProfileStore } from "@store/main/menu";
-import ProfilePopper from "./popper";
+import dynamic from "next/dynamic";
+
+const Avatar = dynamic(() => import("@mui/material/Avatar"));
+const Box = dynamic(() => import("@mui/material/Box"));
+const ButtonBase = dynamic(() => import("@mui/material/ButtonBase"));
+const Stack = dynamic(() => import("@mui/material/Stack"));
+const ProfilePopper = dynamic(() => import("./popper"));
 
 const ProfileComponent = () => {
 	const { anchorEl, setAnchorEl, isOpen, toggleProfileMenu } =

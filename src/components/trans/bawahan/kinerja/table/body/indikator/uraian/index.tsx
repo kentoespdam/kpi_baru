@@ -1,14 +1,20 @@
-import CellBuilder from "@components/commons/table/cell.builder";
-import ViewBtn from "@components/trans/kpi/staff/button/view";
-import EditIcon from "@mui/icons-material/Edit";
-import IconButton from "@mui/material/IconButton";
-import Stack from "@mui/material/Stack";
-import TableCell from "@mui/material/TableCell";
-import TableRow from "@mui/material/TableRow";
-import Tooltip from "@mui/material/Tooltip";
 import { useTheme } from "@mui/material/styles";
 import { TransUraian } from "@myTypes/entity/trans.uraian";
 import { useViewFormKinerjaDialogStore } from "@store/dialog/view.form.kinerja";
+import dynamic from "next/dynamic";
+
+const CellBuilder = dynamic(
+	() => import("@components/commons/table/cell.builder")
+);
+const ViewBtn = dynamic(
+	() => import("@components/trans/kpi/staff/button/view")
+);
+const EditIcon = dynamic(() => import("@mui/icons-material/Edit"));
+const IconButton = dynamic(() => import("@mui/material/IconButton"));
+const Stack = dynamic(() => import("@mui/material/Stack"));
+const TableCell = dynamic(() => import("@mui/material/TableCell"));
+const TableRow = dynamic(() => import("@mui/material/TableRow"));
+const Tooltip = dynamic(() => import("@mui/material/Tooltip"));
 
 type UraianCellProps = {
 	nipamStaff: string | null;
@@ -50,7 +56,7 @@ const UraianCell = (props: UraianCellProps) => {
 				}}
 				bordered
 			/>
-			<CellBuilder value={uraian.nilaiProdukKerja} bordered percent/>
+			<CellBuilder value={uraian.nilaiProdukKerja} bordered percent />
 			<CellBuilder value={uraian.nilaiWaktu} bordered percent />
 			<CellBuilder value={uraian.nilaiTotalUraian} bordered percent />
 			<TableCell sx={{ border: `1px solid ${theme.palette.divider}` }}>

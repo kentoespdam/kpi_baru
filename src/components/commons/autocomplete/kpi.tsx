@@ -1,10 +1,12 @@
 import Autocomplete from "@mui/material/Autocomplete";
-import TextField from "@mui/material/TextField";
 import { Kpi } from "@myTypes/entity/kpi";
 import { useQuery } from "@tanstack/react-query";
 import { getList } from "@utils/master/kpi";
+import dynamic from "next/dynamic";
 import { SyntheticEvent, useState } from "react";
 import LoadingAutocomplete from "./loading";
+
+const TextField = dynamic(() => import("@mui/material/TextField"));
 
 type KpiAutocompleteProps = {
 	search: Kpi | null;

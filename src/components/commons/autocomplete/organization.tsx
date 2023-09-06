@@ -2,8 +2,9 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { Organization } from "@myTypes/entity/organization";
 import { useQuery } from "@tanstack/react-query";
 import { getList } from "@utils/eo/organization";
+import dynamic from "next/dynamic";
 import LoadingAutocomplete from "./loading";
-import TextField from "@mui/material/TextField";
+const TextField = dynamic(() => import("@mui/material/TextField"));
 
 type OrganizationAutcompleteProps = {
 	search: Organization | null;

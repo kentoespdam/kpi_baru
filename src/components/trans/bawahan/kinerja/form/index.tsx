@@ -1,28 +1,36 @@
-import WaktuAutocomplete from "@autocomplete/waktu";
 import {
 	hitungNilaiProdukKerja,
 	hitungNilaiTotalUraian,
 	hitungNilaiWaktu,
 } from "@helper/hitung";
-import DoDisturbIcon from "@mui/icons-material/DoDisturb";
-import SaveIcon from "@mui/icons-material/Save";
-import LoadingButton from "@mui/lab/LoadingButton";
-import Button from "@mui/material/Button";
-import FormControl from "@mui/material/FormControl";
 import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
+
 import { TransUraian, TransUraianData } from "@myTypes/entity/trans.uraian";
 import { AUDIT_STATUS } from "@myTypes/index";
 import { useViewFormKinerjaDialogStore } from "@store/dialog/view.form.kinerja";
 import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { doSave, getById } from "@utils/trans/uraian";
+import dynamic from "next/dynamic";
 import { useSnackbar } from "notistack";
 import React from "react";
 
+const WaktuAutocomplete = dynamic(() => import("@autocomplete/waktu"));
+const DoDisturbIcon = dynamic(() => import("@mui/icons-material/DoDisturb"));
+const SaveIcon = dynamic(() => import("@mui/icons-material/Save"));
+const LoadingButton = dynamic(() => import("@mui/lab/LoadingButton"));
+const Button = dynamic(() => import("@mui/material/Button"));
+const FormControl = dynamic(() => import("@mui/material/FormControl"));
+const TextField = dynamic(() => import("@mui/material/TextField"));
+
 const KpiKinerjaForm = () => {
-	const { toggleFormKinerjaOpen: toggleFormOpen, staffNipam, idKpi, idUraian, reset } =
-		useViewFormKinerjaDialogStore();
+	const {
+		toggleFormKinerjaOpen: toggleFormOpen,
+		staffNipam,
+		idKpi,
+		idUraian,
+		reset,
+	} = useViewFormKinerjaDialogStore();
 	const periode = useTransKpiStore((state) => state.periode);
 	const { enqueueSnackbar } = useSnackbar();
 	const qc = useQueryClient();

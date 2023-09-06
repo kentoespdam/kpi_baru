@@ -1,10 +1,4 @@
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import FileDownloadIcon from "@mui/icons-material/FileDownload";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import TableCell from "@mui/material/TableCell";
-import Tooltip from "@mui/material/Tooltip";
 import { LOCAL_URAIAN_FILE, UraianFile } from "@myTypes/entity/uraian.file";
 import { useViewFileDialogStore } from "@store/dialog/view.file";
 import { useViewPdfDialogStore } from "@store/dialog/view.pdf";
@@ -12,8 +6,20 @@ import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useSessionStore } from "@store/main/session";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { doDelete } from "@utils/trans/file";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useSnackbar } from "notistack";
+
+const DeleteForeverIcon = dynamic(
+	() => import("@mui/icons-material/DeleteForever")
+);
+const FileDownloadIcon = dynamic(
+	() => import("@mui/icons-material/FileDownload")
+);
+const VisibilityIcon = dynamic(() => import("@mui/icons-material/Visibility"));
+const IconButton = dynamic(() => import("@mui/material/IconButton"));
+const TableCell = dynamic(() => import("@mui/material/TableCell"));
+const Tooltip = dynamic(() => import("@mui/material/Tooltip"));
 
 type TransKpiFileListItemCellProps = {
 	uraianId: number;

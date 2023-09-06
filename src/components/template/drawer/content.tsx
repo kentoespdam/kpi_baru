@@ -1,9 +1,11 @@
-import Box from "@mui/material/Box";
 import { useMenuStore } from "@store/main/menu";
 import { menuList } from "../menu.list";
-import MenuBuilder from "./menu";
 import { useSessionStore } from "@store/main/session";
 import { USER_ROLE } from "@myTypes/index";
+import dynamic from "next/dynamic";
+
+const Box = dynamic(() => import("@mui/material/Box"));
+const MenuBuilder = dynamic(() => import("./menu"));
 
 const DrawerContent = () => {
 	const toggleDrawer = useMenuStore((state) => state.toggleDrawer);

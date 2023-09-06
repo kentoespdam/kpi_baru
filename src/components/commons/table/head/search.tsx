@@ -1,19 +1,25 @@
 import TableCell from "@mui/material/TableCell";
-import TableRow from "@mui/material/TableRow";
-import { MyTableHead } from "@myTypes/table";
-import SearchTypeText from "./searchType/text";
-import SearchTypeAuditStatus from "./searchType/audit.status";
-import { AuditStatus } from "@myTypes/index";
-import SearchTypeLevel from "./searchType/level";
+const TableRow=dynamic(()=>import("@mui/material/TableRow"))
+import { Kpi } from "@myTypes/entity/kpi";
 import { Level } from "@myTypes/entity/level";
 import { Organization } from "@myTypes/entity/organization";
-import { Position } from "@myTypes/entity/position";
-import SearchTypePosition from "./searchType/position";
-import SearchTypeOrganization from "./searchType/organization";
-import { Kpi } from "@myTypes/entity/kpi";
-import SearchTypeKpi from "./searchType/kpi";
 import { Perilaku } from "@myTypes/entity/perilaku";
-import SearchtypePerilaku from "./searchType/perilaku";
+import { Position } from "@myTypes/entity/position";
+import { AuditStatus } from "@myTypes/index";
+import { MyTableHead } from "@myTypes/table";
+import dynamic from "next/dynamic";
+
+const SearchTypeAuditStatus = dynamic(
+	() => import("./searchType/audit.status")
+);
+const SearchTypeKpi = dynamic(() => import("./searchType/kpi"));
+const SearchTypeLevel = dynamic(() => import("./searchType/level"));
+const SearchTypeOrganization = dynamic(
+	() => import("./searchType/organization")
+);
+const SearchtypePerilaku = dynamic(() => import("./searchType/perilaku"));
+const SearchTypePosition = dynamic(() => import("./searchType/position"));
+const SearchTypeText = dynamic(() => import("./searchType/text"));
 
 export type SearchValueProps =
 	| string

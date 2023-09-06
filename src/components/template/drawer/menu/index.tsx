@@ -1,10 +1,12 @@
-import Box from "@mui/material/Box";
-import List from "@mui/material/List";
-import Typography from "@mui/material/Typography";
 import { IMenu } from "@template/menu.list";
-import MenuItemBuilder from "./item.builder";
 import { useSessionStore } from "@store/main/session";
 import { USER_ROLE } from "@myTypes/index";
+import dynamic from "next/dynamic";
+
+const Box = dynamic(() => import("@mui/material/Box"));
+const List = dynamic(() => import("@mui/material/List"));
+const Typography = dynamic(() => import("@mui/material/Typography"));
+const MenuItemBuilder = dynamic(() => import("./item.builder"));
 
 const MenuBuilder = ({ item }: { item: IMenu }) => {
 	const user = useSessionStore.getState().user;

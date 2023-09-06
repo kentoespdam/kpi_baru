@@ -1,9 +1,4 @@
-import DoDisturbIcon from "@mui/icons-material/DoDisturb";
-import SaveIcon from "@mui/icons-material/Save";
-import LoadingButton from "@mui/lab/LoadingButton";
-import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { TransPerilakuNilaiData } from "@myTypes/entity/trans.perilaku.nilai";
 import { useViewFormPerilakuDialogStore } from "@store/dialog/view.form.perilaku";
@@ -12,8 +7,15 @@ import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useTransPerilakuStore } from "@store/filter/trans/perilaku";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { doSave } from "@utils/trans/perilaku";
+import dynamic from "next/dynamic";
 import { useSnackbar } from "notistack";
 import { FormEvent, useRef } from "react";
+
+const DoDisturbIcon = dynamic(() => import("@mui/icons-material/DoDisturb"));
+const SaveIcon = dynamic(() => import("@mui/icons-material/Save"));
+const LoadingButton = dynamic(() => import("@mui/lab/LoadingButton"));
+const Button = dynamic(() => import("@mui/material/Button"));
+const TextField = dynamic(() => import("@mui/material/TextField"));
 
 const TransPerilakuForm = () => {
 	const { enqueueSnackbar } = useSnackbar();

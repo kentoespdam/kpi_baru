@@ -1,18 +1,22 @@
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import EditIcon from "@mui/icons-material/Edit";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import { ITEM_HEIGHT } from "@myConfig/index";
 import { IndikatorWithAudit } from "@myTypes/entity/indikator";
 import { useIndikatorStore } from "@store/filter/master/indikator";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { enqueueSnackbar } from "notistack";
 import { Dispatch, SetStateAction } from "react";
 import { doDelete } from "src/utils/master/indikator";
+
+const DeleteForeverIcon = dynamic(
+	() => import("@mui/icons-material/DeleteForever")
+);
+const EditIcon = dynamic(() => import("@mui/icons-material/Edit"));
+const ListItemIcon = dynamic(() => import("@mui/material/ListItemIcon"));
+const ListItemText = dynamic(() => import("@mui/material/ListItemText"));
+const Menu = dynamic(() => import("@mui/material/Menu"));
+const MenuItem = dynamic(() => import("@mui/material/MenuItem"));
 
 type IndikatorMenuItemButtonProps = {
 	indikatorWithAudit: IndikatorWithAudit;

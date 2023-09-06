@@ -1,12 +1,16 @@
-import AccountCircleSharpIcon from "@mui/icons-material/AccountCircleSharp";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import { DetEmployee } from "@myTypes/entity/det.employee";
 import { useSessionStore } from "@store/main/session";
 import { useQueryClient } from "@tanstack/react-query";
+import dynamic from "next/dynamic";
+
+const AccountCircleSharpIcon = dynamic(
+	() => import("@mui/icons-material/AccountCircleSharp")
+);
+const Box = dynamic(() => import("@mui/material/Box"));
+const Card = dynamic(() => import("@mui/material/Card"));
+const CardContent = dynamic(() => import("@mui/material/CardContent"));
+const Divider = dynamic(() => import("@mui/material/Divider"));
 
 const DetailEmployeeComponent = () => {
 	const curNipam = useSessionStore.getState().user?.userId;

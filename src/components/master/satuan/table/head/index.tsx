@@ -1,10 +1,15 @@
-import HeaderSearchBuilder, {
-	SearchValueProps,
-} from "@components/commons/table/head/search";
-import HeaderSortBuilder from "@components/commons/table/head/sort";
-import TableHead from "@mui/material/TableHead";
+import { SearchValueProps } from "@components/commons/table/head/search";
 import { satuanHeader } from "@myTypes/entity/satuan";
 import { useSatuanStore } from "@store/filter/master/satuan";
+import dynamic from "next/dynamic";
+
+const HeaderSearchBuilder = dynamic(
+	() => import("@components/commons/table/head/search")
+);
+const HeaderSortBuilder = dynamic(
+	() => import("@components/commons/table/head/sort")
+);
+const TableHead = dynamic(() => import("@mui/material/TableHead"));
 
 const SatuanTableHead = () => {
 	const { sortRequest, setSortRequest, setKeyVal, status } = useSatuanStore();

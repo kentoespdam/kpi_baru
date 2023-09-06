@@ -1,11 +1,13 @@
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Divider from "@mui/material/Divider";
-import Skeleton from "@mui/material/Skeleton";
-import Stack from "@mui/material/Stack";
 import { useTemplateStore } from "@store/main/template";
+import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
+
+const Box = dynamic(() => import("@mui/material/Box"));
+const Card = dynamic(() => import("@mui/material/Card"));
+const CardContent = dynamic(() => import("@mui/material/CardContent"));
+const Divider = dynamic(() => import("@mui/material/Divider"));
+const Skeleton = dynamic(() => import("@mui/material/Skeleton"));
+const Stack = dynamic(() => import("@mui/material/Stack"));
 
 const CardEmployeeSkeleton = () => {
 	return (

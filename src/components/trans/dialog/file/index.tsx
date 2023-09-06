@@ -1,11 +1,15 @@
 import { DialogSlideTransition } from "@components/commons/effect/transition/dialog";
-import CloseIcon from "@mui/icons-material/Close";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import IconButton from "@mui/material/IconButton";
 import { useViewFileDialogStore } from "@store/dialog/view.file";
-import TransKpiFileListComponent from "@trans/kpi/staff/file";
+import dynamic from "next/dynamic";
+
+const CloseIcon = dynamic(() => import("@mui/icons-material/Close"));
+const Dialog = dynamic(() => import("@mui/material/Dialog"));
+const DialogActions = dynamic(() => import("@mui/material/DialogActions"));
+const DialogContent = dynamic(() => import("@mui/material/DialogContent"));
+const IconButton = dynamic(() => import("@mui/material/IconButton"));
+const TransKpiFileListComponent = dynamic(
+	() => import("@trans/kpi/staff/file")
+);
 
 const ViewFileDialog = () => {
 	const { isViewOpen, toggleViewOpen, idUraian } = useViewFileDialogStore();

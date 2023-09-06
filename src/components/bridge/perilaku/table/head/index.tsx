@@ -1,8 +1,14 @@
-import HeaderSearchBuilder from "@components/commons/table/head/search";
-import HeaderSortBuilder from "@components/commons/table/head/sort";
-import TableHead from "@mui/material/TableHead";
 import { bridgePerilakuHead } from "@myTypes/entity/bridge.perilaku";
 import { useBridgePerilakuStore } from "@store/filter/bridge/perilaku";
+import dynamic from "next/dynamic";
+
+const HeaderSearchBuilder = dynamic(
+	() => import("@components/commons/table/head/search")
+);
+const HeaderSortBuilder = dynamic(
+	() => import("@components/commons/table/head/sort")
+);
+const TableHead = dynamic(() => import("@mui/material/TableHead"));
 
 const BridgePerilakuTableHead = () => {
 	const {

@@ -1,11 +1,14 @@
-import { IconButton, Typography } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import TableCell from "@mui/material/TableCell";
-import TableRow from "@mui/material/TableRow";
+const TableRow=dynamic(()=>import("@mui/material/TableRow"))
+import Typography from "@mui/material/Typography";
 import { MyTableHead, SortRequest } from "@myTypes/table";
-import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
-import ArrowDropUpOutlinedIcon from "@mui/icons-material/ArrowDropUpOutlined";
+import dynamic from "next/dynamic";
 import React from "react";
+
+const ArrowDropDownOutlinedIcon=dynamic(()=>import("@mui/icons-material/ArrowDropDownOutlined"))
+const ArrowDropUpOutlinedIcon=dynamic(()=>import("@mui/icons-material/ArrowDropUpOutlined"))
 
 type HeaderCellBuilderProps = {
 	header: MyTableHead;

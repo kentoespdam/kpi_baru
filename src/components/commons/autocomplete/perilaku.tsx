@@ -1,9 +1,10 @@
 import Autocomplete from "@mui/material/Autocomplete";
-import TextField from "@mui/material/TextField";
 import { Perilaku } from "@myTypes/entity/perilaku";
 import { useQuery } from "@tanstack/react-query";
 import { getList } from "@utils/master/perilaku";
+import dynamic from "next/dynamic";
 import LoadingAutocomplete from "./loading";
+const TextField = dynamic(() => import("@mui/material/TextField"));
 
 type PerilakuAutocompleteProps = {
 	search: Perilaku | null;
@@ -13,7 +14,7 @@ type PerilakuAutocompleteProps = {
 	size?: "small" | "medium";
 };
 const PerilakuAutocomplete = (props: PerilakuAutocompleteProps) => {
-	const { search, setSearchValue, required, variant, size } = props;
+	const { search, setSearchValue, required, size } = props;
 	const { status, error, data } = useQuery({
 		queryKey: ["perilaku.autocomplete"],
 		queryFn: getList,

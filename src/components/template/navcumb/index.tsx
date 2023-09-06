@@ -1,9 +1,11 @@
-import HomeIcon from "@mui/icons-material/Home";
-import Breadcrumbs from "@mui/material/Breadcrumbs";
 import MuiLink from "@mui/material/Link";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { hashPath } from "../menu.list";
+
+const HomeIcon = dynamic(() => import("@mui/icons-material/Home"));
+const Breadcrumbs = dynamic(() => import("@mui/material/Breadcrumbs"));
 
 const GlobalNav = () => {
 	const pathname = usePathname();

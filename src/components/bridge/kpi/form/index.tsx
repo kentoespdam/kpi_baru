@@ -1,19 +1,4 @@
 "use client";
-
-import EmployeeAutocomplete from "@autocomplete/employee";
-import KpiAutocomplete from "@autocomplete/kpi";
-import LevelAutocomplete from "@autocomplete/level";
-import OrganizationAutcomplete from "@autocomplete/organization";
-import RolesAutocomple from "@autocomplete/roles";
-import DoDisturbIcon from "@mui/icons-material/DoDisturb";
-import SaveIcon from "@mui/icons-material/Save";
-import LoadingButton from "@mui/lab/LoadingButton";
-import Button from "@mui/material/Button";
-import FormControl from "@mui/material/FormControl";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormGroup from "@mui/material/FormGroup";
-import Stack from "@mui/material/Stack";
-import Switch from "@mui/material/Switch";
 import { BridgeKpiData } from "@myTypes/entity/bridge.kpi";
 import { Employee } from "@myTypes/entity/employee";
 import { Kpi } from "@myTypes/entity/kpi";
@@ -27,6 +12,26 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
 import React from "react";
+import Stack from "@mui/material/Stack";
+import dynamic from "next/dynamic";
+
+const EmployeeAutocomplete = dynamic(() => import("@autocomplete/employee"));
+const KpiAutocomplete = dynamic(() => import("@autocomplete/kpi"));
+const LevelAutocomplete = dynamic(() => import("@autocomplete/level"));
+const OrganizationAutcomplete = dynamic(
+	() => import("@autocomplete/organization")
+);
+const RolesAutocomple = dynamic(() => import("@autocomplete/roles"));
+const DoDisturbIcon = dynamic(() => import("@mui/icons-material/DoDisturb"));
+const SaveIcon = dynamic(() => import("@mui/icons-material/Save"));
+const LoadingButton = dynamic(() => import("@mui/lab/LoadingButton"));
+const Button = dynamic(() => import("@mui/material/Button"));
+const FormControl = dynamic(() => import("@mui/material/FormControl"));
+const FormControlLabel = dynamic(
+	() => import("@mui/material/FormControlLabel")
+);
+const FormGroup = dynamic(() => import("@mui/material/FormGroup"));
+const Switch = dynamic(() => import("@mui/material/Switch"));
 
 type BridgeKpiFormProps = {
 	id?: number;

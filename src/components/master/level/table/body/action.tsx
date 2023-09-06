@@ -1,10 +1,14 @@
-import BtnActionBuilder from "@components/commons/table/action/button.builder";
 import { LevelWithAudit } from "@myTypes/entity/level";
 import { useLevelStore } from "@store/filter/master/level";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
 import { doDelete } from "src/utils/master/level";
+
+const BtnActionBuilder = dynamic(
+	() => import("@components/commons/table/action/button.builder")
+);
 
 type LevelActionBtnProps = {
 	row: LevelWithAudit;
@@ -14,7 +18,7 @@ const LevelActionBtn = (props: LevelActionBtnProps) => {
 	const { row } = props;
 	const router = useRouter();
 	const { pageRequest, sortRequest, status, level } = useLevelStore();
-	
+
 	const qc = useQueryClient();
 	const { enqueueSnackbar } = useSnackbar();
 

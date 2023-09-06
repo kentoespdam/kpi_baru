@@ -1,8 +1,14 @@
-import HeaderSearchBuilder from "@components/commons/table/head/search";
-import HeaderSortBuilder from "@components/commons/table/head/sort";
-import TableHead from "@mui/material/TableHead";
 import { profesiHeader } from "@myTypes/entity/profesi";
 import { useProfesiStore } from "@store/filter/master/profesi";
+import dynamic from "next/dynamic";
+
+const HeaderSearchBuilder = dynamic(
+	() => import("@components/commons/table/head/search")
+);
+const HeaderSortBuilder = dynamic(
+	() => import("@components/commons/table/head/sort")
+);
+const TableHead = dynamic(() => import("@mui/material/TableHead"));
 
 const ProfesiTableHead = () => {
 	const {
@@ -12,14 +18,7 @@ const ProfesiTableHead = () => {
 		setPageRequest,
 		setKeyVal,
 		status,
-	} = useProfesiStore((state) => ({
-		sortRequest: state.sortRequest,
-		setSortRequest: state.setSortRequest,
-		pageRequest: state.pageRequest,
-		setPageRequest: state.setPageRequest,
-		setKeyVal: state.setKeyVal,
-		status: state.status,
-	}));
+	} = useProfesiStore();
 
 	const handleSort = (sort: string | null, direction: "asc" | "desc") => {
 		setSortRequest({ sort, direction });

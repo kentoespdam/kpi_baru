@@ -1,6 +1,10 @@
-import CellBuilder from "@components/commons/table/cell.builder";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
+import dynamic from "next/dynamic";
+
+const CellBuilder = dynamic(
+	() => import("@components/commons/table/cell.builder")
+);
+const TableHead = dynamic(() => import("@mui/material/TableHead"));
+const TableRow = dynamic(() => import("@mui/material/TableRow"));
 
 const KpiStaffTableHead = () => {
 	return (
