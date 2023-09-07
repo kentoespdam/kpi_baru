@@ -4,9 +4,6 @@ import {
 	hitungNilaiWaktu,
 } from "@helper/hitung";
 import Stack from "@mui/material/Stack";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 import { TransUraian, TransUraianData } from "@myTypes/entity/trans.uraian";
 import { AUDIT_STATUS } from "@myTypes/index";
@@ -14,69 +11,23 @@ import { useViewFormKinerjaDialogStore } from "@store/dialog/view.form.kinerja";
 import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { doSave, getById } from "@utils/trans/uraian";
-import dayjs, { Dayjs } from "dayjs";
 import dynamic from "next/dynamic";
 import { useSnackbar } from "notistack";
 import React from "react";
+import { TanggalComponent } from "./tanggal.component";
 
 const DoDisturbIcon = dynamic(() => import("@mui/icons-material/DoDisturb"));
 const SaveIcon = dynamic(() => import("@mui/icons-material/Save"));
 const LoadingButton = dynamic(() => import("@mui/lab/LoadingButton"));
 const Button = dynamic(() => import("@mui/material/Button"));
 const FormControl = dynamic(() => import("@mui/material/FormControl"));
-const TextField = dynamic(() => import("@mui/material/TextField"));
+export const TextField = dynamic(() => import("@mui/material/TextField"));
 
-type TanggalComponentProps = {
+export type TanggalComponentProps = {
 	inputRef: React.Ref<HTMLInputElement>;
 	tarWaktu?: string;
 	capWaktu: string | null | undefined;
 };
-const TanggalComponent = (props: TanggalComponentProps) => {
-	const { inputRef, tarWaktu, capWaktu } = props;
-	const tanggalKosong = tarWaktu?.toLowerCase().includes("tanggal");
-	const [cusTanggal, setCusTanggal] = React.useState<Dayjs | null>(
-		tanggalKosong ? dayjs(new Date()) : dayjs(capWaktu)
-	);
-
-	if (tarWaktu === "Akhir Bulan")
-		return (
-			<TextField
-				id="waktu"
-				inputRef={inputRef}
-				value={capWaktu}
-				aria-readonly
-			/>
-		);
-
-	if (tarWaktu === null || tarWaktu === undefined) return null;
-
-	console.log(tarWaktu);
-
-	if (tarWaktu.includes("Tanggal"))
-		return (
-			<LocalizationProvider dateAdapter={AdapterDayjs}>
-				<DatePicker
-					inputRef={inputRef}
-					defaultValue={cusTanggal}
-					onChange={setCusTanggal}
-					format="YYYY-MM-DD"
-				/>
-			</LocalizationProvider>
-		);
-
-	return (
-		<LocalizationProvider dateAdapter={AdapterDayjs}>
-			<DatePicker
-				inputRef={inputRef}
-				value={dayjs(tarWaktu)}
-				onChange={setCusTanggal}
-				format="YYYY-MM-DD"
-				readOnly
-			/>
-		</LocalizationProvider>
-	);
-};
-
 const KpiKinerjaForm = () => {
 	const {
 		toggleFormKinerjaOpen: toggleFormOpen,

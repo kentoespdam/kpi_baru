@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-	// output: "standalone",
+	output: "standalone",
 	webpack: (config, options) => {
 		config.module.rules.push({
 			test: /\.node$/,
