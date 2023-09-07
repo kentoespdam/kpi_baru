@@ -15,8 +15,9 @@ const SessionProvider = () => {
 				const { status, data } = await axios.get("/api/auth/session");
 				if (status === 200) setUser(data);
 				else setUser(null);
+				return status;
 			}
-			const { status, data } = await axios.options("/api/auth/token");
+			const { status } = await axios.options("/api/auth/token");
 			return status;
 		},
 		refetchInterval: 60 * 1000,

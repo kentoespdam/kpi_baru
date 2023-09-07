@@ -1,5 +1,6 @@
+import { setCookieToken } from "@helper/index";
 import { NextRequest } from "next/server";
-import { getAccount, getSession } from "src/lib/appwrite";
+import { createToken, getAccount, getSession } from "src/lib/appwrite";
 
 export const GET = async (req: NextRequest) => {
 	const cookie = req.cookies;
@@ -7,8 +8,12 @@ export const GET = async (req: NextRequest) => {
 	try {
 		if (cookie.size === 0)
 			return new Response("unauthorized", { status: 401 });
-		const session = await getSession(cookie);
-		const account = await getAccount(cookie);
+		const [session, token, account] = await Promise.all([
+			await getSession(cookie),
+			await createToken(cookie),
+			await getAccount(cookie),
+		]);
+
 		const user = {
 			$id: session.$id,
 			userId: session.userId,
@@ -16,7 +21,11 @@ export const GET = async (req: NextRequest) => {
 			email: account.email,
 			prefs: account.prefs,
 		};
-		return new Response(JSON.stringify(user));
+		return new Response(JSON.stringify(user), {
+			headers: {
+				"Set-Cookie": setCookieToken(token),
+			},
+		});
 	} catch (e: any) {
 		return new Response(e.message, { status: 401 });
 	}

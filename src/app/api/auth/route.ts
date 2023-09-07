@@ -38,10 +38,7 @@ export const POST = async (req: Request) => {
 			await createToken(fallbackCookie[sessionNames[0]]),
 			await getAccount(fallbackCookie[sessionNames[0]]),
 		]);
-
-		// const token = await createToken(fallbackCookie[sessionNames[0]]);
 		const newCookies = newSetCookies(setCookie!.join(","));
-		// const account = await getAccount(fallbackCookie[sessionNames[0]]);
 		const user: SessionUser = {
 			$id: data.$id,
 			userId: data.userId,

@@ -1,8 +1,8 @@
 import { appwriteHeader } from "@helper/index";
 import axios from "axios";
 import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
-import { APPWRITE_ENDPOINT } from ".";
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
+import { APPWRITE_ENDPOINT } from ".";
 
 export const getSession = async (sessCookie: RequestCookies) => {
 	try {
@@ -24,7 +24,7 @@ export const getSession = async (sessCookie: RequestCookies) => {
 };
 
 export const createToken = async (
-	cookieString: RequestCookies | ReadonlyRequestCookies | string
+	cookieString: RequestCookies | ReadonlyRequestCookies
 ) => {
 	try {
 		const { data } = await axios.post(
@@ -47,12 +47,9 @@ export const createToken = async (
 
 export const getAccount = async (cookieString: RequestCookies | string) => {
 	try {
-		const { data } = await axios.get(
-			`${APPWRITE_ENDPOINT}/v1/account`,
-			{
-				headers: appwriteHeader(cookieString),
-			}
-		);
+		const { data } = await axios.get(`${APPWRITE_ENDPOINT}/v1/account`, {
+			headers: appwriteHeader(cookieString),
+		});
 		return data;
 	} catch (e: any) {
 		console.log(
