@@ -1,8 +1,7 @@
-// import "./globals.css";
-// import { Inter } from 'next/font/google'
+import QueryProvider from "@components/commons/provider/query";
+import SessionProvider from "@components/commons/provider/session";
 import { Public_Sans as PublicSans } from "next/font/google";
 
-// const inter = Inter({ subsets: ['latin'] })
 const inter = PublicSans({
 	subsets: ["latin"],
 	weight: ["300", "400", "500", "700"],
@@ -26,7 +25,10 @@ export default function RootLayout({
 					backgroundColor: "rgb(239 239 241)",
 				}}
 			>
-				{children}
+				<QueryProvider>
+					<SessionProvider />
+					{children}
+				</QueryProvider>
 			</body>
 		</html>
 	);
