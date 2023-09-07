@@ -8,8 +8,6 @@ const SessionProvider = () => {
 	const { user, setUser } = useSessionStore();
 	const path = usePathname();
 
-	if (path === "/auth") return null;
-
 	useQuery({
 		queryKey: ["session"],
 		queryFn: async () => {
@@ -23,6 +21,7 @@ const SessionProvider = () => {
 		},
 		refetchInterval: 60 * 1000,
 		cacheTime: Infinity,
+		enabled: path !== "/auth",
 	});
 
 	return null;
