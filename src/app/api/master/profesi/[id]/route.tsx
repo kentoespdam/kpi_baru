@@ -1,4 +1,4 @@
-import { appwriteHeader, getCurrentToken, setCookieToken } from "@helper/index";
+import { getCurrentToken } from "@helper/index";
 import { REMOTE_PROFESI } from "@myTypes/entity/profesi";
 import axios from "axios";
 import { NextRequest } from "next/server";
@@ -15,9 +15,9 @@ export const GET = async (
 		const token = await getCurrentToken(cookie);
 		const { status, data } = await axios.get(`${REMOTE_PROFESI}/${id}`, {
 			headers: {
-					"Content-Type": "application/json",
-					"Authorization": token,
-				},
+				"Content-Type": "application/json",
+				"Authorization": token,
+			},
 		});
 		return new Response(JSON.stringify(data), { status: status });
 	} catch (e: any) {
@@ -71,9 +71,9 @@ export const DELETE = async (
 		const token = await getCurrentToken(cookie);
 		const { status, data } = await axios.delete(`${REMOTE_PROFESI}/${id}`, {
 			headers: {
-					"Content-Type": "application/json",
-					"Authorization": token,
-				},
+				"Content-Type": "application/json",
+				"Authorization": token,
+			},
 		});
 		return new Response(JSON.stringify(data), { status: status });
 	} catch (e: any) {

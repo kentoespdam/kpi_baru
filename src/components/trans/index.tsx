@@ -65,6 +65,7 @@ const TransRoot = () => {
 				queryFn: getBridgePerilaku,
 				enabled: !!levelStaff,
 				retry: 2,
+				cacheTime: 0,
 			},
 			{
 				queryKey: [
@@ -92,6 +93,7 @@ const TransRoot = () => {
 				queryFn: getTransPerilaku,
 				enabled:
 					!!nipamStaff && !!bridgeKpiBawahan?.level.id && !!periode,
+				cacheTime: 0,
 			},
 		],
 	});

@@ -1,5 +1,5 @@
 import { responseNoContent } from "@helper/error/nocontent";
-import { getCurrentToken, appwriteHeader } from "@helper/index";
+import { getCurrentToken } from "@helper/index";
 import { REMOTE_INDIKATOR } from "@myTypes/entity/indikator";
 import axios from "axios";
 import { NextRequest } from "next/server";
@@ -17,9 +17,9 @@ export const GET = async (
 		const token = await getCurrentToken(cookie);
 		const { status, data } = await axios.get(`${REMOTE_INDIKATOR}/${id}`, {
 			headers: {
-					"Content-Type": "application/json",
-					"Authorization": token,
-				},
+				"Content-Type": "application/json",
+				"Authorization": token,
+			},
 		});
 		if (status === 204) return responseNoContent();
 		return new Response(JSON.stringify(data), { status: status });

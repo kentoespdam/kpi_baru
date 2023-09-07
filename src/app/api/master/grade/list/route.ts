@@ -1,5 +1,5 @@
 import { responseNoContent } from "@helper/error/nocontent";
-import { getCurrentToken, appwriteHeader } from "@helper/index";
+import { getCurrentToken } from "@helper/index";
 import { REMOTE_GRADE } from "@myTypes/entity/grade";
 import axios from "axios";
 import { NextRequest } from "next/server";
@@ -15,9 +15,9 @@ export const GET = async (req: NextRequest) => {
 		const token = await getCurrentToken(cookie);
 		const { status, data } = await axios.get(`${REMOTE_GRADE}?${search}`, {
 			headers: {
-					"Content-Type": "application/json",
-					"Authorization": token,
-				},
+				"Content-Type": "application/json",
+				"Authorization": token,
+			},
 		});
 		if (status === 204) return responseNoContent();
 		return new Response(JSON.stringify(data), { status: status });

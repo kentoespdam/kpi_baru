@@ -1,9 +1,9 @@
-import { LOCAL_ORGANIZATION } from "@myTypes/entity/organization";
+import { REMOTE_ORGANIZATION } from "@myTypes/entity/organization";
 import axios from "axios";
 
-export const getList = async () => {
+export const getOrgInList = async (orgsId: string) => {
 	try {
-		const { data } = await axios.get(`${LOCAL_ORGANIZATION}/list`);
+		const { data } = await axios.get(`${REMOTE_ORGANIZATION}/in/${orgsId}`);
 		return data.data;
 	} catch (e: any) {
 		console.log(

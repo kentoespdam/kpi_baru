@@ -1,4 +1,4 @@
-import { SearchValueProps } from "@components/commons/table/head/search";
+import { SearchValueProps } from "@components/commons/table/head/searchType";
 import { GradeFilter } from "@myTypes/entity/grade";
 import { AUDIT_STATUS, Nullable } from "@myTypes/index";
 import { create } from "zustand";

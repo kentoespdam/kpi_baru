@@ -5,11 +5,10 @@ import {
 	KpiWithPagination,
 	REMOTE_KPI,
 } from "@myTypes/entity/kpi";
-import {
-	REMOTE_ORGANIZATION,
-	Organization,
-} from "@myTypes/entity/organization";
-import { REMOTE_POSITION, Position } from "@myTypes/entity/position";
+import { Organization } from "@myTypes/entity/organization";
+import { Position } from "@myTypes/entity/position";
+import { getOrgInList } from "@utils/eo/server/organization";
+import { getPosInList } from "@utils/eo/server/position";
 import axios from "axios";
 import { NextRequest } from "next/server";
 
@@ -32,33 +31,40 @@ export const GET = async (req: NextRequest) => {
 		);
 		if (status === 204) return responseNoContent();
 
-		const kpiPage = data.data satisfies KpiWithPagination;
-		const orgsId = kpiPage.content
+		const content = data.data.content;
+		const orgsId = content
 			.map((kpi: KpiWithAudit) => kpi.organizationId)
 			.join(",");
 
-		const postsId = kpiPage.content
+		const postsId = content
 			.map((kpi: KpiWithAudit) => kpi.positionId)
 			.join(",");
 
-		const { data: orgData } = await axios.get(
-			`${REMOTE_ORGANIZATION}/in/${orgsId}`
-		);
-		const { data: posData } = await axios.get(
-			`${REMOTE_POSITION}/in/${postsId}`
-		);
-		kpiPage.content = kpiPage.content.map((kpi: KpiWithAudit) => {
-			kpi.organization = orgData.data.find(
-				(org: Organization) => org.id === kpi.organizationId
-			);
-			kpi.position = posData.data.find(
-				(pos: Position) => pos.id === kpi.positionId
-			);
+		const [orgData, posData] = await Promise.all([
+			await getOrgInList(orgsId),
+			await getPosInList(postsId),
+		]);
 
-			return kpi;
-		});
+		await Promise.all(
+			content.map(async (kpi: KpiWithAudit) => {
+				kpi.organization = await new Promise((resolve, reject) => {
+					const org = orgData.find(
+						(org: Organization) => org.id === kpi.organizationId
+					);
+					org ? resolve(org) : reject("Organization not found");
+				});
+				kpi.position = await new Promise((resolve, reject) => {
+					const pos = posData.find(
+						(pos: Position) => pos.id === kpi.positionId
+					);
+					pos ? resolve(pos) : reject("Position not found");
+				});
 
-		data.data = kpiPage;
+				return kpi;
+			})
+		);
+
+		data.data.content = content;
 
 		return new Response(JSON.stringify(data), { status });
 	} catch (e: any) {
@@ -76,9 +82,9 @@ export const POST = async (req: NextRequest) => {
 		const token = await getCurrentToken(cookie);
 		const { status, data } = await axios.post(`${REMOTE_KPI}`, body, {
 			headers: {
-					"Content-Type": "application/json",
-					"Authorization": token,
-				},
+				"Content-Type": "application/json",
+				"Authorization": token,
+			},
 		});
 		return new Response(JSON.stringify(data), { status: status });
 	} catch (e: any) {

@@ -50,7 +50,7 @@ export const getList = async () => {
 };
 
 export const getById = async (props: any) => {
-	const id = props[1]
+	const id = props[1];
 	try {
 		const { data } = await axios.get(`${LOCAL_KPI}/${id}`);
 		return data.data;

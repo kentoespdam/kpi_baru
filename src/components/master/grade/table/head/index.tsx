@@ -1,9 +1,9 @@
-import { SearchValueProps } from "@components/commons/table/head/search";
-const TableHead=dynamic(()=>import("@mui/material/TableHead"))
+import { SearchValueProps } from "@components/commons/table/head/searchType";
 import { gradeHeader } from "@myTypes/entity/grade";
 import { useGradeStore } from "@store/filter/master/grade";
 import dynamic from "next/dynamic";
 
+const TableHead = dynamic(() => import("@mui/material/TableHead"));
 const HeaderSearchBuilder = dynamic(
 	() => import("@components/commons/table/head/search")
 );

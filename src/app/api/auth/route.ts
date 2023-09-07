@@ -34,9 +34,14 @@ export const POST = async (req: Request) => {
 
 		const setCookie = headers["set-cookie"];
 		const fallbackCookie = JSON.parse(headers["x-fallback-cookies"]);
-		const token = await createToken(fallbackCookie[sessionNames[0]]);
+		const [token, account] = await Promise.all([
+			await createToken(fallbackCookie[sessionNames[0]]),
+			await getAccount(fallbackCookie[sessionNames[0]]),
+		]);
+
+		// const token = await createToken(fallbackCookie[sessionNames[0]]);
 		const newCookies = newSetCookies(setCookie!.join(","));
-		const account = await getAccount(fallbackCookie[sessionNames[0]]);
+		// const account = await getAccount(fallbackCookie[sessionNames[0]]);
 		const user: SessionUser = {
 			$id: data.$id,
 			userId: data.userId,

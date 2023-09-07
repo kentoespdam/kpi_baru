@@ -73,6 +73,8 @@ const getSession = async (cookies: RequestCookies) => {
 			cookies.get(sessionNames[0])?.value ||
 			cookies.get(sessionNames[1])?.value ||
 			"";
+		if (xfallback === "") throw Error("No session found");
+
 		const cookieString = cookies.toString();
 		const decodedCookie = decodeURIComponent(cookieString);
 		const headers = {
@@ -102,6 +104,8 @@ const createToken = async (cookies: RequestCookies) => {
 			cookies.get(sessionNames[0])?.value ||
 			cookies.get(sessionNames[1])?.value ||
 			"";
+
+		if (xfallback === "") throw Error("No session found");
 		const cookieString = cookies.toString();
 		const decodedCookie = decodeURIComponent(cookieString);
 		const headers = {

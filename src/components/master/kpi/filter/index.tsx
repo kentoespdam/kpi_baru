@@ -1,6 +1,8 @@
+import ProfesiAutocomplete from "@autocomplete/profesi";
 import InputAdornment from "@mui/material/InputAdornment";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Tooltip from "@mui/material/Tooltip";
+import { Profesi } from "@myTypes/entity/profesi";
 import { AUDIT_STATUS } from "@myTypes/index";
 import { useKpiStore } from "@store/filter/master/kpi";
 import dynamic from "next/dynamic";
@@ -18,10 +20,11 @@ const Stack = dynamic(() => import("@mui/material/Stack"));
 const Switch = dynamic(() => import("@mui/material/Switch"));
 
 const KpiFilter = () => {
-	const { setKeyVal, status, name } = useKpiStore();
+	const { setKeyVal, status, name, profesi } = useKpiStore();
 	const field = "kpi";
 	const title = "KPI Name";
 	const nameRef = useRef<HTMLInputElement>(null);
+	const [_profesi, _setProfesi] = useState<Profesi | null>(profesi);
 	const [checked, setChecked] = useState(
 		status === AUDIT_STATUS.DISABLED ? false : true
 	);
@@ -39,6 +42,12 @@ const KpiFilter = () => {
 			setKeyVal("name", e.currentTarget.value);
 		}
 	};
+
+	const handleChangeProfesi = (value: Profesi | null) => {
+		_setProfesi(value);
+		setKeyVal("profesi", value);
+	};
+
 	const searchNameClick = () => {
 		if (nameRef.current === null) return;
 		if (nameRef.current.value === "") setKeyVal("name", null);
@@ -81,6 +90,14 @@ const KpiFilter = () => {
 							</Tooltip>
 						}
 						defaultValue={name}
+					/>
+				</FormControl>
+				<FormControl>
+					<ProfesiAutocomplete
+						search={_profesi}
+						setSearchValue={handleChangeProfesi}
+						variant="outlined"
+						sx={{ minWidth: 250 }}
 					/>
 				</FormControl>
 				<FormGroup>

@@ -94,6 +94,6 @@ export const setCookieToken = (token: string) => {
 		sessionNames[2]
 	}=${token}; domain=${newHostname}; expires=${new Date(
 		getExpToken(token)
-	).toISOString()}; path=/; httponly; SameSite=none; Secure`;
+	)}; path=/; httponly; SameSite=none; Secure`;
 	return resCookie;
 };

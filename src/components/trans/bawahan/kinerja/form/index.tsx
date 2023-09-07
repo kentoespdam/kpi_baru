@@ -4,6 +4,9 @@ import {
 	hitungNilaiWaktu,
 } from "@helper/hitung";
 import Stack from "@mui/material/Stack";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 import { TransUraian, TransUraianData } from "@myTypes/entity/trans.uraian";
 import { AUDIT_STATUS } from "@myTypes/index";
@@ -11,17 +14,68 @@ import { useViewFormKinerjaDialogStore } from "@store/dialog/view.form.kinerja";
 import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { doSave, getById } from "@utils/trans/uraian";
+import dayjs, { Dayjs } from "dayjs";
 import dynamic from "next/dynamic";
 import { useSnackbar } from "notistack";
 import React from "react";
 
-const WaktuAutocomplete = dynamic(() => import("@autocomplete/waktu"));
 const DoDisturbIcon = dynamic(() => import("@mui/icons-material/DoDisturb"));
 const SaveIcon = dynamic(() => import("@mui/icons-material/Save"));
 const LoadingButton = dynamic(() => import("@mui/lab/LoadingButton"));
 const Button = dynamic(() => import("@mui/material/Button"));
 const FormControl = dynamic(() => import("@mui/material/FormControl"));
 const TextField = dynamic(() => import("@mui/material/TextField"));
+
+type TanggalComponentProps = {
+	inputRef: React.Ref<HTMLInputElement>;
+	tarWaktu?: string;
+	capWaktu: string | null | undefined;
+};
+const TanggalComponent = (props: TanggalComponentProps) => {
+	const { inputRef, tarWaktu, capWaktu } = props;
+	const tanggalKosong = tarWaktu?.toLowerCase().includes("tanggal");
+	const [cusTanggal, setCusTanggal] = React.useState<Dayjs | null>(
+		tanggalKosong ? dayjs(new Date()) : dayjs(capWaktu)
+	);
+
+	if (tarWaktu === "Akhir Bulan")
+		return (
+			<TextField
+				id="waktu"
+				inputRef={inputRef}
+				value={capWaktu}
+				aria-readonly
+			/>
+		);
+
+	if (tarWaktu === null || tarWaktu === undefined) return null;
+
+	console.log(tarWaktu);
+
+	if (tarWaktu.includes("Tanggal"))
+		return (
+			<LocalizationProvider dateAdapter={AdapterDayjs}>
+				<DatePicker
+					inputRef={inputRef}
+					defaultValue={cusTanggal}
+					onChange={setCusTanggal}
+					format="YYYY-MM-DD"
+				/>
+			</LocalizationProvider>
+		);
+
+	return (
+		<LocalizationProvider dateAdapter={AdapterDayjs}>
+			<DatePicker
+				inputRef={inputRef}
+				value={dayjs(tarWaktu)}
+				onChange={setCusTanggal}
+				format="YYYY-MM-DD"
+				readOnly
+			/>
+		</LocalizationProvider>
+	);
+};
 
 const KpiKinerjaForm = () => {
 	const {
@@ -31,17 +85,24 @@ const KpiKinerjaForm = () => {
 		idUraian,
 		reset,
 	} = useViewFormKinerjaDialogStore();
+	const waktuRef = React.useRef<HTMLInputElement>(null);
 	const periode = useTransKpiStore((state) => state.periode);
 	const { enqueueSnackbar } = useSnackbar();
 	const qc = useQueryClient();
 	const capaianVolumeRef = React.useRef<HTMLInputElement>(null);
-	const [waktu, setWaktu] = React.useState<string | null | undefined>(null);
+	const [tarWaktu, setTarWaktu] = React.useState<string | undefined>();
+	const [capWaktu, setCapWaktu] = React.useState<string | null | undefined>(
+		null
+	);
 
 	const { isFetching, data, error } = useQuery<TransUraian>({
 		queryKey: ["trans.kpi.form", idUraian],
 		queryFn: async ({ queryKey }) => {
 			const result = await getById(queryKey);
-			setWaktu(result?.capaianWaktu ? result.capaianWaktu : result.waktu);
+			setTarWaktu(result.waktu);
+			result?.capaianWaktu
+				? setCapWaktu(result.capaianWaktu)
+				: setCapWaktu(new Date().toUTCString());
 			return result;
 		},
 		enabled: !!idUraian,
@@ -69,9 +130,6 @@ const KpiKinerjaForm = () => {
 		},
 	});
 
-	const setSearchWaktu = (value: string | null | undefined) =>
-		setWaktu(value);
-
 	const cancelHandler = () => {
 		reset();
 		toggleFormOpen();
@@ -84,12 +142,12 @@ const KpiKinerjaForm = () => {
 			Number(data?.volume),
 			String(data?.satuan),
 			Number(data?.bobot),
-			String(waktu),
+			String(waktuRef.current?.value),
 			String(data?.target)
 		).toFixed(2);
 		const nilaiWaktu = hitungNilaiWaktu(
 			Number(capaianVolumeRef.current?.value),
-			String(waktu),
+			String(waktuRef.current?.value),
 			String(data?.waktu),
 			String(periode?.periode)
 		).toFixed(2);
@@ -102,7 +160,7 @@ const KpiKinerjaForm = () => {
 			id: Number(data?.id),
 			capaianVolume: Number(capaianVolumeRef.current?.value),
 			capaianSatuan: String(data?.capaianSatuan),
-			capaianWaktu: String(waktu),
+			capaianWaktu: String(waktuRef.current?.value),
 			nilaiProdukKerja: Number(nilaiProdukKerja),
 			nilaiWaktu: Number(nilaiWaktu),
 			nilaiTotalUraian: Number(nilaiTotalUraian),
@@ -136,11 +194,12 @@ const KpiKinerjaForm = () => {
 					}}
 				/>
 			</FormControl>
+
 			<FormControl fullWidth>
-				<WaktuAutocomplete
-					search={waktu}
-					setSearchValue={setSearchWaktu}
-					size="small"
+				<TanggalComponent
+					inputRef={waktuRef}
+					tarWaktu={tarWaktu}
+					capWaktu={capWaktu}
 				/>
 			</FormControl>
 
@@ -155,7 +214,6 @@ const KpiKinerjaForm = () => {
 				</Button>
 				<LoadingButton
 					color="primary"
-					// onClick={handleSubmit}
 					type="submit"
 					loading={mutation.isLoading}
 					loadingPosition="end"

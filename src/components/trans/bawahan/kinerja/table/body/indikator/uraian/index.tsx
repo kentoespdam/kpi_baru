@@ -66,7 +66,9 @@ const UraianCell = (props: UraianCellProps) => {
 							<EditIcon />
 						</IconButton>
 					</Tooltip>
-					<ViewBtn fileList={fileList} uraianId={uraian.id} />
+					{fileList.length > 0 ?? (
+						<ViewBtn fileList={fileList} uraianId={uraian.id} />
+					)}
 				</Stack>
 			</TableCell>
 		</>

@@ -38,12 +38,13 @@ const GlobalNav = () => {
 
 				return last ? (
 					<MuiLink
-						key={to}
 						sx={{
 							color: "text.primary",
 							textDecoration: "none",
 							textTransform: "capitalize",
 						}}
+						key={to}
+						href="#"
 					>
 						{value}
 					</MuiLink>

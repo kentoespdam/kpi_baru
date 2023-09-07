@@ -1,5 +1,5 @@
 import { responseNoContent } from "@helper/error/nocontent";
-import { getCurrentToken, appwriteHeader } from "@helper/index";
+import { getCurrentToken } from "@helper/index";
 import { REMOTE_TRANS_PERILAKU_NILAI } from "@myTypes/entity/trans.perilaku.nilai";
 import axios from "axios";
 import { NextRequest } from "next/server";
@@ -17,10 +17,12 @@ export const PUT = async (
 		const { status, data } = await axios.put(
 			`${REMOTE_TRANS_PERILAKU_NILAI}/${id}`,
 			body,
-			{ headers: {
+			{
+				headers: {
 					"Content-Type": "application/json",
 					"Authorization": token,
-				}, }
+				},
+			}
 		);
 		if (status === 204) return responseNoContent();
 		return new Response(JSON.stringify(data), { status });

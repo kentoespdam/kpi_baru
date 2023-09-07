@@ -2,7 +2,6 @@ import { responseNoContent } from "@helper/error/nocontent";
 import { getCurrentToken } from "@helper/index";
 import {
 	BridgeKpiWithAudit,
-	BridgeKpiWithPagination,
 	REMOTE_BRIDGE_KPI,
 } from "@myTypes/entity/bridge.kpi";
 import {
@@ -10,12 +9,24 @@ import {
 	REMOTE_ORGANIZATION,
 } from "@myTypes/entity/organization";
 import { Position, REMOTE_POSITION } from "@myTypes/entity/position";
+import { getOrgInList } from "@utils/eo/server/organization";
+import { getPosInList } from "@utils/eo/server/position";
 import axios from "axios";
 import { NextRequest } from "next/server";
 import { DEFAULT_MAIL_DOMAIN } from "src/lib";
-import { createUserAccount, getAllUser } from "src/lib/appwrite/user";
+import { createUserAccount, getPrefsInUser } from "src/lib/appwrite/user";
 
 export const revalidate = 0;
+
+const findPosition = (
+	posList: Position[],
+	posId: number
+): Promise<Position> => {
+	return new Promise((resolve, reject) => {
+		const pos = posList.find((pos: Position) => pos.id === posId);
+		pos ? resolve(pos) : reject("Position not found");
+	});
+};
 
 export const GET = async (req: NextRequest) => {
 	const cookie = req.cookies;
@@ -32,42 +43,51 @@ export const GET = async (req: NextRequest) => {
 				},
 			}
 		);
-		const bridgeKpis: BridgeKpiWithPagination = data.data;
-		const orgsId = bridgeKpis.content
+
+		const content = data.data.content.map((kpi: BridgeKpiWithAudit) => kpi);
+		const orgsId = content
 			.map((kpi: BridgeKpiWithAudit) => kpi.organizationId)
 			.join(",");
-		const postsId = bridgeKpis.content
+		const postsId = content
 			.map((kpi: BridgeKpiWithAudit) => kpi.positionId)
 			.join(",");
-		const { data: orgData } = await axios.get(
-			`${REMOTE_ORGANIZATION}/in/${orgsId}`
+
+		const nipams = content.map((kpi: BridgeKpiWithAudit) => kpi.nipam);
+
+		const [orgData, posData, prefsList] = await Promise.all([
+			await getOrgInList(orgsId),
+			await getPosInList(postsId),
+			await getPrefsInUser(nipams),
+		]);
+
+		await Promise.all(
+			content.map(async (kpi: BridgeKpiWithAudit) => {
+
+
+				kpi.organization = await new Promise((resolve, reject) => {
+					const org = orgData.find(
+						(org: Organization) => org.id === kpi.organizationId
+					);
+					org ? resolve(org) : reject("Organization not found");
+				});
+
+				kpi.position = await new Promise((resolve, reject) => {
+					const pos = posData.find(
+						(pos: Position) => pos.id === kpi.positionId
+					);
+					pos ? resolve(pos) : reject("Position not found");
+				});
+				kpi.roles = await new Promise((resolve, reject) => {
+					const prefs = prefsList.find(
+						(user: { nipam: string; roles: string[] }) =>
+							user.nipam === kpi.nipam
+					);
+					prefs ? resolve(prefs.roles) : reject("Roles not found");
+				});
+
+				return kpi;
+			})
 		);
-		const { data: posData } = await axios.get(
-			`${REMOTE_POSITION}/in/${postsId}`
-		);
-
-		const prefsList = await getAllUser();
-
-		const content: BridgeKpiWithAudit[] = [];
-		bridgeKpis.content.forEach((item) => content.push(item));
-
-		content.map(async (kpi: BridgeKpiWithAudit) => {
-			const organization = orgData.data.find(
-				(org: Organization) => org.id === kpi.organizationId
-			);
-
-			const position = posData.data.find(
-				(pos: Position) => pos.id === kpi.positionId
-			);
-
-			kpi.organization = organization;
-			kpi.position = position;
-			kpi.roles = prefsList.users.find(
-				(user: Record<string, unknown>) => user.$id === kpi.nipam
-			)?.prefs.roles;
-
-			return kpi;
-		});
 
 		data.data.content = content;
 
@@ -93,9 +113,9 @@ export const POST = async (req: NextRequest) => {
 		const token = await getCurrentToken(cookie);
 		const { status, data } = await axios.post(REMOTE_BRIDGE_KPI, body, {
 			headers: {
-					"Content-Type": "application/json",
-					"Authorization": token,
-				},
+				"Content-Type": "application/json",
+				"Authorization": token,
+			},
 		});
 		if (status === 201)
 			await createUserAccount({

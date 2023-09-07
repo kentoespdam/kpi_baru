@@ -1,5 +1,5 @@
-import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useTransKinerjaStore } from "@store/filter/trans/kinerja";
+import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useQueryClient } from "@tanstack/react-query";
 import dynamic from "next/dynamic";
 
@@ -26,17 +26,15 @@ const TransKinerjaTable = () => {
 
 	return (
 		<TableContainer>
-			{qStatus?.status === "loading" ||
-			qStatus?.fetchStatus === "fetching" ? (
-				<LinearProgress />
-			) : null}
+			{qStatus?.fetchStatus === "fetching" ? <LinearProgress /> : null}
 			<Table width="100%">
 				<DetailKpiBawahanTableHead />
-				{qStatus?.status === "loading" ||
-				qStatus?.fetchStatus === "fetching" ? (
-					<TableLoading colSpan={10} />
-				) : (
+				{qStatus?.fetchStatus === "fetching" ? (
+					<TableLoading colSpan={14} />
+				) : qStatus?.data ? (
 					<DetailKpiBawahanTableBody />
+				) : (
+					<TableLoading colSpan={14} error />
 				)}
 				<DetailKpiBawahanTableFooter />
 			</Table>

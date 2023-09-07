@@ -1,4 +1,4 @@
-import { getCurrentToken, xfallback } from "@helper/index";
+import { getCurrentToken } from "@helper/index";
 import { REMOTE_URAIAN_FILE } from "@myTypes/entity/uraian.file";
 import axios from "axios";
 import { readFile, unlink, writeFile } from "fs/promises";
@@ -36,7 +36,7 @@ export const POST = async (req: Request) => {
 			{
 				headers: {
 					...reqHeader,
-					"Authorization": token,
+					Authorization: token,
 				},
 				onUploadProgress: (e) => {
 					console.log("bytes: ", e.bytes);

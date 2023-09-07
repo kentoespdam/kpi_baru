@@ -1,4 +1,4 @@
-import { SearchValueProps } from "@components/commons/table/head/search";
+import { SearchValueProps } from "@components/commons/table/head/searchType";
 import { PageRequest, SortRequest } from "@myTypes/table";
 
 export interface BaseStore {

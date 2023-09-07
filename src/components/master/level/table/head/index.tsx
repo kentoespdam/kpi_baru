@@ -1,4 +1,4 @@
-import { SearchValueProps } from "@components/commons/table/head/search";
+import { SearchValueProps } from "@components/commons/table/head/searchType";
 import { levelHeader } from "@myTypes/entity/level";
 import { useLevelStore } from "@store/filter/master/level";
 import dynamic from "next/dynamic";

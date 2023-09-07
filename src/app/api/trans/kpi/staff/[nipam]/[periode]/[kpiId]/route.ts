@@ -17,10 +17,12 @@ export const GET = async (
 		const token = await getCurrentToken(cookies);
 		const { status, data } = await axios.get(
 			`${REMOTE_TRANS_KPI}/${periode}/periode/${nipam}/nipam/${kpiId}/kpi`,
-			{ headers: {
+			{
+				headers: {
 					"Content-Type": "application/json",
 					"Authorization": token,
-				}, }
+				},
+			}
 		);
 		if (status === 204) return responseNoContent();
 		return new Response(JSON.stringify(data), { status });

@@ -1,4 +1,4 @@
-import { getCurrentToken, appwriteHeader } from "@helper/index";
+import { getCurrentToken } from "@helper/index";
 import { REMOTE_URAIAN } from "@myTypes/entity/uraian";
 import axios from "axios";
 import { NextRequest } from "next/server";
@@ -13,9 +13,9 @@ export const POST = async (req: NextRequest) => {
 		const token = await getCurrentToken(cookie);
 		const { status, data } = await axios.post(`${REMOTE_URAIAN}`, body, {
 			headers: {
-					"Content-Type": "application/json",
-					"Authorization": token,
-				},
+				"Content-Type": "application/json",
+				"Authorization": token,
+			},
 		});
 		return new Response(JSON.stringify(data), { status: status });
 	} catch (e: any) {

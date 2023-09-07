@@ -87,6 +87,15 @@ export const getUserByNipam = async (nipam: string) => {
 	}
 };
 
+export const getPrefsInUser = async (nipams: string[]) => {
+	return await Promise.all(
+		nipams.map(async (nipam) => {
+			const user = await getPrefs(nipam);
+			return { nipam: nipam, roles: user?.roles };
+		})
+	);
+};
+
 export const getPrefs = async (id: string) => {
 	try {
 		const { data } = await axios.get(
@@ -105,14 +114,14 @@ export const getPrefs = async (id: string) => {
 		console.log(
 			"api.user.get.prefs",
 			new Date().toLocaleString(),
-			e.response.data
+			e.response.data.message,
+			id
 		);
-		return null;
+		throw new Error(e.response.data.message);
 	}
 };
 
 export const updateRoleUser = async (id: string, roles: string[]) => {
-	console.log("appwrite.user.update.role", id, roles);
 	try {
 		const { status, data } = await axios.patch(
 			`${APPWRITE_ENDPOINT}/v1/users/${id}/prefs`,

@@ -2,7 +2,7 @@ import { AUDIT_STATUS, Nullable } from "@myTypes/index";
 import { BaseStore } from "..";
 import { SatuanFilter } from "@myTypes/entity/satuan";
 import { create } from "zustand";
-import { SearchValueProps } from "@components/commons/table/head/search";
+import { SearchValueProps } from "@components/commons/table/head/searchType";
 import { PageRequest, SortRequest } from "@myTypes/table";
 
 interface SatuanStore extends BaseStore, Nullable<SatuanFilter> {}

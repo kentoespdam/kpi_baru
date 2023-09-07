@@ -1,4 +1,4 @@
-import { getCurrentToken, appwriteHeader } from "@helper/index";
+import { getCurrentToken } from "@helper/index";
 import { REMOTE_URAIAN_FILE } from "@myTypes/entity/uraian.file";
 import axios from "axios";
 import { NextRequest } from "next/server";

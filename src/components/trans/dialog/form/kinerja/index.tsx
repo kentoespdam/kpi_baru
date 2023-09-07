@@ -19,7 +19,7 @@ const ViewFormKinerjaDialog = () => {
 			open={isFormOpen}
 			onClose={toggleFormOpen}
 			TransitionComponent={DialogSlideTransition}
-			maxWidth="xs"
+			maxWidth="md"
 		>
 			<DialogTitle>
 				Form Kinerja Staff

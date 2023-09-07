@@ -1,4 +1,4 @@
-import { SearchValueProps } from "@components/commons/table/head/search";
+import { SearchValueProps } from "@components/commons/table/head/searchType";
 import { UraianFilter } from "@myTypes/entity/uraian";
 import { AUDIT_STATUS, Nullable } from "@myTypes/index";
 import { AccordionStore } from "@store/main/accordion";

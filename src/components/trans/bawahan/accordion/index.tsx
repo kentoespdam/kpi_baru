@@ -46,7 +46,7 @@ const AccordionBawahan = (props: AccordionBawahanProps) => {
 		<Accordion expanded={expanded === `panel${staffNipam}` ? true : false}>
 			<AccordionSummary
 				expandIcon={
-					<IconButton onClick={expandHandler}>
+					<IconButton onClick={expandHandler} id={`expand-btn-${staffNipam}`}>
 						<ExpandMoreIcon />
 					</IconButton>
 				}

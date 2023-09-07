@@ -1,4 +1,4 @@
-import { SearchValueProps } from "@components/commons/table/head/search";
+import { SearchValueProps } from "@components/commons/table/head/searchType";
 import { satuanHeader } from "@myTypes/entity/satuan";
 import { useSatuanStore } from "@store/filter/master/satuan";
 import dynamic from "next/dynamic";

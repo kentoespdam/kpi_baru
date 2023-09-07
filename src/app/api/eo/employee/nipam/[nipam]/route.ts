@@ -26,28 +26,25 @@ export const GET = async (
 		const emp = data.data satisfies Employee;
 		const posParent = emp.position.parent;
 		const posId = emp.position.id;
-		const { data: atasanData } = await axios.get(
-			`${REMOTE_EMPLOYEE}/${posParent}/position`,
-			{
+		const [atasanData, staffData] = await Promise.all([
+			await axios.get(`${REMOTE_EMPLOYEE}/${posParent}/position`, {
 				headers: {
 					"Content-Type": "application/json",
 					"Authorization": token,
 				},
-			}
-		);
-		const { data: staffData } = await axios.get(
-			`${REMOTE_EMPLOYEE}/${posId}/staff`,
-			{
+			}),
+			await axios.get(`${REMOTE_EMPLOYEE}/${posId}/staff`, {
 				headers: {
 					"Content-Type": "application/json",
 					"Authorization": token,
 				},
-			}
-		);
+			}),
+		]);
+
 		const detEmp: DetEmployee = {
 			curr: data.data,
-			atasan: atasanData.data,
-			staff: staffData.data,
+			atasan: atasanData.data.data,
+			staff: staffData.data.data,
 		};
 		if (status === 204) return responseNoContent();
 		return new Response(

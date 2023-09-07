@@ -1,4 +1,4 @@
-import { SearchValueProps } from "@components/commons/table/head/search";
+import { SearchValueProps } from "@components/commons/table/head/searchType";
 import { PerilakuFilter } from "@myTypes/entity/perilaku";
 import { AUDIT_STATUS, Nullable } from "@myTypes/index";
 import { create } from "zustand";

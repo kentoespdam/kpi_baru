@@ -2,12 +2,12 @@
 import { buttonHovered, buttonSelectedColor } from "@myConfig/index";
 import { useProfileStore } from "@store/main/menu";
 import dynamic from "next/dynamic";
+import ProfilePopper from "./popper";
 
 const Avatar = dynamic(() => import("@mui/material/Avatar"));
 const Box = dynamic(() => import("@mui/material/Box"));
 const ButtonBase = dynamic(() => import("@mui/material/ButtonBase"));
 const Stack = dynamic(() => import("@mui/material/Stack"));
-const ProfilePopper = dynamic(() => import("./popper"));
 
 const ProfileComponent = () => {
 	const { anchorEl, setAnchorEl, isOpen, toggleProfileMenu } =

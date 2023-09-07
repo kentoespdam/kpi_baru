@@ -1,5 +1,5 @@
 import { responseNoContent } from "@helper/error/nocontent";
-import { getCurrentToken, appwriteHeader } from "@helper/index";
+import { getCurrentToken } from "@helper/index";
 import { REMOTE_TRANS_PERILAKU } from "@myTypes/entity/trans.perilaku";
 import axios from "axios";
 import { NextRequest } from "next/server";
@@ -15,10 +15,12 @@ export const GET = async (
 		const token = await getCurrentToken(cookies);
 		const { status, data } = await axios.get(
 			`${REMOTE_TRANS_PERILAKU}/${periode}/periode/${nipam}/nipam/${levelId}/level`,
-			{ headers: {
+			{
+				headers: {
 					"Content-Type": "application/json",
 					"Authorization": token,
-				}, }
+				},
+			}
 		);
 		if (status === 204) return responseNoContent();
 		return new Response(JSON.stringify(data), { status });

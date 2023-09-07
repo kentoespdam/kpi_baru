@@ -1,4 +1,4 @@
-import { SearchValueProps } from "@components/commons/table/head/search";
+import { SearchValueProps } from "@components/commons/table/head/searchType";
 import { perilakuHeader } from "@myTypes/entity/perilaku";
 import { usePerilakuStore } from "@store/filter/master/perilaku";
 import dynamic from "next/dynamic";

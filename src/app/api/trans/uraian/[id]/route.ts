@@ -1,5 +1,5 @@
 import { responseNoContent } from "@helper/error/nocontent";
-import { getCurrentToken, appwriteHeader } from "@helper/index";
+import { getCurrentToken } from "@helper/index";
 import { REMOTE_TRANS_URAIAN } from "@myTypes/entity/trans.uraian";
 import axios from "axios";
 import { NextRequest } from "next/server";

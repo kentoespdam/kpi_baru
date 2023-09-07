@@ -5,7 +5,7 @@ import { SearchTypeProps } from ".";
 
 const SearchTypeKpi = (props: SearchTypeProps) => {
 	const { field, handleSearch, kpi } = props;
-	const [search, setSearchValue] = useState<Kpi | null>(kpi ? kpi : null);
+	const [search, setSearchValue] = useState<Kpi | null>(kpi ?? null);
 
 	const handleChange = async (value: Kpi | null) => {
 		setSearchValue(value);
