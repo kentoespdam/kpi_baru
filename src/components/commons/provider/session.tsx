@@ -2,9 +2,13 @@
 import { useSessionStore } from "@store/main/session";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { usePathname } from "next/navigation";
 
 const SessionProvider = () => {
 	const { user, setUser } = useSessionStore();
+	const path = usePathname();
+
+	if (path === "/auth") return null;
 
 	useQuery({
 		queryKey: ["session"],
