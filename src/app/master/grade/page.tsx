@@ -1,7 +1,5 @@
-import dynamic from "next/dynamic";
-
-const CardBuilder = dynamic(() => import("@components/commons/card"));
-const GradeComponent = dynamic(() => import("@components/master/grade"));
+import CardBuilder from "@components/commons/card";
+import GradeComponent from "@components/master/grade";
 
 export const metadata = { title: "Master Grade" };
 const MasterGrade = () => {

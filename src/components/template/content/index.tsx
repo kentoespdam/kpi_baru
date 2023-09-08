@@ -1,10 +1,8 @@
 "use client";
+import { Toolbar } from "@mui/material";
+import Container from "@mui/material/Container";
 import { ChildrenProps } from "@myTypes/index";
-import dynamic from "next/dynamic";
-
-const GlobalNav = dynamic(() => import("../navcumb"));
-const Container = dynamic(() => import("@mui/material/Container"));
-const Toolbar = dynamic(() => import("@mui/material/Toolbar"));
+import GlobalNav from "../navcumb";
 
 const ContentComponent = ({ children }: ChildrenProps) => {
 	return (

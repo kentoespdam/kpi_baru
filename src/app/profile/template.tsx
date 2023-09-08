@@ -13,7 +13,6 @@ const TopBarComponent = dynamic(() => import("@components/template/topbar"));
 const Template = ({ children }: ChildrenProps) => {
 	return (
 		<>
-			<SessionProvider />
 			<TopBarComponent />
 			<MenuDrawerComponent />
 			<ContentComponent>{children}</ContentComponent>

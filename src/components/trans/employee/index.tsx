@@ -1,21 +1,15 @@
-import { useTemplateStore } from "@store/main/template";
-import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
-
-const Stack = dynamic(() => import("@mui/material/Stack"));
-const DetailEmployeeComponent = dynamic(() => import("./detail"));
-const DetailAtasanComponent = dynamic(() => import("./detail/atasan"));
+"use client";
+import { useMediaQuery } from "@mui/material";
+import Stack from "@mui/material/Stack";
+import DetailEmployeeComponent from "./detail";
+import DetailAtasanComponent from "./detail/atasan";
 
 const EmployeeComponent = () => {
-	const isDesktop = useTemplateStore((state) => state.isDesktop);
-	const [direction, setDirection] = useState(false);
-	useEffect(() => {
-		setDirection(isDesktop);
-	}, [isDesktop]);
+	const isMobile = useMediaQuery("(max-width:600px)");
 	return (
 		<Stack
-			direction={isDesktop ? "row" : "column"}
-			justifyContent={direction ? "space-between" : "center"}
+			direction={isMobile ? "column" : "row"}
+			justifyContent={isMobile ? "center" : "space-between"}
 			spacing={2}
 		>
 			<DetailEmployeeComponent />

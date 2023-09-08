@@ -1,7 +1,5 @@
-import dynamic from "next/dynamic";
-
-const CardBuilder = dynamic(() => import("@components/commons/card"));
-const LevelComponent = dynamic(() => import("@components/master/level"));
+import CardBuilder from "@components/commons/card";
+import LevelComponent from "@components/master/level";
 
 export const metadata = {
 	title: "Master Level",

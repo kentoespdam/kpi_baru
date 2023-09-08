@@ -1,7 +1,6 @@
+import BridgeKpiComponent from "@components/bridge/kpi";
+import CardBuilder from "@components/commons/card";
 import dynamic from "next/dynamic";
-
-const BridgeKpiComponent = dynamic(() => import("@components/bridge/kpi"));
-const CardBuilder = dynamic(() => import("@components/commons/card"));
 
 export const metadata = {
 	title: "Bridge KPI",

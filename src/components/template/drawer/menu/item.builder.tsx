@@ -1,13 +1,11 @@
 import { IMenu, ISubMenu } from "@components/template/menu.list";
 import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Typography from "@mui/material/Typography";
 import { useMenuStore } from "@store/main/menu";
-import dynamic from "next/dynamic";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
-const ListItemIcon = dynamic(() => import("@mui/material/ListItemIcon"));
-const ListItemText = dynamic(() => import("@mui/material/ListItemText"));
-const Typography = dynamic(() => import("@mui/material/Typography"));
 
 const selectedCheck = (pathname: string, itemPath: string) => {
 	return pathname === itemPath;

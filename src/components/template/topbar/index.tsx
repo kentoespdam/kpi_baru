@@ -1,23 +1,23 @@
 "use client";
 
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
 import { Theme, useTheme } from "@mui/material/styles";
 import { buttonSelectedColor, drawerWidth } from "@myConfig/index";
 import { useMenuStore } from "@store/main/menu";
 import { useTemplateStore } from "@store/main/template";
 import dynamic from "next/dynamic";
+import ProfileComponent from "./profile";
 
-const ProfileComponent = dynamic(() => import("./profile"));
-const MenuFoldOutlined = dynamic(
-	() => import("@ant-design/icons/MenuFoldOutlined")
+const MenuFoldOutlined = dynamic(() =>
+	import("@ant-design/icons").then((mod) => mod.MenuFoldOutlined)
 );
-const MenuUnfoldOutlined = dynamic(
-	() => import("@ant-design/icons/MenuUnfoldOutlined")
+const MenuUnfoldOutlined = dynamic(() =>
+	import("@ant-design/icons").then((mod) => mod.MenuUnfoldOutlined)
 );
-const AppBar = dynamic(() => import("@mui/material/AppBar"));
-const Box = dynamic(() => import("@mui/material/Box"));
-const IconButton = dynamic(() => import("@mui/material/IconButton"));
-const Toolbar = dynamic(() => import("@mui/material/Toolbar"));
-const Typography = dynamic(() => import("@mui/material/Typography"));
 
 const appBarSx = (theme: Theme, isOpen: boolean, isDesktop: boolean) => {
 	return {

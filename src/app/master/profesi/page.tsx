@@ -1,7 +1,5 @@
-import dynamic from "next/dynamic";
-
-const CardBuilder = dynamic(() => import("@components/commons/card"));
-const ProfesiComponent = dynamic(() => import("@components/master/profesi"));
+import CardBuilder from "@components/commons/card";
+import ProfesiComponent from "@components/master/profesi";
 
 export const metadata = {
 	title: "Master Profesi",

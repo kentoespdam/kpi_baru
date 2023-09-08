@@ -1,9 +1,5 @@
-import dynamic from "next/dynamic";
-
-const BridgePerilakuComponent = dynamic(
-	() => import("@components/bridge/perilaku")
-);
-const CardBuilder = dynamic(() => import("@components/commons/card"));
+import BridgePerilakuComponent from "@components/bridge/perilaku";
+import CardBuilder from "@components/commons/card";
 
 export const metadata = {
 	title: "Bridge Perilaku",

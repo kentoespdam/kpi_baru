@@ -1,11 +1,7 @@
+import CellBuilder from "@components/commons/table/cell.builder";
+import TableRow from "@mui/material/TableRow";
 import { TransUraian } from "@myTypes/entity/trans.uraian";
-import dynamic from "next/dynamic";
-
-const CellBuilder = dynamic(
-	() => import("@components/commons/table/cell.builder")
-);
-const TableRow = dynamic(() => import("@mui/material/TableRow"));
-const TransKpiFileComponent = dynamic(() => import("./file"));
+import TransKpiFileComponent from "./file";
 
 type UraianCellProps = {
 	indikatorId: number;

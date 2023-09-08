@@ -1,5 +1,3 @@
-import QueryProvider from "@components/commons/provider/query";
-import SessionProvider from "@components/commons/provider/session";
 import { Public_Sans as PublicSans } from "next/font/google";
 
 const inter = PublicSans({
@@ -25,10 +23,7 @@ export default function RootLayout({
 					backgroundColor: "rgb(239 239 241)",
 				}}
 			>
-				<QueryProvider>
-					<SessionProvider />
-					{children}
-				</QueryProvider>
+				{children}
 			</body>
 		</html>
 	);

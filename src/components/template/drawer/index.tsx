@@ -1,4 +1,9 @@
 "use client";
+import Box from "@mui/material/Box";
+import Drawer from "@mui/material/Drawer";
+import Stack from "@mui/material/Stack";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
 import { Theme, useTheme } from "@mui/material/styles";
 import { drawerWidth } from "@myConfig/index";
 import { useMenuStore } from "@store/main/menu";
@@ -6,11 +11,6 @@ import { useTemplateStore } from "@store/main/template";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 
-const Box = dynamic(() => import("@mui/material/Box"));
-const Drawer = dynamic(() => import("@mui/material/Drawer"));
-const Stack = dynamic(() => import("@mui/material/Stack"));
-const Toolbar = dynamic(() => import("@mui/material/Toolbar"));
-const Typography = dynamic(() => import("@mui/material/Typography"));
 const DrawerContent = dynamic(() => import("./content"));
 const Logo = dynamic(() => import("./logo"));
 

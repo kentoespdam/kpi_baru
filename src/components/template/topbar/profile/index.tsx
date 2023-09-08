@@ -1,13 +1,12 @@
 "use client";
+import Box from "@mui/material/Box";
+import ButtonBase from "@mui/material/ButtonBase";
 import { buttonHovered, buttonSelectedColor } from "@myConfig/index";
 import { useProfileStore } from "@store/main/menu";
 import dynamic from "next/dynamic";
 import ProfilePopper from "./popper";
 
 const Avatar = dynamic(() => import("@mui/material/Avatar"));
-const Box = dynamic(() => import("@mui/material/Box"));
-const ButtonBase = dynamic(() => import("@mui/material/ButtonBase"));
-const Stack = dynamic(() => import("@mui/material/Stack"));
 
 const ProfileComponent = () => {
 	const { anchorEl, setAnchorEl, isOpen, toggleProfileMenu } =
@@ -40,13 +39,11 @@ const ProfileComponent = () => {
 				aria-haspopup="true"
 				onClick={handleToggle}
 			>
-				<Stack>
-					<Avatar
-						alt="user"
-						src="/images/avatars/avatar_1.png"
-						sx={{ bgcolor: "white", width: 32, height: 32 }}
-					/>
-				</Stack>
+				<Avatar
+					alt="user"
+					src="/images/avatars/avatar_1.png"
+					sx={{ bgcolor: "white", width: 32, height: 32 }}
+				/>
 			</ButtonBase>
 			{isOpen ? <ProfilePopper id={id} /> : null}
 		</Box>

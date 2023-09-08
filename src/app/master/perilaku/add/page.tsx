@@ -1,8 +1,6 @@
-import dynamic from "next/dynamic";
-
-const MuiContainer = dynamic(() => import("@components/commons/mui/container"));
-const CardBuilder = dynamic(() => import("@components/commons/card"));
-const PerilakuForm = dynamic(() => import("@components/master/perilaku/form"));
+import CardBuilder from "@components/commons/card";
+import MuiContainer from "@components/commons/mui/container";
+import PerilakuForm from "@components/master/perilaku/form";
 
 export const metadata = { title: "Add Master Perilaku" };
 const AddMasterPerilaku = () => {

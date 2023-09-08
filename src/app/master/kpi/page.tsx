@@ -1,7 +1,5 @@
-import dynamic from "next/dynamic";
-
-const CardBuilder = dynamic(() => import("@components/commons/card"));
-const KpiComponent = dynamic(() => import("@components/master/kpi"));
+import CardBuilder from "@components/commons/card";
+import KpiComponent from "@components/master/kpi";
 
 export const metadata = {
 	title: "Master KPI",

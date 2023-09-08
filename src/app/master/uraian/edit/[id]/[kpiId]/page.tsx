@@ -1,10 +1,6 @@
-import dynamic from "next/dynamic";
-
-const MuiContainer = dynamic(() => import("@mui/material/Container"));
-const CardBuilder = dynamic(() => import("@components/commons/card"));
-const UraianFormComponent = dynamic(
-	() => import("@components/master/uraian/form")
-);
+import CardBuilder from "@components/commons/card";
+import MuiContainer from "@components/commons/mui/container";
+import UraianFormComponent from "@components/master/uraian/form";
 
 export const metadata = { title: "Edit Master Uraian" };
 const EditMasterUraian = ({

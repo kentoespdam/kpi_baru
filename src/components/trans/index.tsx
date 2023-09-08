@@ -1,5 +1,6 @@
 "use client";
 
+import Stack from "@mui/material/Stack";
 import { useTransKinerjaStore } from "@store/filter/trans/kinerja";
 import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useTransPerilakuStore } from "@store/filter/trans/perilaku";
@@ -10,18 +11,14 @@ import { getEmpDetails } from "@utils/eo/employee";
 import { getBridgeKpi, getStaffKpi } from "@utils/trans/kpi";
 import { getBridgePerilaku, getTransPerilaku } from "@utils/trans/perilaku";
 import dynamic from "next/dynamic";
+import EmployeeComponent from "./employee";
+import DetailEmployeeSkeleton from "./employee/detail/skeleton";
+import KpiCard from "./kpi";
 
-const Box = dynamic(() => import("@mui/material/Box"));
-const Stack = dynamic(() => import("@mui/material/Stack"));
+const BawahanComponent = dynamic(() => import("./bawahan"));
 const ViewFileDialog = dynamic(() => import("./dialog/file"));
 const ViewPdfDialog = dynamic(() => import("./dialog/pdf"));
 const ViewUploadDialog = dynamic(() => import("./dialog/upload"));
-const DetailEmployeeSkeleton = dynamic(
-	() => import("./employee/detail/skeleton")
-);
-const BawahanComponent = dynamic(() => import("./bawahan"));
-const EmployeeComponent = dynamic(() => import("./employee"));
-const KpiCard = dynamic(() => import("./kpi"));
 
 const TransRoot = () => {
 	const curNipam = useSessionStore.getState().user?.userId;
@@ -31,10 +28,6 @@ const TransRoot = () => {
 
 	const queries = useQueries({
 		queries: [
-			{
-				queryKey: ["employee-detail", curNipam],
-				queryFn: getEmpDetails,
-			},
 			{
 				queryKey: ["kpi.bridge", curNipam],
 				queryFn: getByNipam,
@@ -53,6 +46,10 @@ const TransRoot = () => {
 				enabled:
 					periode?.periode !== undefined &&
 					bridgeKpi?.id !== undefined,
+			},
+			{
+				queryKey: ["employee-detail", curNipam],
+				queryFn: getEmpDetails,
 			},
 			{
 				queryKey: ["trans.kpi.bawahan.bridge", nipamStaff],
@@ -99,25 +96,20 @@ const TransRoot = () => {
 	});
 
 	return (
-		<>
-			<Stack direction="column" spacing={2}>
-				<Box>
-					{queries[0].isFetching ? (
-						<DetailEmployeeSkeleton />
-					) : (
-						<EmployeeComponent />
-					)}
-				</Box>
+		<Stack direction="column" spacing={2}>
+			{queries[0].isFetching || queries[0].isLoading ? (
+				<DetailEmployeeSkeleton />
+			) : (
+				<EmployeeComponent />
+			)}
+			<KpiCard />
 
-				<KpiCard />
+			{queries[1].data?.staff ? <BawahanComponent /> : null}
 
-				{queries[0].data?.staff ? <BawahanComponent /> : null}
-
-				<ViewFileDialog />
-				<ViewPdfDialog />
-				<ViewUploadDialog />
-			</Stack>
-		</>
+			<ViewFileDialog />
+			<ViewPdfDialog />
+			<ViewUploadDialog />
+		</Stack>
 	);
 };
 

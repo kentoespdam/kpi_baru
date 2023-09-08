@@ -3,9 +3,8 @@ import { menuList } from "../menu.list";
 import { useSessionStore } from "@store/main/session";
 import { USER_ROLE } from "@myTypes/index";
 import dynamic from "next/dynamic";
-
-const Box = dynamic(() => import("@mui/material/Box"));
-const MenuBuilder = dynamic(() => import("./menu"));
+import Box from "@mui/material/Box";
+import MenuBuilder from "./menu";
 
 const DrawerContent = () => {
 	const toggleDrawer = useMenuStore((state) => state.toggleDrawer);

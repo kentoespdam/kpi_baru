@@ -1,8 +1,6 @@
-import dynamic from "next/dynamic";
-
-const MuiContainer = dynamic(() => import("@mui/material/Container"));
-const CardBuilder = dynamic(() => import("@components/commons/card"));
-const GradeForm = dynamic(() => import("@components/master/grade/form"));
+import CardBuilder from "@components/commons/card";
+import MuiContainer from "@components/commons/mui/container";
+import GradeForm from "@components/master/grade/form";
 
 export const metadata = { title: "Add Master Grade" };
 
