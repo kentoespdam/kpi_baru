@@ -1,19 +1,15 @@
+import CellBuilder from "@components/commons/table/cell.builder";
 import {
 	hitungTotalBobot,
 	hitungTotalNilaiProdukKerja,
 	hitungTotalNilaiWaktu,
 } from "@helper/nilaiKinerja";
+import TableFooter from "@mui/material/TableFooter";
+import TableRow from "@mui/material/TableRow";
 import { TransKpiWithAudit } from "@myTypes/entity/trans.kpi";
 import { useTransKinerjaStore } from "@store/filter/trans/kinerja";
 import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useQueryClient } from "@tanstack/react-query";
-import dynamic from "next/dynamic";
-
-const TableFooter = dynamic(() => import("@mui/material/TableFooter"));
-const TableRow = dynamic(() => import("@mui/material/TableRow"));
-const CellBuilder = dynamic(
-	() => import("@components/commons/table/cell.builder")
-);
 
 const DetailKpiBawahanTableFooter = () => {
 	const periode = useTransKpiStore((state) => state.periode);

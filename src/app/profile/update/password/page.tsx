@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 
 const MuiContainer = dynamic(() => import("@components/commons/mui/container"));
-const CardBuilder = dynamic(() => import("@components/commons/card"));
+import CardBuilder from "@components/commons/card";
 const ChangePasswordComponent = dynamic(
 	() => import("@components/profile/password")
 );

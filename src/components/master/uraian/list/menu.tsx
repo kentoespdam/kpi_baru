@@ -1,4 +1,8 @@
 import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import { ITEM_HEIGHT } from "@myConfig/index";
 import { Uraian } from "@myTypes/entity/uraian";
 import { useUraianStore } from "@store/filter/master/uraian";
@@ -13,10 +17,6 @@ const DeleteForeverIcon = dynamic(
 	() => import("@mui/icons-material/DeleteForever")
 );
 const EditIcon = dynamic(() => import("@mui/icons-material/Edit"));
-const ListItemIcon = dynamic(() => import("@mui/material/ListItemIcon"));
-const ListItemText = dynamic(() => import("@mui/material/ListItemText"));
-const Menu = dynamic(() => import("@mui/material/Menu"));
-const MenuItem = dynamic(() => import("@mui/material/MenuItem"));
 
 type UraianMenuItemProps = {
 	uraian: Uraian;

@@ -1,14 +1,10 @@
+import BtnActionBuilder from "@components/commons/table/action/button.builder";
 import { BridgeKpiWithAudit } from "@myTypes/entity/bridge.kpi";
 import { useBridgeKpiStore } from "@store/filter/bridge/kpi";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { doDelete } from "@utils/bridge/kpi";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
-
-const BtnActionBuilder = dynamic(
-	() => import("@components/commons/table/action/button.builder")
-);
 
 type BridgeKpiActionButtonsProps = {
 	row: BridgeKpiWithAudit;

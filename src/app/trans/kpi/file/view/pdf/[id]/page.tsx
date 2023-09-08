@@ -1,7 +1,5 @@
-import dynamic from "next/dynamic";
-
-const CardBuilder = dynamic(() => import("@components/commons/card"));
-const ViewPdfComponent = dynamic(() => import("@trans/view/pdf"));
+import CardBuilder from "@components/commons/card";
+import ViewPdfComponent from "@components/trans/view/pdf";
 
 export const metadata = { title: "View Pdf File" };
 const TransKpiViewPdf = ({ params }: { params: { id: number } }) => {

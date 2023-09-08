@@ -1,14 +1,10 @@
+import CellBuilder from "@components/commons/table/cell.builder";
+import TableBody from "@mui/material/TableBody";
+import TableRow from "@mui/material/TableRow";
 import { LevelWithPagination } from "@myTypes/entity/level";
 import { useLevelStore } from "@store/filter/master/level";
 import { useQueryClient } from "@tanstack/react-query";
-import dynamic from "next/dynamic";
-
-const CellBuilder = dynamic(
-	() => import("@components/commons/table/cell.builder")
-);
-const TableBody = dynamic(() => import("@mui/material/TableBody"));
-const TableRow = dynamic(() => import("@mui/material/TableRow"));
-const LevelActionBtn = dynamic(() => import("./action"));
+import LevelActionBtn from "./action";
 
 const LevelTableBody = () => {
 	const { pageRequest, sortRequest, status, level } = useLevelStore();

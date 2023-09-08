@@ -1,8 +1,6 @@
-import dynamic from "next/dynamic";
-
-const TableBody = dynamic(() => import("@mui/material/TableBody"));
-const TableCell = dynamic(() => import("@mui/material/TableCell"));
-const TableRow = dynamic(() => import("@mui/material/TableRow"));
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
 
 type TableBodyProps = {
 	colSpan?: number | 1;

@@ -1,14 +1,10 @@
+import BtnActionBuilder from "@components/commons/table/action/button.builder";
 import { ProfesiWithAudit } from "@myTypes/entity/profesi";
 import { useProfesiStore } from "@store/filter/master/profesi";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
 import { doDelete } from "src/utils/master/profesi";
-
-const BtnActionBuilder = dynamic(
-	() => import("@components/commons/table/action/button.builder")
-);
 
 type ProfesiActionBtnProps = {
 	row: ProfesiWithAudit;

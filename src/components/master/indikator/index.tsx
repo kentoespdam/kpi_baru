@@ -1,13 +1,12 @@
+import CardBuilder from "@components/commons/card";
+import LinearProgress from "@mui/material/LinearProgress";
+import Typography from "@mui/material/Typography";
 import { useIndikatorStore } from "@store/filter/master/indikator";
 import { useQuery } from "@tanstack/react-query";
 import dynamic from "next/dynamic";
 import { getPage } from "src/utils/master/indikator";
-
-const CardBuilder = dynamic(() => import("@components/commons/card"));
-const LinearProgress = dynamic(() => import("@mui/material/LinearProgress"));
+import IndikatorFilter from "./filter";
 const IndikatorAccordion = dynamic(() => import("./accordion"));
-const IndikatorFilter = dynamic(() => import("./filter"));
-const Typography = dynamic(() => import("@mui/material/Typography"));
 
 const IndikatorComponent = () => {
 	const { pageRequest, sortRequest, kpiId, indikator, status } =

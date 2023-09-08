@@ -1,17 +1,13 @@
+import CellBuilder from "@components/commons/table/cell.builder";
 import { hitungTotalNilaiPerilaku } from "@helper/nilaiIndikator";
+import TableFooter from "@mui/material/TableFooter";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
 import { TransPerilaku } from "@myTypes/entity/trans.perilaku";
 import { useTransKinerjaStore } from "@store/filter/trans/kinerja";
 import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useTransPerilakuStore } from "@store/filter/trans/perilaku";
 import { useQueryClient } from "@tanstack/react-query";
-import dynamic from "next/dynamic";
-
-const CellBuilder = dynamic(
-	() => import("@components/commons/table/cell.builder")
-);
-const TableRow = dynamic(() => import("@mui/material/TableRow"));
-const TableFooter = dynamic(() => import("@mui/material/TableFooter"));
-const Typography = dynamic(() => import("@mui/material/Typography"));
 
 const TransPerilakuTableFooter = () => {
 	const periode = useTransKpiStore((state) => state.periode);

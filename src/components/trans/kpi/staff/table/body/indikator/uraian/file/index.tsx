@@ -1,15 +1,9 @@
 import CellBuilder from "@components/commons/table/cell.builder";
+import UploadBtn from "@components/trans/kpi/staff/button/upload";
+import ViewBtn from "@components/trans/kpi/staff/button/view";
 import Stack from "@mui/material/Stack";
 import TableCell from "@mui/material/TableCell";
 import { UraianFile } from "@myTypes/entity/uraian.file";
-import dynamic from "next/dynamic";
-
-const UploadBtn = dynamic(
-	() => import("@components/trans/kpi/staff/button/upload")
-);
-const ViewBtn = dynamic(
-	() => import("@components/trans/kpi/staff/button/view")
-);
 
 type TransKpiFileComponentProps = {
 	indikatorId: number;

@@ -1,5 +1,4 @@
 "use client";
-
 import Stack from "@mui/material/Stack";
 import { useTransKinerjaStore } from "@store/filter/trans/kinerja";
 import { useTransKpiStore } from "@store/filter/trans/kpi";
@@ -14,7 +13,6 @@ import dynamic from "next/dynamic";
 import EmployeeComponent from "./employee";
 import DetailEmployeeSkeleton from "./employee/detail/skeleton";
 import KpiCard from "./kpi";
-
 const BawahanComponent = dynamic(() => import("./bawahan"));
 const ViewFileDialog = dynamic(() => import("./dialog/file"));
 const ViewPdfDialog = dynamic(() => import("./dialog/pdf"));

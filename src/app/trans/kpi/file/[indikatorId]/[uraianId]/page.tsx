@@ -1,8 +1,5 @@
-import dynamic from "next/dynamic";
-const CardBuilder = dynamic(() => import("@components/commons/card"));
-const TransKpiFileListComponent = dynamic(
-	() => import("@components/trans/kpi/staff/file")
-);
+import CardBuilder from "@components/commons/card";
+import TransKpiFileListComponent from "@components/trans/kpi/staff/file";
 
 export const metadata = { title: "List File" };
 const FilePage = ({

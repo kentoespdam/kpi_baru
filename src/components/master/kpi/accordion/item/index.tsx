@@ -1,22 +1,17 @@
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import Divider from "@mui/material/Divider";
 import { KpiWithAudit } from "@myTypes/entity/kpi";
 import { useIndikatorStore } from "@store/filter/master/indikator";
 import { useKpiStore } from "@store/filter/master/kpi";
 import dynamic from "next/dynamic";
-
-const KpiItemSummary = dynamic(() => import("./summary"));
+import KpiItemSummary from "./summary";
 const IndikatorComponent = dynamic(
 	() => import("@components/master/indikator")
 );
 const ExpandMoreIcon = dynamic(() => import("@mui/icons-material/ExpandMore"));
-const Accordion = dynamic(() => import("@mui/material/Accordion"));
-const AccordionDetails = dynamic(
-	() => import("@mui/material/AccordionDetails")
-);
-const AccordionSummary = dynamic(
-	() => import("@mui/material/AccordionSummary")
-);
-const Divider = dynamic(() => import("@mui/material/Divider"));
-const IconButton = dynamic(() => import("@mui/material/IconButton"));
+import IconButton from "@mui/material/IconButton";
 
 type KpiAccordionItemProps = {
 	kpi: KpiWithAudit;

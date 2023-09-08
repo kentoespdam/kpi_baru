@@ -1,14 +1,10 @@
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormGroup from "@mui/material/FormGroup";
+import Stack from "@mui/material/Stack";
+import Switch from "@mui/material/Switch";
 import { AUDIT_STATUS } from "@myTypes/index";
 import { useUraianStore } from "@store/filter/master/uraian";
-import dynamic from "next/dynamic";
 import { useState } from "react";
-
-const FormControlLabel = dynamic(
-	() => import("@mui/material/FormControlLabel")
-);
-const FormGroup = dynamic(() => import("@mui/material/FormGroup"));
-const Stack = dynamic(() => import("@mui/material/Stack"));
-const Switch = dynamic(() => import("@mui/material/Switch"));
 
 const UraianFilter = () => {
 	const { status, setKeyVal } = useUraianStore();

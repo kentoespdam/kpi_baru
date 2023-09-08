@@ -1,12 +1,12 @@
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardHeader from "@mui/material/CardHeader";
+import Divider from "@mui/material/Divider";
 import { DetEmployee } from "@myTypes/entity/det.employee";
 import { useSessionStore } from "@store/main/session";
 import { useQueryClient } from "@tanstack/react-query";
 import dynamic from "next/dynamic";
 
-const Card = dynamic(() => import("@mui/material/Card"));
-const CardContent = dynamic(() => import("@mui/material/CardContent"));
-const CardHeader = dynamic(() => import("@mui/material/CardHeader"));
-const Divider = dynamic(() => import("@mui/material/Divider"));
 const AccordionBawahan = dynamic(() => import("./accordion"));
 const ViewFormKinerjaDialog = dynamic(
 	() => import("@transDialog/form/kinerja")
@@ -20,8 +20,6 @@ const BawahanComponent = () => {
 	const qc = useQueryClient();
 	const data = qc.getQueryData<DetEmployee>(["employee-detail", curNipam]);
 
-	if (data?.staff === undefined) return null;
-
 	return (
 		<Card>
 			<CardHeader
@@ -30,7 +28,7 @@ const BawahanComponent = () => {
 			/>
 			<Divider />
 			<CardContent>
-				{data?.staff.map((item) => (
+				{data?.staff?.map((item) => (
 					<AccordionBawahan
 						key={item.nipam}
 						staffNipam={item.nipam}

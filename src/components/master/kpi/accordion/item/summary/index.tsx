@@ -1,13 +1,12 @@
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { KpiWithAudit } from "@myTypes/entity/kpi";
 import dynamic from "next/dynamic";
 import { useState } from "react";
-
-const KpiMenuItemButton = dynamic(() => import("./button"));
+import KpiMenuItemButton from "./button";
 const MoreVertIcon = dynamic(() => import("@mui/icons-material/MoreVert"));
-const IconButton = dynamic(() => import("@mui/material/IconButton"));
-const Stack = dynamic(() => import("@mui/material/Stack"));
-const Typography = dynamic(() => import("@mui/material/Typography"));
+import IconButton from "@mui/material/IconButton";
 
 type KpiItemSummaryProps = {
 	kpi: KpiWithAudit;

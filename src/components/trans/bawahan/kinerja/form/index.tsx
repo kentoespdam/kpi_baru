@@ -3,8 +3,11 @@ import {
 	hitungNilaiTotalUraian,
 	hitungNilaiWaktu,
 } from "@helper/hitung";
+import LoadingButton from "@mui/lab/LoadingButton";
+import Button from "@mui/material/Button";
+import FormControl from "@mui/material/FormControl";
 import Stack from "@mui/material/Stack";
-
+import TextField from "@mui/material/TextField";
 import { TransUraian, TransUraianData } from "@myTypes/entity/trans.uraian";
 import { AUDIT_STATUS } from "@myTypes/index";
 import { useViewFormKinerjaDialogStore } from "@store/dialog/view.form.kinerja";
@@ -15,13 +18,8 @@ import dynamic from "next/dynamic";
 import { useSnackbar } from "notistack";
 import React from "react";
 import { TanggalComponent } from "./tanggal.component";
-
 const DoDisturbIcon = dynamic(() => import("@mui/icons-material/DoDisturb"));
 const SaveIcon = dynamic(() => import("@mui/icons-material/Save"));
-const LoadingButton = dynamic(() => import("@mui/lab/LoadingButton"));
-const Button = dynamic(() => import("@mui/material/Button"));
-const FormControl = dynamic(() => import("@mui/material/FormControl"));
-export const TextField = dynamic(() => import("@mui/material/TextField"));
 
 export type TanggalComponentProps = {
 	inputRef: React.Ref<HTMLInputElement>;

@@ -1,18 +1,16 @@
 "use client";
-
+import TableLoading from "@components/commons/table/loading";
+import LinearProgress from "@mui/material/LinearProgress";
+import Table from "@mui/material/Table";
+import TableContainer from "@mui/material/TableContainer";
 import { gradeHeader } from "@myTypes/entity/grade";
 import { useGradeStore } from "@store/filter/master/grade";
 import { useQueries } from "@tanstack/react-query";
 import dynamic from "next/dynamic";
 import { getPage } from "src/utils/master/grade";
-
-const Table = dynamic(() => import("@mui/material/Table"));
-const TableContainer = dynamic(() => import("@mui/material/TableContainer"));
-const GradeTableHead = dynamic(() => import("./table/head"));
+import GradeTableHead from "./table/head";
+import GradePagination from "./table/pagination";
 const GradeTableBody = dynamic(() => import("./table/body"));
-const TableLoading = dynamic(() => import("@components/commons/table/loading"));
-const GradePagination = dynamic(() => import("./table/pagination"));
-const LinearProgress = dynamic(() => import("@mui/material/LinearProgress"));
 
 const GradeComponent = () => {
 	const { loading, pageRequest, sortRequest, status, grade, tukin, level } =

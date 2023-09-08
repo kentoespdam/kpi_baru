@@ -1,15 +1,9 @@
+import HeaderSearchBuilder from "@components/commons/table/head/search";
 import { SearchValueProps } from "@components/commons/table/head/searchType";
+import HeaderSortBuilder from "@components/commons/table/head/sort";
+import TableHead from "@mui/material/TableHead";
 import { levelHeader } from "@myTypes/entity/level";
 import { useLevelStore } from "@store/filter/master/level";
-import dynamic from "next/dynamic";
-
-const HeaderSearchBuilder = dynamic(
-	() => import("@components/commons/table/head/search")
-);
-const HeaderSortBuilder = dynamic(
-	() => import("@components/commons/table/head/sort")
-);
-const TableHead = dynamic(() => import("@mui/material/TableHead"));
 
 const LevelTableHead = () => {
 	const { sortRequest, setSortRequest, setKeyVal, status } = useLevelStore();

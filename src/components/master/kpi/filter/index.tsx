@@ -1,23 +1,20 @@
 import ProfesiAutocomplete from "@autocomplete/profesi";
+import FormControl from "@mui/material/FormControl";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormGroup from "@mui/material/FormGroup";
 import InputAdornment from "@mui/material/InputAdornment";
+import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
+import Stack from "@mui/material/Stack";
+import Switch from "@mui/material/Switch";
 import Tooltip from "@mui/material/Tooltip";
 import { Profesi } from "@myTypes/entity/profesi";
 import { AUDIT_STATUS } from "@myTypes/index";
 import { useKpiStore } from "@store/filter/master/kpi";
 import dynamic from "next/dynamic";
 import { useRef, useState } from "react";
-
 const EnterOutlined = dynamic(() => import("@ant-design/icons/EnterOutlined"));
-const FormControl = dynamic(() => import("@mui/material/FormControl"));
-const FormControlLabel = dynamic(
-	() => import("@mui/material/FormControlLabel")
-);
-const FormGroup = dynamic(() => import("@mui/material/FormGroup"));
-const IconButton = dynamic(() => import("@mui/material/IconButton"));
-const InputLabel = dynamic(() => import("@mui/material/InputLabel"));
-const Stack = dynamic(() => import("@mui/material/Stack"));
-const Switch = dynamic(() => import("@mui/material/Switch"));
+import IconButton from "@mui/material/IconButton";
 
 const KpiFilter = () => {
 	const { setKeyVal, status, name, profesi } = useKpiStore();

@@ -2,7 +2,7 @@ import TableCell from "@mui/material/TableCell";
 import { MyTableHead } from "@myTypes/table";
 import dynamic from "next/dynamic";
 import { BasicSearchBuilderProps, SearchValueProps } from "./searchType";
-const TableRow = dynamic(() => import("@mui/material/TableRow"));
+import TableRow from "@mui/material/TableRow";
 
 const SearchTypeAuditStatus = dynamic(
 	() => import("./searchType/audit.status")

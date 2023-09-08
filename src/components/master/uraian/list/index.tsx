@@ -1,10 +1,8 @@
+import List from "@mui/material/List";
 import { Uraian } from "@myTypes/entity/uraian";
 import { useUraianStore } from "@store/filter/master/uraian";
 import { useQueryClient } from "@tanstack/react-query";
-import dynamic from "next/dynamic";
-
-const List = dynamic(() => import("@mui/material/List"));
-const UraianListItem = dynamic(() => import("./item"));
+import UraianListItem from "./item";
 
 const UraianList = () => {
 	const {

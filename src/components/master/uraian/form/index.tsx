@@ -1,6 +1,20 @@
 "use client";
+import IndikatorAutocomplete from "@autocomplete/indikator";
+import KpiAutocomplete from "@autocomplete/kpi";
+import SatuanAutocomplete from "@autocomplete/satuan";
+import WaktuAutocomplete from "@autocomplete/waktu";
 import { waktuList } from "@helper/tanggal";
+import LoadingButton from "@mui/lab/LoadingButton";
+import Button from "@mui/material/Button";
+import FormControl from "@mui/material/FormControl";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormGroup from "@mui/material/FormGroup";
+import FormLabel from "@mui/material/FormLabel";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
 import Stack from "@mui/material/Stack";
+import Switch from "@mui/material/Switch";
+import TextField from "@mui/material/TextField";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -19,24 +33,8 @@ import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
 import { useRef, useState } from "react";
 
-const IndikatorAutocomplete = dynamic(() => import("@autocomplete/indikator"));
-const KpiAutocomplete = dynamic(() => import("@autocomplete/kpi"));
-const SatuanAutocomplete = dynamic(() => import("@autocomplete/satuan"));
-const WaktuAutocomplete = dynamic(() => import("@autocomplete/waktu"));
 const DoDisturbIcon = dynamic(() => import("@mui/icons-material/DoDisturb"));
 const SaveIcon = dynamic(() => import("@mui/icons-material/Save"));
-const LoadingButton = dynamic(() => import("@mui/lab/LoadingButton"));
-const Button = dynamic(() => import("@mui/material/Button"));
-const FormControl = dynamic(() => import("@mui/material/FormControl"));
-const FormControlLabel = dynamic(
-	() => import("@mui/material/FormControlLabel")
-);
-const FormGroup = dynamic(() => import("@mui/material/FormGroup"));
-const FormLabel = dynamic(() => import("@mui/material/FormLabel"));
-const Radio = dynamic(() => import("@mui/material/Radio"));
-const RadioGroup = dynamic(() => import("@mui/material/RadioGroup"));
-const Switch = dynamic(() => import("@mui/material/Switch"));
-const TextField = dynamic(() => import("@mui/material/TextField"));
 
 type UraianFormComponentProps = {
 	idIndikator?: number;

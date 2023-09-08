@@ -1,6 +1,5 @@
+import Box from "@mui/material/Box";
 import { ChildrenProps } from "@myTypes/index";
-import dynamic from "next/dynamic";
-const Box = dynamic(() => import("@mui/material/Box"));
 
 type TransKpiTabPanelProps = {
 	index: number;

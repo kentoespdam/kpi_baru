@@ -1,20 +1,17 @@
+import CellBuilder from "@components/commons/table/cell.builder";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
 import Tooltip from "@mui/material/Tooltip";
 import { useTheme } from "@mui/material/styles";
 import { TransUraian } from "@myTypes/entity/trans.uraian";
 import { useViewFormKinerjaDialogStore } from "@store/dialog/view.form.kinerja";
 import dynamic from "next/dynamic";
-
-const CellBuilder = dynamic(
-	() => import("@components/commons/table/cell.builder")
-);
 const ViewBtn = dynamic(
 	() => import("@components/trans/kpi/staff/button/view")
 );
 const EditIcon = dynamic(() => import("@mui/icons-material/Edit"));
-const TableCell = dynamic(() => import("@mui/material/TableCell"));
-const TableRow = dynamic(() => import("@mui/material/TableRow"));
 
 type UraianCellProps = {
 	nipamStaff: string | null;

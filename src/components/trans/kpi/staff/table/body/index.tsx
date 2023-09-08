@@ -3,7 +3,6 @@ import { TransKpiWithAudit } from "@myTypes/entity/trans.kpi";
 import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useSessionStore } from "@store/main/session";
 import { useQueryClient } from "@tanstack/react-query";
-import dynamic from "next/dynamic";
 import TransKpiIndikatorComponent from "./indikator";
 
 const KpiStaffTableBody = () => {

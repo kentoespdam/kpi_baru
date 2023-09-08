@@ -1,17 +1,15 @@
 "use client";
-
+import TableLoading from "@components/commons/table/loading";
+import LinearProgress from "@mui/material/LinearProgress";
+import Table from "@mui/material/Table";
+import TableContainer from "@mui/material/TableContainer";
 import { useLevelStore } from "@store/filter/master/level";
 import { useQueries } from "@tanstack/react-query";
 import dynamic from "next/dynamic";
 import { getPage } from "src/utils/master/level";
-
-const TableLoading = dynamic(() => import("@components/commons/table/loading"));
-const Table = dynamic(() => import("@mui/material/Table"));
-const TableContainer = dynamic(() => import("@mui/material/TableContainer"));
+import LevelTableHead from "./table/head";
+import LevelPagination from "./table/pagination";
 const LevelTableBody = dynamic(() => import("./table/body"));
-const LevelTableHead = dynamic(() => import("./table/head"));
-const LevelPagination = dynamic(() => import("./table/pagination"));
-const LinearProgress = dynamic(() => import("@mui/material/LinearProgress"));
 
 const LevelComponent = () => {
 	const { pageRequest, sortRequest, status, level } = useLevelStore();

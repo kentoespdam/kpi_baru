@@ -1,14 +1,13 @@
+import TableLoading from "@components/commons/table/loading";
+import LinearProgress from "@mui/material/LinearProgress";
+import Table from "@mui/material/Table";
+import TableContainer from "@mui/material/TableContainer";
 import { useTransKinerjaStore } from "@store/filter/trans/kinerja";
 import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useQueryClient } from "@tanstack/react-query";
 import dynamic from "next/dynamic";
-
-const TableLoading = dynamic(() => import("@components/commons/table/loading"));
-const LinearProgress = dynamic(() => import("@mui/material/LinearProgress"));
-const Table = dynamic(() => import("@mui/material/Table"));
-const TableContainer = dynamic(() => import("@mui/material/TableContainer"));
-const DetailKpiBawahanTableHead = dynamic(() => import("./head"));
-const DetailKpiBawahanTableFooter = dynamic(() => import("./footer"));
+import DetailKpiBawahanTableFooter from "./footer";
+import DetailKpiBawahanTableHead from "./head";
 const DetailKpiBawahanTableBody = dynamic(() => import("./body"));
 
 const TransKinerjaTable = () => {

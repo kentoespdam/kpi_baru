@@ -1,13 +1,11 @@
 "use client";
+import LinearProgress from "@mui/material/LinearProgress";
+import Table from "@mui/material/Table";
+import TableContainer from "@mui/material/TableContainer";
 import { useQueries } from "@tanstack/react-query";
 import { getFiles } from "@utils/trans/file";
-import dynamic from "next/dynamic";
-
-const LinearProgress = dynamic(() => import("@mui/material/LinearProgress"));
-const Table = dynamic(() => import("@mui/material/Table"));
-const TableContainer = dynamic(() => import("@mui/material/TableContainer"));
-const TransKpiFileListTableBody = dynamic(() => import("./table/body"));
-const TransKpiFileListTableHead = dynamic(() => import("./table/head"));
+import TransKpiFileListTableBody from "./table/body";
+import TransKpiFileListTableHead from "./table/head";
 
 type TransKpiFileListComponentProps = {
 	uraianId: number;

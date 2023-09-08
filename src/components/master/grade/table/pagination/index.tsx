@@ -1,5 +1,4 @@
 "use client";
-
 import TablePagination from "@mui/material/TablePagination";
 import { GradeWithPagination } from "@myTypes/entity/grade";
 import { useGradeStore } from "@store/filter/master/grade";

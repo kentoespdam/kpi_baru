@@ -1,9 +1,7 @@
 import { KpiWithPagination } from "@myTypes/entity/kpi";
 import { useKpiStore } from "@store/filter/master/kpi";
 import { useQueryClient } from "@tanstack/react-query";
-import dynamic from "next/dynamic";
-
-const KpiAccordionItem = dynamic(() => import("./item"));
+import KpiAccordionItem from "./item";
 
 const KpiAccordion = () => {
 	const qc = useQueryClient();

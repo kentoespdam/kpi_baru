@@ -1,16 +1,11 @@
 "use client";
-
+import CellBuilder from "@components/commons/table/cell.builder";
 import TableBody from "@mui/material/TableBody";
-const TableRow=dynamic(()=>import("@mui/material/TableRow"))
+import TableRow from "@mui/material/TableRow";
 import { GradeWithPagination } from "@myTypes/entity/grade";
 import { useGradeStore } from "@store/filter/master/grade";
 import { useQueryClient } from "@tanstack/react-query";
-import dynamic from "next/dynamic";
-
-const CellBuilder = dynamic(
-	() => import("@components/commons/table/cell.builder")
-);
-const GradeActionBtn = dynamic(() => import("./action"));
+import GradeActionBtn from "./action";
 
 const GradeTableBody = () => {
 	const { pageRequest, sortRequest, status, grade, tukin, level } =

@@ -1,9 +1,8 @@
-import { useMenuStore } from "@store/main/menu";
-import { menuList } from "../menu.list";
-import { useSessionStore } from "@store/main/session";
-import { USER_ROLE } from "@myTypes/index";
-import dynamic from "next/dynamic";
 import Box from "@mui/material/Box";
+import { USER_ROLE } from "@myTypes/index";
+import { useMenuStore } from "@store/main/menu";
+import { useSessionStore } from "@store/main/session";
+import { menuList } from "../menu.list";
 import MenuBuilder from "./menu";
 
 const DrawerContent = () => {

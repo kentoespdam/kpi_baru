@@ -1,11 +1,9 @@
+import TableBody from "@mui/material/TableBody";
 import { TransKpiWithAudit } from "@myTypes/entity/trans.kpi";
 import { useTransKinerjaStore } from "@store/filter/trans/kinerja";
 import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useQueryClient } from "@tanstack/react-query";
-import dynamic from "next/dynamic";
-
-const TableBody = dynamic(() => import("@mui/material/TableBody"));
-const DetailKpiBawahanIndikator = dynamic(() => import("./indikator"));
+import DetailKpiBawahanIndikator from "./indikator";
 
 const DetailKpiBawahanTableBody = () => {
 	const periode = useTransKpiStore((state) => state.periode);

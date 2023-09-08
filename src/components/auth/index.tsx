@@ -1,5 +1,4 @@
 "use client";
-
 import { userToEmail } from "@helper/email";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Avatar from "@mui/material/Avatar";
@@ -17,7 +16,6 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
 import React from "react";
-
 const LockIcon = dynamic(() => import("@mui/icons-material/Lock"), {
 	ssr: false,
 });

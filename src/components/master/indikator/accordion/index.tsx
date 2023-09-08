@@ -1,9 +1,7 @@
 import { IndikatorWithPagination } from "@myTypes/entity/indikator";
 import { useIndikatorStore } from "@store/filter/master/indikator";
 import { useQueryClient } from "@tanstack/react-query";
-import dynamic from "next/dynamic";
-
-const IndikatorAccordionItem = dynamic(() => import("./item"));
+import IndikatorAccordionItem from "./item";
 
 const IndikatorAccordion = () => {
 	const { pageRequest, sortRequest, kpiId, indikator, status } =

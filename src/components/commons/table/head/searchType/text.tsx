@@ -1,7 +1,6 @@
-import dynamic from "next/dynamic";
+import TextField from "@mui/material/TextField";
 import { useRef } from "react";
 import { SearchTypeProps } from ".";
-const TextField = dynamic(() => import("@mui/material/TextField"));
 
 const SearchTypeText = (props: SearchTypeProps) => {
 	const { field, type, handleSearch, ...other } = props;

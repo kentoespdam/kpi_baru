@@ -1,17 +1,14 @@
 import { DialogSlideTransition } from "@components/commons/effect/transition/dialog";
+import TransKpiStaffUploadComponent from "@components/trans/kpi/staff/upload";
 import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardHeader from "@mui/material/CardHeader";
+import Dialog from "@mui/material/Dialog";
+import IconButton from "@mui/material/IconButton";
 import { useTheme } from "@mui/material/styles";
 import { useViewUploadDialogStore } from "@store/dialog/view.upload";
 import dynamic from "next/dynamic";
-
-const TransKpiStaffUploadComponent = dynamic(
-	() => import("@components/trans/kpi/staff/upload")
-);
 const CloseIcon = dynamic(() => import("@mui/icons-material/Close"));
-const CardContent = dynamic(() => import("@mui/material/CardContent"));
-const CardHeader = dynamic(() => import("@mui/material/CardHeader"));
-const Dialog = dynamic(() => import("@mui/material/Dialog"));
-const IconButton = dynamic(() => import("@mui/material/IconButton"));
 
 const ViewUploadDialog = () => {
 	const { isViewUploadOpen, toggleViewUploadOpen, uploadUraianId } =

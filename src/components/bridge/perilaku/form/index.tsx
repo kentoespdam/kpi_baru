@@ -1,4 +1,13 @@
 "use client";
+import LevelAutocomplete from "@autocomplete/level";
+import PerilakuAutocomplete from "@autocomplete/perilaku";
+import LoadingButton from "@mui/lab/LoadingButton";
+import Button from "@mui/material/Button";
+import FormControl from "@mui/material/FormControl";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormGroup from "@mui/material/FormGroup";
+import Stack from "@mui/material/Stack";
+import Switch from "@mui/material/Switch";
 import { BridgePerilakuData } from "@myTypes/entity/bridge.perilaku";
 import { Level } from "@myTypes/entity/level";
 import { Perilaku } from "@myTypes/entity/perilaku";
@@ -6,25 +15,14 @@ import { AUDIT_STATUS } from "@myTypes/index";
 import { useBridgePerilakuStore } from "@store/filter/bridge/perilaku";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { doSave, getById } from "@utils/bridge/perilaku";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
 import React from "react";
-import Stack from "@mui/material/Stack";
-import dynamic from "next/dynamic";
 
-const LevelAutocomplete = dynamic(() => import("@autocomplete/level"));
-const PerilakuAutocomplete = dynamic(() => import("@autocomplete/perilaku"));
 const DoDisturbIcon = dynamic(() => import("@mui/icons-material/DoDisturb"));
 const SaveIcon = dynamic(() => import("@mui/icons-material/Save"));
-const LoadingButton = dynamic(() => import("@mui/lab/LoadingButton"));
-const Button = dynamic(() => import("@mui/material/Button"));
-const FormControl = dynamic(() => import("@mui/material/FormControl"));
-const FormControlLabel = dynamic(
-	() => import("@mui/material/FormControlLabel")
-);
-const FormGroup = dynamic(() => import("@mui/material/FormGroup"));
-const Switch = dynamic(() => import("@mui/material/Switch"));
 
 type BridgePerilakuFormProps = {
 	id?: number;

@@ -1,4 +1,12 @@
 "use client";
+import LoadingButton from "@mui/lab/LoadingButton";
+import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
+import FormControl from "@mui/material/FormControl";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import InputLabel from "@mui/material/InputLabel";
+import OutlinedInput from "@mui/material/OutlinedInput";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useMutation } from "@tanstack/react-query";
@@ -7,21 +15,12 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
 import React, { FormEvent, useRef } from "react";
-
 const DoDisturbIcon = dynamic(() => import("@mui/icons-material/DoDisturb"));
 const LockIcon = dynamic(() => import("@mui/icons-material/Lock"));
 const Visibility = dynamic(() => import("@mui/icons-material/Visibility"));
 const VisibilityOff = dynamic(
 	() => import("@mui/icons-material/VisibilityOff")
 );
-const LoadingButton = dynamic(() => import("@mui/lab/LoadingButton"));
-const Button = dynamic(() => import("@mui/material/Button"));
-const Divider = dynamic(() => import("@mui/material/Divider"));
-const FormControl = dynamic(() => import("@mui/material/FormControl"));
-const IconButton = dynamic(() => import("@mui/material/IconButton"));
-const InputAdornment = dynamic(() => import("@mui/material/InputAdornment"));
-const InputLabel = dynamic(() => import("@mui/material/InputLabel"));
-const OutlinedInput = dynamic(() => import("@mui/material/OutlinedInput"));
 
 const ChangePasswordComponent = () => {
 	const routes = useRouter();

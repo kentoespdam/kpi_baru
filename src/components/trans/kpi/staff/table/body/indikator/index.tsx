@@ -1,7 +1,6 @@
 import CellBuilder from "@components/commons/table/cell.builder";
 import TableRow from "@mui/material/TableRow";
 import { TransIndikator } from "@myTypes/entity/trans.indikator";
-import dynamic from "next/dynamic";
 import TransKpiUraianComponent from "./uraian";
 
 type TransKpiIndikatorComponentProps = {

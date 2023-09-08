@@ -1,15 +1,9 @@
+import HeaderSearchBuilder from "@components/commons/table/head/search";
 import { SearchValueProps } from "@components/commons/table/head/searchType";
+import HeaderSortBuilder from "@components/commons/table/head/sort";
+import TableHead from "@mui/material/TableHead";
 import { gradeHeader } from "@myTypes/entity/grade";
 import { useGradeStore } from "@store/filter/master/grade";
-import dynamic from "next/dynamic";
-
-const TableHead = dynamic(() => import("@mui/material/TableHead"));
-const HeaderSearchBuilder = dynamic(
-	() => import("@components/commons/table/head/search")
-);
-const HeaderSortBuilder = dynamic(
-	() => import("@components/commons/table/head/sort")
-);
 
 const GradeTableHead = () => {
 	const { sortRequest, setSortRequest, setKeyVal, status } = useGradeStore(

@@ -1,28 +1,25 @@
 "use client";
+import LevelAutocomplete from "@autocomplete/level";
+import LoadingButton from "@mui/lab/LoadingButton";
+import Button from "@mui/material/Button";
+import FormControl from "@mui/material/FormControl";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormGroup from "@mui/material/FormGroup";
+import Stack from "@mui/material/Stack";
+import Switch from "@mui/material/Switch";
+import TextField from "@mui/material/TextField";
 import { Level } from "@myTypes/entity/level";
 import { ProfesiData } from "@myTypes/entity/profesi";
 import { AUDIT_STATUS } from "@myTypes/index";
 import { useProfesiStore } from "@store/filter/master/profesi";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
 import React from "react";
 import { doSave, getById } from "src/utils/master/profesi";
-import Stack from "@mui/material/Stack";
-import dynamic from "next/dynamic";
-
-const LevelAutocomplete = dynamic(() => import("@autocomplete/level"));
 const BlockIcon = dynamic(() => import("@mui/icons-material/Block"));
 const SaveIcon = dynamic(() => import("@mui/icons-material/Save"));
-const LoadingButton = dynamic(() => import("@mui/lab/LoadingButton"));
-const Button = dynamic(() => import("@mui/material/Button"));
-const FormControl = dynamic(() => import("@mui/material/FormControl"));
-const FormControlLabel = dynamic(
-	() => import("@mui/material/FormControlLabel")
-);
-const FormGroup = dynamic(() => import("@mui/material/FormGroup"));
-const Switch = dynamic(() => import("@mui/material/Switch"));
-const TextField = dynamic(() => import("@mui/material/TextField"));
 
 type ProfesiFormProps = {
 	id?: number;

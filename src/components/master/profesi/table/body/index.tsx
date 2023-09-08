@@ -1,14 +1,10 @@
+import CellBuilder from "@components/commons/table/cell.builder";
+import TableBody from "@mui/material/TableBody";
+import TableRow from "@mui/material/TableRow";
 import { ProfesiWithPagination } from "@myTypes/entity/profesi";
 import { useProfesiStore } from "@store/filter/master/profesi";
 import { useQueryClient } from "@tanstack/react-query";
-import dynamic from "next/dynamic";
-
-const CellBuilder = dynamic(
-	() => import("@components/commons/table/cell.builder")
-);
-const TableBody = dynamic(() => import("@mui/material/TableBody"));
-const TableRow = dynamic(() => import("@mui/material/TableRow"));
-const ProfesiActionBtn = dynamic(() => import("./action"));
+import ProfesiActionBtn from "./action";
 
 const ProfesiTableBody = () => {
 	const { pageRequest, sortRequest, status, name, level } = useProfesiStore();

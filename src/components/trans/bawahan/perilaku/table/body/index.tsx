@@ -1,6 +1,8 @@
 import CellBuilder from "@components/commons/table/cell.builder";
 import { indikatorPerilaku } from "@helper/nilaiIndikator";
 import IconButton from "@mui/material/IconButton";
+import TableBody from "@mui/material/TableBody";
+import TableRow from "@mui/material/TableRow";
 import Tooltip from "@mui/material/Tooltip";
 import { TransPerilaku } from "@myTypes/entity/trans.perilaku";
 import { TransPerilakuNilai } from "@myTypes/entity/trans.perilaku.nilai";
@@ -10,10 +12,7 @@ import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useTransPerilakuStore } from "@store/filter/trans/perilaku";
 import { useQueryClient } from "@tanstack/react-query";
 import dynamic from "next/dynamic";
-
 const EditIcon = dynamic(() => import("@mui/icons-material/Edit"));
-const TableBody = dynamic(() => import("@mui/material/TableBody"));
-const TableRow = dynamic(() => import("@mui/material/TableRow"));
 
 type PerilakuActionProps = {
 	perilaku: TransPerilakuNilai;

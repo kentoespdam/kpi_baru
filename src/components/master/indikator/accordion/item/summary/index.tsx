@@ -1,13 +1,12 @@
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import { IndikatorWithAudit } from "@myTypes/entity/indikator";
 import { useTemplateStore } from "@store/main/template";
 import dynamic from "next/dynamic";
 import { useState } from "react";
-
-const IndikatorMenuItemButton = dynamic(() => import("./button"));
+import IndikatorMenuItemButton from "./button";
 const MoreVertIcon = dynamic(() => import("@mui/icons-material/MoreVert"));
-const IconButton = dynamic(() => import("@mui/material/IconButton"));
-const Stack = dynamic(() => import("@mui/material/Stack"));
-const Typography = dynamic(() => import("@mui/material/Typography"));
+import IconButton from "@mui/material/IconButton";
 
 type IndikatorItemSummaryProps = {
 	indikatorWithAudit: IndikatorWithAudit;

@@ -1,12 +1,11 @@
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
 import dynamic from "next/dynamic";
 import { SyntheticEvent, useState } from "react";
-
-const TransKpiTabPanel = dynamic(() => import("./panel"));
-const Box = dynamic(() => import("@mui/material/Box"));
-const Card = dynamic(() => import("@mui/material/Card"));
-const CardContent = dynamic(() => import("@mui/material/CardContent"));
-const Tab = dynamic(() => import("@mui/material/Tab"));
-const Tabs = dynamic(() => import("@mui/material/Tabs"));
+import TransKpiTabPanel from "./panel";
 const TransKinerjaTable = dynamic(() => import("@trans/bawahan/kinerja/table"));
 const TransPerilakuTable = dynamic(
 	() => import("@trans/bawahan/perilaku/table")

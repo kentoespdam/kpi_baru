@@ -1,14 +1,10 @@
+import BtnActionBuilder from "@components/commons/table/action/button.builder";
 import { GradeWithAudit } from "@myTypes/entity/grade";
 import { useGradeStore } from "@store/filter/master/grade";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
 import { doDelete } from "src/utils/master/grade";
-
-const BtnActionBuilder = dynamic(
-	() => import("@components/commons/table/action/button.builder")
-);
 
 type GradeActionBtnProps = {
 	row: GradeWithAudit;

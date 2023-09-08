@@ -1,4 +1,3 @@
-"use client";
 import { useMediaQuery } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import DetailEmployeeComponent from "./detail";

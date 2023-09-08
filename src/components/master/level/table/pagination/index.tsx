@@ -1,5 +1,4 @@
 "use client";
-
 import TablePagination from "@mui/material/TablePagination";
 import { LevelWithPagination } from "@myTypes/entity/level";
 import { useLevelStore } from "@store/filter/master/level";

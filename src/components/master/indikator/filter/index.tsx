@@ -1,14 +1,10 @@
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormGroup from "@mui/material/FormGroup";
 import Stack from "@mui/material/Stack";
+import Switch from "@mui/material/Switch";
 import { AUDIT_STATUS } from "@myTypes/index";
 import { useIndikatorStore } from "@store/filter/master/indikator";
-import dynamic from "next/dynamic";
 import { useState } from "react";
-
-const FormControlLabel = dynamic(
-	() => import("@mui/material/FormControlLabel")
-);
-const FormGroup = dynamic(() => import("@mui/material/FormGroup"));
-const Switch = dynamic(() => import("@mui/material/Switch"));
 
 const IndikatorFilter = () => {
 	const { status, setKeyVal } = useIndikatorStore();

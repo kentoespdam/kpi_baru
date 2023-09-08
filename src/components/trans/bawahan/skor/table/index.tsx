@@ -1,20 +1,16 @@
+import CellBuilder from "@components/commons/table/cell.builder";
 import { hitungRating } from "@helper/hitung";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
 import { TransKpi } from "@myTypes/entity/trans.kpi";
 import { TransPerilaku } from "@myTypes/entity/trans.perilaku";
 import { useTransKinerjaStore } from "@store/filter/trans/kinerja";
 import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useTransPerilakuStore } from "@store/filter/trans/perilaku";
 import { useQueryClient } from "@tanstack/react-query";
-import dynamic from "next/dynamic";
-
-const Table = dynamic(() => import("@mui/material/Table"));
-const TableBody = dynamic(() => import("@mui/material/TableBody"));
-const TableContainer = dynamic(() => import("@mui/material/TableContainer"));
-const CellBuilder = dynamic(
-	() => import("@components/commons/table/cell.builder")
-);
-const TableHead = dynamic(() => import("@mui/material/TableHead"));
-const TableRow = dynamic(() => import("@mui/material/TableRow"));
 
 const TransSkorTable = () => {
 	const periode = useTransKpiStore((state) => state.periode);

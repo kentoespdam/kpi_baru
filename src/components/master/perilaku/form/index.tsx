@@ -1,26 +1,23 @@
 "use client";
+import LoadingButton from "@mui/lab/LoadingButton";
+import Button from "@mui/material/Button";
+import FormControl from "@mui/material/FormControl";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormGroup from "@mui/material/FormGroup";
+import Stack from "@mui/material/Stack";
+import Switch from "@mui/material/Switch";
+import TextField from "@mui/material/TextField";
 import { AUDIT_STATUS } from "@myTypes/index";
 import { usePerilakuStore } from "@store/filter/master/perilaku";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
 import { ChangeEvent, useRef, useState } from "react";
 import { doSave, getById } from "src/utils/master/perilaku";
-import Stack from "@mui/material/Stack";
-import dynamic from "next/dynamic";
-
 const DoDisturbIcon = dynamic(() => import("@mui/icons-material/DoDisturb"));
 const SaveIcon = dynamic(() => import("@mui/icons-material/Save"));
-const LoadingButton = dynamic(() => import("@mui/lab/LoadingButton"));
-const Button = dynamic(() => import("@mui/material/Button"));
-const FormControl = dynamic(() => import("@mui/material/FormControl"));
-const FormControlLabel = dynamic(
-	() => import("@mui/material/FormControlLabel")
-);
-const FormGroup = dynamic(() => import("@mui/material/FormGroup"));
-const Switch = dynamic(() => import("@mui/material/Switch"));
-const TextField = dynamic(() => import("@mui/material/TextField"));
 
 type PerilakuFormProps = {
 	id?: number;

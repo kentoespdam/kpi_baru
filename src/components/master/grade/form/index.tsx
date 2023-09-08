@@ -1,30 +1,26 @@
 "use client";
-
+import LevelAutocomplete from "@autocomplete/level";
+import LoadingButton from "@mui/lab/LoadingButton";
+import Button from "@mui/material/Button";
+import FormControl from "@mui/material/FormControl";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormGroup from "@mui/material/FormGroup";
 import Stack from "@mui/material/Stack";
+import Switch from "@mui/material/Switch";
+import TextField from "@mui/material/TextField";
 import { GradeData } from "@myTypes/entity/grade";
 import { Level } from "@myTypes/entity/level";
 import { AUDIT_STATUS } from "@myTypes/index";
 import { useGradeStore } from "@store/filter/master/grade";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
 import React, { useRef, useState } from "react";
 import { doSave, getById } from "src/utils/master/grade";
-
-const Link = dynamic(() => import("next/link"));
-const FormControlLabel = dynamic(
-	() => import("@mui/material/FormControlLabel")
-);
-const FormGroup = dynamic(() => import("@mui/material/FormGroup"));
-const Button = dynamic(() => import("@mui/material/Button"));
-const Switch = dynamic(() => import("@mui/material/Switch"));
-const FormControl = dynamic(() => import("@mui/material/FormControl"));
-const TextField = dynamic(() => import("@mui/material/TextField"));
-const LevelAutocomplete = dynamic(() => import("@autocomplete/level"));
 const DoDisturbIcon = dynamic(() => import("@mui/icons-material/DoDisturb"));
 const SaveIcon = dynamic(() => import("@mui/icons-material/Save"));
-const LoadingButton = dynamic(() => import("@mui/lab/LoadingButton"));
 
 type GradeFormProps = {
 	id?: number;
