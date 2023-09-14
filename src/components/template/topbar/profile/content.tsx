@@ -86,9 +86,8 @@ const ProfileContent = () => {
 									<Image
 										alt="user"
 										src={Avatar1}
-										// width={32}
-										// height={32}
-										layout="fill"
+										width={32}
+										height={32}
 										placeholder="blur"
 									/>
 								</Avatar>

@@ -42,6 +42,6 @@ export const getBridgeKpi = async (props: any): Promise<BridgeKpiWithAudit> => {
 		);
 		useTransKinerjaStore.setState({ bridgeKpiBawahan: null });
 		useTransPerilakuStore.setState({ levelStaff: null });
-		throw new Error(e.response.data.message);
+		throw new Error(e.response.data);
 	}
 };

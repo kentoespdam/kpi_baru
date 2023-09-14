@@ -54,22 +54,32 @@ const AccordionBawahan = (props: AccordionBawahanProps) => {
 				<Stack
 					direction={isDesktop ? "row" : "column"}
 					spacing={1}
-					justifyContent="space-arround"
+					justifyContent="space-between"
+					width="100%"
 				>
-					<Stack direction="column">
-						<Typography variant="body1">
-							{currStaff?.nama}
-						</Typography>
-						<Typography variant="subtitle2" color="text.secondary">
-							{currStaff?.nipam}
-						</Typography>
-					</Stack>
+					<Stack
+						direction={isDesktop ? "row" : "column"}
+						spacing={1}
+						justifyContent="space-arround"
+					>
+						<Stack direction="column">
+							<Typography variant="body1">
+								{currStaff?.nama}
+							</Typography>
+							<Typography
+								variant="subtitle2"
+								color="text.secondary"
+							>
+								{currStaff?.nipam}
+							</Typography>
+						</Stack>
 
-					<Box>
-						<Typography variant="body2" color="text.secondary">
-							{currStaff?.position?.name}
-						</Typography>
-					</Box>
+						<Box>
+							<Typography variant="body2" color="text.secondary">
+								{currStaff?.position?.name}
+							</Typography>
+						</Box>
+					</Stack>
 				</Stack>
 			</AccordionSummary>
 			{expanded ? <TransKpiBawahanTabs /> : null}

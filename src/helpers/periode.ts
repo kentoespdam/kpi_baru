@@ -48,3 +48,12 @@ export const getCurrentPeriode = (adjust?: number): Periode => {
 	const sBln = bl < 10 ? `0${bl}` : `${bl}`;
 	return { periode: parseInt(`${th}${sBln}`) };
 };
+
+export const periodeToString = (periode: number) => {
+	const periodeString = String(periode);
+	const tahun = periodeString.substring(0, 4);
+	const bulan = periodeString.substring(4, 6);
+	const sekarang = new Date(`${tahun}-${bulan}-1`);
+	const namaBulan = sekarang.toLocaleString("id-ID", { month: "long" });
+	return `${namaBulan} ${tahun}`;
+};

@@ -3,9 +3,9 @@ import ButtonBase from "@mui/material/ButtonBase";
 import { buttonHovered, buttonSelectedColor } from "@myConfig/index";
 import { useProfileStore } from "@store/main/menu";
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import ProfilePopper from "./popper";
 import avatarImage from "/public/images/avatars/avatar_1.png";
-import Image from "next/image";
 const Avatar = dynamic(() => import("@mui/material/Avatar"));
 
 const ProfileComponent = () => {
@@ -43,7 +43,7 @@ const ProfileComponent = () => {
 					alt="user"
 					sx={{ bgcolor: "white", width: 32, height: 32 }}
 				>
-					<Image src={avatarImage} alt="user" layout="fill" />
+					<Image src={avatarImage} alt="user" width={32} height={32}/>
 				</Avatar>
 			</ButtonBase>
 			{isOpen ? <ProfilePopper id={id} /> : null}

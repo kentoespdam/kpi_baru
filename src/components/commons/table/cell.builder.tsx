@@ -1,3 +1,4 @@
+"use client";
 import { isDecimal, rupiah } from "@helper/number";
 import TableCell, { TableCellProps } from "@mui/material/TableCell";
 import { useTheme } from "@mui/material/styles";

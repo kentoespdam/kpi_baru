@@ -1,4 +1,5 @@
 import CellBuilder from "@components/commons/table/cell.builder";
+import ViewBtn from "@components/trans/kpi/staff/button/view";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import TableCell from "@mui/material/TableCell";
@@ -8,9 +9,6 @@ import { useTheme } from "@mui/material/styles";
 import { TransUraian } from "@myTypes/entity/trans.uraian";
 import { useViewFormKinerjaDialogStore } from "@store/dialog/view.form.kinerja";
 import dynamic from "next/dynamic";
-const ViewBtn = dynamic(
-	() => import("@components/trans/kpi/staff/button/view")
-);
 const EditIcon = dynamic(() => import("@mui/icons-material/Edit"));
 
 type UraianCellProps = {
@@ -63,9 +61,9 @@ const UraianCell = (props: UraianCellProps) => {
 							<EditIcon />
 						</IconButton>
 					</Tooltip>
-					{fileList.length > 0 ?? (
+					{fileList.length > 0 ? (
 						<ViewBtn fileList={fileList} uraianId={uraian.id} />
-					)}
+					) : null}
 				</Stack>
 			</TableCell>
 		</>

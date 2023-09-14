@@ -102,7 +102,7 @@ const TransRoot = () => {
 			)}
 			<KpiCard />
 
-			{queries[1].data?.staff ? <BawahanComponent /> : null}
+			{queries[2].data?.staff ? <BawahanComponent /> : null}
 
 			<ViewFileDialog />
 			<ViewPdfDialog />

@@ -1,8 +1,7 @@
 import CellBuilder from "@components/commons/table/cell.builder";
 import TableRow from "@mui/material/TableRow";
 import { TransIndikator } from "@myTypes/entity/trans.indikator";
-import dynamic from "next/dynamic";
-const DetailKpiBawahanUraian = dynamic(() => import("./uraian"));
+import DetailKpiBawahanUraian from "./uraian";
 
 type DetailKpiBawahanIndikatorProps = {
 	nipamStaff: string | null;

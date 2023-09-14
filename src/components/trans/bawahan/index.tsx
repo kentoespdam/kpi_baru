@@ -5,15 +5,9 @@ import Divider from "@mui/material/Divider";
 import { DetEmployee } from "@myTypes/entity/det.employee";
 import { useSessionStore } from "@store/main/session";
 import { useQueryClient } from "@tanstack/react-query";
-import dynamic from "next/dynamic";
-
-const AccordionBawahan = dynamic(() => import("./accordion"));
-const ViewFormKinerjaDialog = dynamic(
-	() => import("@transDialog/form/kinerja")
-);
-const ViewFormPerilakuDialog = dynamic(
-	() => import("@transDialog/form/perilaku")
-);
+import ViewFormKinerjaDialog from "@transDialog/form/kinerja";
+import ViewFormPerilakuDialog from "@transDialog/form/perilaku";
+import AccordionBawahan from "./accordion";
 
 const BawahanComponent = () => {
 	const curNipam = useSessionStore.getState().user?.userId;
