@@ -82,7 +82,7 @@ const AccordionBawahan = (props: AccordionBawahanProps) => {
 					</Stack>
 				</Stack>
 			</AccordionSummary>
-			{expanded ? <TransKpiBawahanTabs /> : null}
+			{expanded === `panel${staffNipam}` ? <TransKpiBawahanTabs /> : null}
 		</Accordion>
 	);
 };

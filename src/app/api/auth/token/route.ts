@@ -10,7 +10,7 @@ export const OPTIONS = async (req: NextRequest) => {
 
 	if (check.status === "ok") return new Response(check.status);
 	if (check.status === "reauth")
-		return new Response(check.status, { status: 204 });
+		return new Response(check.status, { status: 401 });
 
 	const token = await createToken(reqCookies);
 

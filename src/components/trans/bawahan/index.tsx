@@ -5,11 +5,18 @@ import Divider from "@mui/material/Divider";
 import { DetEmployee } from "@myTypes/entity/det.employee";
 import { useSessionStore } from "@store/main/session";
 import { useQueryClient } from "@tanstack/react-query";
-import ViewFormKinerjaDialog from "@transDialog/form/kinerja";
-import ViewFormPerilakuDialog from "@transDialog/form/perilaku";
+const ViewFormKinerjaDialog = dynamic(
+	() => import("@transDialog/form/kinerja")
+);
+const ViewFormPerilakuDialog = dynamic(
+	() => import("@transDialog/form/perilaku")
+);
 import AccordionBawahan from "./accordion";
+import dynamic from "next/dynamic";
+import { useTransKpiStore } from "@store/filter/trans/kpi";
 
 const BawahanComponent = () => {
+	const periode = useTransKpiStore((state) => state.periode);
 	const curNipam = useSessionStore.getState().user?.userId;
 	const qc = useQueryClient();
 	const data = qc.getQueryData<DetEmployee>(["employee-detail", curNipam]);
@@ -29,7 +36,7 @@ const BawahanComponent = () => {
 					/>
 				))}
 			</CardContent>
-			<ViewFormKinerjaDialog />
+			<ViewFormKinerjaDialog periode={periode} />
 			<ViewFormPerilakuDialog />
 		</Card>
 	);

@@ -145,6 +145,12 @@ export const menuList: IMenuList = [
 				icon: <CheckCircleOutlinedIcon />,
 				role: USER_ROLE.USER,
 			},
+			{
+				path: "/trans/kpi-admin",
+				name: "Penilaian KPI Admin",
+				icon: <CheckCircleOutlinedIcon />,
+				role: USER_ROLE.ADMIN,
+			},
 		],
 	},
 ];

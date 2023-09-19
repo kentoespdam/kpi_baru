@@ -3,6 +3,7 @@ import {
 	hitungNilaiTotalUraian,
 	hitungNilaiWaktu,
 } from "@helper/hitung";
+import { Periode } from "@helper/periode";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
@@ -11,7 +12,6 @@ import TextField from "@mui/material/TextField";
 import { TransUraian, TransUraianData } from "@myTypes/entity/trans.uraian";
 import { AUDIT_STATUS } from "@myTypes/index";
 import { useViewFormKinerjaDialogStore } from "@store/dialog/view.form.kinerja";
-import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { doSave, getById } from "@utils/trans/uraian";
 import dynamic from "next/dynamic";
@@ -21,21 +21,21 @@ import { TanggalComponent } from "./tanggal.component";
 const DoDisturbIcon = dynamic(() => import("@mui/icons-material/DoDisturb"));
 const SaveIcon = dynamic(() => import("@mui/icons-material/Save"));
 
-export type TanggalComponentProps = {
-	inputRef: React.Ref<HTMLInputElement>;
-	tarWaktu?: string;
-	capWaktu: string | null | undefined;
+type KpiKinerjaFormProps = {
+	staffNipam: string;
+	idKpi: number;
+	idUraian: number;
+	periode: Periode | null;
+	isAdmin?: boolean;
 };
-const KpiKinerjaForm = () => {
+const KpiKinerjaForm = (props: KpiKinerjaFormProps) => {
+	const { staffNipam, idKpi, idUraian, periode, isAdmin } = props;
 	const {
 		toggleFormKinerjaOpen: toggleFormOpen,
-		staffNipam,
-		idKpi,
-		idUraian,
+
 		reset,
 	} = useViewFormKinerjaDialogStore();
 	const waktuRef = React.useRef<HTMLInputElement>(null);
-	const periode = useTransKpiStore((state) => state.periode);
 	const { enqueueSnackbar } = useSnackbar();
 	const qc = useQueryClient();
 	const capaianVolumeRef = React.useRef<HTMLInputElement>(null);
@@ -63,16 +63,29 @@ const KpiKinerjaForm = () => {
 			enqueueSnackbar(`${error}`, { variant: "error" });
 		},
 		onSuccess: () => {
-			qc.invalidateQueries({
-				queryKey: [
-					"trans.kpi.bawahan",
-					{
-						nipam: staffNipam,
-						kpiId: idKpi,
-						periode: periode?.periode,
-					},
-				],
-			});
+			if (isAdmin)
+				qc.invalidateQueries({
+					queryKey: [
+						"kpi.admin.kpi",
+						{
+							nipam: staffNipam,
+							kpiId: idKpi,
+							periode: periode?.periode,
+						},
+					],
+				});
+			else
+				qc.invalidateQueries({
+					queryKey: [
+						"trans.kpi.bawahan",
+						{
+							nipam: staffNipam,
+							kpiId: idKpi,
+							periode: periode?.periode,
+						},
+					],
+				});
+
 			enqueueSnackbar("Data berhasil disimpan", { variant: "success" });
 			reset();
 			toggleFormOpen();

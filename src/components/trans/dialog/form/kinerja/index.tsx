@@ -1,5 +1,6 @@
 import { DialogSlideTransition } from "@components/commons/effect/transition/dialog";
 import KpiKinerjaForm from "@components/trans/bawahan/kinerja/form";
+import { Periode } from "@helper/periode";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -8,8 +9,14 @@ import { useViewFormKinerjaDialogStore } from "@store/dialog/view.form.kinerja";
 import dynamic from "next/dynamic";
 const CloseIcon = dynamic(() => import("@mui/icons-material/Close"));
 
-const ViewFormKinerjaDialog = () => {
+const ViewFormKinerjaDialog = (props: {
+	periode: Periode | null;
+	isAdmin?: boolean;
+}) => {
 	const {
+		staffNipam,
+		idKpi,
+		idUraian,
 		isFormKinerjaOpen: isFormOpen,
 		toggleFormKinerjaOpen: toggleFormOpen,
 	} = useViewFormKinerjaDialogStore();
@@ -36,7 +43,13 @@ const ViewFormKinerjaDialog = () => {
 				</IconButton>
 			</DialogTitle>
 			<DialogContent>
-				<KpiKinerjaForm />
+				<KpiKinerjaForm
+					staffNipam={staffNipam!}
+					idKpi={idKpi!}
+					idUraian={idUraian!}
+					periode={props.periode}
+					isAdmin={props.isAdmin}
+				/>
 			</DialogContent>
 		</Dialog>
 	);

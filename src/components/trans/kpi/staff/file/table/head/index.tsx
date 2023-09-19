@@ -6,8 +6,8 @@ const TransKpiFileListTableHead = () => {
 	return (
 		<TableHead>
 			<TableRow>
-				<CellBuilder value="No" />
-				<CellBuilder value="File Name" />
+				<CellBuilder bordered value="No" sx={{ maxWidth: 10 }} />
+				<CellBuilder bordered value="File Name" />
 			</TableRow>
 		</TableHead>
 	);

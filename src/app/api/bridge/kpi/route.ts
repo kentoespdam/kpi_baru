@@ -5,10 +5,9 @@ import {
 	REMOTE_BRIDGE_KPI,
 } from "@myTypes/entity/bridge.kpi";
 import {
-	Organization,
-	REMOTE_ORGANIZATION,
+	Organization
 } from "@myTypes/entity/organization";
-import { Position, REMOTE_POSITION } from "@myTypes/entity/position";
+import { Position } from "@myTypes/entity/position";
 import { getOrgInList } from "@utils/eo/server/organization";
 import { getPosInList } from "@utils/eo/server/position";
 import axios from "axios";

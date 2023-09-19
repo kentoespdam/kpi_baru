@@ -4,7 +4,7 @@ import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
 import { TransFile } from "@myTypes/entity/trans.file";
 import { useQueryClient } from "@tanstack/react-query";
-import TransKpiFileListItemCell from "./file.cell";
+import TransFileListItem from "../../item";
 
 type TransKpiFileListTableBodyProps = {
 	uraianId: number;
@@ -24,19 +24,30 @@ const TransKpiFileListTableBody = (props: TransKpiFileListTableBodyProps) => {
 	if (!state?.data) return <TableLoading colSpan={2} error />;
 	let urut = 1;
 
-	return (
-		<TableBody>
-			{state?.data.map((item, index) => (
-				<TableRow hover key={index}>
-					<CellBuilder value={urut++} />
-					<TransKpiFileListItemCell
-						uraianId={uraianId}
-						uraianFile={item}
-					/>
-				</TableRow>
-			))}
-		</TableBody>
-	);
+	// return (
+	// 	<TableBody>
+	// 		{state?.data.map((item, index) => (
+	// 			<TableRow hover key={index}>
+	// 				<CellBuilder
+	// 					bordered
+	// 					value={urut++}
+	// 				/>
+	// 				<TransKpiFileListItemCell
+	// 					uraianId={uraianId}
+	// 					uraianFile={item}
+	// 				/>
+	// 			</TableRow>
+	// 		))}
+	// 	</TableBody>
+	// );
+
+	return state.data.map((item, index) => (
+		<TransFileListItem
+			key={index}
+			uraianId={uraianId}
+			uraianFile={item}
+		/>
+	));
 };
 
 export default TransKpiFileListTableBody;

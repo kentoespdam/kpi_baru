@@ -4,8 +4,12 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs, { Dayjs } from "dayjs";
 import React from "react";
-import { TanggalComponentProps } from ".";
 
+export type TanggalComponentProps = {
+	inputRef: React.Ref<HTMLInputElement>;
+	tarWaktu?: string;
+	capWaktu: string | null | undefined;
+};
 export const TanggalComponent = (props: TanggalComponentProps) => {
 	const { inputRef, tarWaktu, capWaktu } = props;
 	const tanggalKosong = tarWaktu?.toLowerCase().includes("tanggal");
@@ -21,7 +25,8 @@ export const TanggalComponent = (props: TanggalComponentProps) => {
 				id="waktu"
 				inputRef={inputRef}
 				value={capWaktu}
-				aria-readonly />
+				aria-readonly
+			/>
 		);
 
 	if (tarWaktu.includes("Tanggal"))
@@ -31,7 +36,8 @@ export const TanggalComponent = (props: TanggalComponentProps) => {
 					inputRef={inputRef}
 					defaultValue={cusTanggal}
 					onChange={setCusTanggal}
-					format="YYYY-MM-DD" />
+					format="YYYY-MM-DD"
+				/>
 			</LocalizationProvider>
 		);
 
@@ -42,7 +48,8 @@ export const TanggalComponent = (props: TanggalComponentProps) => {
 				value={dayjs(tarWaktu)}
 				onChange={setCusTanggal}
 				format="YYYY-MM-DD"
-				readOnly />
+				readOnly
+			/>
 		</LocalizationProvider>
 	);
 };

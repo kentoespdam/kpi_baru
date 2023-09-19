@@ -1,6 +1,7 @@
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import TableCell from "@mui/material/TableCell";
+import Divider from "@mui/material/Divider";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 import Tooltip from "@mui/material/Tooltip";
 import { LOCAL_URAIAN_FILE, UraianFile } from "@myTypes/entity/uraian.file";
 import { useViewFileDialogStore } from "@store/dialog/view.file";
@@ -11,6 +12,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { doDelete } from "@utils/trans/file";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
 
 const DeleteForeverIcon = dynamic(
@@ -25,8 +27,9 @@ type TransKpiFileListItemCellProps = {
 	uraianId: number;
 	uraianFile: UraianFile;
 };
-const TransKpiFileListItemCell = (props: TransKpiFileListItemCellProps) => {
+const TransFileListItem = (props: TransKpiFileListItemCellProps) => {
 	const { uraianId, uraianFile } = props;
+	const router = useRouter();
 	const { periode, bridgeKpi: bridgeKpi } = useTransKpiStore();
 	const user = useSessionStore((state) => state.user);
 	const toggleViewOpen = useViewFileDialogStore(
@@ -73,49 +76,48 @@ const TransKpiFileListItemCell = (props: TransKpiFileListItemCellProps) => {
 	switch (uraianFile.fileType) {
 		case "pdf":
 			return (
-				<TableCell>
-					{uraianFile.nipam === user!.userId ? (
-						<Tooltip title="Delete File">
-							<IconButton color="error" onClick={handleDelete}>
-								<DeleteForeverIcon />
-							</IconButton>
+				<>
+					<ListItemButton>
+						<Tooltip title="Lihat File">
+							<ListItemIcon sx={{ mr: 2 }} onClick={showPdf}>
+								<VisibilityIcon color="info" />
+							</ListItemIcon>
 						</Tooltip>
-					) : null}
-					<Tooltip title="View File">
-						<Button
-							onClick={showPdf}
-							size="small"
-							color="warning"
-							startIcon={<VisibilityIcon />}
-						>
-							{uraianFile.fileName}
-						</Button>
-					</Tooltip>
-				</TableCell>
+						<ListItemText primary={uraianFile.fileName} />
+						<Tooltip title="Hapus File">
+							<ListItemIcon sx={{ mr: 2 }} onClick={handleDelete}>
+								<DeleteForeverIcon color="error" />
+							</ListItemIcon>
+						</Tooltip>
+					</ListItemButton>
+					<Divider />
+				</>
 			);
 		default:
 			return (
-				<TableCell>
-					<Tooltip title="Delete File">
-						<IconButton color="error" onClick={handleDelete}>
-							<DeleteForeverIcon />
-						</IconButton>
-					</Tooltip>
-					<Tooltip title="Download File">
-						<Button
-							LinkComponent={Link}
+				<>
+					<ListItemButton>
+						<Link
 							href={`${LOCAL_URAIAN_FILE}/download/${uraianFile.id}`}
-							color="info"
-							size="small"
 							target="_blank"
-							startIcon={<FileDownloadIcon />}
 						>
-							{uraianFile.fileName}
-						</Button>
-					</Tooltip>
-				</TableCell>
+							<Tooltip title="Unduh File">
+								<ListItemIcon sx={{ mr: 2 }}>
+									<FileDownloadIcon color="info" />
+								</ListItemIcon>
+							</Tooltip>
+						</Link>
+						<ListItemText primary={uraianFile.fileName} />
+						<Tooltip title="Hapus File">
+							<ListItemIcon sx={{ mr: 2 }} onClick={handleDelete}>
+								<DeleteForeverIcon color="error" />
+							</ListItemIcon>
+						</Tooltip>
+					</ListItemButton>
+					<Divider />
+				</>
 			);
 	}
 };
 
-export default TransKpiFileListItemCell;
+export default TransFileListItem;
