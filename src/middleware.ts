@@ -8,23 +8,20 @@ export const middleware = async (req: NextRequest) => {
 	const response = NextResponse.next();
 	const currPath = req.nextUrl.pathname;
 	const cookies = req.cookies;
+	const origin = req.nextUrl.origin;
+	const hostname = req.nextUrl.hostname;
 
 	if (
 		(!cookies.has(sessionNames[0]) || !cookies.has(sessionNames[1])) &&
 		!currPath.startsWith("/auth") &&
 		!currPath.startsWith("/api/auth")
 	)
-		return NextResponse.redirect(
-			new URL(
-				"/auth",
-				`${process.env.PROTOCOL}://${process.env.NEXT_PUBLIC_URL}`
-			)
-		);
+		return NextResponse.redirect(new URL("/auth", origin));
 
 	const sessCookie = getSessionCookie(cookies);
 	if (sessCookie === undefined) if (currPath.startsWith("/auth")) return;
 
-	const sess = await getSession(cookies);
+	const sess = await getSession(cookies, origin);
 	if (!sess) {
 		response.cookies.delete(sessionNames[0]);
 		response.cookies.delete(sessionNames[1]);
@@ -32,12 +29,7 @@ export const middleware = async (req: NextRequest) => {
 		if (currPath.startsWith("/auth") || currPath.startsWith("/api/auth"))
 			return;
 
-		return NextResponse.redirect(
-			new URL(
-				"/auth",
-				`${process.env.PROTOCOL}://${process.env.NEXT_PUBLIC_URL}`
-			)
-		);
+		return NextResponse.redirect(new URL("/auth", origin));
 	}
 
 	if (!cookies.has(sessionNames[2])) {
@@ -45,7 +37,7 @@ export const middleware = async (req: NextRequest) => {
 		response.cookies.set(sessionNames[2], token, {
 			path: "/",
 			expires: new Date(getExpToken(token)),
-			domain: newHostname,
+			domain: newHostname(hostname),
 			secure: true,
 			httpOnly: true,
 		});
@@ -67,7 +59,7 @@ export const config = {
 	],
 };
 
-const getSession = async (cookies: RequestCookies) => {
+const getSession = async (cookies: RequestCookies, origin: string) => {
 	try {
 		const xfallback =
 			cookies.get(sessionNames[0])?.value ||
@@ -83,7 +75,7 @@ const getSession = async (cookies: RequestCookies) => {
 			"Cookie": decodedCookie,
 			"X-Fallback-Cookies": xfallback,
 		};
-		const req = await fetch(`http://localhost:3000/api/auth/session`, {
+		const req = await fetch(`${origin}/api/auth/session`, {
 			headers: headers,
 		});
 

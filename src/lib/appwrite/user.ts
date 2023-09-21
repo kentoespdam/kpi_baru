@@ -64,7 +64,7 @@ export const getAllUser = async () => {
 
 export const getUserByNipam = async (nipam: string) => {
 	try {
-		const { status, data } = await axios.get(
+		const { data } = await axios.get(
 			`${APPWRITE_ENDPOINT}/v1/users/${nipam}`,
 			{
 				headers: {
@@ -75,7 +75,6 @@ export const getUserByNipam = async (nipam: string) => {
 				},
 			}
 		);
-		console.log(status);
 		return data;
 	} catch (e: any) {
 		console.log(

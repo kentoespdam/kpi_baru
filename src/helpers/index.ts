@@ -4,7 +4,6 @@ import {
 	APPWRITE_API_KEY,
 	APPWRITE_HOSTNAME,
 	APPWRITE_PROJECT_ID,
-	APP_HOSTNAME,
 	sessionNames,
 } from "src/lib";
 import { createToken } from "src/lib/appwrite";
@@ -54,12 +53,15 @@ export const appwriteHeader = (
 	return header;
 };
 
-export const newHostname =
-	APP_HOSTNAME === "localhost" ? APP_HOSTNAME : "." + APP_HOSTNAME;
+export const newHostname = (hostname?: string) =>
+	hostname === "localhost" ? hostname : "." + hostname;
 // APP_HOSTNAME === "localhost" ? APP_HOSTNAME : "";
 
-export const newSetCookies = (cookieString: string) => {
-	let cookie = cookieString.split("." + APPWRITE_HOSTNAME).join(newHostname);
+export const newSetCookies = (cookieString: string, hostname?: string) => {
+	// let cookie = cookieString.split("." + APPWRITE_HOSTNAME).join(newHostname);
+	let cookie = cookieString
+		.split("." + APPWRITE_HOSTNAME)
+		.join(newHostname(hostname));
 	return cookie;
 };
 
@@ -89,10 +91,10 @@ export const setExpiredCookie = (cookies: RequestCookies) => {
 	return result;
 };
 
-export const setCookieToken = (token: string) => {
-	const resCookie = `${
-		sessionNames[2]
-	}=${token}; domain=${newHostname}; expires=${new Date(
+export const setCookieToken = (token: string, hostname?: string) => {
+	const resCookie = `${sessionNames[2]}=${token}; domain=${newHostname(
+		hostname
+	)}; expires=${new Date(
 		getExpToken(token)
 	)}; path=/; httponly; SameSite=none; Secure`;
 	return resCookie;

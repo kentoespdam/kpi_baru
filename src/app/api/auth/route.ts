@@ -8,6 +8,8 @@ import { getUserByNipam } from "src/lib/appwrite/user";
 export const revalidate = 0;
 export const POST = async (req: Request) => {
 	const body = await req.json();
+	const hostname = req.headers.get("host")?.split(":")[0];
+
 	try {
 		const userNipam = await getUserByNipam(body.email.split("@")[0]);
 		if (!userNipam.emailVerification) {
@@ -38,7 +40,7 @@ export const POST = async (req: Request) => {
 			await createToken(fallbackCookie[sessionNames[0]]),
 			await getAccount(fallbackCookie[sessionNames[0]]),
 		]);
-		const newCookies = newSetCookies(setCookie!.join(","));
+		const newCookies = newSetCookies(setCookie!.join(","), hostname);
 		const user: SessionUser = {
 			$id: data.$id,
 			userId: data.userId,

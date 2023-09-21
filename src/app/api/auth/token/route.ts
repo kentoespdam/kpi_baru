@@ -7,6 +7,7 @@ export const revalidate = 0;
 export const OPTIONS = async (req: NextRequest) => {
 	const reqCookies = req.cookies;
 	const check = tokenChecker(reqCookies);
+	const hostname = req.headers.get("host")?.split(":")[0];
 
 	if (check.status === "ok") return new Response(check.status);
 	if (check.status === "reauth")
@@ -16,7 +17,7 @@ export const OPTIONS = async (req: NextRequest) => {
 
 	return new Response(JSON.stringify({ message: "OK" }), {
 		headers: {
-			"Set-Cookie": setCookieToken(token),
+			"Set-Cookie": setCookieToken(token, hostname),
 		},
 	});
 };
