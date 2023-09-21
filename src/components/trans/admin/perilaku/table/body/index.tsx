@@ -4,13 +4,9 @@ import IconButton from "@mui/material/IconButton";
 import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
 import Tooltip from "@mui/material/Tooltip";
-import {
-	TransPerilakuQKeyProps,
-	TransPerilaku,
-} from "@myTypes/entity/trans.perilaku";
+import { TransPerilaku } from "@myTypes/entity/trans.perilaku";
 import { TransPerilakuNilai } from "@myTypes/entity/trans.perilaku.nilai";
 import { useViewFormPerilakuDialogStore } from "@store/dialog/view.form.perilaku";
-import { useQueryClient } from "@tanstack/react-query";
 import dynamic from "next/dynamic";
 const EditIcon = dynamic(() => import("@mui/icons-material/Edit"));
 
@@ -41,22 +37,18 @@ const PerilakuAction = (props: PerilakuActionProps) => {
 	);
 };
 
-type TransPerilakuTableBodyProps = {
-	queryKey: (string | TransPerilakuQKeyProps)[];
+type KpiAdminPerilakuTableBodyProps = {
+	nipam: string | null;
+	levelId: number | null;
+	data?: TransPerilaku;
 };
-const TransPerilakuTableBody = (props: TransPerilakuTableBodyProps) => {
-	const obj = props.queryKey[1] as TransPerilakuQKeyProps;
-	const nipamStaff = obj.nipam;
-	const levelStaff = obj.levelId;
-
-	const qc = useQueryClient();
-	const data = qc.getQueryData<TransPerilaku>(props.queryKey);
-
+const KpiAdminPerilakuTableBody = (props: KpiAdminPerilakuTableBodyProps) => {
+	const { nipam, levelId, data } = props;
+	if (!data) return null;
 	let urut = 1;
-
-	return data ? (
+	return (
 		<TableBody>
-			{data.perilakuList.map((row) => (
+			{data?.perilakuList.map((row) => (
 				<TableRow hover key={row.id}>
 					<CellBuilder value={urut++} bordered />
 					<CellBuilder value={row.kompetensi} width={200} bordered />
@@ -70,13 +62,13 @@ const TransPerilakuTableBody = (props: TransPerilakuTableBodyProps) => {
 					<CellBuilder value={row.nilai} bordered />
 					<PerilakuAction
 						perilaku={row}
-						nipam={nipamStaff}
-						levelId={levelStaff ?? null}
+						nipam={nipam}
+						levelId={levelId}
 					/>
 				</TableRow>
 			))}
 		</TableBody>
-	) : null;
+	);
 };
 
-export default TransPerilakuTableBody;
+export default KpiAdminPerilakuTableBody;

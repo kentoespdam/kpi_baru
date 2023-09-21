@@ -24,3 +24,9 @@ export interface TransKpiResponse extends ApiResponse<TransKpi[]> {}
 
 export interface TransKpiPageResponse
 	extends ApiResponse<TransKpiWithPagination> {}
+
+export interface TransKpiQKeyProps {
+	nipam: string | null;
+	kpiId?: number | null;
+	periode?: number | null;
+}

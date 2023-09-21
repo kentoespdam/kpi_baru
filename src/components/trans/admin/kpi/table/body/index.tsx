@@ -1,5 +1,4 @@
 import DetailKpiBawahanIndikator from "@components/trans/bawahan/kinerja/table/body/indikator";
-import TransKpiIndikatorComponent from "@components/trans/kpi/staff/table/body/indikator";
 import TableBody from "@mui/material/TableBody";
 import { TransKpi } from "@myTypes/entity/trans.kpi";
 

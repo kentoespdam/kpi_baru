@@ -1,56 +1,34 @@
 import TableLoading from "@components/commons/table/loading";
 import DetailKpiBawahanTableHead from "@components/trans/bawahan/kinerja/table/head";
-import { Periode } from "@helper/periode";
-import LinearProgress from "@mui/material/LinearProgress";
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
-import { BridgeKpi } from "@myTypes/entity/bridge.kpi";
-import { useQueries } from "@tanstack/react-query";
-import { getStaffKpi } from "@utils/trans/kpi";
+import { TransKpi, TransKpiQKeyProps } from "@myTypes/entity/trans.kpi";
+import { useQueryClient } from "@tanstack/react-query";
 import KpiAdminTableBody from "./table/body";
 import KpiAdminTableFooter from "./table/footer";
 
 type KpiAdminKpiProps = {
-	periode: Periode | null;
-	bridgeKpi: BridgeKpi | null;
+	queryKeyKpi: (string | TransKpiQKeyProps)[];
 };
 const KpiAdminKpi = (props: KpiAdminKpiProps) => {
-	const { periode, bridgeKpi } = props;
+	const { queryKeyKpi } = props;
+	const { nipam, kpiId } = queryKeyKpi[1] as TransKpiQKeyProps;
+	const qc = useQueryClient();
 
-	const queries = useQueries({
-		queries: [
-			{
-				queryKey: [
-					"kpi.admin.kpi",
-					{
-						periode: periode?.periode,
-						kpiId: bridgeKpi?.kpi.id,
-						nipam: bridgeKpi?.nipam,
-					},
-				],
-				queryFn: getStaffKpi,
-				enabled: !!periode?.periode && !!bridgeKpi?.kpi.id,
-			},
-		],
-	});
-
-	const { isFetching, data, error } = queries[0];
+	const data = qc.getQueryData<TransKpi>(queryKeyKpi);
 
 	return (
 		<>
-			{isFetching ? <LinearProgress /> : null}
 			<TableContainer>
 				<Table>
 					<DetailKpiBawahanTableHead />
-					{isFetching ? (
-						<TableLoading colSpan={14} />
-					) : error || !data ? (
+					{!data ? (
 						<TableLoading colSpan={14} error />
 					) : (
 						<KpiAdminTableBody
 							transKpi={data}
-							nipam={bridgeKpi!.nipam}
-							idKpi={bridgeKpi!.kpi.id}
+							nipam={nipam!}
+							idKpi={kpiId!}
 						/>
 					)}
 					<KpiAdminTableFooter transKpi={data} />

@@ -2,26 +2,20 @@ import TableLoading from "@components/commons/table/loading";
 import LinearProgress from "@mui/material/LinearProgress";
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
-import { useTransKinerjaStore } from "@store/filter/trans/kinerja";
-import { useTransKpiStore } from "@store/filter/trans/kpi";
+import { TransKpiQKeyProps } from "@myTypes/entity/trans.kpi";
 import { useQueryClient } from "@tanstack/react-query";
 import dynamic from "next/dynamic";
 import DetailKpiBawahanTableFooter from "./footer";
 import DetailKpiBawahanTableHead from "./head";
 const DetailKpiBawahanTableBody = dynamic(() => import("./body"));
 
-const TransKinerjaTable = () => {
-	const periode = useTransKpiStore((state) => state.periode);
-	const { nipamStaff, bridgeKpiBawahan } = useTransKinerjaStore();
+type TransKinerjaTableProps = {
+	queryKeyKpi: (string | TransKpiQKeyProps)[];
+};
+const TransKinerjaTable = (props: TransKinerjaTableProps) => {
+	const { queryKeyKpi } = props;
 	const qc = useQueryClient();
-	const qStatus = qc.getQueryState([
-		"trans.kpi.bawahan",
-		{
-			nipam: nipamStaff,
-			kpiId: bridgeKpiBawahan?.kpi.id,
-			periode: periode?.periode,
-		},
-	]);
+	const qStatus = qc.getQueryState(queryKeyKpi);
 
 	return (
 		<TableContainer>
@@ -31,7 +25,7 @@ const TransKinerjaTable = () => {
 				{qStatus?.fetchStatus === "fetching" ? (
 					<TableLoading colSpan={14} />
 				) : qStatus?.data ? (
-					<DetailKpiBawahanTableBody />
+					<DetailKpiBawahanTableBody queryKeyKpi={queryKeyKpi} />
 				) : (
 					<TableLoading colSpan={14} error />
 				)}

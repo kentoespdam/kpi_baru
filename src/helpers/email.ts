@@ -7,6 +7,5 @@ export const validateEmail = (email: string) => {
 
 export const userToEmail = (user: string) => {
 	const validate = validateEmail(user);
-	console.log(validate);
 	return validate ? user : `${user}@perumdamts.com`;
 };

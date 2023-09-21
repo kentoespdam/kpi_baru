@@ -16,15 +16,16 @@ const TransPerilakuTable = () => {
 	const nipamStaff = useTransKinerjaStore((state) => state.nipamStaff);
 	const levelStaff = useTransPerilakuStore((state) => state.levelStaff);
 
-	const qc = useQueryClient();
-	const qStatus = qc.getQueryState([
+	const queryKey = [
 		"trans.perilaku.bawahan",
 		{
 			nipam: nipamStaff,
 			periode: periode?.periode,
 			levelId: levelStaff,
 		},
-	]);
+	];
+	const qc = useQueryClient();
+	const qStatus = qc.getQueryState(queryKey);
 
 	return (
 		<TableContainer>
@@ -40,9 +41,9 @@ const TransPerilakuTable = () => {
 				) : qStatus?.error ? (
 					<TableLoading colSpan={5} error />
 				) : (
-					<TransPerilakuTableBody />
+					<TransPerilakuTableBody queryKey={queryKey} />
 				)}
-				<TransPerilakuTableFooter />
+				<TransPerilakuTableFooter queryKey={queryKey} />
 			</Table>
 		</TableContainer>
 	);

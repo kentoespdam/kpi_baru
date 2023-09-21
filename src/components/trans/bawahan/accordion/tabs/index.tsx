@@ -32,6 +32,24 @@ const TransKpiBawahanTabs = () => {
 		if (newValue !== 3) setTabIndex(newValue);
 	};
 
+	const queryKeyKpi = [
+		"trans.kpi.bawahan",
+		{
+			nipam: nipamStaff,
+			kpiId: bridgeKpiBawahan?.kpi.id,
+			periode: periode?.periode,
+		},
+	];
+
+	const querKeyPerilaku = [
+		"trans.perilaku.bawahan",
+		{
+			nipam: nipamStaff,
+			periode: periode?.periode,
+			levelId: bridgeKpiBawahan?.level.id,
+		},
+	];
+
 	return (
 		<Card>
 			<CardContent sx={{ p: 0 }}>
@@ -57,13 +75,16 @@ const TransKpiBawahanTabs = () => {
 					</Tabs>
 				</Box>
 				<TransKpiTabPanel value={tabIndex} index={0}>
-					<TransKinerjaTable />
+					<TransKinerjaTable queryKeyKpi={queryKeyKpi} />
 				</TransKpiTabPanel>
 				<TransKpiTabPanel value={tabIndex} index={1}>
 					<TransPerilakuTable />
 				</TransKpiTabPanel>{" "}
 				<TransKpiTabPanel value={tabIndex} index={2}>
-					<TransSkorTable />
+					<TransSkorTable
+						queryKeyKpi={queryKeyKpi}
+						querKeyPerilaku={querKeyPerilaku}
+					/>
 				</TransKpiTabPanel>
 			</CardContent>
 		</Card>

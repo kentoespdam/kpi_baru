@@ -2,15 +2,17 @@
 
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import Divider from "@mui/material/Divider";
+import Typography from "@mui/material/Typography";
 import { DetEmployee } from "@myTypes/entity/det.employee";
 import { useKpiAdminStore } from "@store/filter/trans/kpi.admin";
 import { useQuery } from "@tanstack/react-query";
 import { getEmpDetails } from "@utils/eo/employee";
 import dynamic from "next/dynamic";
 import KpiAdminBawahan from "./bawahan";
+import KpiAdminBiodata from "./biodata";
 import KpiAdminFilter from "./filter";
 import KpiAdminTab from "./tabs";
-import KpiAdminBiodata from "./biodata";
 const ViewFormKinerjaDialog = dynamic(
 	() => import("@transDialog/form/kinerja")
 );
@@ -23,7 +25,7 @@ const ViewPdfDialog = dynamic(() => import("@transDialog/pdf"));
 const TransKpiAdminComponent = () => {
 	const { periode, bridgeKpi } = useKpiAdminStore();
 
-	const { isFetching, data, error } = useQuery<DetEmployee>({
+	const { data } = useQuery<DetEmployee>({
 		queryKey: ["kpi-admin-biodata", bridgeKpi?.nipam],
 		queryFn: getEmpDetails,
 		enabled: !!bridgeKpi?.nipam,
@@ -42,6 +44,10 @@ const TransKpiAdminComponent = () => {
 			{data?.staff && data.staff.length > 0 ? (
 				<Card>
 					<CardContent sx={{ p: 0 }}>
+						<Typography variant="h3" sx={{ m: 1 }}>
+							Daftar Staf
+						</Typography>
+						{/* <Divider sx={{ mb: 1 }} /> */}
 						{data.staff.map((staff, index) => (
 							<KpiAdminBawahan employee={staff} key={index} />
 						))}
@@ -50,7 +56,7 @@ const TransKpiAdminComponent = () => {
 			) : null}
 
 			<ViewFormKinerjaDialog periode={periode} isAdmin />
-			<ViewFormPerilakuDialog />
+			<ViewFormPerilakuDialog periode={periode} isAdmin />
 			<ViewFileDialog />
 			<ViewPdfDialog />
 		</>

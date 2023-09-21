@@ -15,7 +15,7 @@ export const getPage = async (props: any) => {
 		params.set("sort", sortRequest.sort);
 		params.set("direction", sortRequest.direction);
 	}
-	if (profesiData.name) params.set("profesi", profesiData.name);
+	if (profesiData.name) params.set("name", profesiData.name);
 	if (profesiData.status) params.set("status", profesiData.status);
 	if (profesiData.level) params.set("levelId", profesiData.level.id);
 

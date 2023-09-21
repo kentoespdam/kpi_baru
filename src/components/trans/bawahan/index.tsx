@@ -37,7 +37,7 @@ const BawahanComponent = () => {
 				))}
 			</CardContent>
 			<ViewFormKinerjaDialog periode={periode} />
-			<ViewFormPerilakuDialog />
+			<ViewFormPerilakuDialog periode={periode} />
 		</Card>
 	);
 };
