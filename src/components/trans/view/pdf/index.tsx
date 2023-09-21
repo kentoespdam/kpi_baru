@@ -25,6 +25,7 @@ const ViewPdfComponent = (props: ViewPdfComponentProps) => {
 			return URL.createObjectURL(result);
 		},
 		enabled: !!id,
+		retry: 2,
 	});
 
 	if (isFetching) return <LinearProgress />;

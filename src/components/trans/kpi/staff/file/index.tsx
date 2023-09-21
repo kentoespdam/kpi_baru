@@ -19,6 +19,7 @@ const TransKpiFileListComponent = (props: TransKpiFileListComponentProps) => {
 				queryKey: ["trans.file.list", Number(uraianId)],
 				queryFn: getFiles,
 				enabled: !!uraianId,
+				retry: 2,
 			},
 		],
 	});
