@@ -21,7 +21,12 @@ export const middleware = async (req: NextRequest) => {
 		!currPath.startsWith("/auth") &&
 		!currPath.startsWith("/api/auth")
 	)
-		return NextResponse.redirect(new URL("/auth", origin));
+		return NextResponse.redirect(
+			new URL(
+				"/auth",
+				`${process.env.PROTOCOL}://${process.env.NEXT_PUBLIC_URL}`
+			)
+		);
 
 	const sessCookie = getSessionCookie(cookies);
 	if (sessCookie === undefined) if (currPath.startsWith("/auth")) return;
@@ -34,7 +39,12 @@ export const middleware = async (req: NextRequest) => {
 		if (currPath.startsWith("/auth") || currPath.startsWith("/api/auth"))
 			return response;
 
-		return NextResponse.redirect(new URL("/auth", origin));
+		return NextResponse.redirect(
+			new URL(
+				"/auth",
+				`${process.env.PROTOCOL}://${process.env.NEXT_PUBLIC_URL}`
+			)
+		);
 	}
 
 	if (!cookies.has(sessionNames[2])) {
