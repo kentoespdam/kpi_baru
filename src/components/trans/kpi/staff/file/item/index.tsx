@@ -3,16 +3,14 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Tooltip from "@mui/material/Tooltip";
+import { TransKpiQKeyProps } from "@myTypes/entity/trans.kpi";
 import { LOCAL_URAIAN_FILE, UraianFile } from "@myTypes/entity/uraian.file";
 import { useViewFileDialogStore } from "@store/dialog/view.file";
 import { useViewPdfDialogStore } from "@store/dialog/view.pdf";
-import { useTransKpiStore } from "@store/filter/trans/kpi";
-import { useSessionStore } from "@store/main/session";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { doDelete } from "@utils/trans/file";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
 
 const DeleteForeverIcon = dynamic(
@@ -26,12 +24,10 @@ const VisibilityIcon = dynamic(() => import("@mui/icons-material/Visibility"));
 type TransKpiFileListItemCellProps = {
 	uraianId: number;
 	uraianFile: UraianFile;
+	qKeyKpiStaff: (string | TransKpiQKeyProps)[];
 };
 const TransFileListItem = (props: TransKpiFileListItemCellProps) => {
 	const { uraianId, uraianFile } = props;
-	const router = useRouter();
-	const { periode, bridgeKpi: bridgeKpi } = useTransKpiStore();
-	const user = useSessionStore((state) => state.user);
 	const toggleViewOpen = useViewFileDialogStore(
 		(state) => state.toggleViewOpen
 	);
@@ -45,16 +41,7 @@ const TransFileListItem = (props: TransKpiFileListItemCellProps) => {
 			enqueueSnackbar(`${error}`, { variant: "error" });
 		},
 		onSuccess: () => {
-			qc.invalidateQueries({
-				queryKey: [
-					"trans.kpi.staff",
-					{
-						nipam: user!.userId,
-						kpiId: bridgeKpi!.id,
-						periode: periode!.periode,
-					},
-				],
-			});
+			qc.invalidateQueries(props.qKeyKpiStaff);
 			qc.invalidateQueries({
 				queryKey: ["trans.file.list", Number(uraianId)],
 			});

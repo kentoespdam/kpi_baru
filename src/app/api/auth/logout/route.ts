@@ -7,6 +7,7 @@ export const revalidate = false;
 
 export const GET = async (req: NextRequest) => {
 	const cookies = req.cookies;
+	const hostname = req.headers.get("host")?.split(":")[0];
 	try {
 		if (cookies.has(sessionNames[0]) || cookies.has(sessionNames[1])) {
 			const { status, data } = await axios.delete(
@@ -23,7 +24,7 @@ export const GET = async (req: NextRequest) => {
 					}),
 					{
 						headers: {
-							"Set-Cookie": setExpiredCookie(cookies),
+							"Set-Cookie": setExpiredCookie(cookies, hostname),
 						},
 					}
 				);
@@ -35,7 +36,7 @@ export const GET = async (req: NextRequest) => {
 			}),
 			{
 				headers: {
-					"Set-Cookie": setExpiredCookie(cookies),
+					"Set-Cookie": setExpiredCookie(cookies, hostname),
 				},
 			}
 		);
@@ -48,7 +49,7 @@ export const GET = async (req: NextRequest) => {
 			}),
 			{
 				headers: {
-					"Set-Cookie": setExpiredCookie(cookies),
+					"Set-Cookie": setExpiredCookie(cookies, hostname),
 				},
 			}
 		);

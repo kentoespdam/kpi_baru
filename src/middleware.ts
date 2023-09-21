@@ -1,7 +1,12 @@
 import { useSessionStore } from "@store/main/session";
 import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
 import { NextRequest, NextResponse } from "next/server";
-import { getExpToken, getSessionCookie, newHostname } from "./helpers";
+import {
+	getExpToken,
+	getSessionCookie,
+	newHostname,
+	xfallback,
+} from "./helpers";
 import { APPWRITE_ENDPOINT, APPWRITE_PROJECT_ID, sessionNames } from "./lib";
 
 export const middleware = async (req: NextRequest) => {
@@ -22,12 +27,12 @@ export const middleware = async (req: NextRequest) => {
 	if (sessCookie === undefined) if (currPath.startsWith("/auth")) return;
 
 	const sess = await getSession(cookies, origin);
-	if (!sess) {
+	if (!sess || sess === undefined) {
 		response.cookies.delete(sessionNames[0]);
 		response.cookies.delete(sessionNames[1]);
 		response.cookies.delete(sessionNames[2]);
 		if (currPath.startsWith("/auth") || currPath.startsWith("/api/auth"))
-			return;
+			return response;
 
 		return NextResponse.redirect(new URL("/auth", origin));
 	}
@@ -61,11 +66,8 @@ export const config = {
 
 const getSession = async (cookies: RequestCookies, origin: string) => {
 	try {
-		const xfallback =
-			cookies.get(sessionNames[0])?.value ||
-			cookies.get(sessionNames[1])?.value ||
-			"";
-		if (xfallback === "") throw Error("No session found");
+		const cookieFallback = xfallback(cookies);
+		if (cookieFallback === "") throw new Error("No session found");
 
 		const cookieString = cookies.toString();
 		const decodedCookie = decodeURIComponent(cookieString);
@@ -73,8 +75,9 @@ const getSession = async (cookies: RequestCookies, origin: string) => {
 			"Content-Type": "application/json",
 			"X-Appwrite-Project": APPWRITE_PROJECT_ID,
 			"Cookie": decodedCookie,
-			"X-Fallback-Cookies": xfallback,
+			"X-Fallback-Cookies": cookieFallback,
 		};
+
 		const req = await fetch(`${origin}/api/auth/session`, {
 			headers: headers,
 		});
@@ -86,25 +89,21 @@ const getSession = async (cookies: RequestCookies, origin: string) => {
 		return req.status === 200 ? true : false;
 	} catch (e: any) {
 		console.log("middleware get session:", e);
-		return false;
 	}
 };
 
 const createToken = async (cookies: RequestCookies) => {
 	try {
-		const xfallback =
-			cookies.get(sessionNames[0])?.value ||
-			cookies.get(sessionNames[1])?.value ||
-			"";
+		const cookieFallback = xfallback(cookies);
 
-		if (xfallback === "") throw Error("No session found");
+		if (cookieFallback === "") throw Error("No session found");
 		const cookieString = cookies.toString();
 		const decodedCookie = decodeURIComponent(cookieString);
 		const headers = {
 			"Content-Type": "application/json",
 			"X-Appwrite-Project": APPWRITE_PROJECT_ID,
 			"Cookie": decodedCookie,
-			"X-Fallback-Cookies": xfallback,
+			"X-Fallback-Cookies": cookieFallback,
 		};
 		const req = await fetch(`${APPWRITE_ENDPOINT}/v1/account/jwt`, {
 			method: "POST",

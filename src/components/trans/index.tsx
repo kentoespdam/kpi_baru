@@ -1,5 +1,6 @@
 "use client";
 import Stack from "@mui/material/Stack";
+import { TransKpiQKeyProps } from "@myTypes/entity/trans.kpi";
 import { useTransKinerjaStore } from "@store/filter/trans/kinerja";
 import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useTransPerilakuStore } from "@store/filter/trans/perilaku";
@@ -25,10 +26,10 @@ const TransRoot = () => {
 	const { periode, bridgeKpi } = useTransKpiStore();
 
 	const qKeyBridge = ["kpi.bridge", curNipam];
-	const qKeyKpiStaff = [
+	const qKeyKpiStaff: (string | TransKpiQKeyProps)[] = [
 		"trans.kpi.staff",
 		{
-			nipam: curNipam,
+			nipam: curNipam ?? null,
 			kpiId: bridgeKpi?.kpi.id,
 			periode: periode?.periode,
 		},
@@ -115,7 +116,7 @@ const TransRoot = () => {
 
 			{queries[2].data?.staff ? <BawahanComponent /> : null}
 
-			<ViewFileDialog />
+			<ViewFileDialog qKeyKpiStaff={qKeyKpiStaff} />
 			<ViewPdfDialog />
 			<ViewUploadDialog />
 		</Stack>

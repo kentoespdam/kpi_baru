@@ -2,7 +2,6 @@
 
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import { DetEmployee } from "@myTypes/entity/det.employee";
 import { useKpiAdminStore } from "@store/filter/trans/kpi.admin";
@@ -19,8 +18,6 @@ const ViewFormKinerjaDialog = dynamic(
 const ViewFormPerilakuDialog = dynamic(
 	() => import("@transDialog/form/perilaku")
 );
-const ViewFileDialog = dynamic(() => import("@transDialog/file"));
-const ViewPdfDialog = dynamic(() => import("@transDialog/pdf"));
 
 const TransKpiAdminComponent = () => {
 	const { periode, bridgeKpi } = useKpiAdminStore();
@@ -57,8 +54,6 @@ const TransKpiAdminComponent = () => {
 
 			<ViewFormKinerjaDialog periode={periode} isAdmin />
 			<ViewFormPerilakuDialog periode={periode} isAdmin />
-			<ViewFileDialog />
-			<ViewPdfDialog />
 		</>
 	);
 };

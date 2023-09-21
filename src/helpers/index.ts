@@ -81,10 +81,15 @@ export const getExpToken = (token: string) => {
 	return tokenBody.exp * 1000 - 60000;
 };
 
-export const setExpiredCookie = (cookies: RequestCookies) => {
+export const setExpiredCookie = (
+	cookies: RequestCookies,
+	hostname?: string
+) => {
 	if (cookies.size === 0) return "";
 	const expiredCookie = cookies.getAll().map((cookie) => {
-		cookie.value += `; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=${newHostname}; secure; httponly`;
+		cookie.value += `; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=${newHostname(
+			hostname
+		)}; secure; httponly`;
 		return `${cookie.name}=${cookie.value}`;
 	});
 	const result = expiredCookie.join(", ").toString();

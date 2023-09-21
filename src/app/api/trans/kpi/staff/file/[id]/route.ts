@@ -27,14 +27,17 @@ export const DELETE = async (
 
 		return new Response(data, {
 			status: status,
-			headers: data.headers,
 		});
 	} catch (e: any) {
 		console.log(
 			"api.kpi.file.delete.id",
 			new Date().toISOString(),
-			e.response.data.message
+			"Error Delete code",
+			e.response.status
 		);
-		return new Response(e.response.data.message, { status: 500 });
+		return new Response(
+			JSON.stringify({ message: "Delete file Failed!" }),
+			{ status: 500 }
+		);
 	}
 };

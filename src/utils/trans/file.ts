@@ -71,7 +71,7 @@ export const doDelete = async (id: number) => {
 		console.log(
 			"utils.trans.file.delete",
 			new Date().toISOString(),
-			e.response.data.message
+			e.response.data
 		);
 
 		throw new Error(e.response.data.message);

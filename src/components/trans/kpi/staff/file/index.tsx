@@ -3,12 +3,14 @@ import LinearProgress from "@mui/material/LinearProgress";
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import { TransFile } from "@myTypes/entity/trans.file";
+import { TransKpiQKeyProps } from "@myTypes/entity/trans.kpi";
 import { useQueries } from "@tanstack/react-query";
 import { getFiles } from "@utils/trans/file";
 import TransFileListItem from "./item";
 
 type TransKpiFileListComponentProps = {
 	uraianId: number;
+	qKeyKpiStaff: (string | TransKpiQKeyProps)[];
 };
 const TransKpiFileListComponent = (props: TransKpiFileListComponentProps) => {
 	const { uraianId } = props;
@@ -35,6 +37,7 @@ const TransKpiFileListComponent = (props: TransKpiFileListComponentProps) => {
 					key={index}
 					uraianId={uraianId}
 					uraianFile={item}
+					qKeyKpiStaff={props.qKeyKpiStaff}
 				/>
 			))}
 		</List>

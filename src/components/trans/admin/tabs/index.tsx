@@ -18,6 +18,8 @@ import { SyntheticEvent, useState } from "react";
 import KpiAdminKpi from "../kpi";
 import KpiAdminPerilaku from "../perilaku";
 
+const ViewFileDialog = dynamic(() => import("@transDialog/file"));
+const ViewPdfDialog = dynamic(() => import("@transDialog/pdf"));
 const LocalPrintshopOutlinedIcon = dynamic(
 	() => import("@mui/icons-material/LocalPrintshopOutlined")
 );
@@ -77,48 +79,52 @@ const KpiAdminTab = (props: KpiAdminTabProps) => {
 	});
 
 	return (
-		<Card sx={{ mb: 2 }}>
-			<CardContent sx={{ p: 0 }}>
-				<Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-					<Tabs
-						value={tabIndex}
-						onChange={tabHandler}
-						aria-label="kpi bawahan tabs"
-					>
-						<Tab label="Kinerja" {...tabProps(0)} />
-						<Tab label="Perilaku" {...tabProps(1)} />
-						<Tab label="Skor" {...tabProps(2)} />
-						<Tooltip title="Cetak">
-							<Tab
-								id="tab-link"
-								aria-controls="tabpanel-0"
-								LinkComponent={Link}
-								icon={<LocalPrintshopOutlinedIcon />}
-								href={`/cetak/${nipam}/${periode?.periode}/${kpiId}/${levelId}`}
-								target="_blank"
-							/>
-						</Tooltip>
-					</Tabs>
-				</Box>
-				<TransKpiTabPanel value={tabIndex} index={0}>
-					<KpiAdminKpi queryKeyKpi={queryKeyKpi} />
-				</TransKpiTabPanel>
-				<TransKpiTabPanel value={tabIndex} index={1}>
-					<KpiAdminPerilaku
-						querKeyPerilaku={querKeyPerilaku}
-						nipam={nipam ?? null}
-						periode={periode}
-						levelId={levelId ?? null}
-					/>
-				</TransKpiTabPanel>
-				<TransKpiTabPanel value={tabIndex} index={2}>
-					<TransSkorTable
-						queryKeyKpi={queryKeyKpi}
-						querKeyPerilaku={querKeyPerilaku}
-					/>
-				</TransKpiTabPanel>
-			</CardContent>
-		</Card>
+		<>
+			<Card sx={{ mb: 2 }}>
+				<CardContent sx={{ p: 0 }}>
+					<Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+						<Tabs
+							value={tabIndex}
+							onChange={tabHandler}
+							aria-label="kpi bawahan tabs"
+						>
+							<Tab label="Kinerja" {...tabProps(0)} />
+							<Tab label="Perilaku" {...tabProps(1)} />
+							<Tab label="Skor" {...tabProps(2)} />
+							<Tooltip title="Cetak">
+								<Tab
+									id="tab-link"
+									aria-controls="tabpanel-0"
+									LinkComponent={Link}
+									icon={<LocalPrintshopOutlinedIcon />}
+									href={`/cetak/${nipam}/${periode?.periode}/${kpiId}/${levelId}`}
+									target="_blank"
+								/>
+							</Tooltip>
+						</Tabs>
+					</Box>
+					<TransKpiTabPanel value={tabIndex} index={0}>
+						<KpiAdminKpi queryKeyKpi={queryKeyKpi} />
+					</TransKpiTabPanel>
+					<TransKpiTabPanel value={tabIndex} index={1}>
+						<KpiAdminPerilaku
+							querKeyPerilaku={querKeyPerilaku}
+							nipam={nipam ?? null}
+							periode={periode}
+							levelId={levelId ?? null}
+						/>
+					</TransKpiTabPanel>
+					<TransKpiTabPanel value={tabIndex} index={2}>
+						<TransSkorTable
+							queryKeyKpi={queryKeyKpi}
+							querKeyPerilaku={querKeyPerilaku}
+						/>
+					</TransKpiTabPanel>
+				</CardContent>
+			</Card>
+			<ViewFileDialog qKeyKpiStaff={queryKeyKpi} />
+			<ViewPdfDialog />
+		</>
 	);
 };
 

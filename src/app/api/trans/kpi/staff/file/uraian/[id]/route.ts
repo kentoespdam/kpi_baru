@@ -27,7 +27,6 @@ export const GET = async (
 
 		return new Response(data, {
 			status: status,
-			headers: data.headers,
 		});
 	} catch (e: any) {
 		console.log(

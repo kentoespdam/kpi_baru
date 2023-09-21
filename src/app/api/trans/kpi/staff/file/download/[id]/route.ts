@@ -12,7 +12,7 @@ export const GET = async (
 
 	try {
 		const token = await getCurrentToken(cookies);
-		const { status, data } = await axios.get(
+		const { status, data, headers } = await axios.get(
 			`${REMOTE_URAIAN_FILE}/${id}/file`,
 			{
 				headers: {
@@ -25,7 +25,7 @@ export const GET = async (
 
 		return new Response(data, {
 			status: status,
-			headers: data.headers,
+			headers: headers as HeadersInit,
 		});
 	} catch (e: any) {
 		console.log(
