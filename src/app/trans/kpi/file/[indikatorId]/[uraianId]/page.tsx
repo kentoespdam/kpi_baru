@@ -9,11 +9,12 @@ const FilePage = ({
 }) => {
 	const { indikatorId, uraianId } = params;
 
-	return (
-		<CardBuilder title={metadata.title} isLink={false} color="success">
-			<TransKpiFileListComponent uraianId={uraianId} />
-		</CardBuilder>
-	);
+	return null;
+	// return (
+	// 	<CardBuilder title={metadata.title} isLink={false} color="success">
+	// 		<TransKpiFileListComponent uraianId={uraianId} />
+	// 	</CardBuilder>
+	// );
 };
 
 export default FilePage;
