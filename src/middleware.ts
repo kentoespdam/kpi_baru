@@ -7,31 +7,30 @@ import {
 	newHostname,
 	xfallback,
 } from "./helpers";
-import { APPWRITE_ENDPOINT, APPWRITE_PROJECT_ID, sessionNames } from "./lib";
+import {
+	APPWRITE_ENDPOINT,
+	APPWRITE_PROJECT_ID,
+	APP_HOSTNAME,
+	APP_URL,
+	sessionNames,
+} from "./lib";
 
 export const middleware = async (req: NextRequest) => {
 	const response = NextResponse.next();
 	const currPath = req.nextUrl.pathname;
 	const cookies = req.cookies;
-	const origin = req.nextUrl.origin;
-	const hostname = req.nextUrl.hostname;
 
 	if (
 		(!cookies.has(sessionNames[0]) || !cookies.has(sessionNames[1])) &&
 		!currPath.startsWith("/auth") &&
 		!currPath.startsWith("/api/auth")
 	)
-		return NextResponse.redirect(
-			new URL(
-				"/auth",
-				`${process.env.PROTOCOL}://${process.env.NEXT_PUBLIC_URL}`
-			)
-		);
+		return NextResponse.redirect(new URL("/auth", APP_URL));
 
 	const sessCookie = getSessionCookie(cookies);
 	if (sessCookie === undefined) if (currPath.startsWith("/auth")) return;
 
-	const sess = await getSession(cookies, origin);
+	const sess = await getSession(cookies);
 	if (!sess || sess === undefined) {
 		response.cookies.delete(sessionNames[0]);
 		response.cookies.delete(sessionNames[1]);
@@ -39,12 +38,7 @@ export const middleware = async (req: NextRequest) => {
 		if (currPath.startsWith("/auth") || currPath.startsWith("/api/auth"))
 			return response;
 
-		return NextResponse.redirect(
-			new URL(
-				"/auth",
-				`${process.env.PROTOCOL}://${process.env.NEXT_PUBLIC_URL}`
-			)
-		);
+		return NextResponse.redirect(new URL("/auth", APP_URL));
 	}
 
 	if (!cookies.has(sessionNames[2])) {
@@ -52,7 +46,7 @@ export const middleware = async (req: NextRequest) => {
 		response.cookies.set(sessionNames[2], token, {
 			path: "/",
 			expires: new Date(getExpToken(token)),
-			domain: newHostname(hostname),
+			domain: newHostname(APP_HOSTNAME),
 			secure: true,
 			httpOnly: true,
 		});
@@ -74,7 +68,7 @@ export const config = {
 	],
 };
 
-const getSession = async (cookies: RequestCookies, origin: string) => {
+const getSession = async (cookies: RequestCookies) => {
 	try {
 		const cookieFallback = xfallback(cookies);
 		if (cookieFallback === "") throw new Error("No session found");
@@ -88,7 +82,7 @@ const getSession = async (cookies: RequestCookies, origin: string) => {
 			"X-Fallback-Cookies": cookieFallback,
 		};
 
-		const req = await fetch(`${origin}/api/auth/session`, {
+		const req = await fetch(`http://localhost:3000/api/auth/session`, {
 			headers: headers,
 		});
 
