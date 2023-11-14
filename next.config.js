@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-	experimental: {
-		appDir: true,
-	},
+	// experimental: {
+	// 	appDir: true,
+	// },
 	output: "standalone",
 	webpack: (config, options) => {
 		config.module.rules.push({

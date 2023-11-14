@@ -27,6 +27,7 @@ const DetailKpiBawahanTableBody = (props: DetailKpiBawahanTableBodyProps) => {
 					nipamStaff={nipamStaff}
 					indikator={row}
 					idKpi={Number(bridgeKpiBawahan?.kpi.id)}
+					lockedStatus={data.lockedStatus}
 				/>
 			))}
 		</TableBody>

@@ -12,6 +12,9 @@ import KpiAdminBawahan from "./bawahan";
 import KpiAdminBiodata from "./biodata";
 import KpiAdminFilter from "./filter";
 import KpiAdminTab from "./tabs";
+import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
+import OrgTree from "./orgs/tree";
 const ViewFormKinerjaDialog = dynamic(
 	() => import("@transDialog/form/kinerja")
 );
@@ -30,30 +33,40 @@ const TransKpiAdminComponent = () => {
 
 	return (
 		<>
-			<KpiAdminFilter />
-			<KpiAdminBiodata
-				nama={data?.curr.nama ?? "Waiting for Search Pegawai"}
-				posName={data?.curr.position.name ?? ""}
-				orgName={data?.curr.organization.name ?? ""}
-			/>
-			<KpiAdminTab periode={periode} bridgeKpi={bridgeKpi} />
+			<Stack direction="row" spacing={2}>
+				<Box minWidth={300}>
+					<OrgTree />
+				</Box>
+				<Box>
+					<KpiAdminFilter />
+					<KpiAdminBiodata
+						nama={data?.curr.nama ?? "Waiting for Search Pegawai"}
+						posName={data?.curr.position.name ?? ""}
+						orgName={data?.curr.organization.name ?? ""}
+					/>
+					<KpiAdminTab periode={periode} bridgeKpi={bridgeKpi} />
 
-			{data?.staff && data.staff.length > 0 ? (
-				<Card>
-					<CardContent sx={{ p: 0 }}>
-						<Typography variant="h3" sx={{ m: 1 }}>
-							Daftar Staf
-						</Typography>
-						{/* <Divider sx={{ mb: 1 }} /> */}
-						{data.staff.map((staff, index) => (
-							<KpiAdminBawahan employee={staff} key={index} />
-						))}
-					</CardContent>
-				</Card>
-			) : null}
+					{data?.staff && data.staff.length > 0 ? (
+						<Card>
+							<CardContent sx={{ p: 0 }}>
+								<Typography variant="h3" sx={{ m: 1 }}>
+									Daftar Staf
+								</Typography>
+								{/* <Divider sx={{ mb: 1 }} /> */}
+								{data.staff.map((staff, index) => (
+									<KpiAdminBawahan
+										employee={staff}
+										key={index}
+									/>
+								))}
+							</CardContent>
+						</Card>
+					) : null}
 
-			<ViewFormKinerjaDialog periode={periode} isAdmin />
-			<ViewFormPerilakuDialog periode={periode} isAdmin />
+					<ViewFormKinerjaDialog periode={periode} isAdmin />
+					<ViewFormPerilakuDialog periode={periode} isAdmin />
+				</Box>
+			</Stack>
 		</>
 	);
 };

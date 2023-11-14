@@ -25,6 +25,7 @@
 		"@tanstack/react-query": "^4.29.19",
 		"@types/lodash": "^4.14.195",
 		"@types/node": "20.3.3",
+		"@types/pdfjs-dist": "^2.10.378",
 		"@types/react": "18.2.14",
 		"@types/react-dom": "18.2.6",
 		"appwrite": "^11.0.0",
@@ -36,7 +37,7 @@
 		"fs": "^0.0.1-security",
 		"lodash": "^4.17.21",
 		"logrocket": "^5.0.1",
-		"next": "13.5.6",
+		"next": "13.4.13",
 		"node-loader": "^2.0.0",
 		"notistack": "^3.0.1",
 		"pdfjs-dist": "3.4.120",
@@ -47,10 +48,6 @@
 		"zustand": "^4.3.9"
 	},
 	"devDependencies": {
-		"@tanstack/react-query-devtools": "^4.29.19",
-		"@types/pdfjs-dist": "^2.10.378",
-		"@mui/system": "^5.8.0",
-		"webpack": "^5.0.0",
-		"csstype": "^3.0.10"
+		"@tanstack/react-query-devtools": "^4.29.19"
 	}
 }

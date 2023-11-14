@@ -9,7 +9,7 @@ export const revalidate = 0;
 export const POST = async (req: Request) => {
 	const body = await req.json();
 	const hostname = req.headers.get("host")?.split(":")[0];
-	console.log(hostname);
+	// console.log(hostname);
 
 	try {
 		const userNipam = await getUserByNipam(body.email.split("@")[0]);

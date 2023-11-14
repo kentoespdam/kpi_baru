@@ -2,13 +2,15 @@ import CellBuilder from "@components/commons/table/cell.builder";
 import TableRow from "@mui/material/TableRow";
 import { TransUraian } from "@myTypes/entity/trans.uraian";
 import TransKpiFileComponent from "./file";
+import { AcceptedStatus } from "@myTypes/index";
 
 type UraianCellProps = {
 	indikatorId: number;
 	uraian: TransUraian;
+	lockedStatus: AcceptedStatus;
 };
 const UraianCell = (props: UraianCellProps) => {
-	const { indikatorId, uraian } = props;
+	const { indikatorId, uraian, lockedStatus } = props;
 	const { fileList } = uraian;
 
 	return (
@@ -18,6 +20,7 @@ const UraianCell = (props: UraianCellProps) => {
 				fileList={fileList}
 				uraianId={uraian.id}
 				indikatorId={indikatorId}
+				lockedStatus={lockedStatus}
 			/>
 		</>
 	);
@@ -26,19 +29,28 @@ const UraianCell = (props: UraianCellProps) => {
 type TransKpiUraianComponentProps = {
 	indikatorId: number;
 	uraianList: TransUraian[];
+	lockedStatus: AcceptedStatus;
 	first?: boolean;
 };
 const TransKpiUraianComponent = (props: TransKpiUraianComponentProps) => {
-	const { indikatorId, uraianList, first } = props;
+	const { indikatorId, uraianList, lockedStatus, first } = props;
 
 	return first ? (
-		<UraianCell uraian={uraianList[0]} indikatorId={indikatorId} />
+		<UraianCell
+			uraian={uraianList[0]}
+			indikatorId={indikatorId}
+			lockedStatus={lockedStatus}
+		/>
 	) : (
 		<>
 			{uraianList.map((uraian, index) =>
 				index === 0 ? null : (
 					<TableRow hover key={uraian.id}>
-						<UraianCell uraian={uraian} indikatorId={indikatorId} />
+						<UraianCell
+							uraian={uraian}
+							indikatorId={indikatorId}
+							lockedStatus={lockedStatus}
+						/>
 					</TableRow>
 				)
 			)}

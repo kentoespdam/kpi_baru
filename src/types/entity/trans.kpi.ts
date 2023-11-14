@@ -1,4 +1,4 @@
-import { ApiResponse, Audit, BaseId, Pages } from "..";
+import { AcceptedStatus, ApiResponse, Audit, BaseId, Pages } from "..";
 import { Profesi } from "./profesi";
 import { TransIndikator } from "./trans.indikator";
 
@@ -13,6 +13,7 @@ export interface TransKpi extends BaseId {
 	periode: string;
 	name: string;
 	nilaiTotal: number;
+	lockedStatus: AcceptedStatus;
 	indikatorList: TransIndikator[];
 }
 
@@ -20,6 +21,7 @@ export interface TransKpiWithAudit extends TransKpi, Audit {}
 
 export interface TransKpiWithPagination extends Pages<TransKpiWithAudit> {}
 
+export interface TransKpiSingleResponse extends ApiResponse<TransKpi> {}
 export interface TransKpiResponse extends ApiResponse<TransKpi[]> {}
 
 export interface TransKpiPageResponse
