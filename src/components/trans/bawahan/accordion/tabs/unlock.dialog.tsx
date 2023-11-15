@@ -1,3 +1,4 @@
+import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import Dialog from "@mui/material/Dialog";
@@ -53,7 +54,7 @@ const UnlockDialog = (props: UnlockDialogProps) => {
 				<DialogContentText>
 					Jika Ingin membuka kunci data silahkan ketik kode berikut
 					<br />
-					<Chip label={`UNLOCK-${data?.id}`} variant="outlined" />
+					<Chip label={`UNLOCK-${data?.id}`} variant="filled" color="error" />
 				</DialogContentText>
 				<TextField
 					autoFocus
@@ -67,7 +68,9 @@ const UnlockDialog = (props: UnlockDialogProps) => {
 			</DialogContent>
 			<DialogActions>
 				<Button onClick={handleOpen}>Cancel</Button>
-				<Button onClick={doUnlock}>UNLOCK</Button>
+				<LoadingButton onClick={doUnlock} loading={mutation.isLoading}>
+					UNLOCK
+				</LoadingButton>
 			</DialogActions>
 		</Dialog>
 	);

@@ -8,6 +8,9 @@ import { useSessionStore } from "@store/main/session";
 import { useQueryClient } from "@tanstack/react-query";
 import dynamic from "next/dynamic";
 import KpiStaffTableHead from "./table/head";
+import { TransKpi } from "@myTypes/entity/trans.kpi";
+import { ACCEPTED_STATUS } from "@myTypes/index";
+import Alert from "@mui/material/Alert";
 
 const KpiStaffTableBody = dynamic(() => import("./table/body"));
 
@@ -19,7 +22,7 @@ const KpiStaffComponents = () => {
 		bridgeKpi: state.bridgeKpi,
 	}));
 	const qc = useQueryClient();
-	const state = qc.getQueryState([
+	const state = qc.getQueryState<TransKpi>([
 		"trans.kpi.staff",
 		{
 			nipam: curNipam,
@@ -33,6 +36,13 @@ const KpiStaffComponents = () => {
 			{state?.fetchStatus === "fetching" ? (
 				<LinearProgress sx={{ mb: 1 }} />
 			) : null}
+			{state?.data?.lockedStatus === ACCEPTED_STATUS.UNLOCKED ? null : (
+				<Alert severity="error">
+					<strong>
+						KPI ini sudah dikunci oleh {state?.data?.lockedStatus}
+					</strong>
+				</Alert>
+			)}
 			<Table sx={{ border: `solid 1px ${theme.palette.divider}` }}>
 				<KpiStaffTableHead />
 				{state?.fetchStatus === "fetching" ? (

@@ -1,5 +1,4 @@
 import { UserRole } from "@myTypes/index";
-import axios from "axios";
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 

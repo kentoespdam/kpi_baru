@@ -4,6 +4,7 @@ import {
 	LOCAL_BRIDGE_KPI,
 } from "@myTypes/entity/bridge.kpi";
 import { useTransKpiStore } from "@store/filter/trans/kpi";
+import { useKpiAdminStore } from "@store/filter/trans/kpi.admin";
 import axios from "axios";
 
 export const getPage = async (props: any) => {
@@ -47,6 +48,7 @@ export const getPage = async (props: any) => {
 export const getList = async () => {
 	try {
 		const { data } = await axios.get(`${LOCAL_BRIDGE_KPI}/list`);
+		useKpiAdminStore.setState({ bridgeKpiList: data.data });
 		return data.data;
 	} catch (e: any) {
 		console.log(

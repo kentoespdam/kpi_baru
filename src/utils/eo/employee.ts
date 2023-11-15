@@ -1,3 +1,4 @@
+import { DetEmployee } from "@myTypes/entity/det.employee";
 import { LOCAL_EMPLOYEE } from "@myTypes/entity/employee";
 import axios from "axios";
 
@@ -18,7 +19,7 @@ export const getList = async (props: any) => {
 	}
 };
 
-export const getEmpDetails = async (props: any) => {
+export const getEmpDetails = async (props: any): Promise<DetEmployee> => {
 	const { queryKey } = props;
 	const nipam = queryKey[1];
 

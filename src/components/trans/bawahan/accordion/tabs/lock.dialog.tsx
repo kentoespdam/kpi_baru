@@ -1,3 +1,4 @@
+import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -47,8 +48,14 @@ const LockDialog = (props: LockDialogProps) => {
 				</DialogContentText>
 			</DialogContent>
 			<DialogActions>
-				<Button onClick={handleLockOpen}>CANCEL</Button>
-				<Button onClick={doLock}>KUNCI</Button>
+				<Button onClick={handleLockOpen} variant="contained" color="error">CANCEL</Button>
+				<LoadingButton
+					onClick={doLock}
+					variant="contained"
+					loading={mutation.isLoading}
+				>
+					KUNCI
+				</LoadingButton>
 			</DialogActions>
 		</Dialog>
 	);
