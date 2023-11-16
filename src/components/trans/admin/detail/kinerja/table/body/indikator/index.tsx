@@ -45,6 +45,14 @@ const KpiAdminKinerjaTableBodyIndikator = (
 					</>
 				)}
 			</TableRow>
+			{rowSpan > 1 ? (
+				<KpiAdminKinerjaTableBodyUraian
+					nipam={nipam}
+					idKpi={idKpi}
+					uraianList={uraianList}
+					lockedStatus={lockedStatus}
+				/>
+			) : null}
 		</>
 	);
 };

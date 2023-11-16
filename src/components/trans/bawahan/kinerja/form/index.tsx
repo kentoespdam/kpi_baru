@@ -66,7 +66,7 @@ const KpiKinerjaForm = (props: KpiKinerjaFormProps) => {
 			if (isAdmin)
 				qc.invalidateQueries({
 					queryKey: [
-						"kpi.admin.kpi",
+						"kpi.admin.kinerja",
 						{
 							nipam: staffNipam,
 							kpiId: idKpi,

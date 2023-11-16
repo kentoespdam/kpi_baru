@@ -21,10 +21,41 @@ const KpiAdminKinerjaTableFooter = (props: KpiAdminKinerjaProps) => {
 		return (
 			<TableFooter>
 				<TableRow>
-					<CellBuilder colSpan={7} align="right" value="Total" />
-					<CellBuilder value={0} />
-					<CellBuilder colSpan={5} value="" bordered />
-					<CellBuilder value={0} />
+					<CellBuilder
+						colSpan={6}
+						align="right"
+						value="Total"
+						bordered
+						sx={{ fontWeight: "bold" }}
+					/>
+					<CellBuilder
+						value={0}
+						align="right"
+						bordered
+						percent
+						sx={{ fontWeight: "bold" }}
+					/>
+					<CellBuilder colSpan={3} value="" bordered />
+					<CellBuilder
+						value={0}
+						bordered
+						percent
+						align="right"
+						sx={{ fontWeight: "bold" }}
+					/>
+					<CellBuilder
+						value={0}
+						bordered
+						percent
+						align="right"
+						sx={{ fontWeight: "bold" }}
+					/>
+					<CellBuilder
+						value={0}
+						bordered
+						percent
+						sx={{ fontWeight: "bold" }}
+					/>
 					<CellBuilder value="" bordered />
 				</TableRow>
 			</TableFooter>

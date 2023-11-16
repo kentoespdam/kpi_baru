@@ -7,8 +7,8 @@ interface KpiAdminStore {
 	setOrgOpen: (v: boolean) => void;
 	periode: Periode | null;
 	setPeriode: (v: Periode | null) => void;
-	rootNipam: String | null;
-	setRootNipam: (v: String | null) => void;
+	rootNipam: string | null;
+	setRootNipam: (v: string | null) => void;
 	bridgeKpiList: BridgeKpi[];
 	setBridgeKpiList: (v: BridgeKpi[]) => void;
 	bridgeKpi: BridgeKpi | null;

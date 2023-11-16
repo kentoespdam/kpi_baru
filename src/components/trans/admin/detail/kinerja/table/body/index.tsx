@@ -3,6 +3,7 @@ import { KpiAdminKinerjaProps } from "../..";
 import { TransKpi } from "@myTypes/entity/trans.kpi";
 import TableBody from "@mui/material/TableBody";
 import KpiAdminKinerjaTableBodyIndikator from "./indikator";
+import TableLoading from "@components/commons/table/loading";
 
 const KpiAdminKinerjaTableBody = (props: KpiAdminKinerjaProps) => {
 	const { nipam, kpiId, periode } = props;
@@ -11,7 +12,7 @@ const KpiAdminKinerjaTableBody = (props: KpiAdminKinerjaProps) => {
 		"kpi.admin.kinerja",
 		{ nipam: nipam, kpiId: kpiId, periode: periode?.periode },
 	]);
-	if (!data || !nipam) return null;
+	if (!data || !nipam) return <TableLoading colSpan={14} error />;
 	let urut = 1;
 	return (
 		<TableBody>
@@ -21,7 +22,7 @@ const KpiAdminKinerjaTableBody = (props: KpiAdminKinerjaProps) => {
 					urut={urut++}
 					nipam={nipam}
 					indikator={row}
-					idKpi={Number(data.id)}
+					idKpi={Number(kpiId)}
 					lockedStatus={data.lockedStatus}
 				/>
 			))}

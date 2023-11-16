@@ -2,12 +2,12 @@ import {
 	BridgeKpiWithAudit,
 	LOCAL_BRIDGE_KPI,
 } from "@myTypes/entity/bridge.kpi";
-import { LOCAL_TRANS_KPI } from "@myTypes/entity/trans.kpi";
+import { LOCAL_TRANS_KPI, TransKpi } from "@myTypes/entity/trans.kpi";
 import { useTransKinerjaStore } from "@store/filter/trans/kinerja";
 import { useTransPerilakuStore } from "@store/filter/trans/perilaku";
 import axios from "axios";
 
-export const getStaffKpi = async (props: any) => {
+export const getStaffKpi = async (props: any): Promise<TransKpi> => {
 	const { queryKey } = props;
 	const { nipam, periode, kpiId } = queryKey[1];
 
