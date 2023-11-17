@@ -7,7 +7,10 @@ export const APPWRITE_ENDPOINT: string = `${process.env.APPWRITE_ENDPOINT}`;
 // Used by SSR
 export const APP_HOSTNAME: string = `${process.env.APP_HOSTNAME}`;
 export const APPWRITE_HOSTNAME: string = `${process.env.NEXT_PUBLIC_APPWRITE_HOSTNAME}`; // Must be subdomain of APP_HOSTNAME
-export const APP_URL = `${APP_PROTOCOL}://${APP_HOSTNAME}:${APP_PORT}`;
+export const APP_URL =
+	APP_PORT === "3000"
+		? `${APP_PROTOCOL}://${APP_HOSTNAME}:${APP_PORT}`
+		: `${APP_PROTOCOL}://${APP_HOSTNAME}`;
 
 export const sessionNames = [
 	"a_session_" + APPWRITE_PROJECT_ID.toLowerCase(),
