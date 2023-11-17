@@ -11,7 +11,6 @@ import {
 	APPWRITE_ENDPOINT,
 	APPWRITE_PROJECT_ID,
 	APP_HOSTNAME,
-	APP_URL,
 	sessionNames,
 } from "./lib";
 
@@ -25,7 +24,7 @@ export const middleware = async (req: NextRequest) => {
 		!currPath.startsWith("/auth") &&
 		!currPath.startsWith("/api/auth")
 	)
-		return NextResponse.redirect(new URL("/auth", APP_URL));
+		return NextResponse.redirect(new URL("/auth", APP_HOSTNAME));
 
 	const sessCookie = getSessionCookie(cookies);
 	if (sessCookie === undefined) if (currPath.startsWith("/auth")) return;
@@ -38,7 +37,7 @@ export const middleware = async (req: NextRequest) => {
 		if (currPath.startsWith("/auth") || currPath.startsWith("/api/auth"))
 			return response;
 
-		return NextResponse.redirect(new URL("/auth", APP_URL));
+		return NextResponse.redirect(new URL("/auth", APP_HOSTNAME));
 	}
 
 	if (!cookies.has(sessionNames[2])) {
