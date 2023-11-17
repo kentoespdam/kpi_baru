@@ -33,7 +33,8 @@ type LevelParserProps = {
 	title: string;
 };
 const LevelParser = (props: LevelParserProps) => {
-	const { setRootNipam, bridgeKpiList, setBridgeKpi } = useKpiAdminStore();
+	const { setRootNipam, setOrgOpen, bridgeKpiList, setBridgeKpi } =
+		useKpiAdminStore();
 	const { selected, setSelected } = useOrgAdminStore();
 	const handleClick = (value: string | false, org: Organization) => {
 		const filtered = bridgeKpiList.filter(
@@ -44,6 +45,7 @@ const LevelParser = (props: LevelParserProps) => {
 			setBridgeKpi(filtered[0]);
 		}
 		setSelected(selected === value ? false : value);
+		setOrgOpen(false);
 	};
 	return props.data.length <= 0 ? null : (
 		<List

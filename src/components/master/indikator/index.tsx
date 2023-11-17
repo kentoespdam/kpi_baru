@@ -19,8 +19,9 @@ const IndikatorComponent = () => {
 		],
 		queryFn: getPage,
 		enabled: !!kpiId,
-		retry: 1,
+		retry: 2,
 	});
+	console.log(error);
 	return (
 		<CardBuilder
 			title="Master Indikator"

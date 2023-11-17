@@ -8,7 +8,7 @@ import {
 import { useIndikatorStore } from "@store/filter/master/indikator";
 import axios from "axios";
 
-export const getPage = async (props: any) => {
+export const getPage = async (props: any): Promise<Indikator[]> => {
 	const { queryKey } = props;
 
 	const { pageRequest, sortRequest } = queryKey[1];
