@@ -28,6 +28,20 @@ export const getBridgePerilaku = async (props: any) => {
 	}
 };
 
+export const getBridgePerilakuList = async () => {
+	try {
+		const { data } = await axios.get(`${LOCAL_BRIDGE_PERILAKU}/list`);
+		return data.data;
+	} catch (e: any) {
+		console.log(
+			"utils.bridge.perilaku.get.list",
+			new Date().toISOString(),
+			e.response.data
+		);
+		throw new Error(e.response.data.message);
+	}
+};
+
 export const getTransPerilaku = async (props: any) => {
 	const { queryKey } = props;
 	const { nipam, periode, levelId } = queryKey[1];

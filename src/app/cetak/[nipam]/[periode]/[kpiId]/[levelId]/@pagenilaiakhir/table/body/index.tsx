@@ -20,9 +20,11 @@ const PageNilaiAkhirTableBody = () => {
 			<tr>
 				<td align="right">2</td>
 				<td>KOMPETENSI</td>
-				<td align="center">{perilakuData ? nilaiPerilaku : 0}</td>
+				<td align="center">
+					{perilakuData ? Number(nilaiPerilaku.toFixed(2)) : 0}
+				</td>
 				<td align="center">20%</td>
-				<td align="center">{totalPerilaku}</td>
+				<td align="center">{Number(totalPerilaku.toFixed(2))}</td>
 			</tr>
 		</tbody>
 	);

@@ -9,10 +9,12 @@ import { useQueries } from "@tanstack/react-query";
 import ViewFormKinerjaDialog from "@trans/dialog/form/kinerja";
 import { getList as getBridgeKpiList } from "@utils/bridge/kpi";
 import { getList as getOrgList } from "@utils/eo/organization";
+import { getBridgePerilakuList } from "@utils/trans/perilaku";
 import KpiAdminBawahan from "./bawahan";
 import KpiAdminDetail from "./detail";
 import KpiAdminBiodata from "./detail/biodata";
 import KpiAdminFilter from "./filter";
+import ViewFormPerilakuDialog from "../dialog/form/perilaku";
 
 const TransKpiAdminComponent = () => {
 	const { periode, rootNipam, bridgeKpi } = useKpiAdminStore();
@@ -20,6 +22,10 @@ const TransKpiAdminComponent = () => {
 		queries: [
 			{ queryKey: ["orgTree"], queryFn: getOrgList },
 			{ queryKey: ["kpi.admin.bridge.list"], queryFn: getBridgeKpiList },
+			{
+				queryKey: ["kpi.admin.bridge.perilaku.list"],
+				queryFn: getBridgePerilakuList,
+			},
 		],
 	});
 	return (
@@ -35,6 +41,7 @@ const TransKpiAdminComponent = () => {
 			<KpiAdminBawahan nipam={rootNipam} />
 
 			<ViewFormKinerjaDialog periode={periode} isAdmin />
+			<ViewFormPerilakuDialog periode={periode} isAdmin />
 		</Stack>
 	);
 };
