@@ -1,13 +1,11 @@
+import TableLoading from "@components/commons/table/loading";
 import { Periode } from "@helper/periode";
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
+import { useQueryClient } from "@tanstack/react-query";
 import KpiAdminKinerjaTableBody from "./table/body";
 import KpiAdminKinerjaTableFooter from "./table/footer";
 import KpiAdminKinerjaTableHead from "./table/header";
-import { useQueryClient } from "@tanstack/react-query";
-import TableLoading from "@components/commons/table/loading";
-import ViewFileDialog from "@components/trans/dialog/file";
-import ViewPdfDialog from "@components/trans/dialog/pdf";
 
 export type KpiAdminKinerjaProps = {
 	periode: Periode | null;
@@ -44,18 +42,6 @@ const KpiAdminKinerja = (props: KpiAdminKinerjaProps) => {
 					periode={periode}
 				/>
 			</Table>
-
-			<ViewFileDialog
-				qKeyKpiStaff={[
-					"kpi.admin.kinerja",
-					{
-						nipam: nipam ?? null,
-						kpiId: kpiId,
-						periode: periode?.periode,
-					},
-				]}
-			/>
-			<ViewPdfDialog />
 		</TableContainer>
 	);
 };

@@ -1,5 +1,6 @@
 import CellBuilder from "@components/commons/table/cell.builder";
 import ViewBtn from "@components/trans/kpi/staff/button/view";
+import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import TableCell from "@mui/material/TableCell";
@@ -8,7 +9,6 @@ import { useTheme } from "@mui/material/styles";
 import { TransUraian } from "@myTypes/entity/trans.uraian";
 import { ACCEPTED_STATUS, AcceptedStatus } from "@myTypes/index";
 import { useViewFormKinerjaDialogStore } from "@store/dialog/view.form.kinerja";
-import EditIcon from "@mui/icons-material/Edit";
 
 type KpiAdminKinerjaTableBodyUraianCellProps = {
 	nipam: string | null;
@@ -31,6 +31,7 @@ const KpiAdminKinerjaTableBodyUraianCell = (
 			idUraian: uraian.id,
 		});
 	};
+
 	return (
 		<>
 			<CellBuilder value={uraian.uraian} bordered noWrap />
@@ -65,7 +66,12 @@ const KpiAdminKinerjaTableBodyUraianCell = (
 						</Tooltip>
 					) : null}
 					{fileList.length > 0 ? (
-						<ViewBtn fileList={fileList} uraianId={uraian.id} />
+						<ViewBtn
+							fileList={fileList}
+							uraianId={uraian.id}
+							nipam={nipam}
+							kpiId={idKpi}
+						/>
 					) : null}
 				</Stack>
 			</TableCell>

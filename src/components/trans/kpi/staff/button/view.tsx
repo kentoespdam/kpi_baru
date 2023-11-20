@@ -11,13 +11,18 @@ const CloudDoneIcon = dynamic(() => import("@mui/icons-material/CloudDone"));
 type ViewBtnProps = {
 	fileList: UraianFile[] | TransFile[];
 	uraianId: number;
+	nipam?: string | null;
+	kpiId?: number;
 };
 const ViewBtn = (props: ViewBtnProps) => {
-	const { fileList, uraianId } = props;
-	const { toggleViewOpen, setIdUraian } = useViewFileDialogStore();
+	const { fileList, uraianId, nipam, kpiId } = props;
+	const { toggleViewOpen, setIdUraian, setNipam, setKpiId } =
+		useViewFileDialogStore();
 
 	const handleClick = () => {
 		setIdUraian(uraianId);
+		setNipam(nipam ?? null);
+		setKpiId(kpiId ?? null);
 		toggleViewOpen();
 	};
 
