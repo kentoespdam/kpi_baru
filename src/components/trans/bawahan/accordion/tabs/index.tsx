@@ -50,8 +50,6 @@ const TransKpiBawahanTabs = () => {
 
 	const qc = useQueryClient();
 
-	const queryKeyEmp = ["employee-detail", nipamStaff];
-
 	const queryKeyKpi = [
 		"trans.kpi.bawahan",
 		{
@@ -70,16 +68,10 @@ const TransKpiBawahanTabs = () => {
 		},
 	];
 
-	const { data } = useQuery<DetEmployee>({
-		queryKey: queryKeyEmp,
-		queryFn: getEmpDetails,
-	});
-
 	const trans = qc.getQueryData<TransKpiWithAudit>(queryKeyKpi);
 
 	const doLock = async () => {
 		setTabIndex(tabIndex);
-		console.log(trans?.lockedStatus);
 		if (trans?.lockedStatus === ACCEPTED_STATUS.UNLOCKED) {
 			handleLockOpen();
 			return;
@@ -148,7 +140,10 @@ const TransKpiBawahanTabs = () => {
 				</TransKpiTabPanel>
 
 				<TransKpiTabPanel value={tabIndex} index={1}>
-					<TransPerilakuTable />
+					<TransPerilakuTable
+						queryKeyKpi={queryKeyKpi}
+						queryKeyPerilaku={queryKeyPerilaku}
+					/>
 				</TransKpiTabPanel>
 
 				<TransKpiTabPanel value={tabIndex} index={2}>

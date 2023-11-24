@@ -8,7 +8,8 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
 import { TransKpi, TransKpiQKeyProps } from "@myTypes/entity/trans.kpi";
-import { AcceptedStatus } from "@myTypes/index";
+import { ACCEPTED_STATUS, AcceptedStatus } from "@myTypes/index";
+import { useSessionStore } from "@store/main/session";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { unlockKpi } from "@utils/trans/lock";
 import { useSnackbar } from "notistack";
@@ -21,6 +22,7 @@ type UnlockDialogProps = {
 	lockedBy: AcceptedStatus;
 };
 const UnlockDialog = (props: UnlockDialogProps) => {
+	const { user } = useSessionStore();
 	const { open, handleOpen, queryKey, lockedBy } = props;
 	const konfirm = useRef<HTMLInputElement>();
 	const qc = useQueryClient();
@@ -47,6 +49,11 @@ const UnlockDialog = (props: UnlockDialogProps) => {
 		}
 		mutation.mutate(Number(data?.id));
 	};
+	if (
+		lockedBy === ACCEPTED_STATUS.ADMIN &&
+		!user?.prefs.roles?.includes("ADMIN")
+	)
+		return;
 	return (
 		<Dialog open={open} onClose={handleOpen}>
 			<DialogTitle>Unlock data?</DialogTitle>
@@ -54,7 +61,11 @@ const UnlockDialog = (props: UnlockDialogProps) => {
 				<DialogContentText>
 					Jika Ingin membuka kunci data silahkan ketik kode berikut
 					<br />
-					<Chip label={`UNLOCK-${data?.id}`} variant="filled" color="error" />
+					<Chip
+						label={`UNLOCK-${data?.id}`}
+						variant="filled"
+						color="error"
+					/>
 				</DialogContentText>
 				<TextField
 					autoFocus

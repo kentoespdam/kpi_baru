@@ -5,10 +5,15 @@ import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
 import Tooltip from "@mui/material/Tooltip";
 import {
+	TransKpiQKeyProps,
+	TransKpiWithAudit,
+} from "@myTypes/entity/trans.kpi";
+import {
 	TransPerilakuQKeyProps,
 	TransPerilaku,
 } from "@myTypes/entity/trans.perilaku";
 import { TransPerilakuNilai } from "@myTypes/entity/trans.perilaku.nilai";
+import { ACCEPTED_STATUS, AcceptedStatus } from "@myTypes/index";
 import { useViewFormPerilakuDialogStore } from "@store/dialog/view.form.perilaku";
 import { useQueryClient } from "@tanstack/react-query";
 import dynamic from "next/dynamic";
@@ -18,9 +23,10 @@ type PerilakuActionProps = {
 	perilaku: TransPerilakuNilai;
 	nipam: string | null;
 	levelId: number | null;
+	lockedStatus?: AcceptedStatus;
 };
 const PerilakuAction = (props: PerilakuActionProps) => {
-	const { perilaku, nipam, levelId } = props;
+	const { perilaku, nipam, levelId, lockedStatus } = props;
 	const { toggleFormPerilakuOpen, setNipam, setLevelId } =
 		useViewFormPerilakuDialogStore();
 
@@ -32,16 +38,20 @@ const PerilakuAction = (props: PerilakuActionProps) => {
 
 	return (
 		<CellBuilder bordered>
-			<Tooltip title="Edit Nilai Perilaku Staff" followCursor>
-				<IconButton onClick={editHandler} color="warning">
-					<EditIcon />
-				</IconButton>
-			</Tooltip>
+			{lockedStatus === ACCEPTED_STATUS.ADMIN ||
+			lockedStatus === ACCEPTED_STATUS.ATASAN ? null : (
+				<Tooltip title="Edit Nilai Perilaku Staff" followCursor>
+					<IconButton onClick={editHandler} color="warning">
+						<EditIcon />
+					</IconButton>
+				</Tooltip>
+			)}
 		</CellBuilder>
 	);
 };
 
 type TransPerilakuTableBodyProps = {
+	queryKeyKpi: (string | TransKpiQKeyProps)[];
 	queryKey: (string | TransPerilakuQKeyProps)[];
 };
 const TransPerilakuTableBody = (props: TransPerilakuTableBodyProps) => {
@@ -51,6 +61,8 @@ const TransPerilakuTableBody = (props: TransPerilakuTableBodyProps) => {
 
 	const qc = useQueryClient();
 	const data = qc.getQueryData<TransPerilaku>(props.queryKey);
+	const dataKpi = qc.getQueryData<TransKpiWithAudit>(props.queryKeyKpi);
+	const lockedStatus = dataKpi?.lockedStatus;
 
 	let urut = 1;
 
@@ -72,6 +84,7 @@ const TransPerilakuTableBody = (props: TransPerilakuTableBodyProps) => {
 						perilaku={row}
 						nipam={nipamStaff}
 						levelId={levelStaff ?? null}
+						lockedStatus={lockedStatus}
 					/>
 				</TableRow>
 			))}

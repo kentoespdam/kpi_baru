@@ -20,6 +20,7 @@ const ViewFormKinerjaDialog = (props: {
 		isFormKinerjaOpen: isFormOpen,
 		toggleFormKinerjaOpen: toggleFormOpen,
 	} = useViewFormKinerjaDialogStore();
+
 	return (
 		<Dialog
 			open={isFormOpen}

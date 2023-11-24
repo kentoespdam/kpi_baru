@@ -9,23 +9,17 @@ import { useQueryClient } from "@tanstack/react-query";
 import dynamic from "next/dynamic";
 import TransPerilakuTableFooter from "./footer";
 import TransPerilakuTableHead from "./head";
+import { TransKpiQKeyProps } from "@myTypes/entity/trans.kpi";
+import { TransPerilakuQKeyProps } from "@myTypes/entity/trans.perilaku";
 const TransPerilakuTableBody = dynamic(() => import("./body"));
 
-const TransPerilakuTable = () => {
-	const periode = useTransKpiStore((state) => state.periode);
-	const nipamStaff = useTransKinerjaStore((state) => state.nipamStaff);
-	const levelStaff = useTransPerilakuStore((state) => state.levelStaff);
-
-	const queryKey = [
-		"trans.perilaku.bawahan",
-		{
-			nipam: nipamStaff,
-			periode: periode?.periode,
-			levelId: levelStaff,
-		},
-	];
+type TransPerilakuTableProps = {
+	queryKeyKpi: (string | TransKpiQKeyProps)[];
+	queryKeyPerilaku: (string | TransPerilakuQKeyProps)[];
+};
+const TransPerilakuTable = (props: TransPerilakuTableProps) => {
 	const qc = useQueryClient();
-	const qStatus = qc.getQueryState(queryKey);
+	const qStatus = qc.getQueryState(props.queryKeyPerilaku);
 
 	return (
 		<TableContainer>
@@ -41,9 +35,12 @@ const TransPerilakuTable = () => {
 				) : qStatus?.error ? (
 					<TableLoading colSpan={5} error />
 				) : (
-					<TransPerilakuTableBody queryKey={queryKey} />
+					<TransPerilakuTableBody
+						queryKeyKpi={props.queryKeyKpi}
+						queryKey={props.queryKeyPerilaku}
+					/>
 				)}
-				<TransPerilakuTableFooter queryKey={queryKey} />
+				<TransPerilakuTableFooter queryKey={props.queryKeyPerilaku} />
 			</Table>
 		</TableContainer>
 	);

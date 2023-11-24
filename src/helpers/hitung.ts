@@ -40,12 +40,14 @@ export const hitungNilaiWaktu = (
 	} else {
 		waktuTime = new Date(waktu).getTime();
 	}
+
 	const capWaktuTime = new Date(`${capaianWaktu} 00:00:00`).getTime();
 	const selisih = capWaktuTime - waktuTime;
 	const selisihHari = selisih / (1000 * 3600 * 24);
 	if (selisihHari >= 5) return 0;
-	if (selisihHari <= -5) return 1.5;
+	if (selisihHari < -5) return 1.5;
 	const nilaiWaktu = 1 - selisihHari * 0.1;
+
 	return nilaiWaktu;
 };
 
