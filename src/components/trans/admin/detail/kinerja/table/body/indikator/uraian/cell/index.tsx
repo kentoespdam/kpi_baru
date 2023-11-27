@@ -58,13 +58,13 @@ const KpiAdminKinerjaTableBodyUraianCell = (
 			<CellBuilder value={uraian.nilaiTotalUraian} bordered percent />
 			<TableCell sx={{ border: `1px solid ${theme.palette.divider}` }}>
 				<Stack direction="row">
-					{lockedStatus === ACCEPTED_STATUS.UNLOCKED ? (
+					{lockedStatus === ACCEPTED_STATUS.ADMIN ? null : (
 						<Tooltip title="Edit Uraian KPI Bawahan" followCursor>
 							<IconButton onClick={editHandler} color="warning">
 								<EditIcon />
 							</IconButton>
 						</Tooltip>
-					) : null}
+					)}
 					{fileList.length > 0 ? (
 						<ViewBtn
 							fileList={fileList}
