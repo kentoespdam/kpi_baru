@@ -60,7 +60,7 @@ const LockDialog = (props: LockDialogProps) => {
 	const doLock = async () =>
 		mutation.mutate({
 			id: Number(data?.id),
-			lockedStatus: acceptedStatusRef.current!.value as AcceptedStatus,
+			lockedStatus: acceptedStatusRef.current?.value as AcceptedStatus,
 		});
 
 	return (
