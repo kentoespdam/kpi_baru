@@ -21,7 +21,7 @@ import KpiAdminPerilaku from "./perilaku";
 import KpiAdminSkor from "./skor";
 
 const tabProps = (index: number) => {
-	return { "id": `tab-${index}`, "aria-controls": `tabpanel-${index}` };
+	return { id: `tab-${index}`, "aria-controls": `tabpanel-${index}` };
 };
 
 type KpiAdminTabProps = {
@@ -86,10 +86,9 @@ const KpiAdminDetail = (props: KpiAdminTabProps) => {
 		) {
 			handleLockOpen();
 			return;
-		} else {
-			handleUnlockOpen();
-			return;
 		}
+		handleUnlockOpen();
+		return;
 	};
 
 	let lockColor: "success" | "warning" | "error";
@@ -130,8 +129,7 @@ const KpiAdminDetail = (props: KpiAdminTabProps) => {
 						aria-controls="tabpanel-0"
 						label={queries[0].data?.lockedStatus}
 						color={
-							queries[0].data?.lockedStatus ===
-							ACCEPTED_STATUS.UNLOCKED
+							queries[0].data?.lockedStatus === ACCEPTED_STATUS.UNLOCKED
 								? "success"
 								: "error"
 						}
@@ -148,11 +146,7 @@ const KpiAdminDetail = (props: KpiAdminTabProps) => {
 				</Tooltip>
 			</Tabs>
 			<TransKpiTabPanel value={tabIndex} index={0}>
-				<KpiAdminKinerja
-					nipam={_nipam}
-					kpiId={_kpiId}
-					periode={periode}
-				/>
+				<KpiAdminKinerja nipam={_nipam} kpiId={_kpiId} periode={periode} />
 			</TransKpiTabPanel>
 			<TransKpiTabPanel value={tabIndex} index={1}>
 				<KpiAdminPerilaku
