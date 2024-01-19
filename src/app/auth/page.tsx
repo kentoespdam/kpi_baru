@@ -1,9 +1,26 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from "@components/ui/button";
+import { Input } from "@components/ui/input";
+import React, { FormEvent, useRef } from "react";
+// import { doLogin } from "./action";
+import { account } from "@lib/appwrite";
 
 const Auth = () => {
+	const emailRef = useRef<HTMLInputElement>(null);
+	const passwordRef = useRef<HTMLInputElement>(null);
+
+	const createSessionEmail = async (e: FormEvent) => {
+		e.preventDefault();
+		const email = emailRef.current?.value;
+		const password = passwordRef.current?.value;
+		if (email && password) {
+			const res = await account.createEmailSession(email, password);
+			console.log(res);
+		}
+	};
+
 	return (
 		<section className="bg-gray-50 dark:bg-gray-900">
 			<div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -25,7 +42,10 @@ const Auth = () => {
 						<h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
 							Sign in to your account
 						</h1>
-						<form className="space-y-4 md:space-y-6" action="#">
+						<form
+							className="space-y-4 md:space-y-6"
+							onSubmit={createSessionEmail}
+						>
 							<div>
 								<label
 									htmlFor="email"
@@ -34,6 +54,7 @@ const Auth = () => {
 									Your email
 								</label>
 								<Input
+									ref={emailRef}
 									type="email"
 									name="email"
 									id="email"
@@ -50,6 +71,7 @@ const Auth = () => {
 									Password
 								</label>
 								<Input
+									ref={passwordRef}
 									type="password"
 									name="password"
 									id="password"
@@ -58,10 +80,7 @@ const Auth = () => {
 									required
 								/>
 							</div>
-
-							<Button className="w-full focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-								Sign in
-							</Button>
+							<Button title="Sign In">LOGIN</Button>
 						</form>
 					</div>
 				</div>
