@@ -1,39 +1,41 @@
 import { responseNoContent } from "@helper/error/nocontent";
 import { getCurrentToken, appwriteHeader } from "@helper/index";
 import { REMOTE_BRIDGE_KPI } from "@myTypes/entity/bridge.kpi";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { NextRequest } from "next/server";
 
 export const revalidate = 0;
 
 export const GET = async (
 	req: NextRequest,
-	{ params }: { params: { nipam: number } }
+	{ params }: { params: { nipam: number } },
 ) => {
 	const { nipam } = params;
 	const cookie = req.cookies;
 
 	try {
 		const token = await getCurrentToken(cookie);
+		console.log(token);
 		const { status, data } = await axios.get(
 			`${REMOTE_BRIDGE_KPI}/${nipam}/nipam`,
 			{
 				headers: {
 					"Content-Type": "application/json",
-					"Authorization": token,
+					Authorization: token,
 				},
-			}
+			},
 		);
 		if (status === 204) return responseNoContent();
 		return new Response(JSON.stringify(data), { status: status });
-	} catch (e: any) {
+	} catch (e) {
+		const error = e as AxiosError;
 		console.log(
 			"api.bridge.kpi.get.id",
 			new Date().toString(),
-			e.response.data
+			error.response?.data,
 		);
-		return new Response(JSON.stringify(e.response.data), {
-			status: e.response.status,
+		return new Response(JSON.stringify(error.response?.data), {
+			status: error.response?.status,
 		});
 	}
 };

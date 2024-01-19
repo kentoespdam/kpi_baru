@@ -21,7 +21,7 @@ export const POST = async (req: Request) => {
 				}),
 				{
 					status: 400,
-				}
+				},
 			);
 		}
 		const { data, status, headers } = await axios.post(
@@ -32,7 +32,7 @@ export const POST = async (req: Request) => {
 					"Content-Type": "application/json",
 					"X-Appwrite-Project": APPWRITE_PROJECT_ID,
 				},
-			}
+			},
 		);
 
 		const setCookie = headers["set-cookie"];
@@ -41,6 +41,7 @@ export const POST = async (req: Request) => {
 			await createToken(fallbackCookie[sessionNames[0]]),
 			await getAccount(fallbackCookie[sessionNames[0]]),
 		]);
+		// biome-ignore lint/style/noNonNullAssertion: <explanation>
 		const newCookies = newSetCookies(setCookie!.join(","), hostname);
 		const user: SessionUser = {
 			$id: data.$id,
@@ -55,12 +56,9 @@ export const POST = async (req: Request) => {
 				"Set-Cookie": `${newCookies}, ${token}`,
 			},
 		});
+		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 	} catch (e: any) {
-		console.log(
-			"api.auth.post:",
-			new Date().toLocaleString(),
-			e.response.data
-		);
+		console.log("api.auth.post:", new Date().toLocaleString(), e.respone.data);
 		return new Response(JSON.stringify(e.response.data), {
 			status: e.response.status,
 		});

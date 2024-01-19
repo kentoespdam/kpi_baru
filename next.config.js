@@ -3,7 +3,7 @@ const nextConfig = {
 	// experimental: {
 	// 	appDir: true,
 	// },
-	output: "standalone",
+	// output: "standalone",
 	webpack: (config, options) => {
 		config.module.rules.push({
 			test: /\.node$/,

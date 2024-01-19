@@ -16,7 +16,7 @@ export const GET = async (req: NextRequest) => {
 			{
 				headers: {
 					"Content-Type": "application/json",
-					"Authorization": token,
+					Authorization: token,
 				},
 			}
 		);
@@ -26,7 +26,8 @@ export const GET = async (req: NextRequest) => {
 		data.data = bridgePerilakuList;
 
 		return new Response(JSON.stringify(data), { status });
-	} catch (e: any) {
+	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+}  catch (e: any) {
 		console.log(
 			"api.bridge.perilaku.list",
 			new Date().toString(),

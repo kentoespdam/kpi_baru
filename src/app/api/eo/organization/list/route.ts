@@ -16,7 +16,7 @@ export const GET = async (req: NextRequest) => {
 			{
 				headers: {
 					"Content-Type": "application/json",
-					"Authorization": token,
+					Authorization: token,
 				},
 			}
 		);
@@ -24,7 +24,8 @@ export const GET = async (req: NextRequest) => {
 		return new Response(JSON.stringify(data), {
 			status,
 		});
-	} catch (e: any) {
+	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+}  catch (e: any) {
 		console.log(
 			"api.eo.organization.list.get",
 			new Date().toString(),

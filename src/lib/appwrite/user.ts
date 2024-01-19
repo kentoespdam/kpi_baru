@@ -26,7 +26,7 @@ export const createUserAccount = async (account: {
 					"X-Appwrite-Project": APPWRITE_PROJECT_ID,
 					"X-Appwrite-Key": APPWRITE_API_KEY,
 				},
-			}
+			},
 		);
 
 		data.prefs = await updateRoleUser(data.$id, defaultRoles);
@@ -35,7 +35,7 @@ export const createUserAccount = async (account: {
 		console.log(
 			"lib.appwrite.create.user.account",
 			new Date().toISOString(),
-			e
+			e,
 		);
 		return null;
 	}
@@ -56,7 +56,7 @@ export const getAllUser = async () => {
 		console.log(
 			"lib.appwrite.getAllUser",
 			new Date().toISOString(),
-			e.response.data
+			e.response.data,
 		);
 		return null;
 	}
@@ -64,24 +64,17 @@ export const getAllUser = async () => {
 
 export const getUserByNipam = async (nipam: string) => {
 	try {
-		const { data } = await axios.get(
-			`${APPWRITE_ENDPOINT}/v1/users/${nipam}`,
-			{
-				headers: {
-					"Content-Type": "application/json",
-					"X-Appwrite-Response-Format": "1.0.0",
-					"X-Appwrite-Project": APPWRITE_PROJECT_ID,
-					"X-Appwrite-Key": APPWRITE_API_KEY,
-				},
-			}
-		);
+		const { data } = await axios.get(`${APPWRITE_ENDPOINT}/v1/users/${nipam}`, {
+			headers: {
+				"Content-Type": "application/json",
+				"X-Appwrite-Response-Format": "1.0.0",
+				"X-Appwrite-Project": APPWRITE_PROJECT_ID,
+				"X-Appwrite-Key": APPWRITE_API_KEY,
+			},
+		});
 		return data;
 	} catch (e: any) {
-		console.log(
-			"li.appwrite.getUserByNipam",
-			new Date().toISOString(),
-			e.response.data
-		);
+		console.log("li.appwrite.getUserByNipam", new Date().toISOString(), e);
 		return null;
 	}
 };
@@ -91,7 +84,7 @@ export const getPrefsInUser = async (nipams: string[]) => {
 		nipams.map(async (nipam) => {
 			const user = await getPrefs(nipam);
 			return { nipam: nipam, roles: user?.roles };
-		})
+		}),
 	);
 };
 
@@ -106,7 +99,7 @@ export const getPrefs = async (id: string) => {
 					"X-Appwrite-Project": APPWRITE_PROJECT_ID,
 					"X-Appwrite-Key": APPWRITE_API_KEY,
 				},
-			}
+			},
 		);
 		return data;
 	} catch (e: any) {
@@ -114,7 +107,7 @@ export const getPrefs = async (id: string) => {
 			"api.user.get.prefs",
 			new Date().toLocaleString(),
 			e.response.data.message,
-			id
+			id,
 		);
 		throw new Error(e.response.data.message);
 	}
@@ -135,14 +128,14 @@ export const updateRoleUser = async (id: string, roles: string[]) => {
 					"X-Appwrite-Project": APPWRITE_PROJECT_ID,
 					"X-Appwrite-Key": APPWRITE_API_KEY,
 				},
-			}
+			},
 		);
 		return new Response(JSON.stringify(data), { status });
 	} catch (e: any) {
 		console.log(
 			"api.user.update.pref",
 			new Date().toLocaleString(),
-			e.response.data
+			e.response.data,
 		);
 		return new Response(JSON.stringify(e.response.data), {
 			status: e.response.status,

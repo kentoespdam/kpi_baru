@@ -10,30 +10,32 @@ import { createToken } from "src/lib/appwrite";
 
 export const getSessionCookie = (cookies: RequestCookies) => {
 	const sess =
-		cookies.get(sessionNames[0])?.value ||
-		cookies.get(sessionNames[1])?.value;
+		cookies.get(sessionNames[0])?.value || cookies.get(sessionNames[1])?.value;
 	return sess;
 };
 
 export const xfallback = (
-	sessCookie: RequestCookies | ReadonlyRequestCookies
-) =>
-	sessCookie.get(sessionNames[0])?.value ||
-	sessCookie.get(sessionNames[1])?.value ||
-	"";
+	sessCookie: RequestCookies | ReadonlyRequestCookies,
+) => {
+	return (
+		sessCookie.get(sessionNames[0])?.value ||
+		sessCookie.get(sessionNames[1])?.value ||
+		""
+	);
+};
 
 export const appwriteHeader = (
 	sessCookie: string | RequestCookies | ReadonlyRequestCookies,
 	token?: string,
-	contentType?: string
+	contentType?: string,
 ) => {
-	let header;
+	let header = {};
 	switch (typeof sessCookie) {
 		case "object":
 			header = {
 				"X-Appwrite-Project": APPWRITE_PROJECT_ID,
 				"Content-Type": contentType ? contentType : "application/json",
-				"Cookie": sessCookie.toString(),
+				Cookie: sessCookie.toString(),
 				"X-Fallback-Cookies": xfallback(sessCookie),
 				"X-Appwrite-key": APPWRITE_API_KEY,
 			};
@@ -42,7 +44,7 @@ export const appwriteHeader = (
 			header = {
 				"X-Appwrite-Project": APPWRITE_PROJECT_ID,
 				"Content-Type": contentType ? contentType : "application/json",
-				"Cookie": `${sessionNames[0]}=${sessCookie}`,
+				Cookie: `${sessionNames[0]}=${sessCookie}`,
 				"X-Fallback-Cookies": sessCookie,
 				"X-Appwrite-key": APPWRITE_API_KEY,
 			};
@@ -54,19 +56,19 @@ export const appwriteHeader = (
 };
 
 export const newHostname = (hostname?: string) =>
-	hostname === "localhost" ? hostname : "." + hostname;
+	hostname === "localhost" ? hostname : `.${hostname}`;
 // APP_HOSTNAME === "localhost" ? APP_HOSTNAME : "";
 
 export const newSetCookies = (cookieString: string, hostname?: string) => {
 	// let cookie = cookieString.split("." + APPWRITE_HOSTNAME).join(newHostname);
-	let cookie = cookieString
-		.split("." + APPWRITE_HOSTNAME)
+	const cookie = cookieString
+		.split(`.${APPWRITE_HOSTNAME}`)
 		.join(newHostname(hostname));
 	return cookie;
 };
 
 export const getCurrentToken = async (
-	cookies: RequestCookies | ReadonlyRequestCookies
+	cookies: RequestCookies | ReadonlyRequestCookies,
 ) => {
 	const cookieToken = cookies.get(sessionNames[2])?.value;
 	if (cookieToken) return cookieToken;
@@ -83,12 +85,12 @@ export const getExpToken = (token: string) => {
 
 export const setExpiredCookie = (
 	cookies: RequestCookies,
-	hostname?: string
+	hostname?: string,
 ) => {
 	if (cookies.size === 0) return "";
 	const expiredCookie = cookies.getAll().map((cookie) => {
 		cookie.value += `; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=${newHostname(
-			hostname
+			hostname,
 		)}; secure; httponly`;
 		return `${cookie.name}=${cookie.value}`;
 	});
@@ -98,9 +100,9 @@ export const setExpiredCookie = (
 
 export const setCookieToken = (token: string, hostname?: string) => {
 	const resCookie = `${sessionNames[2]}=${token}; domain=${newHostname(
-		hostname
+		hostname,
 	)}; expires=${new Date(
-		getExpToken(token)
+		getExpToken(token),
 	)}; path=/; httponly; SameSite=none; Secure`;
 	return resCookie;
 };

@@ -81,11 +81,11 @@ const getSession = async (cookies: RequestCookies) => {
 		const headers = {
 			"Content-Type": "application/json",
 			"X-Appwrite-Project": APPWRITE_PROJECT_ID,
-			"Cookie": decodedCookie,
+			Cookie: decodedCookie,
 			"X-Fallback-Cookies": cookieFallback,
 		};
 
-		const req = await fetch(`http://localhost:3000/api/auth/session`, {
+		const req = await fetch("http://localhost:3000/api/auth/session", {
 			headers: headers,
 		});
 
@@ -94,7 +94,7 @@ const getSession = async (cookies: RequestCookies) => {
 			useSessionStore.setState({ user: data });
 
 		return req.status === 200 ? true : false;
-	} catch (e: any) {
+	} catch (e) {
 		console.log("middleware get session:", e);
 	}
 };
@@ -109,7 +109,7 @@ const createToken = async (cookies: RequestCookies) => {
 		const headers = {
 			"Content-Type": "application/json",
 			"X-Appwrite-Project": APPWRITE_PROJECT_ID,
-			"Cookie": decodedCookie,
+			Cookie: decodedCookie,
 			"X-Fallback-Cookies": cookieFallback,
 		};
 		const req = await fetch(`${APPWRITE_ENDPOINT}/v1/account/jwt`, {
@@ -121,7 +121,7 @@ const createToken = async (cookies: RequestCookies) => {
 
 		const data = await req.json();
 		return data.jwt;
-	} catch (e: any) {
+	} catch (e) {
 		console.log("middleware create token", e);
 	}
 };
