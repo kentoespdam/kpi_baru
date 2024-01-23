@@ -1,4 +1,5 @@
 import { type ClassValue, clsx } from "clsx";
+import Cryptr from "cryptr";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -21,3 +22,5 @@ export const sessionNames = [
 
 export const DEFAULT_MAIL_DOMAIN = `${process.env.DEFAULT_MAIL_DOMAIN}`;
 export const AUTH_SECRET = `${process.env.AUTH_SECRET}`;
+
+export const cryptr = new Cryptr(AUTH_SECRET);

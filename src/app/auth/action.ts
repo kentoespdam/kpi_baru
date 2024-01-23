@@ -3,7 +3,7 @@
 import { userToEmail } from "@helpers/email";
 import { AxiosErrorData, cookieStringToObject } from "@helpers/index";
 import { getUserByNipam } from "@lib/appwrite/user";
-import { authUrl, projectId } from "@utils/index";
+import { DEFAULT_MAIL_DOMAIN, authUrl, projectId } from "@utils/index";
 import axios, { AxiosError } from "axios";
 import { cookies, headers } from "next/headers";
 
@@ -27,7 +27,7 @@ export const doLogin = async (_prevState: unknown, formData: FormData) => {
 		const { headers } = await axios.post(
 			authUrl,
 			{
-				email: email,
+				email: username[1]?username:`${username}@${DEFAULT_MAIL_DOMAIN}`,
 				password: password,
 			},
 			{

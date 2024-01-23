@@ -54,7 +54,6 @@ export async function middleware(req: NextRequest) {
 
 	if (!isHasTokenCookie(cookies)) {
 		const token = await renewToken(cookies, host);
-		console.log(token);
 		response.cookies.set(token.name, token.value, token);
 	}
 
