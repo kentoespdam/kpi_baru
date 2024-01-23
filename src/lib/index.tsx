@@ -1,4 +1,4 @@
-import { USER_ROLE, UserRole } from "@utils/index";
+import { USER_ROLE, UserRole } from "@tipes/index";
 import {
     AudioLinesIcon, CandlestickChartIcon, ComponentIcon,
     HomeIcon, PencilLineIcon, Rotate3DIcon, ShieldCheckIcon,

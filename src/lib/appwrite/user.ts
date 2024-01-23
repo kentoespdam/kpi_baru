@@ -4,6 +4,7 @@ import {
 	getExpToken,
 	newHostname,
 } from "@helpers/index";
+import { useSessionStore } from "@store/main/session";
 import {
 	appwriteKey,
 	baseAuthUrl,
@@ -94,6 +95,7 @@ export const getCurrentAccount = async (
 		const { data } = await axios.get(`${baseAuthUrl}/account`, {
 			headers: headers,
 		});
+		useSessionStore.setState({ account: data });
 		return data;
 	} catch (e) {
 		const err = e as unknown as AxiosError;

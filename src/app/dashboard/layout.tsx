@@ -1,17 +1,18 @@
-import ThemeProvider from "@components/providers/theme";
 import TopBarComponent from "@components/template/topbar";
 import MenuCommand from "@components/template/topbar/menuCommand";
-import { Separator } from "@components/ui/separator";
+import { getCurrentAccount } from "@lib/appwrite/user";
 import { ChildrenNode } from "@lib/index";
+import { useSessionStore } from "@store/main/session";
 import { cookies } from "next/headers";
 
 const DashboardLayout = async ({ children }: ChildrenNode) => {
     const cookieList = cookies()
-    // const account = await getCurrentAccount(cookieList)
+    const account = await getCurrentAccount(cookieList)
+
     return (
         <div className="min-h-screen min-w-screen">
-            <div className="border-red-600 flex flex-col pb-10">
-                <TopBarComponent />
+            <div className="border-red-600 pb-10">
+                <TopBarComponent account={account} />
                 <div className="h-full flex items justify-between">
                     <div className="min-h-full">
                         <MenuCommand />

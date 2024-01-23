@@ -7,7 +7,7 @@ import {
 	isValidIpAddress,
 	newHostname,
 } from "./helpers";
-import { baseAuthUrl, publicUrl, sessionNames } from "./utils";
+import { baseAuthUrl, sessionNames } from "./utils";
 import {
 	RequestCookie,
 	RequestCookies,
@@ -23,7 +23,7 @@ export async function middleware(req: NextRequest) {
 		return NextResponse.redirect(
 			new URL(
 				`/auth?callbackUrl=${encodeURIComponent(req.nextUrl.href)}`,
-				publicUrl,
+				req.nextUrl.origin,
 			),
 			{
 				headers: {
@@ -42,7 +42,7 @@ export async function middleware(req: NextRequest) {
 		return NextResponse.redirect(
 			new URL(
 				`/auth?callbackUrl=${encodeURIComponent(req.nextUrl.href)}`,
-				publicUrl,
+				req.nextUrl.origin,
 			),
 			{
 				headers: {

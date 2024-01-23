@@ -45,10 +45,14 @@ export const xFallbackFromCookie = (
 	return `{"${sessionNames[0]}":"${currentCookie}"}`;
 };
 
+export const extractTokenData = (token: string) => {
+	const tokenParts = token.split(".");
+	return JSON.parse(atob(tokenParts[1]));
+};
+
 export const getExpToken = (token: string) => {
 	if (!token) return 0;
-	const tokenParts = token.split(".");
-	const tokenBody = JSON.parse(atob(tokenParts[1]));
+	const tokenBody = extractTokenData(token);
 	return tokenBody.exp * 1000 - 60000;
 };
 

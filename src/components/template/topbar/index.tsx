@@ -1,10 +1,21 @@
 "use client"
+import { Account } from "appwrite";
 import ProfilComponent from "./profile";
 import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/avatar";
+import { useSessionStore } from "@store/main/session";
+import useStore from "@store/main/nextSessionClient";
 
-const TopBarComponent = () => {
+type TopBarComponentProps = {
+    account: Account
+}
+const TopBarComponent = (props: TopBarComponentProps) => {
+    // const user = useStore(useSessionStore, state => state.user)
+    useSessionStore.getState().setAccount(props.account)
+    const account = useStore(useSessionStore, state => state.account)
+
     return (
         <div className="border">
+            {JSON.stringify(account)}
             <div className="mx-auto max-w-7x1 px-2 sm:px-4 lg:px-4 mr-2">
                 <div className="flex h-12 items-center justify-between">
                     <div className="mt-5 flex items-center justify-between gap-4">
