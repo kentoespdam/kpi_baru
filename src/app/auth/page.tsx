@@ -1,26 +1,22 @@
-"use client";
+// "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "@components/ui/button";
-import { Input } from "@components/ui/input";
-import React, { FormEvent, useRef } from "react";
-// import { doLogin } from "./action";
-import { account } from "@lib/appwrite";
+import React, { } from "react";
+import Login from "./login";
+import { z } from "zod";
+import { cookies } from "next/headers";
+import { getCUrrentSession } from "@lib/appwrite/user";
+import { redirect } from "next/navigation";
 
-const Auth = () => {
-	const emailRef = useRef<HTMLInputElement>(null);
-	const passwordRef = useRef<HTMLInputElement>(null);
+export const signInSchema = z.object({
+	email: z.string().email(),
+	password: z.string().min(8),
+});
 
-	const createSessionEmail = async (e: FormEvent) => {
-		e.preventDefault();
-		const email = emailRef.current?.value;
-		const password = passwordRef.current?.value;
-		if (email && password) {
-			const res = await account.createEmailSession(email, password);
-			console.log(res);
-		}
-	};
-
+const Auth = async () => {
+	const cookieList = cookies();
+	const currentSession = await getCUrrentSession(cookieList);
+	if (currentSession) redirect(`${cookieList.get("callback_url")?.value}`)
 	return (
 		<section className="bg-gray-50 dark:bg-gray-900">
 			<div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -42,46 +38,7 @@ const Auth = () => {
 						<h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
 							Sign in to your account
 						</h1>
-						<form
-							className="space-y-4 md:space-y-6"
-							onSubmit={createSessionEmail}
-						>
-							<div>
-								<label
-									htmlFor="email"
-									className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-								>
-									Your email
-								</label>
-								<Input
-									ref={emailRef}
-									type="email"
-									name="email"
-									id="email"
-									className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-									placeholder="name@company.com"
-									required
-								/>
-							</div>
-							<div>
-								<label
-									htmlFor="password"
-									className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-								>
-									Password
-								</label>
-								<Input
-									ref={passwordRef}
-									type="password"
-									name="password"
-									id="password"
-									placeholder="••••••••"
-									className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-									required
-								/>
-							</div>
-							<Button title="Sign In">LOGIN</Button>
-						</form>
+						<Login />
 					</div>
 				</div>
 			</div>

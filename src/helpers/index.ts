@@ -1,0 +1,154 @@
+import {
+	appwriteKey,
+	authHostname,
+	projectId,
+	sessionNames,
+} from "@utils/index";
+import {
+	RequestCookie,
+	RequestCookies,
+} from "next/dist/compiled/@edge-runtime/cookies";
+import { ReadonlyHeaders } from "next/dist/server/web/spec-extension/adapters/headers";
+import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
+import { cookies } from "next/headers";
+
+export const isValidIpAddress = (ipAddress?: string) => {
+	if (
+		ipAddress &&
+		/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(
+			ipAddress,
+		)
+	) {
+		return true;
+	}
+	return false;
+};
+
+export const newHostname = (hostname?: string) =>
+	hostname === "localhost"
+		? hostname
+		: isValidIpAddress(hostname)
+		  ? undefined
+		  : `.${hostname}`;
+
+export const newSetCookies = (cookieString: string, hostname?: string) =>
+	cookieString.split(`.${authHostname}`).join(newHostname(hostname));
+
+export const xFallbackFromCookie = (
+	cookies: RequestCookies | ReadonlyRequestCookies,
+) => {
+	const currentCookie =
+		`${cookies.get(sessionNames[0])?.value}` ||
+		`${cookies.get(sessionNames[1])}` ||
+		"";
+
+	return `{"${sessionNames[0]}":"${currentCookie}"}`;
+};
+
+export const getExpToken = (token: string) => {
+	if (!token) return 0;
+	const tokenParts = token.split(".");
+	const tokenBody = JSON.parse(atob(tokenParts[1]));
+	return tokenBody.exp * 1000 - 60000;
+};
+
+export const appwriteHeader = (
+	sessCookie: string | RequestCookies | ReadonlyRequestCookies,
+	token?: string,
+	contentType?: string,
+) => {
+	const headers = {
+		"Content-Type": contentType ? contentType : "application/json",
+		"X-Appwrite-Response-Format": "1.0.0",
+		Cookie: sessCookie.toString(),
+		"X-Appwrite-Project": projectId,
+		"X-Appwrite-key": appwriteKey,
+	};
+
+	if (token) {
+		Object.assign(headers, { "X-Appwrite-JWT": token });
+		return headers;
+	}
+
+	switch (typeof sessCookie) {
+		case "object":
+			Object.assign(headers, {
+				Cookie: sessCookie.toString(),
+				"X-Fallback-Cookies": xFallbackFromCookie(sessCookie),
+			});
+			return headers;
+		default:
+			Object.assign(headers, {
+				Cookie: sessCookie,
+				"X-Fallback-Cookies": sessCookie,
+			});
+			return headers;
+	}
+};
+
+export const isHasSessionCookie = (cookies: RequestCookies) => {
+	return cookies.has(sessionNames[0]) || cookies.has(sessionNames[1]);
+};
+
+export const isHasTokenCookie = (cookies: RequestCookies) =>
+	cookies.has(sessionNames[2]);
+
+export const cookieStringToObject = (
+	cookieString: string,
+	headers: ReadonlyHeaders,
+): RequestCookie => {
+	const host = headers.get("host") ? headers.get("host")?.split(":")[0] : "";
+	const arrCookie = cookieString.split(";");
+
+	return arrCookie.reduce((acc, cookie) => {
+		const [key, val] = cookie.trim().split("=").map(decodeURIComponent);
+		if (sessionNames.includes(key))
+			return Object.assign(acc, {
+				name: key,
+				value: val,
+			});
+
+		switch (key) {
+			case "expires":
+				return Object.assign(acc, {
+					maxAge: new Date(val).getTime(),
+				});
+			case "domain":
+				return Object.assign(acc, { domain: newHostname(host) });
+			case "secure":
+				if (isValidIpAddress(host)) return acc;
+				return Object.assign(acc, { secure: true });
+			case "httponly":
+				if (isValidIpAddress(host)) return acc;
+				return Object.assign(acc, { httpOnly: true });
+			case "samesite":
+				if (isValidIpAddress(host)) return acc;
+				return Object.assign(acc, { sameSite: val });
+			case "path":
+				return Object.assign(acc, { path: val });
+			case "priority":
+				return Object.assign(acc, { priority: val });
+		}
+
+		try {
+			return Object.assign(acc, { [key]: JSON.parse(val) });
+		} catch (e) {
+			return Object.assign(acc, { [key]: val });
+		}
+	}, {}) as RequestCookie;
+};
+
+export const setAuthCookieHeader = (
+	cookieString: string[],
+	headers?: ReadonlyHeaders,
+) => {
+	const cookieFromReq = cookieString[0].trim().split(";");
+	cookies().set("kpi-session", cookieString[0].split("=")[1], {});
+};
+
+export interface AxiosErrorData {
+	message: string;
+	code: number;
+	type: string;
+	version: string;
+}

@@ -2,10 +2,9 @@
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
-
-import { cn } from "@lib/utils";
-import { useFormStatus } from "react-dom";
+import { cn } from "../../utils";
 import { RefreshCwIcon } from "lucide-react";
+import { useFormStatus } from "react-dom";
 
 const buttonVariants = cva(
 	"inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
@@ -60,6 +59,7 @@ Button.displayName = "Button";
 const LoadingButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
 	({ className, variant, size, asChild = false, ...props }, ref) => {
 		const { pending } = useFormStatus();
+
 		return (
 			<Button
 				className={cn(buttonVariants({ variant, size, className }))}
@@ -73,5 +73,7 @@ const LoadingButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
 		);
 	},
 );
+
+LoadingButton.displayName = "LoadingButton";
 
 export { Button, LoadingButton, buttonVariants };
