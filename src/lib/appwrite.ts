@@ -63,7 +63,7 @@ export const createToken = async (
 
 		return result as RequestCookie;
 	} catch (e) {
-const err = e as unknown as AxiosError;
+		const err = e as unknown as AxiosError;
 		console.log("middleware create token", e);
 		return {} as RequestCookie;
 	}
@@ -106,7 +106,7 @@ export const createTokenLogin = async (
 			new Date().toLocaleString(),
 			err.response?.data,
 		);
-		return null;
+		return {} as RequestCookie;
 	}
 };
 

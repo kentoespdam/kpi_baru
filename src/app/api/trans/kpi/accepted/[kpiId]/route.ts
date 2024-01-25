@@ -2,6 +2,7 @@ import { responseNoContent } from "@helper/error/nocontent";
 import { getCurrentToken } from "@helper/index";
 import { REMOTE_TRANS_LOCK } from "@myTypes/entity/trans.accepted.kpi";
 import axios, { AxiosError } from "axios";
+import { headers } from "next/headers";
 import { NextRequest } from "next/server";
 
 export const PUT = async (
@@ -9,7 +10,8 @@ export const PUT = async (
 	{ params }: { params: { kpiId: number } },
 ) => {
 	const cookies = req.cookies;
-	const hostname = req.nextUrl.hostname;
+	const headerList = headers();
+	const hostname = String(headerList.get("host")).split(":")[0];
 	const { kpiId } = params;
 	const body = await req.json();
 
@@ -46,7 +48,8 @@ export const DELETE = async (
 	{ params }: { params: { kpiId: number } },
 ) => {
 	const cookies = req.cookies;
-	const hostname = req.nextUrl.hostname;
+	const headerList = headers();
+	const hostname = String(headerList.get("host")).split(":")[0];
 	const { kpiId } = params;
 
 	try {

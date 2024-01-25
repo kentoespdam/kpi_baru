@@ -1,6 +1,7 @@
 import { LOCAL_URAIAN_FILE } from "@myTypes/entity/uraian.file";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const getFiles = async (props: any) => {
 	const { queryKey } = props;
 	const id = queryKey[1];
@@ -9,14 +10,14 @@ export const getFiles = async (props: any) => {
 		const { data } = await axios.get(`${LOCAL_URAIAN_FILE}/uraian/${id}`);
 		return data.data;
 	} catch (e) {
-const err = e as unknown as AxiosError;
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.trans.get.id",
 			new Date().toISOString(),
 			err.response?.data,
 		);
 
-		throw new Error(err.response?.data,);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };
 
@@ -38,7 +39,7 @@ export const doUpload = async (formData: {
 			},
 			{
 				headers: {
-					"Accept": "*/*",
+					Accept: "*/*",
 					"Content-Type": "multipart/form-data",
 					"X-Periode": periode,
 					"X-Nipam": nipam,
@@ -46,22 +47,23 @@ export const doUpload = async (formData: {
 				},
 				onUploadProgress: (event) => {
 					console.log(
-						`Current progress:`,
-						Math.round((event.loaded * 100) / event.total!)
+						"Current progress:",
+						// biome-ignore lint/style/noNonNullAssertion: <explanation>
+						Math.round((event.loaded * 100) / event.total!),
 					);
 				},
-			}
+			},
 		);
 		return data.data;
 	} catch (e) {
-const err = e as unknown as AxiosError;
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.trans.file.post",
 			new Date().toISOString(),
 			err.response?.data,
 		);
 
-		throw new Error(err.response?.data,);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };
 
@@ -70,13 +72,13 @@ export const doDelete = async (id: number) => {
 		const { data } = await axios.delete(`${LOCAL_URAIAN_FILE}/${id}`);
 		return data.data;
 	} catch (e) {
-const err = e as unknown as AxiosError;
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.trans.file.delete",
 			new Date().toISOString(),
-			err.response?.data
+			err.response?.data,
 		);
 
-		throw new Error(err.response?.data,);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };

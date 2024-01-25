@@ -4,6 +4,7 @@ import {
 	setExpiredCookie,
 } from "@helper/index";
 import axios from "axios";
+import { headers } from "next/headers";
 import { NextRequest } from "next/server";
 import { APPWRITE_ENDPOINT } from "src/lib";
 
@@ -11,7 +12,8 @@ export const revalidate = false;
 
 export const GET = async (req: NextRequest) => {
 	const cookies = req.cookies;
-	const hostname = req.nextUrl.hostname;
+	const headerList = headers();
+	const hostname = String(headerList.get("host")).split(":")[0];
 
 	try {
 		if (isHasSessionCookie(cookies)) {

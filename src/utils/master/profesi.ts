@@ -1,7 +1,8 @@
 import { LOCAL_PROFESI, ProfesiData } from "@myTypes/entity/profesi";
 import { useProfesiStore } from "@store/filter/master/profesi";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const getPage = async (props: any) => {
 	const { queryKey } = props;
 
@@ -21,20 +22,18 @@ export const getPage = async (props: any) => {
 
 	useProfesiStore.setState({ loading: true });
 	try {
-		const { data } = await axios.get(
-			`${LOCAL_PROFESI}?${params.toString()}`
-		);
+		const { data } = await axios.get(`${LOCAL_PROFESI}?${params.toString()}`);
 		useProfesiStore.setState({ loading: false });
 		return data.data;
 	} catch (e) {
-const err = e as unknown as AxiosError;
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.profesi.page",
 			new Date().toISOString(),
-			err.response?.data
+			err.response?.data,
 		);
 		useProfesiStore.setState({ loading: false });
-		throw new Error(err.response?.data,);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };
 
@@ -43,16 +42,17 @@ export const getList = async () => {
 		const { data } = await axios.get(`${LOCAL_PROFESI}/list`);
 		return data.data;
 	} catch (e) {
-const err = e as unknown as AxiosError;
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.profesi.list",
 			new Date().toISOString(),
-			e.response
+			err.response?.data,
 		);
-		throw new Error(err.response?.data);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const getById = async (props: any) => {
 	const id = props[1];
 	useProfesiStore.setState({ loading: true });
@@ -61,14 +61,14 @@ export const getById = async (props: any) => {
 		useProfesiStore.setState({ loading: false });
 		return data.data;
 	} catch (e) {
-const err = e as unknown as AxiosError;
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.profesi.getById",
 			new Date().toISOString(),
-			err.response?.data
+			err.response?.data,
 		);
 		useProfesiStore.setState({ loading: false });
-		throw new Error(err.response?.data,);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };
 
@@ -81,14 +81,14 @@ export const doSave = async (data: ProfesiData) => {
 		useProfesiStore.setState({ loading: false });
 		return result.data;
 	} catch (e) {
-const err = e as unknown as AxiosError;
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.profesi.save",
 			new Date().toISOString(),
-			err.response?.data
+			err.response?.data,
 		);
 		useProfesiStore.setState({ loading: false });
-		throw new Error(err.response?.data,);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };
 
@@ -99,13 +99,13 @@ export const doDelete = async (id: number) => {
 		useProfesiStore.setState({ loading: false });
 		return result.data;
 	} catch (e) {
-const err = e as unknown as AxiosError;
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.profesi.delete",
 			new Date().toISOString(),
-			err.response?.data
+			err.response?.data,
 		);
 		useProfesiStore.setState({ loading: false });
-		throw new Error(err.response?.data,);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };

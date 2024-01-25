@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 export const getSession = async () => {
 	try {
@@ -6,6 +6,7 @@ export const getSession = async () => {
 		if (status !== 200) throw Error("Unauthorized");
 		return data;
 	} catch (e) {
-		throw Error(JSON.stringify(e.message));
+		const err=e as unknown as AxiosError
+		throw Error(JSON.stringify(err.response?.data));
 	}
 };

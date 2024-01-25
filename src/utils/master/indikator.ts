@@ -6,8 +6,9 @@ import {
 	LOCAL_INDIKATOR,
 } from "@myTypes/entity/indikator";
 import { useIndikatorStore } from "@store/filter/master/indikator";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const getPage = async (props: any): Promise<Indikator[]> => {
 	const { queryKey } = props;
 
@@ -31,22 +32,23 @@ export const getPage = async (props: any): Promise<Indikator[]> => {
 
 	try {
 		const { data } = await axios.get(
-			`${LOCAL_INDIKATOR}/kpi/${filter.kpiId}?${params.toString()}`
+			`${LOCAL_INDIKATOR}/kpi/${filter.kpiId}?${params.toString()}`,
 		);
 		useIndikatorStore.setState({ loading: false });
 		return data.data;
 	} catch (e) {
-const err = e as unknown as AxiosError;
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.indikator.page",
 			new Date().toISOString(),
-			err.response?.data
+			err.response?.data,
 		);
 		useIndikatorStore.setState({ loading: false });
-		throw new Error(err.response?.data);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const getList = async (props: any): Promise<Indikator[]> => {
 	const kpiId = props[1];
 	try {
@@ -54,17 +56,18 @@ export const getList = async (props: any): Promise<Indikator[]> => {
 		useIndikatorStore.setState({ loading: false });
 		return data.data;
 	} catch (e) {
-const err = e as unknown as AxiosError;
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.indikator.page",
 			new Date().toISOString(),
-			err.response?.data
+			err.response?.data,
 		);
 		useIndikatorStore.setState({ loading: false });
-		throw new Error(err.response?.data,);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const getById = async (props: any): Promise<IndikatorWithAudit> => {
 	const id = props[1];
 	useIndikatorStore.setState({ loading: true });
@@ -73,14 +76,14 @@ export const getById = async (props: any): Promise<IndikatorWithAudit> => {
 		useIndikatorStore.setState({ loading: false });
 		return data.data;
 	} catch (e) {
-const err = e as unknown as AxiosError;
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.indikator.getById",
 			new Date().toISOString(),
-			err.response?.data
+			err.response?.data,
 		);
 		useIndikatorStore.setState({ loading: false });
-		throw new Error(err.response?.data,);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };
 
@@ -93,14 +96,14 @@ export const doSave = async (data: IndikatorData) => {
 		useIndikatorStore.setState({ loading: false });
 		return result.data;
 	} catch (e) {
-const err = e as unknown as AxiosError;
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.indikator.save",
 			new Date().toISOString(),
-			err.response?.data
+			err.response?.data,
 		);
 		useIndikatorStore.setState({ loading: false });
-		throw new Error(err.response?.data,);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };
 
@@ -111,13 +114,13 @@ export const doDelete = async (id: number) => {
 		useIndikatorStore.setState({ loading: false });
 		return result.data;
 	} catch (e) {
-const err = e as unknown as AxiosError;
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.indikator.delete",
 			new Date().toISOString(),
-			err.response?.data
+			err.response?.data,
 		);
 		useIndikatorStore.setState({ loading: false });
-		throw new Error(err.response?.data,);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };

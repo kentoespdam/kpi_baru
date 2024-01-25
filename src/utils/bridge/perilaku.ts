@@ -2,7 +2,7 @@ import {
 	BridgePerilakuData,
 	LOCAL_BRIDGE_PERILAKU,
 } from "@myTypes/entity/bridge.perilaku";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 export const getPage = async (props: any) => {
 	const { queryKey } = props;
@@ -26,13 +26,13 @@ export const getPage = async (props: any) => {
 		);
 		return data.data;
 	} catch (e) {
-const err = e as unknown as AxiosError;
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.bridge.perilaku.page",
 			new Date().toISOString(),
 			err.response?.data
 		);
-		throw new Error(err.response?.data,);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };
 export const getList = async () => {};
@@ -42,13 +42,13 @@ export const getById = async (props: any) => {
 		const { data } = await axios.get(`${LOCAL_BRIDGE_PERILAKU}/${id}`);
 		return data.data;
 	} catch (e) {
-const err = e as unknown as AxiosError;
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.bridge.perilaku.id",
 			new Date().toISOString(),
 			err.response?.data
 		);
-		throw new Error(err.response?.data,);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };
 export const doSave = async (data: BridgePerilakuData) => {
@@ -58,13 +58,13 @@ export const doSave = async (data: BridgePerilakuData) => {
 			: await axios.post(LOCAL_BRIDGE_PERILAKU, data);
 		return result.data;
 	} catch (e) {
-const err = e as unknown as AxiosError;
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.bridge.kpi.save",
 			new Date().toISOString(),
 			err.response?.data
 		);
-		throw new Error(err.response?.data,);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };
 export const doDelete = async (id: number) => {
@@ -72,12 +72,12 @@ export const doDelete = async (id: number) => {
 		const { data } = await axios.delete(`${LOCAL_BRIDGE_PERILAKU}/${id}`);
 		return data.data;
 	} catch (e) {
-const err = e as unknown as AxiosError;
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.bridge.kpi.getById",
 			new Date().toISOString(),
 			err.response?.data
 		);
-		throw new Error(err.response?.data,);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };

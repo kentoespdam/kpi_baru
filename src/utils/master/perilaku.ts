@@ -1,7 +1,8 @@
 import { LOCAL_PERILAKU, PerilakuData } from "@myTypes/entity/perilaku";
 import { useGradeStore } from "@store/filter/master/grade";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const getPage = async (props: any) => {
 	const { queryKey } = props;
 
@@ -23,20 +24,18 @@ export const getPage = async (props: any) => {
 	useGradeStore.setState({ loading: true });
 
 	try {
-		const { data } = await axios.get(
-			`${LOCAL_PERILAKU}?${params.toString()}`
-		);
+		const { data } = await axios.get(`${LOCAL_PERILAKU}?${params.toString()}`);
 		useGradeStore.setState({ loading: false });
 		return data.data;
 	} catch (e) {
-const err = e as unknown as AxiosError;
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.perilaku.page",
 			new Date().toISOString(),
-			err.response?.data
+			err.response?.data,
 		);
 		useGradeStore.setState({ loading: false });
-		throw new Error(err.response?.data,);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };
 
@@ -46,17 +45,18 @@ export const getList = async () => {
 		useGradeStore.setState({ loading: false });
 		return data.data;
 	} catch (e) {
-const err = e as unknown as AxiosError;
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.perilaku.page",
 			new Date().toISOString(),
-			err.response?.data
+			err.response?.data,
 		);
 		useGradeStore.setState({ loading: false });
-		throw new Error(err.response?.data,);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const getById = async (props: any) => {
 	const id = props[1];
 	console.log(props);
@@ -65,14 +65,14 @@ export const getById = async (props: any) => {
 		useGradeStore.setState({ loading: false });
 		return data.data;
 	} catch (e) {
-const err = e as unknown as AxiosError;
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.perilaku.getById",
 			new Date().toISOString(),
-			err.response?.data
+			err.response?.data,
 		);
 		useGradeStore.setState({ loading: false });
-		throw new Error(err.response?.data,);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };
 
@@ -85,14 +85,14 @@ export const doSave = async (data: PerilakuData) => {
 		useGradeStore.setState({ loading: false });
 		return result.data;
 	} catch (e) {
-const err = e as unknown as AxiosError;
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.perilaku.save",
 			new Date().toISOString(),
-			err.response?.data
+			err.response?.data,
 		);
 		useGradeStore.setState({ loading: false });
-		throw new Error(err.response?.data,);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };
 
@@ -103,13 +103,13 @@ export const doDelete = async (id: number) => {
 		useGradeStore.setState({ loading: false });
 		return result.data;
 	} catch (e) {
-const err = e as unknown as AxiosError;
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.perilaku.delete",
 			new Date().toISOString(),
-			err.response?.data
+			err.response?.data,
 		);
 		useGradeStore.setState({ loading: false });
-		throw new Error(err.response?.data,);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };

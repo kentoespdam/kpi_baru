@@ -4,11 +4,13 @@ import {
 	REMOTE_BRIDGE_KPI,
 } from "@myTypes/entity/bridge.kpi";
 import axios, { AxiosError } from "axios";
+import { headers } from "next/headers";
 import { NextRequest } from "next/server";
 
 export const GET = async (req: NextRequest) => {
 	const cookie = req.cookies;
-	const hostname = req.nextUrl.hostname;
+	const headerList = headers();
+	const hostname = String(headerList.get("host")).split(":")[0];
 
 	try {
 		const token = await getCurrentToken(cookie, hostname);

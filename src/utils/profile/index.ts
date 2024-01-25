@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 export const createAccount = () => {};
 
@@ -16,12 +16,12 @@ export const updatePassword = async ({
 		});
 		return data.data;
 	} catch (e) {
-const err = e as unknown as AxiosError;
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.profile.update.password",
 			new Date().toISOString(),
 			err.response?.data,
 		);
-		throw new Error(err.response?.data,);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };

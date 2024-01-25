@@ -3,6 +3,7 @@ import { getCurrentToken } from "@helper/index";
 import { DetEmployee } from "@myTypes/entity/det.employee";
 import { Employee, REMOTE_EMPLOYEE } from "@myTypes/entity/employee";
 import axios, { AxiosError } from "axios";
+import { headers } from "next/headers";
 import { NextRequest } from "next/server";
 
 export const GET = async (
@@ -11,7 +12,8 @@ export const GET = async (
 ) => {
 	const { nipam } = params;
 	const cookie = req.cookies;
-	const hostname = req.nextUrl.hostname;
+	const headerList = headers();
+	const hostname = String(headerList.get("host")).split(":")[0];
 
 	try {
 		const token = await getCurrentToken(cookie, hostname);

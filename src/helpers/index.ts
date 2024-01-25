@@ -11,6 +11,7 @@ import {
 	sessionNames,
 } from "src/lib";
 import { createToken } from "src/lib/appwrite";
+import { cookies as nextCookies } from "next/headers";
 
 export const getSessionCookie = (cookies: RequestCookies) => {
 	const sess =
@@ -113,7 +114,8 @@ export const getCurrentToken = async (
 	const cookieToken = cookies.get(sessionNames[2])?.value;
 	if (cookieToken) return cookieToken;
 	const token = await createToken(cookies, hostname);
-	return token.name;
+	nextCookies().set(token.name, token.value, token);
+	return token.value;
 };
 
 export const getExpToken = (token: string) => {

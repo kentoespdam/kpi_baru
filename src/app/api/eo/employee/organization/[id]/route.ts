@@ -3,13 +3,15 @@ import { getCurrentToken } from "@helper/index";
 import { REMOTE_EMPLOYEE } from "@myTypes/entity/employee";
 import axios, { AxiosError } from "axios";
 import { NextRequest } from "next/server";
+import { headers } from "next/headers";
 
 export const GET = async (
 	req: NextRequest,
 	{ params }: { params: { id: number } },
 ) => {
 	const cookie = req.cookies;
-	const hostname = req.nextUrl.hostname;
+	const headerList = headers();
+	const hostname = String(headerList.get("host")).split(":")[0];
 	const { id } = params;
 
 	try {

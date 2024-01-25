@@ -5,28 +5,30 @@ import {
 import { LOCAL_TRANS_KPI, TransKpi } from "@myTypes/entity/trans.kpi";
 import { useTransKinerjaStore } from "@store/filter/trans/kinerja";
 import { useTransPerilakuStore } from "@store/filter/trans/perilaku";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const getStaffKpi = async (props: any): Promise<TransKpi> => {
 	const { queryKey } = props;
 	const { nipam, periode, kpiId } = queryKey[1];
 
 	try {
 		const { data } = await axios.get(
-			`${LOCAL_TRANS_KPI}/staff/${nipam}/${periode}/${kpiId}`
+			`${LOCAL_TRANS_KPI}/staff/${nipam}/${periode}/${kpiId}`,
 		);
 		return data.data;
 	} catch (e) {
-const err = e as unknown as AxiosError;
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.trans.kpi.staff",
 			new Date().toISOString(),
-			err.response?.data
+			err.response?.data,
 		);
-		throw new Error(err.response?.data,);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const getBridgeKpi = async (props: any): Promise<BridgeKpiWithAudit> => {
 	const { queryKey } = props;
 	const nipam = queryKey[1];
@@ -36,14 +38,14 @@ export const getBridgeKpi = async (props: any): Promise<BridgeKpiWithAudit> => {
 		useTransPerilakuStore.setState({ levelStaff: data.data.level.id });
 		return data.data;
 	} catch (e) {
-const err = e as unknown as AxiosError;
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.bridge.kpi.get.nipam",
 			new Date().toISOString(),
-			err.response?.data
+			err.response?.data,
 		);
 		useTransKinerjaStore.setState({ bridgeKpiBawahan: null });
 		useTransPerilakuStore.setState({ levelStaff: null });
-		throw new Error(err.response?.data);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };

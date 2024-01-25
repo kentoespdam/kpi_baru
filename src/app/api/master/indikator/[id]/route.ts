@@ -2,6 +2,7 @@ import { responseNoContent } from "@helper/error/nocontent";
 import { getCurrentToken } from "@helper/index";
 import { REMOTE_INDIKATOR } from "@myTypes/entity/indikator";
 import axios, { AxiosError } from "axios";
+import { headers } from "next/headers";
 import { NextRequest } from "next/server";
 
 export const revalidate = 0;
@@ -11,7 +12,8 @@ export const GET = async (
 	{ params }: { params: { id: number } },
 ) => {
 	const cookie = req.cookies;
-	const hostname = req.nextUrl.hostname;
+	const headerList = headers();
+	const hostname = String(headerList.get("host")).split(":")[0];
 	const { id } = params;
 
 	try {
@@ -42,10 +44,11 @@ export const PUT = async (
 	{ params }: { params: { id: number } },
 ) => {
 	const cookie = req.cookies;
-	const hostname = req.nextUrl.hostname;
+	const headerList = headers();
+	const hostname = String(headerList.get("host")).split(":")[0];
 	const { id } = params;
 	const body = await req.json();
-	
+
 	try {
 		const token = await getCurrentToken(cookie, hostname);
 		const { status, data } = await axios.put(
@@ -73,7 +76,8 @@ export const DELETE = async (
 	{ params }: { params: { id: number } },
 ) => {
 	const cookie = req.cookies;
-	const hostname = req.nextUrl.hostname;
+	const headerList = headers();
+	const hostname = String(headerList.get("host")).split(":")[0];
 	const { id } = params;
 
 	try {

@@ -1,6 +1,7 @@
 import { getCurrentToken } from "@helper/index";
 import { REMOTE_URAIAN_FILE } from "@myTypes/entity/uraian.file";
 import axios, { AxiosError } from "axios";
+import { headers } from "next/headers";
 import { NextRequest } from "next/server";
 
 export const revalidate = 0;
@@ -10,8 +11,9 @@ export const DELETE = async (
 	{ params }: { params: { id: number } },
 ) => {
 	const { id } = params;
-	const hostname = req.nextUrl.hostname;
 	const cookies = req.cookies;
+	const headerList = headers();
+	const hostname = String(headerList.get("host")).split(":")[0];
 
 	try {
 		const token = await getCurrentToken(cookies, hostname);

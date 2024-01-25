@@ -1,7 +1,9 @@
 import { responseNoContent } from "@helper/error/nocontent";
-import { getCurrentToken } from "@helper/index";
+import { getCurrentToken, isHasTokenCookie } from "@helper/index";
+import { createTokenLogin } from "@lib/appwrite";
 import { REMOTE_BRIDGE_PERILAKU } from "@myTypes/entity/bridge.perilaku";
 import axios, { AxiosError } from "axios";
+import { cookies, headers } from "next/headers";
 import { NextRequest } from "next/server";
 
 export const GET = async (
@@ -9,10 +11,16 @@ export const GET = async (
 	{ params }: { params: { id: number } },
 ) => {
 	const cookie = req.cookies;
-	const hostname = req.nextUrl.hostname;
+	const headerList = headers();
+	const hostname = String(headerList.get("host")).split(":")[0];
 	const { id } = params;
 
 	try {
+		if (!isHasTokenCookie(cookie)) {
+			const tokenLogin = await createTokenLogin(cookie, hostname);
+			console.log(tokenLogin);
+			cookies().set(tokenLogin.name, tokenLogin.value, tokenLogin);
+		}
 		const token = await getCurrentToken(cookie, hostname);
 		const { status, data } = await axios.get(
 			`${REMOTE_BRIDGE_PERILAKU}/${id}`,
@@ -43,12 +51,14 @@ export const PUT = async (
 	{ params }: { params: { id: number } },
 ) => {
 	const cookie = req.cookies;
-	const hostname = req.nextUrl.hostname;
+	const headerList = headers();
+	const hostname = String(headerList.get("host")).split(":")[0];
 	const { id } = params;
 	const body = await req.json();
 
 	try {
 		const token = await getCurrentToken(cookie, hostname);
+		// if (!isString(token)) cookies().set(token.name, token.value, token);
 		const { status, data } = await axios.put(
 			`${REMOTE_BRIDGE_PERILAKU}/${id}`,
 			body,
@@ -79,7 +89,8 @@ export const DELETE = async (
 	{ params }: { params: { id: number } },
 ) => {
 	const cookie = req.cookies;
-	const hostname = req.nextUrl.hostname;
+	const headerList = headers();
+	const hostname = String(headerList.get("host")).split(":")[0];
 	const { id } = params;
 
 	try {

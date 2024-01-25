@@ -1,11 +1,13 @@
 import { getCurrentToken } from "@helper/index";
 import { REMOTE_PERILAKU } from "@myTypes/entity/perilaku";
 import axios, { AxiosError } from "axios";
+import { headers } from "next/headers";
 import { NextRequest } from "next/server";
 
 export const GET = async (req: NextRequest) => {
 	const cookie = req.cookies;
-	const hostname = req.nextUrl.hostname;
+	const headerList = headers();
+	const hostname = String(headerList.get("host")).split(":")[0];
 	const search = req.nextUrl.search;
 
 	try {
@@ -27,7 +29,8 @@ export const GET = async (req: NextRequest) => {
 };
 export const POST = async (req: NextRequest) => {
 	const cookie = req.cookies;
-	const hostname = req.nextUrl.hostname;
+	const headerList = headers();
+	const hostname = String(headerList.get("host")).split(":")[0];
 	const body = req.body;
 	try {
 		const token = await getCurrentToken(cookie, hostname);

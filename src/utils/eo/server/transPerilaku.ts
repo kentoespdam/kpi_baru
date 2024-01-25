@@ -1,15 +1,18 @@
 import { getCurrentToken } from "@helper/index";
 import { REMOTE_TRANS_PERILAKU } from "@myTypes/entity/trans.perilaku";
 import { useCetakStore } from "@store/server/cetak";
-import axios from "axios";
-import { cookies } from "next/headers";
+import axios, { AxiosError } from "axios";
+import { cookies, headers } from "next/headers";
 
 export const getPerilakuData = async (
 	nipam: string,
 	periode: number,
-	levelId: number
+	levelId: number,
 ) => {
 	const cookie = cookies();
+	const headerList = headers();
+	const hostname = String(headerList.get("host")).split(":")[0];
+
 	try {
 		const token = await getCurrentToken(cookie, hostname);
 		const { status, data } = await axios.get(
@@ -19,7 +22,7 @@ export const getPerilakuData = async (
 					"Content-Type": "application/json",
 					Authorization: token,
 				},
-			}
+			},
 		);
 		if (status !== 200) return null;
 		useCetakStore.setState({
@@ -27,12 +30,8 @@ export const getPerilakuData = async (
 		});
 		return data.data;
 	} catch (e) {
-const err = e as unknown as AxiosError;
-		console.log(
-			"cetak.perilaku",
-			new Date().toISOString(),
-			err.response?.data,
-		);
+		const err = e as unknown as AxiosError;
+		console.log("cetak.perilaku", new Date().toISOString(), err.response?.data);
 		return null;
 	}
 };

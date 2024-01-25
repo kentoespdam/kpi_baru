@@ -1,7 +1,9 @@
 import { responseNoContent } from "@helper/error/nocontent";
-import { getCurrentToken } from "@helper/index";
+import { getCurrentToken, isHasTokenCookie } from "@helper/index";
+import { createTokenLogin } from "@lib/appwrite";
 import { REMOTE_BRIDGE_KPI } from "@myTypes/entity/bridge.kpi";
 import axios, { AxiosError } from "axios";
+import {  headers } from "next/headers";
 import { NextRequest } from "next/server";
 
 export const revalidate = 0;
@@ -12,7 +14,8 @@ export const GET = async (
 ) => {
 	const { nipam } = params;
 	const cookie = req.cookies;
-	const hostname = req.nextUrl.hostname;
+	const headerList = headers();
+	const hostname = String(headerList.get("host")).split(":")[0];
 
 	try {
 		const token = await getCurrentToken(cookie, hostname);
@@ -30,7 +33,7 @@ export const GET = async (
 	} catch (e) {
 		const error = e as AxiosError;
 		console.log(
-			"api.bridge.kpi.get.id",
+			"api.bridge.kpi.get.nipam",
 			new Date().toString(),
 			error.response?.data,
 		);

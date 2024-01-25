@@ -9,6 +9,7 @@ import { Position } from "@myTypes/entity/position";
 import { getOrgInList } from "@utils/eo/server/organization";
 import { getPosInList } from "@utils/eo/server/position";
 import axios, { AxiosError } from "axios";
+import { headers } from "next/headers";
 import { NextRequest } from "next/server";
 import { DEFAULT_MAIL_DOMAIN } from "src/lib";
 import { createUserAccount, getPrefsInUser } from "src/lib/appwrite/user";
@@ -17,7 +18,8 @@ export const revalidate = 0;
 
 export const GET = async (req: NextRequest) => {
 	const cookies = req.cookies;
-	const hostname = req.nextUrl.hostname;
+	const headerList = headers();
+	const hostname = String(headerList.get("host")).split(":")[0];
 	const search = req.nextUrl.search;
 
 	try {
@@ -94,7 +96,8 @@ export const GET = async (req: NextRequest) => {
 
 export const POST = async (req: NextRequest) => {
 	const cookie = req.cookies;
-	const hostname = req.nextUrl.hostname;
+	const headerList = headers();
+	const hostname = String(headerList.get("host")).split(":")[0];
 	const body = await req.json();
 
 	try {

@@ -1,6 +1,7 @@
 import { LOCAL_LEVEL, LevelData } from "@myTypes/entity/level";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const getPage = async (props: any) => {
 	const { queryKey } = props;
 
@@ -21,14 +22,14 @@ export const getPage = async (props: any) => {
 
 		return data.data;
 	} catch (e) {
-const err = e as unknown as AxiosError;
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.level.page",
 			new Date().toISOString(),
-			err.response?.data
+			err.response?.data,
 		);
 
-		throw new Error(err.response?.data,);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };
 
@@ -38,17 +39,18 @@ export const getLevelList = async () => {
 
 		return data.data;
 	} catch (e) {
-const err = e as unknown as AxiosError;
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.level.list",
 			new Date().toISOString(),
-			err.response?.data
+			err.response?.data,
 		);
 
-		throw new Error(err.response?.data,);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const getById = async (props: any) => {
 	const id = props[1];
 
@@ -57,14 +59,14 @@ export const getById = async (props: any) => {
 
 		return data.data;
 	} catch (e) {
-const err = e as unknown as AxiosError;
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.level.getById",
 			new Date().toISOString(),
-			err.response?.data
+			err.response?.data,
 		);
 
-		throw new Error(err.response?.data,);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };
 
@@ -76,14 +78,14 @@ export const doSave = async (data: LevelData) => {
 
 		return result.data;
 	} catch (e) {
-const err = e as unknown as AxiosError;
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.level.save",
 			new Date().toISOString(),
-			err.response?.data
+			err.response?.data,
 		);
 
-		throw new Error(err.response?.data,);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };
 
@@ -93,13 +95,13 @@ export const doDelete = async (id: number) => {
 
 		return result.data;
 	} catch (e) {
-const err = e as unknown as AxiosError;
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.level.delete",
 			new Date().toISOString(),
-			err.response?.data
+			err.response?.data,
 		);
 
-		throw new Error(err.response?.data,);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };
