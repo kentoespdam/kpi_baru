@@ -11,27 +11,14 @@ import {
 	isHasTokenCookie,
 	isValidIpAddress,
 	newHostname,
-	xfallback,
 } from "./helpers";
-import { APPWRITE_ENDPOINT, APPWRITE_PROJECT_ID, sessionNames } from "./lib";
+import { APPWRITE_ENDPOINT, sessionNames } from "./lib";
 
 export const middleware = async (req: NextRequest) => {
 	const response = NextResponse.next();
 	const currPath = req.nextUrl.pathname;
 	const cookies = req.cookies;
 	const host = req.nextUrl.hostname;
-
-	// if (
-	// 	(!cookies.has(sessionNames[0]) || !cookies.has(sessionNames[1])) &&
-	// 	!currPath.startsWith("/auth") &&
-	// 	!currPath.startsWith("/api/auth")
-	// )
-	// 	return NextResponse.redirect(
-	// 		new URL("/auth", `${process.env.NEXT_PUBLIC_URL}`),
-	// 	);
-
-	// const sessCookie = getSessionCookie(cookies);
-	// if (sessCookie === undefined) if (currPath.startsWith("/auth")) return;
 
 	if (!isHasSessionCookie(cookies) && !currPath.startsWith("/auth"))
 		return NextResponse.redirect(
@@ -51,9 +38,9 @@ export const middleware = async (req: NextRequest) => {
 
 	const sess = await getSession(cookies);
 	if (!sess) {
-		// response.cookies.delete(sessionNames[0]);
-		// response.cookies.delete(sessionNames[1]);
-		// response.cookies.delete(sessionNames[2]);
+		response.cookies.delete(sessionNames[0]);
+		response.cookies.delete(sessionNames[1]);
+		response.cookies.delete(sessionNames[2]);
 		if (currPath.startsWith("/auth") || currPath.startsWith("/api/auth"))
 			return response;
 
