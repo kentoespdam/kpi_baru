@@ -14,7 +14,7 @@ export const GET = async (req: NextRequest) => {
 				`${APPWRITE_ENDPOINT}/v1/account/sessions/current`,
 				{
 					headers: appwriteHeader(cookies),
-				}
+				},
 			);
 			if (status === 204)
 				return new Response(
@@ -26,7 +26,7 @@ export const GET = async (req: NextRequest) => {
 						headers: {
 							"Set-Cookie": setExpiredCookie(cookies, hostname),
 						},
-					}
+					},
 				);
 		}
 		return new Response(
@@ -38,9 +38,9 @@ export const GET = async (req: NextRequest) => {
 				headers: {
 					"Set-Cookie": setExpiredCookie(cookies, hostname),
 				},
-			}
+			},
 		);
-	} catch (e: any) {
+	} catch (e) {
 		console.log("api.auth.logout.delete", new Date().toISOString());
 		return new Response(
 			JSON.stringify({
@@ -51,7 +51,7 @@ export const GET = async (req: NextRequest) => {
 				headers: {
 					"Set-Cookie": setExpiredCookie(cookies, hostname),
 				},
-			}
+			},
 		);
 	}
 };

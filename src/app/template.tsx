@@ -5,10 +5,12 @@ import { ChildrenProps } from "@myTypes/index";
 
 const Template = ({ children }: ChildrenProps) => {
 	return (
-		<QueryProvider>
-			<SessionProvider />
-			<TemplateProvider>{children}</TemplateProvider>
-		</QueryProvider>
+		<>
+			<QueryProvider>
+				{/* <SessionProvider /> */}
+				<TemplateProvider>{children}</TemplateProvider>
+			</QueryProvider>
+		</>
 	);
 };
 

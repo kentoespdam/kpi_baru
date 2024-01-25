@@ -1,10 +1,14 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import {
 	APPWRITE_API_KEY,
 	APPWRITE_ENDPOINT,
 	APPWRITE_PROJECT_ID,
 	defaultRoles,
-} from "..";
+	sessionNames,
+} from "@lib/index";
+import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
+import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
+import { appwriteHeader } from "@helper/index";
 
 export const createUserAccount = async (account: {
 	userId: string;
@@ -31,11 +35,12 @@ export const createUserAccount = async (account: {
 
 		data.prefs = await updateRoleUser(data.$id, defaultRoles);
 		return data;
-	} catch (e: any) {
+	} catch (e) {
+		const err = e as unknown as AxiosError;
 		console.log(
-			"lib.appwrite.create.user.account",
+			"lib.appwrite.user.createUserAccount",
 			new Date().toISOString(),
-			e,
+			err.response?.data,
 		);
 		return null;
 	}
@@ -52,11 +57,12 @@ export const getAllUser = async () => {
 			},
 		});
 		return data;
-	} catch (e: any) {
+	} catch (e) {
+		const err = e as unknown as AxiosError;
 		console.log(
 			"lib.appwrite.getAllUser",
 			new Date().toISOString(),
-			e.response.data,
+			err.response?.data,
 		);
 		return null;
 	}
@@ -64,17 +70,25 @@ export const getAllUser = async () => {
 
 export const getUserByNipam = async (nipam: string) => {
 	try {
-		const { data } = await axios.get(`${APPWRITE_ENDPOINT}/v1/users/${nipam}`, {
-			headers: {
-				"Content-Type": "application/json",
-				"X-Appwrite-Response-Format": "1.0.0",
-				"X-Appwrite-Project": APPWRITE_PROJECT_ID,
-				"X-Appwrite-Key": APPWRITE_API_KEY,
+		const { data } = await axios.get(
+			`${APPWRITE_ENDPOINT}/v1/users/${nipam.split("@")[0]}`,
+			{
+				headers: {
+					"Content-Type": "application/json",
+					"X-Appwrite-Response-Format": "1.0.0",
+					"X-Appwrite-Project": APPWRITE_PROJECT_ID,
+					"X-Appwrite-Key": APPWRITE_API_KEY,
+				},
 			},
-		});
+		);
 		return data;
-	} catch (e: any) {
-		console.log("li.appwrite.getUserByNipam", new Date().toISOString(), e);
+	} catch (e) {
+		const err = e as unknown as AxiosError;
+		console.log(
+			"lib.appwrite.getUserByNipam",
+			new Date().toISOString(),
+			err.response?.data,
+		);
 		return null;
 	}
 };
@@ -102,14 +116,15 @@ export const getPrefs = async (id: string) => {
 			},
 		);
 		return data;
-	} catch (e: any) {
+	} catch (e) {
+		const err = e as unknown as AxiosError;
 		console.log(
 			"api.user.get.prefs",
 			new Date().toLocaleString(),
-			e.response.data.message,
+			err.response?.data,
 			id,
 		);
-		throw new Error(e.response.data.message);
+		throw new Error(String(err.response?.data));
 	}
 };
 
@@ -131,14 +146,40 @@ export const updateRoleUser = async (id: string, roles: string[]) => {
 			},
 		);
 		return new Response(JSON.stringify(data), { status });
-	} catch (e: any) {
+	} catch (e) {
+		const err = e as unknown as AxiosError;
 		console.log(
 			"api.user.update.pref",
 			new Date().toLocaleString(),
-			e.response.data,
+			err.response?.data,
 		);
-		return new Response(JSON.stringify(e.response.data), {
-			status: e.response.status,
+		return new Response(JSON.stringify(err.response?.data), {
+			status: err.response?.status,
 		});
+	}
+};
+
+export const getCurrentAccount = async (
+	cookies: RequestCookies | ReadonlyRequestCookies,
+	cookieString?: string[],
+) => {
+	const token = cookies.get(sessionNames[2])?.value;
+	const headers = appwriteHeader(cookies, token);
+	try {
+		const { data } = await axios.get(
+			`${APPWRITE_ENDPOINT}/v1/account/current`,
+			{
+				headers: headers,
+			},
+		);
+		return data;
+	} catch (e) {
+		const err = e as unknown as AxiosError;
+		console.log(
+			"lib.appwrite.user.getCurrentAccount",
+			new Date().toISOString(),
+			err.response?.data,
+		);
+		return null;
 	}
 };

@@ -15,7 +15,6 @@ export const GET = async (
 
 	try {
 		const token = await getCurrentToken(cookie);
-		console.log(token);
 		const { status, data } = await axios.get(
 			`${REMOTE_BRIDGE_KPI}/${nipam}/nipam`,
 			{

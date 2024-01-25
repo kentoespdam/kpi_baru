@@ -1,7 +1,11 @@
 {
 	"compilerOptions": {
 		"target": "es5",
-		"lib": ["dom", "dom.iterable", "esnext"],
+		"lib": [
+			"dom",
+			"dom.iterable",
+			"esnext"
+		],
 		"allowJs": true,
 		"skipLibCheck": true,
 		"strict": true,
@@ -21,20 +25,51 @@
 		],
 		"baseUrl": ".",
 		"paths": {
-			// "@/*": ["./src/*"]
-			"@myConfig/*": ["./src/config/*"],
-			"@autocomplete/*": ["./src/components/commons/autocomplete/*"],
-			"@components/*": ["./src/components/*"],
-			"@myTypes/*": ["./src/types/*"],
-			"@myMui/*": ["src/components/commons/mui/*"],
-			"@template/*": ["./src/components/template/*"],
-			"@helper/*": ["./src/helpers/*"],
-			"@store/*": ["./src/store/*"],
-			"@utils/*": ["./src/utils/*"],
-			"@transDialog/*": ["./src/components/trans/dialog/*"],
-			"@trans/*": ["./src/components/trans/*"]
+			"@myConfig/*": [
+				"./src/config/*"
+			],
+			"@autocomplete/*": [
+				"./src/components/commons/autocomplete/*"
+			],
+			"@components/*": [
+				"./src/components/*"
+			],
+			"@myTypes/*": [
+				"./src/types/*"
+			],
+			"@myMui/*": [
+				"src/components/commons/mui/*"
+			],
+			"@template/*": [
+				"./src/components/template/*"
+			],
+			"@helper/*": [
+				"./src/helpers/*"
+			],
+			"@store/*": [
+				"./src/store/*"
+			],
+			"@utils/*": [
+				"./src/utils/*"
+			],
+			"@transDialog/*": [
+				"./src/components/trans/dialog/*"
+			],
+			"@trans/*": [
+				"./src/components/trans/*"
+			],
+			"@lib/*": [
+				"./src/lib/*"
+			]
 		}
 	},
-	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-	"exclude": ["node_modules"]
+	"include": [
+		"next-env.d.ts",
+		"**/*.ts",
+		"**/*.tsx",
+		".next/types/**/*.ts"
+	],
+	"exclude": [
+		"node_modules"
+	]
 }

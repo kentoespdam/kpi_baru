@@ -55,8 +55,8 @@ const AuthComponent = () => {
 
 		try {
 			const { status, data } = await axios.post("/api/auth", {
-				email: userToEmail(usernameRef.current!.value),
-				password: passwordRef.current!.value,
+				email: userToEmail(String(usernameRef.current?.value)),
+				password: passwordRef.current?.value,
 			});
 
 			if (status !== 201) {
@@ -66,7 +66,7 @@ const AuthComponent = () => {
 			setUser(data);
 			setSubmitText("Redirecting...");
 			router.push("/");
-		} catch (e: any) {
+		} catch (e) {
 			setLoading(false);
 			setSubmitText("LOGIN");
 			const variant = "error";
@@ -95,7 +95,7 @@ const AuthComponent = () => {
 						autoComplete="nipam"
 						autoFocus
 						inputRef={usernameRef}
-						// variant="standard"
+					// variant="standard"
 					/>
 				</FormControl>
 				<FormControl fullWidth>
