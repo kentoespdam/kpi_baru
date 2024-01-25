@@ -110,33 +110,6 @@ const getSession = async (cookies: RequestCookies) => {
 	}
 };
 
-const createToken = async (cookies: RequestCookies) => {
-	try {
-		const cookieFallback = xfallback(cookies);
-
-		if (cookieFallback === "") throw Error("No session found");
-		const cookieString = cookies.toString();
-		const decodedCookie = decodeURIComponent(cookieString);
-		const headers = {
-			"Content-Type": "application/json",
-			"X-Appwrite-Project": APPWRITE_PROJECT_ID,
-			Cookie: decodedCookie,
-			"X-Fallback-Cookies": cookieFallback,
-		};
-		const req = await fetch(`${APPWRITE_ENDPOINT}/v1/account/jwt`, {
-			method: "POST",
-			headers: headers,
-		});
-
-		if (req.status !== 201) throw Error(req.statusText);
-
-		const data = await req.json();
-		return data.jwt;
-	} catch (e) {
-		console.log("middleware create token", e);
-	}
-};
-
 export const renewToken = async (cookies: RequestCookies, host: string) => {
 	const reqHeaders = appwriteHeader(cookies);
 

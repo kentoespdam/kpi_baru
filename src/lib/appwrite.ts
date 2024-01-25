@@ -33,25 +33,38 @@ export const getSession = async (sessCookie: RequestCookies) => {
 };
 
 export const createToken = async (
-	cookieString: RequestCookies | ReadonlyRequestCookies,
+	cookies: RequestCookies | ReadonlyRequestCookies,
+	host: string,
 ) => {
+	const reqHeaders = appwriteHeader(cookies);
+
 	try {
-		const { data } = await axios.post(
-			`${APPWRITE_ENDPOINT}/v1/account/jwt`,
-			{},
-			{
-				headers: appwriteHeader(cookieString),
-			},
-		);
-		return data.jwt;
+		const req = await fetch(`${APPWRITE_ENDPOINT}/v1/account/jwt`, {
+			method: "POST",
+			headers: reqHeaders,
+		});
+		const data = await req.json();
+		const expires = getExpToken(data.jwt);
+		const result = {
+			name: sessionNames[2],
+			value: data.jwt,
+			path: "/",
+			expires: new Date(expires),
+		};
+		if (!isValidIpAddress(host)) {
+			Object.assign(result, {
+				domain: newHostname(host),
+				httpOnly: true,
+				secure: true,
+				sameSite: true,
+				priority: "hight",
+			});
+		}
+
+		return result as RequestCookie;
 	} catch (e) {
-		const err = e as unknown as AxiosError;
-		console.log(
-			"api.auth.createToken:",
-			new Date().toLocaleString(),
-			err.response?.data,
-		);
-		return "";
+		console.log("middleware create token", e);
+		return {} as RequestCookie;
 	}
 };
 
