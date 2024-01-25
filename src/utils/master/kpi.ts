@@ -25,13 +25,14 @@ export const getPage = async (props: any) => {
 	try {
 		const { data } = await axios.get(`${LOCAL_KPI}?${params.toString()}`);
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.kpi.page",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 
@@ -39,13 +40,14 @@ export const getList = async () => {
 	try {
 		const { data } = await axios.get(`${LOCAL_KPI}/list`);
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.kpi.page",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 
@@ -54,13 +56,14 @@ export const getById = async (props: any) => {
 	try {
 		const { data } = await axios.get(`${LOCAL_KPI}/${id}`);
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.kpi.getById",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 
@@ -70,13 +73,14 @@ export const doSave = async (data: KpiData) => {
 			? await axios.put(`${LOCAL_KPI}/${data.id}`, data)
 			: await axios.post(LOCAL_KPI, data);
 		return result.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.kpi.save",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 
@@ -84,12 +88,13 @@ export const doDelete = async (id: number) => {
 	try {
 		const result = await axios.delete(`${LOCAL_KPI}/${id}`);
 		return result.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.kpi.delete",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };

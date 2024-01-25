@@ -26,14 +26,15 @@ export const getPage = async (props: any) => {
 		);
 		useProfesiStore.setState({ loading: false });
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.profesi.page",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
 		useProfesiStore.setState({ loading: false });
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 
@@ -41,13 +42,14 @@ export const getList = async () => {
 	try {
 		const { data } = await axios.get(`${LOCAL_PROFESI}/list`);
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.profesi.list",
 			new Date().toISOString(),
 			e.response
 		);
-		throw new Error(e.response.data);
+		throw new Error(err.response?.data);
 	}
 };
 
@@ -58,14 +60,15 @@ export const getById = async (props: any) => {
 		const { data } = await axios.get(`${LOCAL_PROFESI}/${id}`);
 		useProfesiStore.setState({ loading: false });
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.profesi.getById",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
 		useProfesiStore.setState({ loading: false });
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 
@@ -77,14 +80,15 @@ export const doSave = async (data: ProfesiData) => {
 			: await axios.post(LOCAL_PROFESI, data);
 		useProfesiStore.setState({ loading: false });
 		return result.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.profesi.save",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
 		useProfesiStore.setState({ loading: false });
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 
@@ -94,13 +98,14 @@ export const doDelete = async (id: number) => {
 		const result = await axios.delete(`${LOCAL_PROFESI}/${id}`);
 		useProfesiStore.setState({ loading: false });
 		return result.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.profesi.delete",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
 		useProfesiStore.setState({ loading: false });
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };

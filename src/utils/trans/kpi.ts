@@ -16,13 +16,14 @@ export const getStaffKpi = async (props: any): Promise<TransKpi> => {
 			`${LOCAL_TRANS_KPI}/staff/${nipam}/${periode}/${kpiId}`
 		);
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.trans.kpi.staff",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 
@@ -34,14 +35,15 @@ export const getBridgeKpi = async (props: any): Promise<BridgeKpiWithAudit> => {
 		useTransKinerjaStore.setState({ bridgeKpiBawahan: data.data });
 		useTransPerilakuStore.setState({ levelStaff: data.data.level.id });
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.bridge.kpi.get.nipam",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
 		useTransKinerjaStore.setState({ bridgeKpiBawahan: null });
 		useTransPerilakuStore.setState({ levelStaff: null });
-		throw new Error(e.response.data);
+		throw new Error(err.response?.data);
 	}
 };

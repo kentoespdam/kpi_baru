@@ -3,14 +3,15 @@ import {
 	BridgePerilakuResponse,
 	REMOTE_BRIDGE_PERILAKU,
 } from "@myTypes/entity/bridge.perilaku";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { NextRequest } from "next/server";
 
 export const GET = async (req: NextRequest) => {
 	const cookie = req.cookies;
+	const hostname = req.nextUrl.hostname;
 
 	try {
-		const token = await getCurrentToken(cookie);
+		const token = await getCurrentToken(cookie, hostname);
 		const { status, data } = await axios.get<BridgePerilakuResponse>(
 			REMOTE_BRIDGE_PERILAKU,
 			{
@@ -18,7 +19,7 @@ export const GET = async (req: NextRequest) => {
 					"Content-Type": "application/json",
 					Authorization: token,
 				},
-			}
+			},
 		);
 
 		const bridgePerilakuList = data.data;
@@ -26,15 +27,15 @@ export const GET = async (req: NextRequest) => {
 		data.data = bridgePerilakuList;
 
 		return new Response(JSON.stringify(data), { status });
-	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-}  catch (e: any) {
+	} catch (e) {
+		const err = e as unknown as AxiosError;
 		console.log(
 			"api.bridge.perilaku.list",
 			new Date().toString(),
-			e.response.data
+			err.response?.data,
 		);
-		return new Response(JSON.stringify(e.response.data), {
-			status: e.response.status,
+		return new Response(JSON.stringify(err.response?.data), {
+			status: err.response?.status,
 		});
 	}
 };

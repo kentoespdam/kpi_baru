@@ -33,14 +33,15 @@ export const getPage = async (props: any) => {
 		);
 		useUraianStore.setState({ loading: false });
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.uraian.page",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
 		useUraianStore.setState({ loading: false });
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 
@@ -51,14 +52,15 @@ export const getById = async (props: any) => {
 		const { data } = await axios.get(`${LOCAL_URAIAN}/${id}`);
 		useUraianStore.setState({ loading: false });
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.uraian.getById",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
 		useUraianStore.setState({ loading: false });
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 
@@ -70,14 +72,15 @@ export const doSave = async (data: UraianData) => {
 			: await axios.post(LOCAL_URAIAN, data);
 		useUraianStore.setState({ loading: false });
 		return result.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.uraian.save",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
 		useUraianStore.setState({ loading: false });
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 
@@ -87,13 +90,14 @@ export const doDelete = async (id: number) => {
 		const result = await axios.delete(`${LOCAL_URAIAN}/${id}`);
 		useUraianStore.setState({ loading: false });
 		return result.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.uraian.delete",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
 		useUraianStore.setState({ loading: false });
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };

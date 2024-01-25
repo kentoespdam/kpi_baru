@@ -1,7 +1,7 @@
 import { responseNoContent } from "@helper/error/nocontent";
 import { getCurrentToken } from "@helper/index";
 import { REMOTE_INDIKATOR } from "@myTypes/entity/indikator";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { NextRequest } from "next/server";
 
 export const revalidate = 0;
@@ -11,29 +11,31 @@ export const GET = async (
 	{ params }: { params: { kpiId: number } }
 ) => {
 	const cookie = req.cookies;
+	const hostname = req.nextUrl.hostname
 	const { kpiId } = params;
 
 	try {
-		const token = await getCurrentToken(cookie);
+		const token = await getCurrentToken(cookie, hostname);
 		const { status, data } = await axios.get(
 			`${REMOTE_INDIKATOR}/kpi/list/${kpiId}`,
 			{
 				headers: {
 					"Content-Type": "application/json",
-					"Authorization": token,
+					Authorization: token,
 				},
 			}
 		);
 		if (status === 204) return responseNoContent();
 		return new Response(JSON.stringify(data), { status: status });
-	} catch (e: any) {
+	} catch (e) {
+		const err = e as unknown as AxiosError
 		console.log(
 			"api.indikator.get.id",
 			new Date().toString(),
-			e.response.data
+			err.response?.data
 		);
-		return new Response(JSON.stringify(e.response.data), {
-			status: e.response.status,
+		return new Response(JSON.stringify(err.response?.data), {
+			status: err.response?.status,
 		});
 	}
 };

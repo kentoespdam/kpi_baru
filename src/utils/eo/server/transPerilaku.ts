@@ -11,13 +11,13 @@ export const getPerilakuData = async (
 ) => {
 	const cookie = cookies();
 	try {
-		const token = await getCurrentToken(cookie);
+		const token = await getCurrentToken(cookie, hostname);
 		const { status, data } = await axios.get(
 			`${REMOTE_TRANS_PERILAKU}/${periode}/periode/${nipam}/nipam/${levelId}/level`,
 			{
 				headers: {
 					"Content-Type": "application/json",
-					"Authorization": token,
+					Authorization: token,
 				},
 			}
 		);
@@ -26,11 +26,12 @@ export const getPerilakuData = async (
 			perilakuData: data.data,
 		});
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"cetak.perilaku",
 			new Date().toISOString(),
-			e.response.data.message
+			err.response?.data,
 		);
 		return null;
 	}

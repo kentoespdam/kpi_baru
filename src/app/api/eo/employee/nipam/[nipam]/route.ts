@@ -11,9 +11,10 @@ export const GET = async (
 ) => {
 	const { nipam } = params;
 	const cookie = req.cookies;
+	const hostname = req.nextUrl.hostname;
 
 	try {
-		const token = await getCurrentToken(cookie);
+		const token = await getCurrentToken(cookie, hostname);
 		const { status, data, statusText } = await axios.get(
 			`${REMOTE_EMPLOYEE}/${nipam}/nipam`,
 			{

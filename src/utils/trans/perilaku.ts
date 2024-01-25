@@ -17,14 +17,15 @@ export const getBridgePerilaku = async (props: any) => {
 		);
 		useTransPerilakuStore.setState({ bridgePerilakuBawahan: data.data });
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.bridge.perilaku.get.level",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
 		useTransPerilakuStore.setState({ bridgePerilakuBawahan: null });
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 
@@ -32,13 +33,14 @@ export const getBridgePerilakuList = async () => {
 	try {
 		const { data } = await axios.get(`${LOCAL_BRIDGE_PERILAKU}/list`);
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.bridge.perilaku.get.list",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 
@@ -52,14 +54,15 @@ export const getTransPerilaku = async (props: any) => {
 		);
 		useTransPerilakuStore.setState({ bridgePerilakuBawahan: data.data });
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.trans.perilaku.get",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
 		useTransPerilakuStore.setState({ bridgePerilakuBawahan: null });
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 
@@ -70,12 +73,13 @@ export const doSave = async (formData: TransPerilakuNilaiData) => {
 			formData
 		);
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"trans.perilaku.save.id",
 			new Date().toISOString(),
 			e.response
 		);
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };

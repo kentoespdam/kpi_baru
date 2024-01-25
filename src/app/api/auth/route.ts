@@ -8,11 +8,12 @@ import { NextRequest } from "next/server";
 
 export const revalidate = 0;
 export const POST = async (req: NextRequest) => {
+	const cookieList = req.cookies;
 	const headerList = headers();
 	const body = await req.json();
 
 	try {
-		const userNipam = await getUserByNipam(body.email);
+		const userNipam = await getUserByNipam(cookieList, body.email);
 		if (!userNipam) {
 			return new Response(
 				JSON.stringify({

@@ -26,14 +26,15 @@ export const getPage = async (props: any) => {
 		const { data } = await axios.get(`${LOCAL_GRADE}?${params.toString()}`);
 		useGradeStore.setState({ loading: false });
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.grade.page",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
 		useGradeStore.setState({ loading: false });
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 
@@ -42,14 +43,15 @@ export const getList = async () => {
 		const { data } = await axios.get(`${LOCAL_GRADE}/list`);
 		useGradeStore.setState({ loading: false });
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.grade.list",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
 		useGradeStore.setState({ loading: false });
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 
@@ -60,14 +62,15 @@ export const getById = async (props: any) => {
 		const { data } = await axios.get(`${LOCAL_GRADE}/${id}`);
 		useGradeStore.setState({ loading: false });
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.grade.getById",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
 		useGradeStore.setState({ loading: false });
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 
@@ -79,14 +82,15 @@ export const doSave = async (data: GradeData) => {
 			: await axios.post(LOCAL_GRADE, data);
 		useGradeStore.setState({ loading: false });
 		return result.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.grade.save",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
 		useGradeStore.setState({ loading: false });
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 
@@ -96,13 +100,14 @@ export const doDelete = async (id: number) => {
 		const result = await axios.delete(`${LOCAL_GRADE}/${id}`);
 		useGradeStore.setState({ loading: false });
 		return result.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.grade.delete",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
 		useGradeStore.setState({ loading: false });
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };

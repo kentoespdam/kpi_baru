@@ -9,13 +9,14 @@ export const getList = async (props: any) => {
 			`${LOCAL_EMPLOYEE}/organization/${orgCode}`
 		);
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.indikator.list",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 
@@ -26,12 +27,13 @@ export const getEmpDetails = async (props: any): Promise<DetEmployee> => {
 	try {
 		const { data } = await axios.get(`${LOCAL_EMPLOYEE}/nipam/${nipam}`);
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.indikator.list",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };

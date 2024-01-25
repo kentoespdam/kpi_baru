@@ -11,24 +11,25 @@ export const getKpiData = async (
 ) => {
 	const cookie = cookies();
 	try {
-		const token = await getCurrentToken(cookie);
+		const token = await getCurrentToken(cookie, hostname);
 		const { status, data } = await axios.get(
 			`${REMOTE_TRANS_KPI}/${periode}/periode/${nipam}/nipam/${kpiId}/kpi`,
 			{
 				headers: {
 					"Content-Type": "application/json",
-					"Authorization": token,
+					Authorization: token,
 				},
 			}
 		);
 		if (status !== 200) return null;
 		useCetakStore.setState({ kpiData: data.data });
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"cetak.kpi",
 			new Date().toISOString(),
-			e.response.data.message
+			err.response?.data,
 		);
 		return null;
 	}

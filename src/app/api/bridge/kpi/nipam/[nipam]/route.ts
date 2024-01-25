@@ -1,5 +1,5 @@
 import { responseNoContent } from "@helper/error/nocontent";
-import { getCurrentToken, appwriteHeader } from "@helper/index";
+import { getCurrentToken } from "@helper/index";
 import { REMOTE_BRIDGE_KPI } from "@myTypes/entity/bridge.kpi";
 import axios, { AxiosError } from "axios";
 import { NextRequest } from "next/server";
@@ -12,9 +12,10 @@ export const GET = async (
 ) => {
 	const { nipam } = params;
 	const cookie = req.cookies;
+	const hostname = req.nextUrl.hostname;
 
 	try {
-		const token = await getCurrentToken(cookie);
+		const token = await getCurrentToken(cookie, hostname);
 		const { status, data } = await axios.get(
 			`${REMOTE_BRIDGE_KPI}/${nipam}/nipam`,
 			{

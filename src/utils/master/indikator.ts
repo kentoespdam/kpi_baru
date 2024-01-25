@@ -35,14 +35,15 @@ export const getPage = async (props: any): Promise<Indikator[]> => {
 		);
 		useIndikatorStore.setState({ loading: false });
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.indikator.page",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
 		useIndikatorStore.setState({ loading: false });
-		throw new Error(e.response.data);
+		throw new Error(err.response?.data);
 	}
 };
 
@@ -52,14 +53,15 @@ export const getList = async (props: any): Promise<Indikator[]> => {
 		const { data } = await axios.get(`${LOCAL_INDIKATOR}/list/${kpiId}`);
 		useIndikatorStore.setState({ loading: false });
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.indikator.page",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
 		useIndikatorStore.setState({ loading: false });
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 
@@ -70,14 +72,15 @@ export const getById = async (props: any): Promise<IndikatorWithAudit> => {
 		const { data } = await axios.get(`${LOCAL_INDIKATOR}/${id}`);
 		useIndikatorStore.setState({ loading: false });
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.indikator.getById",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
 		useIndikatorStore.setState({ loading: false });
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 
@@ -89,14 +92,15 @@ export const doSave = async (data: IndikatorData) => {
 			: await axios.post(LOCAL_INDIKATOR, data);
 		useIndikatorStore.setState({ loading: false });
 		return result.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.indikator.save",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
 		useIndikatorStore.setState({ loading: false });
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 
@@ -106,13 +110,14 @@ export const doDelete = async (id: number) => {
 		const result = await axios.delete(`${LOCAL_INDIKATOR}/${id}`);
 		useIndikatorStore.setState({ loading: false });
 		return result.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.indikator.delete",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
 		useIndikatorStore.setState({ loading: false });
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };

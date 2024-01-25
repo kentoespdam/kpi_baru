@@ -21,13 +21,14 @@ export const getPage = async (props: any) => {
 			`${LOCAL_SATUAN}?${params.toString()}`
 		);
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.satuan.page",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 
@@ -35,13 +36,14 @@ export const getList = async () => {
 	try {
 		const { data } = await axios.get(`${LOCAL_SATUAN}/list`);
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.satuan.list",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 
@@ -51,13 +53,14 @@ export const getById = async (props: any) => {
 	try {
 		const { data } = await axios.get(`${LOCAL_SATUAN}/${id}`);
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.satuan.getById",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 
@@ -68,13 +71,14 @@ export const doSave = async (formData: SatuanData) => {
 			? await axios.put(`${LOCAL_SATUAN}/${formData.id}`, formData)
 			: await axios.post(LOCAL_SATUAN, formData);
 		return result.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.satuan.save",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 
@@ -82,12 +86,13 @@ export const doDelete = async (id: number) => {
 	try {
 		const result = await axios.delete(`${LOCAL_SATUAN}/${id}`);
 		return result.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.satuan.delete",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };

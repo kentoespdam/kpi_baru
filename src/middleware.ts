@@ -92,6 +92,7 @@ const getSession = async (cookies: RequestCookies) => {
 
 		return true;
 	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log("middleware get session:", e);
 		return false;
 	}
@@ -125,6 +126,7 @@ export const renewToken = async (cookies: RequestCookies, host: string) => {
 
 		return result as RequestCookie;
 	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log("middleware create token", e);
 		return {} as RequestCookie;
 	}

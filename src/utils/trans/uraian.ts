@@ -9,13 +9,14 @@ export const getById = async (props: any) => {
 	try {
 		const { data } = await axios.get(`${LOCAL_TRANS_URAIAN}/${id}`);
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"trans.uraian.id",
 			new Date().toISOString(),
-			e.response.data.message
+			err.response?.data,
 		);
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 
@@ -26,12 +27,13 @@ export const doSave = async (formData: TransUraianData) => {
 			formData
 		);
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"trans.uraian.save.id",
 			new Date().toISOString(),
-			e.response.data.message
+			err.response?.data,
 		);
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };

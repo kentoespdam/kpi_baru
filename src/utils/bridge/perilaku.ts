@@ -25,13 +25,14 @@ export const getPage = async (props: any) => {
 			`${LOCAL_BRIDGE_PERILAKU}?${params.toString()}`
 		);
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.bridge.perilaku.page",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 export const getList = async () => {};
@@ -40,13 +41,14 @@ export const getById = async (props: any) => {
 	try {
 		const { data } = await axios.get(`${LOCAL_BRIDGE_PERILAKU}/${id}`);
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.bridge.perilaku.id",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 export const doSave = async (data: BridgePerilakuData) => {
@@ -55,25 +57,27 @@ export const doSave = async (data: BridgePerilakuData) => {
 			? await axios.put(`${LOCAL_BRIDGE_PERILAKU}/${data.id}`, data)
 			: await axios.post(LOCAL_BRIDGE_PERILAKU, data);
 		return result.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.bridge.kpi.save",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 export const doDelete = async (id: number) => {
 	try {
 		const { data } = await axios.delete(`${LOCAL_BRIDGE_PERILAKU}/${id}`);
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.bridge.kpi.getById",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };

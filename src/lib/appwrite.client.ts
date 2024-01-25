@@ -5,7 +5,7 @@ export const getSession = async () => {
 		const { status, data } = await axios.get("/api/auth/session");
 		if (status !== 200) throw Error("Unauthorized");
 		return data;
-	} catch (e: any) {
+	} catch (e) {
 		throw Error(JSON.stringify(e.message));
 	}
 };

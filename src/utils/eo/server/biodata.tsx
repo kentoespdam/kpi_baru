@@ -9,13 +9,13 @@ export const getBiodata = async (nipam: string) => {
 	const cookie = cookies();
 
 	try {
-		const token = await getCurrentToken(cookie);
+		const token = await getCurrentToken(cookie, hostname);
 		const { status, data } = await axios.get(
 			`${REMOTE_EMPLOYEE}/${nipam}/nipam`,
 			{
 				headers: {
 					"Content-Type": "application/json",
-					"Authorization": token,
+					Authorization: token,
 				},
 			}
 		);
@@ -27,7 +27,7 @@ export const getBiodata = async (nipam: string) => {
 			{
 				headers: {
 					"Content-Type": "application/json",
-					"Authorization": token,
+					Authorization: token,
 				},
 			}
 		);
@@ -37,11 +37,12 @@ export const getBiodata = async (nipam: string) => {
 		};
 		useCetakStore.setState({ biodata: detEmp });
 		return detEmp;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"cetak.kpi.biodata",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
 		return null;
 	}

@@ -3,22 +3,23 @@ import {
 	BridgeKpiResponse,
 	REMOTE_BRIDGE_KPI,
 } from "@myTypes/entity/bridge.kpi";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { NextRequest } from "next/server";
 
 export const GET = async (req: NextRequest) => {
 	const cookie = req.cookies;
+	const hostname = req.nextUrl.hostname;
 
 	try {
-		const token = await getCurrentToken(cookie);
+		const token = await getCurrentToken(cookie, hostname);
 		const { status, data } = await axios.get<BridgeKpiResponse>(
 			`${REMOTE_BRIDGE_KPI}`,
 			{
 				headers: {
 					"Content-Type": "application/json",
-					"Authorization": token,
+					Authorization: token,
 				},
-			}
+			},
 		);
 
 		const bridgeKpiList = data.data;
@@ -26,14 +27,15 @@ export const GET = async (req: NextRequest) => {
 		data.data = bridgeKpiList;
 
 		return new Response(JSON.stringify(data), { status });
-	} catch (e: any) {
+	} catch (e) {
+		const err = e as unknown as AxiosError;
 		console.log(
 			"api.bridge.kpi.list",
 			new Date().toString(),
-			e.response.data
+			err.response?.data,
 		);
-		return new Response(JSON.stringify(e.response.data), {
-			status: e.response.status,
+		return new Response(JSON.stringify(err.response?.data), {
+			status: err.response?.status,
 		});
 	}
 };

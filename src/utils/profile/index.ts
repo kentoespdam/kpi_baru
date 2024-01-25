@@ -15,12 +15,13 @@ export const updatePassword = async ({
 			newPass,
 		});
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.profile.update.password",
 			new Date().toISOString(),
-			e.response.data.message
+			err.response?.data,
 		);
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };

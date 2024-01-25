@@ -1,39 +1,32 @@
 import axios, { AxiosError } from "axios";
-import {
-	APPWRITE_API_KEY,
-	APPWRITE_ENDPOINT,
-	APPWRITE_PROJECT_ID,
-	defaultRoles,
-	sessionNames,
-} from "@lib/index";
+import { APPWRITE_ENDPOINT, defaultRoles, sessionNames } from "@lib/index";
 import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { appwriteHeader } from "@helper/index";
 
-export const createUserAccount = async (account: {
-	userId: string;
-	email: string;
-	password: string;
-	name: string;
-}) => {
+export const createUserAccount = async (
+	cookies: RequestCookies | ReadonlyRequestCookies,
+	account: {
+		userId: string;
+		email: string;
+		password: string;
+		name: string;
+	},
+) => {
 	try {
-		const user = await getUserByNipam(account.userId);
+		const token = cookies.get(sessionNames[2])?.value;
+		const headers = appwriteHeader(cookies, token);
+
+		const user = await getUserByNipam(cookies, account.userId);
 		if (user !== null) return user;
 
-		const { status, data } = await axios.post(
+		const { data } = await axios.post(
 			`${APPWRITE_ENDPOINT}/v1/users`,
 			account,
-			{
-				headers: {
-					"Content-Type": "application/json",
-					"X-Appwrite-Response-Format": "1.0.0",
-					"X-Appwrite-Project": APPWRITE_PROJECT_ID,
-					"X-Appwrite-Key": APPWRITE_API_KEY,
-				},
-			},
+			{ headers: headers },
 		);
 
-		data.prefs = await updateRoleUser(data.$id, defaultRoles);
+		data.prefs = await updateRoleUser(cookies, data.$id, defaultRoles);
 		return data;
 	} catch (e) {
 		const err = e as unknown as AxiosError;
@@ -46,15 +39,15 @@ export const createUserAccount = async (account: {
 	}
 };
 
-export const getAllUser = async () => {
+export const getAllUser = async (
+	cookies: RequestCookies | ReadonlyRequestCookies,
+) => {
 	try {
+		const token = cookies.get(sessionNames[2])?.value;
+		const headers = appwriteHeader(cookies, token);
+
 		const { data } = await axios.get(`${APPWRITE_ENDPOINT}/v1/users`, {
-			headers: {
-				"Content-Type": "application/json",
-				"X-Appwrite-Response-Format": "1.0.0",
-				"X-Appwrite-Project": APPWRITE_PROJECT_ID,
-				"X-Appwrite-Key": APPWRITE_API_KEY,
-			},
+			headers: headers,
 		});
 		return data;
 	} catch (e) {
@@ -68,18 +61,17 @@ export const getAllUser = async () => {
 	}
 };
 
-export const getUserByNipam = async (nipam: string) => {
+export const getUserByNipam = async (
+	cookies: RequestCookies | ReadonlyRequestCookies,
+	nipam: string,
+) => {
 	try {
+		const token = cookies.get(sessionNames[2])?.value;
+		const headers = appwriteHeader(cookies, token);
+
 		const { data } = await axios.get(
 			`${APPWRITE_ENDPOINT}/v1/users/${nipam.split("@")[0]}`,
-			{
-				headers: {
-					"Content-Type": "application/json",
-					"X-Appwrite-Response-Format": "1.0.0",
-					"X-Appwrite-Project": APPWRITE_PROJECT_ID,
-					"X-Appwrite-Key": APPWRITE_API_KEY,
-				},
-			},
+			{ headers: headers },
 		);
 		return data;
 	} catch (e) {
@@ -93,27 +85,29 @@ export const getUserByNipam = async (nipam: string) => {
 	}
 };
 
-export const getPrefsInUser = async (nipams: string[]) => {
+export const getPrefsInUser = async (
+	cookies: RequestCookies | ReadonlyRequestCookies,
+	nipams: string[],
+) => {
 	return await Promise.all(
 		nipams.map(async (nipam) => {
-			const user = await getPrefs(nipam);
+			const user = await getPrefs(cookies, nipam);
 			return { nipam: nipam, roles: user?.roles };
 		}),
 	);
 };
 
-export const getPrefs = async (id: string) => {
+export const getPrefs = async (
+	cookies: RequestCookies | ReadonlyRequestCookies,
+	id: string,
+) => {
 	try {
+		const token = cookies.get(sessionNames[2])?.value;
+		const headers = appwriteHeader(cookies, token);
+
 		const { data } = await axios.get(
 			`${APPWRITE_ENDPOINT}/v1/users/${id}/prefs`,
-			{
-				headers: {
-					"Content-Type": "application/json",
-					"X-Appwrite-Response-Format": "1.0.0",
-					"X-Appwrite-Project": APPWRITE_PROJECT_ID,
-					"X-Appwrite-Key": APPWRITE_API_KEY,
-				},
-			},
+			{ headers: headers },
 		);
 		return data;
 	} catch (e) {
@@ -128,22 +122,22 @@ export const getPrefs = async (id: string) => {
 	}
 };
 
-export const updateRoleUser = async (id: string, roles: string[]) => {
+export const updateRoleUser = async (
+	cookies: RequestCookies | ReadonlyRequestCookies,
+	id: string,
+	roles: string[],
+) => {
 	try {
+		const token = cookies.get(sessionNames[2])?.value;
+		const headers = appwriteHeader(cookies, token);
+
 		const { status, data } = await axios.patch(
 			`${APPWRITE_ENDPOINT}/v1/users/${id}/prefs`,
 			{
 				userId: id,
 				prefs: { roles: roles },
 			},
-			{
-				headers: {
-					"Content-Type": "application/json",
-					"X-Appwrite-Response-Format": "1.0.0",
-					"X-Appwrite-Project": APPWRITE_PROJECT_ID,
-					"X-Appwrite-Key": APPWRITE_API_KEY,
-				},
-			},
+			{ headers: headers },
 		);
 		return new Response(JSON.stringify(data), { status });
 	} catch (e) {
@@ -161,16 +155,13 @@ export const updateRoleUser = async (id: string, roles: string[]) => {
 
 export const getCurrentAccount = async (
 	cookies: RequestCookies | ReadonlyRequestCookies,
-	cookieString?: string[],
 ) => {
 	const token = cookies.get(sessionNames[2])?.value;
 	const headers = appwriteHeader(cookies, token);
 	try {
 		const { data } = await axios.get(
 			`${APPWRITE_ENDPOINT}/v1/account/current`,
-			{
-				headers: headers,
-			},
+			{ headers: headers },
 		);
 		return data;
 	} catch (e) {

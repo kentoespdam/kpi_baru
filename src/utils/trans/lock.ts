@@ -11,13 +11,14 @@ export const lockKpi = async (formData: LockKpiData) => {
 			formData
 		);
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"trans.accepted.kpi.lock",
 			new Date().toISOString(),
-			e.response.data.message
+			err.response?.data,
 		);
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 
@@ -25,12 +26,13 @@ export const unlockKpi = async (id: number) => {
 	try {
 		const { data } = await axios.delete(`${LOCAL_TRANS_LOCK}/${id}`);
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"trans.accepted.kpi.unlock",
 			new Date().toISOString(),
-			e.response.data.message
+			err.response?.data,
 		);
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };

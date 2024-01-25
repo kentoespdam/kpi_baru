@@ -108,11 +108,12 @@ export const newSetCookies = (cookieString: string, hostname?: string) => {
 
 export const getCurrentToken = async (
 	cookies: RequestCookies | ReadonlyRequestCookies,
+	hostname: string,
 ) => {
 	const cookieToken = cookies.get(sessionNames[2])?.value;
 	if (cookieToken) return cookieToken;
-	const token = await createToken(cookies);
-	return token;
+	const token = await createToken(cookies, hostname);
+	return token.name;
 };
 
 export const getExpToken = (token: string) => {

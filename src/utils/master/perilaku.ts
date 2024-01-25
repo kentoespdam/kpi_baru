@@ -28,14 +28,15 @@ export const getPage = async (props: any) => {
 		);
 		useGradeStore.setState({ loading: false });
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.perilaku.page",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
 		useGradeStore.setState({ loading: false });
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 
@@ -44,14 +45,15 @@ export const getList = async () => {
 		const { data } = await axios.get(`${LOCAL_PERILAKU}/list`);
 		useGradeStore.setState({ loading: false });
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.perilaku.page",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
 		useGradeStore.setState({ loading: false });
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 
@@ -62,14 +64,15 @@ export const getById = async (props: any) => {
 		const { data } = await axios.get(`${LOCAL_PERILAKU}/${id}`);
 		useGradeStore.setState({ loading: false });
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.perilaku.getById",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
 		useGradeStore.setState({ loading: false });
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 
@@ -81,14 +84,15 @@ export const doSave = async (data: PerilakuData) => {
 			: await axios.post(LOCAL_PERILAKU, data);
 		useGradeStore.setState({ loading: false });
 		return result.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.perilaku.save",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
 		useGradeStore.setState({ loading: false });
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
 
@@ -98,13 +102,14 @@ export const doDelete = async (id: number) => {
 		const result = await axios.delete(`${LOCAL_PERILAKU}/${id}`);
 		useGradeStore.setState({ loading: false });
 		return result.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.master.perilaku.delete",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data
 		);
 		useGradeStore.setState({ loading: false });
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };

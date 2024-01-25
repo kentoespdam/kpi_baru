@@ -5,12 +5,13 @@ export const getList = async () => {
 	try {
 		const { data } = await axios.get(`${LOCAL_ORGANIZATION}/list`);
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+const err = e as unknown as AxiosError;
 		console.log(
 			"utils.eo.organization.list",
 			new Date().toISOString(),
 			e.response
 		);
-		throw new Error(e.response.data.message);
+		throw new Error(err.response?.data,);
 	}
 };
