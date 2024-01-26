@@ -18,17 +18,21 @@ export const middleware = async (req: NextRequest) => {
 	const response = NextResponse.next();
 	const currPath = req.nextUrl.pathname;
 	const cookies = req.cookies;
-	const host = req.nextUrl.hostname;
+	const host = String(req.headers.get("host")).split(":")[0];
 
 	if (!isHasSessionCookie(cookies) && !currPath.startsWith("/auth"))
 		return NextResponse.redirect(
 			new URL(
-				`/auth?callbackUrl=${encodeURIComponent(req.nextUrl.href)}`,
+				`/auth?callbackUrl=${encodeURIComponent(
+					String(req.headers.get("referer")),
+				)}`,
 				req.nextUrl.origin,
 			),
 			{
 				headers: {
-					"set-cookie": `callback_url=${encodeURIComponent(req.nextUrl.href)}`,
+					"set-cookie": `callback_url=${encodeURIComponent(
+						String(req.headers.get("referer")),
+					)}`,
 				},
 			},
 		);
@@ -38,9 +42,9 @@ export const middleware = async (req: NextRequest) => {
 
 	const sess = await getSession(cookies);
 	if (!sess) {
-		// response.cookies.delete(sessionNames[0]);
-		// response.cookies.delete(sessionNames[1]);
-		// response.cookies.delete(sessionNames[2]);
+		response.cookies.delete(sessionNames[0]);
+		response.cookies.delete(sessionNames[1]);
+		response.cookies.delete(sessionNames[2]);
 		if (currPath.startsWith("/auth") || currPath.startsWith("/api/auth"))
 			return response;
 
@@ -106,6 +110,7 @@ export const renewToken = async (cookies: RequestCookies, host: string) => {
 			headers: reqHeaders,
 		});
 		const data = await req.json();
+		console.log(data);
 		const expires = getExpToken(data.jwt);
 		const result = {
 			name: sessionNames[2],
@@ -122,6 +127,8 @@ export const renewToken = async (cookies: RequestCookies, host: string) => {
 				priority: "hight",
 			});
 		}
+
+		console.log(result);
 
 		return result as RequestCookie;
 	} catch (e) {

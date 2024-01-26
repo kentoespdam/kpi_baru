@@ -54,7 +54,6 @@ export const appwriteHeader = (
 	const headers = {
 		"Content-Type": contentType ? contentType : "application/json",
 		"X-Appwrite-Response-Format": "1.0.0",
-		Cookie: sessCookie.toString(),
 		"X-Appwrite-Project": APPWRITE_PROJECT_ID,
 		"X-Appwrite-key": APPWRITE_API_KEY,
 	};
@@ -64,20 +63,8 @@ export const appwriteHeader = (
 		return headers;
 	}
 
-	switch (typeof sessCookie) {
-		case "object":
-			Object.assign(headers, {
-				Cookie: sessCookie.toString(),
-				"X-Fallback-Cookies": xFallbackFromCookie(sessCookie),
-			});
-			return headers;
-		default:
-			Object.assign(headers, {
-				Cookie: sessCookie,
-				"X-Fallback-Cookies": sessCookie,
-			});
-			return headers;
-	}
+	Object.assign(headers, { Cookie: sessCookie.toString() });
+	return headers;
 };
 
 export const isValidIpAddress = (ipAddress?: string) => {
