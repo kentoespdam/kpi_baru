@@ -2,7 +2,7 @@ import axios, { AxiosError } from "axios";
 import { APPWRITE_ENDPOINT, defaultRoles, sessionNames } from "@lib/index";
 import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
-import { appwriteHeader } from "@helper/index";
+import { appwriteHeader, appwriteHeaderUser } from "@helper/index";
 
 export const createUserAccount = async (
 	cookies: RequestCookies | ReadonlyRequestCookies,
@@ -14,8 +14,7 @@ export const createUserAccount = async (
 	},
 ) => {
 	try {
-		const token = cookies.get(sessionNames[2])?.value;
-		const headers = appwriteHeader(cookies, token);
+		const headers = appwriteHeaderUser(cookies);
 
 		const user = await getUserByNipam(cookies, account.userId);
 		if (user !== null) return user;
@@ -43,8 +42,7 @@ export const getAllUser = async (
 	cookies: RequestCookies | ReadonlyRequestCookies,
 ) => {
 	try {
-		const token = cookies.get(sessionNames[2])?.value;
-		const headers = appwriteHeader(cookies, token);
+		const headers = appwriteHeaderUser(cookies);
 
 		const { data } = await axios.get(`${APPWRITE_ENDPOINT}/v1/users`, {
 			headers: headers,
@@ -66,8 +64,7 @@ export const getUserByNipam = async (
 	nipam: string,
 ) => {
 	try {
-		const token = cookies.get(sessionNames[2])?.value;
-		const headers = appwriteHeader(cookies, token);
+		const headers = appwriteHeaderUser(cookies);
 
 		const { data } = await axios.get(
 			`${APPWRITE_ENDPOINT}/v1/users/${nipam.split("@")[0]}`,
@@ -102,8 +99,7 @@ export const getPrefs = async (
 	id: string,
 ) => {
 	try {
-		const token = cookies.get(sessionNames[2])?.value;
-		const headers = appwriteHeader(cookies, token);
+		const headers = appwriteHeaderUser(cookies);
 
 		const { data } = await axios.get(
 			`${APPWRITE_ENDPOINT}/v1/users/${id}/prefs`,
@@ -128,8 +124,7 @@ export const updateRoleUser = async (
 	roles: string[],
 ) => {
 	try {
-		const token = cookies.get(sessionNames[2])?.value;
-		const headers = appwriteHeader(cookies, token);
+		const headers = appwriteHeaderUser(cookies);
 
 		const { status, data } = await axios.patch(
 			`${APPWRITE_ENDPOINT}/v1/users/${id}/prefs`,

@@ -67,6 +67,15 @@ export const appwriteHeader = (
 	return headers;
 };
 
+export const appwriteHeaderUser = (
+	sessCookie: string | RequestCookies | ReadonlyRequestCookies,
+) => ({
+	"Content-Type": "application/json",
+	"X-Appwrite-Response-Format": "1.0.0",
+	"X-Appwrite-Project": APPWRITE_PROJECT_ID,
+	"X-Appwrite-key": APPWRITE_API_KEY,
+});
+
 export const isValidIpAddress = (ipAddress?: string) => {
 	if (
 		ipAddress &&
