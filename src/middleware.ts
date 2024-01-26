@@ -90,6 +90,8 @@ const getSession = async (cookies: RequestCookies) => {
 			headers: reqHeaders,
 		});
 
+		if (req.status !== 200) return false;
+
 		const data = await req.json();
 		if (useSessionStore.getState().user === null)
 			useSessionStore.setState({ user: data });
