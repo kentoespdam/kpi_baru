@@ -13,7 +13,7 @@ import Typography from "@mui/material/Typography";
 import { useSessionStore } from "@store/main/session";
 import axios from "axios";
 import dynamic from "next/dynamic";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useSnackbar } from "notistack";
 import React from "react";
 const LockIcon = dynamic(() => import("@mui/icons-material/Lock"), {
@@ -32,6 +32,8 @@ const VisibilityOffIcon = dynamic(
 );
 
 const AuthComponent = () => {
+	const searchParams = useSearchParams()
+	const callbackUrl = decodeURIComponent(`${searchParams.get("callbackUrl")}`)
 	const [submitText, setSubmitText] = React.useState("LOGIN");
 	const router = useRouter();
 	const { setUser } = useSessionStore();
@@ -65,7 +67,7 @@ const AuthComponent = () => {
 			setSubmitText("Setup User...");
 			setUser(data);
 			setSubmitText("Redirecting...");
-			router.push("/");
+			router.push(callbackUrl);
 		} catch (e) {
 			setLoading(false);
 			setSubmitText("LOGIN");

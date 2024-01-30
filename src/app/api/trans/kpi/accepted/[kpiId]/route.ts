@@ -54,6 +54,7 @@ export const DELETE = async (
 
 	try {
 		const token = await getCurrentToken(cookies, hostname);
+		console.log(token);
 		const { status, data } = await axios.delete(
 			`${REMOTE_TRANS_LOCK}/${kpiId}/unlock`,
 			{

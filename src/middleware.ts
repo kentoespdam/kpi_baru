@@ -12,7 +12,7 @@ import {
 	isValidIpAddress,
 	newHostname,
 } from "./helpers";
-import { APPWRITE_ENDPOINT, sessionNames } from "./lib";
+import { sessionNames } from "./lib";
 
 export const middleware = async (req: NextRequest) => {
 	const response = NextResponse.next();
@@ -23,18 +23,9 @@ export const middleware = async (req: NextRequest) => {
 	if (!isHasSessionCookie(cookies) && !currPath.startsWith("/auth"))
 		return NextResponse.redirect(
 			new URL(
-				`/auth?callbackUrl=${encodeURIComponent(
-					String(req.headers.get("referer")),
-				)}`,
+				`/auth?callbackUrl=${encodeURIComponent(currPath)}`,
 				req.nextUrl.origin,
 			),
-			{
-				headers: {
-					"set-cookie": `callback_url=${encodeURIComponent(
-						String(req.headers.get("referer")),
-					)}`,
-				},
-			},
 		);
 
 	if (currPath === "/")
@@ -50,14 +41,9 @@ export const middleware = async (req: NextRequest) => {
 
 		return NextResponse.redirect(
 			new URL(
-				`/auth?callbackUrl=${encodeURIComponent(req.nextUrl.href)}`,
+				`/auth?callbackUrl=${encodeURIComponent(currPath)}`,
 				req.nextUrl.origin,
 			),
-			{
-				headers: {
-					"set-cookie": `callback_url=${encodeURIComponent(req.nextUrl.href)}`,
-				},
-			},
 		);
 	}
 
@@ -85,10 +71,13 @@ export const config = {
 const getSession = async (cookies: RequestCookies) => {
 	const reqHeaders = appwriteHeader(cookies);
 	try {
-		const req = await fetch(`${APPWRITE_ENDPOINT}/v1/account/session/current`, {
-			method: "GET",
-			headers: reqHeaders,
-		});
+		const req = await fetch(
+			`${process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT}/v1/account/session/current`,
+			{
+				method: "GET",
+				headers: reqHeaders,
+			},
+		);
 
 		if (req.status !== 200) return false;
 
@@ -107,10 +96,13 @@ export const renewToken = async (cookies: RequestCookies, host: string) => {
 	const reqHeaders = appwriteHeader(cookies);
 
 	try {
-		const req = await fetch(`${APPWRITE_ENDPOINT}/v1/account/jwt`, {
-			method: "POST",
-			headers: reqHeaders,
-		});
+		const req = await fetch(
+			`${process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT}/v1/account/jwt`,
+			{
+				method: "POST",
+				headers: reqHeaders,
+			},
+		);
 		const data = await req.json();
 		console.log(data);
 		const expires = getExpToken(data.jwt);
@@ -129,8 +121,6 @@ export const renewToken = async (cookies: RequestCookies, host: string) => {
 				priority: "hight",
 			});
 		}
-
-		console.log(result);
 
 		return result as RequestCookie;
 	} catch (e) {

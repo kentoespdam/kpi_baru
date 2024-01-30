@@ -22,7 +22,7 @@ export const GET = async (
 					"Content-Type": "application/json",
 					Authorization: token,
 				},
-				responseType: "stream",
+				responseType: "blob",
 			},
 		);
 

@@ -17,18 +17,20 @@ export const GET = async (
 
 	try {
 		const token = await getCurrentToken(cookies, hostname);
-		const { status, data } = await axios.get(
+		const {  status, data } = await axios.get(
 			`${REMOTE_URAIAN_FILE}/${id}/uraian`,
 			{
 				headers: {
 					"Content-Type": "application/json",
 					Authorization: token,
 				},
-				responseType: "stream",
+				// responseType: "stream",
 			},
 		);
 
-		return new Response(data, {
+		// console.log(data)
+
+		return new Response(JSON.stringify(data), {
 			status: status,
 		});
 	} catch (e) {
