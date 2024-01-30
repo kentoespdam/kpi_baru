@@ -1,17 +1,10 @@
-// "use client";
 import Link from "next/link";
 import Image from "next/image";
 import React, { } from "react";
 import Login from "./login";
-import { z } from "zod";
 import { cookies } from "next/headers";
 import { getCUrrentSession } from "@lib/appwrite/user";
 import { redirect } from "next/navigation";
-
-export const signInSchema = z.object({
-	email: z.string().email(),
-	password: z.string().min(8),
-});
 
 const Auth = async () => {
 	const cookieList = cookies();

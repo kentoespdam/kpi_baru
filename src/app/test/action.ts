@@ -3,7 +3,7 @@
 import { cookieStringToObject } from "@helpers/index";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { signInSchema } from "../auth/page";
+import { signInSchema } from "../auth/signInSchema";
 
 export const doAction = async (formData: FormData) => {
 	const data = Object.fromEntries(formData);

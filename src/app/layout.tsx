@@ -5,6 +5,7 @@ import { getCurrentAccount } from "@lib/appwrite/user";
 import { cookies } from "next/headers";
 import { cn, sessionNames } from "@utils/index";
 import ThemeProvider from "@components/providers/theme";
+import React from "react";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 

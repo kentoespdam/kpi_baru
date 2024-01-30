@@ -57,6 +57,8 @@ export async function middleware(req: NextRequest) {
 		response.cookies.set(token.name, token.value, token);
 	}
 
+	if (currPath === "/")
+		return NextResponse.redirect(new URL("/dashboard", req.nextUrl.origin));
 	return response;
 }
 

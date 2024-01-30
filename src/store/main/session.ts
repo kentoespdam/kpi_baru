@@ -15,11 +15,8 @@ export interface SessionUser {
 }
 
 interface SessionStore {
-	// user: SessionUser | null;
-	// setUser: (user: SessionUser | null) => void;
 	account: string | null;
 	setAccount: (account: Account | null) => void;
-	getAccount: () => string | null;
 	_hasHydrated: boolean;
 	setHasHydrated: (state: boolean) => void;
 }
@@ -28,11 +25,8 @@ export const useSessionStore = create(
 	devtools(
 		persist<SessionStore>(
 			(set, get) => ({
-				// user: null,
-				// setUser: (user) => set({ user }),
 				account: null,
 				setAccount: (account) => set({ account: JSON.stringify(account) }),
-				getAccount: () => get().account,
 				_hasHydrated: false,
 				setHasHydrated: (state) => {
 					set({
