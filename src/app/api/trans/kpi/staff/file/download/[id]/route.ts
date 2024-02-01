@@ -15,20 +15,20 @@ export const GET = async (
 
 	try {
 		const token = await getCurrentToken(cookies, hostname);
-		const { status, data, headers } = await axios.get(
-			`${REMOTE_URAIAN_FILE}/${id}/file`,
-			{
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: token,
-				},
-				responseType: "blob",
+		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+		let resHeader: any;
+		const data = await fetch(`${REMOTE_URAIAN_FILE}/${id}/file`, {
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: token,
 			},
-		);
+		}).then((res) => {
+			resHeader = res.headers;
+			return res.blob();
+		});
 
 		return new Response(data, {
-			status: status,
-			headers: headers as HeadersInit,
+			headers: resHeader,
 		});
 	} catch (e) {
 		const err = e as unknown as AxiosError;
