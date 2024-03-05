@@ -1,11 +1,21 @@
+import ToggleThemeButton from "@components/template/theme";
 import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@components/ui/dropdown-menu";
+import { extracNipamFromToken } from "@helpers/index";
+import { getEmployeeByNipam } from "@utils/eo/employee";
 import { KeyRound, LogOut } from "lucide-react";
-import ToggleThemeButton from "../theme";
 
-const ProfilComponent = () => {
+const ProfilePage = async () => {
+    const nipam = extracNipamFromToken()
+    if (!nipam) return null
+    const employee = await getEmployeeByNipam(nipam)
+
     return (
-        <div className="py-2">
+        <div className="py-2 flex items-center gap-3">
+            <div className="flex flex-col">
+                <h3 className="font-medium text-foreground">{employee?.nama}</h3>
+                <span>{employee?.position.name}</span>
+            </div>
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Avatar className="cursor-pointer w-8 h-8">
@@ -29,4 +39,4 @@ const ProfilComponent = () => {
     );
 }
 
-export default ProfilComponent;
+export default ProfilePage;

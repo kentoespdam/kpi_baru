@@ -86,7 +86,7 @@ export const createJwtToken = async (
 	}
 };
 
-export const getCurrentAccount = async (
+export const getCurrentUser = async (
 	cookies: RequestCookies | ReadonlyRequestCookies,
 ) => {
 	const token = cookies.get(sessionNames[2])?.value;
@@ -95,7 +95,7 @@ export const getCurrentAccount = async (
 		const { data } = await axios.get(`${baseAuthUrl}/account`, {
 			headers: headers,
 		});
-		useSessionStore.setState({ account: data });
+		useSessionStore.setState({ user: data });
 		return data;
 	} catch (e) {
 		const err = e as unknown as AxiosError;

@@ -1,9 +1,9 @@
 import ManuSheet from "@components/template/menusheet"
+import ProfileComponent from "@components/template/profile"
 import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/avatar"
 
-const DashboardLayout = async ({ children, profile }: {
+const MasterLayout = async ({ children }: {
     children: React.ReactNode
-    profile: React.ReactNode
 }) => {
     return (<div className="min-h-screen min-w-screen">
         <div className="border-red-600 pb-10">
@@ -25,7 +25,7 @@ const DashboardLayout = async ({ children, profile }: {
                                 Key Performance Indicator</h2>
                         </div>
                         <div className="md:ml-6">
-                            {profile}
+                            <ProfileComponent />
                         </div>
                     </div>
                 </div>
@@ -39,4 +39,4 @@ const DashboardLayout = async ({ children, profile }: {
     </div>)
 }
 
-export default DashboardLayout
+export default MasterLayout

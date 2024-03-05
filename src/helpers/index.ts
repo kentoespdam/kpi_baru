@@ -45,9 +45,9 @@ export const xFallbackFromCookie = (
 	return `{"${sessionNames[0]}":"${currentCookie}"}`;
 };
 
-export const extractTokenData = (token: string) => {
+export const extractTokenData = (token: string, part?: number) => {
 	const tokenParts = token.split(".");
-	return JSON.parse(atob(tokenParts[1]));
+	return JSON.parse(atob(tokenParts[part ? part : 1]));
 };
 
 export const getExpToken = (token: string) => {
@@ -64,7 +64,6 @@ export const appwriteHeader = (
 	const headers = {
 		"Content-Type": contentType ? contentType : "application/json",
 		"X-Appwrite-Response-Format": "1.0.0",
-		Cookie: sessCookie.toString(),
 		"X-Appwrite-Project": projectId,
 		"X-Appwrite-key": appwriteKey,
 	};
@@ -73,6 +72,7 @@ export const appwriteHeader = (
 		Object.assign(headers, { "X-Appwrite-JWT": token });
 		return headers;
 	}
+	// Object.assign(headers, { Cookie: sessCookie.toString() });
 
 	switch (typeof sessCookie) {
 		case "object":
@@ -94,8 +94,13 @@ export const isHasSessionCookie = (cookies: RequestCookies) => {
 	return cookies.has(sessionNames[0]) || cookies.has(sessionNames[1]);
 };
 
-export const isHasTokenCookie = (cookies: RequestCookies) =>
-	cookies.has(sessionNames[2]);
+export const isHasTokenCookie = (
+	cookies: RequestCookies | ReadonlyRequestCookies,
+) => cookies.has(sessionNames[2]);
+
+export const getCookieToken = (
+	cookies: RequestCookies | ReadonlyRequestCookies,
+) => cookies.get(sessionNames[2])?.value;
 
 export const cookieStringToObject = (
 	cookieString: string,
@@ -156,3 +161,21 @@ export interface AxiosErrorData {
 	type: string;
 	version: string;
 }
+
+export const extracNipamFromToken = (): string | null => {
+	const cookieList = cookies();
+	const tokenString = cookieList.get(sessionNames[0])?.value;
+	if (!tokenString) return null;
+	const tokenData = JSON.parse(atob(tokenString));
+	return tokenData.id;
+};
+
+export const headerApiKpi = (
+	cookies: RequestCookies | ReadonlyRequestCookies,
+) => {
+	const token = getCookieToken(cookies);
+	return {
+		"Content-Type": "application/json",
+		Authorization: String(token),
+	};
+};

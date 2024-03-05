@@ -33,7 +33,7 @@ export async function middleware(req: NextRequest) {
 		);
 
 	const activeSession = await isHasAuthSession(cookies);
-	if (!activeSession) {
+	if (activeSession === 401) {
 		response.cookies.delete(sessionNames[0]);
 		response.cookies.delete(sessionNames[1]);
 		response.cookies.delete(sessionNames[2]);
@@ -70,17 +70,11 @@ export const config = {
 
 export const isHasAuthSession = async (cookies: RequestCookies) => {
 	const reqHeaders = appwriteHeader(cookies);
-	try {
-		const req = await fetch(`${baseAuthUrl}/account/session/current`, {
-			method: "GET",
-			headers: reqHeaders,
-		});
-		if (req.status === 401) return false;
-		return true;
-	} catch (e) {
-		console.log("middleware get current session", e);
-		return false;
-	}
+	const req = await fetch(`${baseAuthUrl}/account/session/current`, {
+		method: "GET",
+		headers: reqHeaders,
+	});
+	return req.status;
 };
 
 export const renewToken = async (cookies: RequestCookies, host: string) => {

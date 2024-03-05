@@ -1,26 +1,27 @@
+import { z } from "zod";
+
 export type ObjectValues<T> = T[keyof T];
 
-export const USER_ROLE = {
-	USER: "USER",
-	ADMIN: "ADMIN",
-} as const;
+export const USER_ROLE = ["USER", "ADMIN"] as const;
+export const UserRole = z.enum(USER_ROLE);
+export type UserRole = z.infer<typeof UserRole>;
 
-export type UserRole = ObjectValues<typeof USER_ROLE>;
+export const Audit = z.object({
+	createdAt: z.date(),
+	createdBy: z.string(),
+	updatedAt: z.date(),
+	updatedBy: z.string(),
+});
+export type Audit = z.infer<typeof Audit>;
 
-export const AUDIT_STATUS = {
-	ENABLED: "Enabled",
-	DISABLED: "Disabled",
-	DELETED: "Deleted",
-} as const;
+export const AUDIT_STATUS = ["Enabled", "Disabled", "Deleted"] as const;
+export const AuditStatus = z.enum(["Enabled", "Disabled", "Deleted"]);
+export type AuditStatus = z.infer<typeof AuditStatus>;
 
-interface AccountPref {
-	roles?: UserRole[];
-}
+export const BaseId = z.object({
+	id: z.number(),
+	status: AuditStatus.optional(),
+});
 
-export interface SessionUser {
-	$id: string;
-	userId: string;
-	name: string;
-	email: string;
-	prefs: AccountPref;
-}
+export type BaseId = z.infer<typeof BaseId>;
+

@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { getCurrentAccount } from "@lib/appwrite/user";
-import { cookies } from "next/headers";
-import { cn, sessionNames } from "@utils/index";
+import { cn } from "@utils/index";
 import ThemeProvider from "@components/providers/theme";
 import React from "react";
+import ManuSheet from "@components/template/menusheet";
+import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/avatar";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
