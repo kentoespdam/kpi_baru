@@ -14,7 +14,7 @@ const LevelActionBtn = (props: LevelActionBtnProps) => {
 	const { row } = props;
 	const router = useRouter();
 	const { pageRequest, sortRequest, status, level } = useLevelStore();
-	
+
 	const qc = useQueryClient();
 	const { enqueueSnackbar } = useSnackbar();
 

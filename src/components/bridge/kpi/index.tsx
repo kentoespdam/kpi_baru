@@ -1,16 +1,18 @@
 "use client";
 
+import TableLoading from "@components/commons/table/loading";
+import LinearProgress from "@mui/material/LinearProgress";
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
+import { bridgeKpiHead } from "@myTypes/entity/bridge.kpi";
 import { useBridgeKpiStore } from "@store/filter/bridge/kpi";
 import { useQueries } from "@tanstack/react-query";
 import { getPage } from "@utils/bridge/kpi";
-import BridgeKpiTableHead from "./table/head";
-import LinearProgress from "@mui/material/LinearProgress";
-import TableLoading from "@components/commons/table/loading";
-import { bridgeKpiHead } from "@myTypes/entity/bridge.kpi";
-import BridgeKpiTableBody from "./table/body";
+import dynamic from "next/dynamic";
 import BridgeKpiPagination from "./pagination";
+import BridgeKpiTableHead from "./table/head";
+
+const BridgeKpiTableBody = dynamic(() => import("./table/body"));
 
 const BridgeKpiComponent = () => {
 	const {

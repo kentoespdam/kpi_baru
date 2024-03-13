@@ -1,5 +1,3 @@
-"use client";
-
 import CellBuilder from "@components/commons/table/cell.builder";
 import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";

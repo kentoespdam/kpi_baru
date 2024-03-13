@@ -4,9 +4,7 @@ import {
 	hitungTotalNilaiProdukKerja,
 	hitungTotalNilaiWaktu,
 } from "@helper/nilaiKinerja";
-import TableBody from "@mui/material/TableBody";
 import TableFooter from "@mui/material/TableFooter";
-import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { TransKpiWithAudit } from "@myTypes/entity/trans.kpi";
 import { useTransKinerjaStore } from "@store/filter/trans/kinerja";

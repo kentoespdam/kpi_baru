@@ -1,9 +1,4 @@
 "use client";
-
-import DoDisturbIcon from "@mui/icons-material/DoDisturb";
-import LockIcon from "@mui/icons-material/Lock";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
@@ -16,9 +11,16 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useMutation } from "@tanstack/react-query";
 import { updatePassword } from "@utils/profile";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
 import React, { FormEvent, useRef } from "react";
+const DoDisturbIcon = dynamic(() => import("@mui/icons-material/DoDisturb"));
+const LockIcon = dynamic(() => import("@mui/icons-material/Lock"));
+const Visibility = dynamic(() => import("@mui/icons-material/Visibility"));
+const VisibilityOff = dynamic(
+	() => import("@mui/icons-material/VisibilityOff")
+);
 
 const ChangePasswordComponent = () => {
 	const routes = useRouter();

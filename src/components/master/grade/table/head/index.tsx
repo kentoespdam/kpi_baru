@@ -1,6 +1,5 @@
-import HeaderSearchBuilder, {
-	SearchValueProps,
-} from "@components/commons/table/head/search";
+import HeaderSearchBuilder from "@components/commons/table/head/search";
+import { SearchValueProps } from "@components/commons/table/head/searchType";
 import HeaderSortBuilder from "@components/commons/table/head/sort";
 import TableHead from "@mui/material/TableHead";
 import { gradeHeader } from "@myTypes/entity/grade";

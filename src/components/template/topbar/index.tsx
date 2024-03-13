@@ -1,7 +1,4 @@
 "use client";
-
-import MenuFoldOutlined from "@ant-design/icons/MenuFoldOutlined";
-import MenuUnfoldOutlined from "@ant-design/icons/MenuUnfoldOutlined";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
@@ -11,7 +8,15 @@ import { Theme, useTheme } from "@mui/material/styles";
 import { buttonSelectedColor, drawerWidth } from "@myConfig/index";
 import { useMenuStore } from "@store/main/menu";
 import { useTemplateStore } from "@store/main/template";
+import dynamic from "next/dynamic";
 import ProfileComponent from "./profile";
+
+const MenuFoldOutlined = dynamic(() =>
+	import("@ant-design/icons").then((mod) => mod.MenuFoldOutlined)
+);
+const MenuUnfoldOutlined = dynamic(() =>
+	import("@ant-design/icons").then((mod) => mod.MenuUnfoldOutlined)
+);
 
 const appBarSx = (theme: Theme, isOpen: boolean, isDesktop: boolean) => {
 	return {

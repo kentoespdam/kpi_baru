@@ -1,5 +1,4 @@
-import DoDisturbIcon from "@mui/icons-material/DoDisturb";
-import SaveIcon from "@mui/icons-material/Save";
+import { Periode } from "@helper/periode";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
@@ -7,21 +6,33 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { TransPerilakuNilaiData } from "@myTypes/entity/trans.perilaku.nilai";
 import { useViewFormPerilakuDialogStore } from "@store/dialog/view.form.perilaku";
-import { useTransKinerjaStore } from "@store/filter/trans/kinerja";
-import { useTransKpiStore } from "@store/filter/trans/kpi";
-import { useTransPerilakuStore } from "@store/filter/trans/perilaku";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { doSave } from "@utils/trans/perilaku";
+import dynamic from "next/dynamic";
 import { useSnackbar } from "notistack";
 import { FormEvent, useRef } from "react";
+const DoDisturbIcon = dynamic(() => import("@mui/icons-material/DoDisturb"));
+const SaveIcon = dynamic(() => import("@mui/icons-material/Save"));
 
-const TransPerilakuForm = () => {
+type TransPerilakuFormProps = {
+	periode: Periode | null;
+	isAdmin?: boolean;
+};
+const TransPerilakuForm = (props: TransPerilakuFormProps) => {
+	const { periode, isAdmin } = props;
 	const { enqueueSnackbar } = useSnackbar();
-	const { toggleFormPerilakuOpen, perilaku } =
+	const { toggleFormPerilakuOpen, perilaku, nipam, levelId } =
 		useViewFormPerilakuDialogStore();
-	const periode = useTransKpiStore((state) => state.periode);
-	const nipamStaff = useTransKinerjaStore((state) => state.nipamStaff);
-	const levelStaff = useTransPerilakuStore((state) => state.levelStaff);
+
+	const queryKey = isAdmin
+		? [
+				"kpi.admin.perilaku",
+				{ nipam: nipam, periode: periode?.periode, levelId: levelId },
+		  ]
+		: [
+				"trans.perilaku.bawahan",
+				{ nipam: nipam, periode: periode?.periode, levelId: levelId },
+		  ];
 
 	const nilaiRef = useRef<HTMLInputElement>(null);
 
@@ -33,14 +44,7 @@ const TransPerilakuForm = () => {
 		},
 		onSuccess: () => {
 			qc.invalidateQueries({
-				queryKey: [
-					"trans.perilaku.bawahan",
-					{
-						nipam: nipamStaff,
-						periode: periode?.periode,
-						levelId: levelStaff,
-					},
-				],
+				queryKey: queryKey,
 			});
 			enqueueSnackbar("Data berhasil disimpan", { variant: "success" });
 			toggleFormPerilakuOpen(null);

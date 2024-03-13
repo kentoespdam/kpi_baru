@@ -1,5 +1,4 @@
 import { UserRole } from "@myTypes/index";
-import axios from "axios";
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
@@ -34,20 +33,3 @@ export const useSessionStore = create(
 		)
 	)
 );
-
-const getSessionAccount = async () => {
-	console.log("hemmmmm");
-	try {
-		const { status, data } = await axios.get("/api/session");
-		if (status !== 200) return null;
-		console.log(data);
-		return data;
-	} catch (e: any) {
-		console.log(
-			"store.main.session",
-			new Date().toISOString(),
-			e.response.data.message
-		);
-		return null;
-	}
-};

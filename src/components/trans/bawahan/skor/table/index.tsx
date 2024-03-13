@@ -5,42 +5,28 @@ import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { TransKpi } from "@myTypes/entity/trans.kpi";
-import { TransPerilaku } from "@myTypes/entity/trans.perilaku";
-import { useTransKinerjaStore } from "@store/filter/trans/kinerja";
-import { useTransKpiStore } from "@store/filter/trans/kpi";
-import { useTransPerilakuStore } from "@store/filter/trans/perilaku";
+import { TransKpi, TransKpiQKeyProps } from "@myTypes/entity/trans.kpi";
+import {
+	TransPerilaku,
+	TransPerilakuQKeyProps,
+} from "@myTypes/entity/trans.perilaku";
 import { useQueryClient } from "@tanstack/react-query";
 
-const TransSkorTable = () => {
-	const periode = useTransKpiStore((state) => state.periode);
-	const { nipamStaff, bridgeKpiBawahan } = useTransKinerjaStore();
-	const levelStaff = useTransPerilakuStore((state) => state.levelStaff);
-
+type TransSkorTableProps = {
+	queryKeyKpi: (string | TransKpiQKeyProps)[];
+	querKeyPerilaku: (string | TransPerilakuQKeyProps)[];
+};
+const TransSkorTable = (props: TransSkorTableProps) => {
 	const qc = useQueryClient();
+	const dataKinerja = qc.getQueryData<TransKpi>(props.queryKeyKpi);
+	const dataPerilaku = qc.getQueryData<TransPerilaku>(props.querKeyPerilaku);
 
-	const dataKinerja = qc.getQueryData([
-		"trans.kpi.bawahan",
-		{
-			nipam: nipamStaff,
-			kpiId: bridgeKpiBawahan?.kpi.id,
-			periode: periode?.periode,
-		},
-	]) as TransKpi;
-
-	const dataPerilaku = qc.getQueryData([
-		"trans.perilaku.bawahan",
-		{
-			nipam: nipamStaff,
-			periode: periode?.periode,
-			levelId: levelStaff,
-		},
-	]) as TransPerilaku;
+	if (!dataKinerja || !dataPerilaku) return null;
 
 	const totalKinerja = 0.8 * dataKinerja.nilaiTotal;
 	const nilaiPerilaku =
-		dataPerilaku.perilakuList.reduce((acc, cur) => acc + cur.nilai, 0) /
-		dataPerilaku.perilakuList.length;
+		dataPerilaku?.perilakuList.reduce((acc, cur) => acc + cur.nilai, 0) /
+		dataPerilaku?.perilakuList.length;
 	const totalPerilaku = 0.2 * nilaiPerilaku;
 	const nilaiRating = totalKinerja + totalPerilaku;
 

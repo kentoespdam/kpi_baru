@@ -5,7 +5,7 @@ export interface Periode {
 export const getListPeriode = (order?: "asc" | "desc") => {
 	const date = new Date();
 	const th = date.getFullYear() - 1;
-	const bl = date.getMonth();
+	const bl = date.getMonth() + 1;
 	const aPeriode: Periode[] = [];
 	for (let i = 12; i >= 1; i--) {
 		// last periode
@@ -44,7 +44,19 @@ export const getListPeriode = (order?: "asc" | "desc") => {
 export const getCurrentPeriode = (adjust?: number): Periode => {
 	const date = new Date();
 	const th = date.getFullYear();
-	const bl = date.getMonth() + 1 + (adjust ? adjust : 0);
+	const bl =
+		date.getMonth() > 0
+			? date.getMonth() + 1 + (adjust ? adjust : 0)
+			: date.getMonth() + 1;
 	const sBln = bl < 10 ? `0${bl}` : `${bl}`;
 	return { periode: parseInt(`${th}${sBln}`) };
+};
+
+export const periodeToString = (periode: number) => {
+	const periodeString = String(periode);
+	const tahun = periodeString.substring(0, 4);
+	const bulan = periodeString.substring(4, 6);
+	const sekarang = new Date(`${tahun}-${bulan}-1`);
+	const namaBulan = sekarang.toLocaleString("id-ID", { month: "long" });
+	return `${namaBulan} ${tahun}`;
 };

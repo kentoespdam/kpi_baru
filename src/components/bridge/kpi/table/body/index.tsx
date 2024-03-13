@@ -44,12 +44,12 @@ const BridgeKpiTableBody = () => {
 			{data.content.map((item) => (
 				<TableRow hover key={item.id}>
 					<CellBuilder value={urut++} />
+					<CellBuilder value={item.level.level} />
 					<CellBuilder value={item.nipam} />
 					<CellBuilder value={String(item.name)} />
 					<CellBuilder value={item.kpi.name} />
 					<CellBuilder value={String(item.position?.name)} />
 					<CellBuilder value={String(item.organization?.name)} />
-					<CellBuilder value={item.level.level} />
 					<CellBuilder
 						value={item.roles ? item.roles.join(" | ") : ""}
 					/>

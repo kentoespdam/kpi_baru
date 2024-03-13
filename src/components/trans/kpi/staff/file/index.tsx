@@ -1,15 +1,16 @@
 "use client";
-
 import LinearProgress from "@mui/material/LinearProgress";
-import Table from "@mui/material/Table";
-import TableContainer from "@mui/material/TableContainer";
+import List from "@mui/material/List";
+import Typography from "@mui/material/Typography";
+import { TransFile } from "@myTypes/entity/trans.file";
+import { TransKpiQKeyProps } from "@myTypes/entity/trans.kpi";
 import { useQueries } from "@tanstack/react-query";
 import { getFiles } from "@utils/trans/file";
-import TransKpiFileListTableBody from "./table/body";
-import TransKpiFileListTableHead from "./table/head";
+import TransFileListItem from "./item";
 
 type TransKpiFileListComponentProps = {
 	uraianId: number;
+	qKeyKpiStaff: (string | TransKpiQKeyProps)[];
 };
 const TransKpiFileListComponent = (props: TransKpiFileListComponentProps) => {
 	const { uraianId } = props;
@@ -20,20 +21,26 @@ const TransKpiFileListComponent = (props: TransKpiFileListComponentProps) => {
 				queryKey: ["trans.file.list", Number(uraianId)],
 				queryFn: getFiles,
 				enabled: !!uraianId,
+				retry: 2,
 			},
 		],
 	});
 
-	return (
-		<TableContainer>
-			{queries[0].isFetching || queries[0].isLoading ? (
-				<LinearProgress />
-			) : null}
-			<Table>
-				<TransKpiFileListTableHead />
-				<TransKpiFileListTableBody uraianId={uraianId} />
-			</Table>
-		</TableContainer>
+	return queries[0].isFetching ? (
+		<LinearProgress />
+	) : queries[0].isError || !queries[0].data ? (
+		<Typography>File Not Found!</Typography>
+	) : (
+		<List component="nav">
+			{queries[0].data.map((item: TransFile, index: number) => (
+				<TransFileListItem
+					key={index}
+					uraianId={uraianId}
+					uraianFile={item}
+					qKeyKpiStaff={props.qKeyKpiStaff}
+				/>
+			))}
+		</List>
 	);
 };
 

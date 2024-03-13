@@ -30,6 +30,7 @@ const KpiStaffTableBody = () => {
 					indikator={row}
 					key={row.id}
 					urut={urut++}
+					lockedStatus={data.lockedStatus}
 				/>
 			))}
 		</TableBody>

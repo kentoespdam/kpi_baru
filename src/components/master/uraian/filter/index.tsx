@@ -7,17 +7,7 @@ import { useUraianStore } from "@store/filter/master/uraian";
 import { useState } from "react";
 
 const UraianFilter = () => {
-	const {
-		pageRequest,
-		sortRequest,
-		indikatorId,
-		uraian,
-		kpiId,
-		profesiId,
-		levelId,
-		status,
-		setKeyVal,
-	} = useUraianStore();
+	const { status, setKeyVal } = useUraianStore();
 
 	const [checked, setChecked] = useState(
 		status === AUDIT_STATUS.DISABLED ? false : true

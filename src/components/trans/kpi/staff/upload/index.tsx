@@ -1,7 +1,4 @@
 "use client";
-
-import DeleteIcon from "@mui/icons-material/Delete";
-import UploadFileIcon from "@mui/icons-material/UploadFile";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Chip from "@mui/material/Chip";
 import IconButton from "@mui/material/IconButton";
@@ -11,9 +8,11 @@ import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useSessionStore } from "@store/main/session";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { doUpload } from "@utils/trans/file";
-import { handleSubmitServer } from "@utils/trans/file.server";
+import dynamic from "next/dynamic";
 import { useSnackbar } from "notistack";
 import { FormEvent, useRef, useState } from "react";
+const DeleteIcon = dynamic(() => import("@mui/icons-material/Delete"));
+const UploadFileIcon = dynamic(() => import("@mui/icons-material/UploadFile"));
 
 type TransKpiStaffUploadComponentProps = {
 	uraianId: number;
@@ -70,37 +69,15 @@ const TransKpiStaffUploadComponent = (
 			transKpiUraianId: Number(uraianId),
 			file: fileRef.current!.files![0],
 		});
-
-		// const aksi = await handleSubmitServer(formData);
-		// const json = JSON.parse(aksi!);
-		// if (json.code === 201) {
-		// 	qc.invalidateQueries({
-		// 		queryKey: [
-		// 			"trans.kpi.staff",
-		// 			{
-		// 				nipam: String(userId),
-		// 				kpiId: Number(bridgeKpi?.kpi.id),
-		// 				periode: Number(periode?.periode),
-		// 			},
-		// 		],
-		// 	});
-		// 	enqueueSnackbar("Data berhasil disimpan", { variant: "success" });
-		// 	toggleViewUploadOpen();
-		// 	setFileName("");
-		// } else {
-		// 	enqueueSnackbar(`${json.message}`, { variant: "error" });
-		// }
 	};
 
 	return (
-		// <form action={handleSubmitServer}>
 		<Stack
 			spacing={1}
 			alignContent="center"
 			alignItems="center"
 			component="form"
 			onSubmit={handleSubmit}
-			// action={handleSubmitServer}
 		>
 			<IconButton
 				sx={{
@@ -151,7 +128,6 @@ const TransKpiStaffUploadComponent = (
 			<input type="hidden" name="nipam" value={userId} />
 			<input type="hidden" name="transKpiUraianId" value={uraianId} />
 		</Stack>
-		// </form>
 	);
 };
 

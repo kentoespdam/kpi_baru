@@ -1,14 +1,21 @@
+import { DialogSlideTransition } from "@components/commons/effect/transition/dialog";
 import TransPerilakuForm from "@components/trans/bawahan/perilaku/form";
+import { Periode } from "@helper/periode";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
 import { useViewFormPerilakuDialogStore } from "@store/dialog/view.form.perilaku";
-import { DialogSlideTransition } from "@components/commons/effect/transition/dialog";
+import dynamic from "next/dynamic";
+const CloseIcon = dynamic(() => import("@mui/icons-material/Close"));
 
-const ViewFormPerilakuDialog = () => {
-	const { isFormPerilakuOpen, toggleFormPerilakuOpen } =
+type ViewFormPerilakuDialogProps = {
+	periode: Periode | null;
+	isAdmin?: boolean;
+};
+const ViewFormPerilakuDialog = (props: ViewFormPerilakuDialogProps) => {
+	const { periode, isAdmin } = props;
+	const { isFormPerilakuOpen, toggleFormPerilakuOpen, nipam } =
 		useViewFormPerilakuDialogStore();
 	return (
 		<Dialog
@@ -33,7 +40,10 @@ const ViewFormPerilakuDialog = () => {
 				</IconButton>
 			</DialogTitle>
 			<DialogContent>
-				<TransPerilakuForm />
+				<TransPerilakuForm
+					periode={periode}
+					isAdmin={isAdmin}
+				/>
 			</DialogContent>
 		</Dialog>
 	);

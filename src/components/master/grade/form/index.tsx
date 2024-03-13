@@ -1,8 +1,5 @@
 "use client";
-
 import LevelAutocomplete from "@autocomplete/level";
-import DoDisturbIcon from "@mui/icons-material/DoDisturb";
-import SaveIcon from "@mui/icons-material/Save";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
@@ -16,11 +13,14 @@ import { Level } from "@myTypes/entity/level";
 import { AUDIT_STATUS } from "@myTypes/index";
 import { useGradeStore } from "@store/filter/master/grade";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
 import React, { useRef, useState } from "react";
 import { doSave, getById } from "src/utils/master/grade";
+const DoDisturbIcon = dynamic(() => import("@mui/icons-material/DoDisturb"));
+const SaveIcon = dynamic(() => import("@mui/icons-material/Save"));
 
 type GradeFormProps = {
 	id?: number;

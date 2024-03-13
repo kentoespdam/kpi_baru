@@ -3,15 +3,15 @@ import { TransPerilakuNilai } from "@myTypes/entity/trans.perilaku.nilai";
 export const indikatorPerilaku = (nilai: number) => {
 	switch (true) {
 		case nilai >= 0 && nilai <= 50:
-			return "sangat kurang";
+			return "Sangat Kurang";
 		case nilai >= 51 && nilai <= 60:
-			return "kurang";
+			return "Kurang";
 		case nilai >= 61 && nilai <= 75:
-			return "cukup";
+			return "Cukup";
 		case nilai >= 76 && nilai <= 90:
-			return "baik";
+			return "Baik";
 		case nilai >= 91 && nilai <= 100:
-			return "baik sekali";
+			return "Sangat Baik";
 		default:
 			return "Belum ada penilaian";
 	}

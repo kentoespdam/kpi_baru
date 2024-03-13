@@ -1,11 +1,9 @@
-import WaktuAutocomplete from "@autocomplete/waktu";
 import {
 	hitungNilaiProdukKerja,
 	hitungNilaiTotalUraian,
 	hitungNilaiWaktu,
 } from "@helper/hitung";
-import DoDisturbIcon from "@mui/icons-material/DoDisturb";
-import SaveIcon from "@mui/icons-material/Save";
+import { Periode } from "@helper/periode";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
@@ -14,26 +12,46 @@ import TextField from "@mui/material/TextField";
 import { TransUraian, TransUraianData } from "@myTypes/entity/trans.uraian";
 import { AUDIT_STATUS } from "@myTypes/index";
 import { useViewFormKinerjaDialogStore } from "@store/dialog/view.form.kinerja";
-import { useTransKpiStore } from "@store/filter/trans/kpi";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { doSave, getById } from "@utils/trans/uraian";
+import dynamic from "next/dynamic";
 import { useSnackbar } from "notistack";
 import React from "react";
+import { TanggalComponent } from "./tanggal.component";
+const DoDisturbIcon = dynamic(() => import("@mui/icons-material/DoDisturb"));
+const SaveIcon = dynamic(() => import("@mui/icons-material/Save"));
 
-const KpiKinerjaForm = () => {
-	const { toggleFormKinerjaOpen: toggleFormOpen, staffNipam, idKpi, idUraian, reset } =
-		useViewFormKinerjaDialogStore();
-	const periode = useTransKpiStore((state) => state.periode);
+type KpiKinerjaFormProps = {
+	staffNipam: string;
+	idKpi: number;
+	idUraian: number;
+	periode: Periode | null;
+	isAdmin?: boolean;
+};
+const KpiKinerjaForm = (props: KpiKinerjaFormProps) => {
+	const { staffNipam, idKpi, idUraian, periode, isAdmin } = props;
+	const {
+		toggleFormKinerjaOpen: toggleFormOpen,
+
+		reset,
+	} = useViewFormKinerjaDialogStore();
+	const waktuRef = React.useRef<HTMLInputElement>(null);
 	const { enqueueSnackbar } = useSnackbar();
 	const qc = useQueryClient();
 	const capaianVolumeRef = React.useRef<HTMLInputElement>(null);
-	const [waktu, setWaktu] = React.useState<string | null | undefined>(null);
+	const [tarWaktu, setTarWaktu] = React.useState<string | undefined>();
+	const [capWaktu, setCapWaktu] = React.useState<string | null | undefined>(
+		null
+	);
 
 	const { isFetching, data, error } = useQuery<TransUraian>({
 		queryKey: ["trans.kpi.form", idUraian],
 		queryFn: async ({ queryKey }) => {
 			const result = await getById(queryKey);
-			setWaktu(result?.capaianWaktu ? result.capaianWaktu : result.waktu);
+			setTarWaktu(result.waktu);
+			result?.capaianWaktu
+				? setCapWaktu(result.capaianWaktu)
+				: setCapWaktu(new Date().toUTCString());
 			return result;
 		},
 		enabled: !!idUraian,
@@ -45,24 +63,34 @@ const KpiKinerjaForm = () => {
 			enqueueSnackbar(`${error}`, { variant: "error" });
 		},
 		onSuccess: () => {
-			qc.invalidateQueries({
-				queryKey: [
-					"trans.kpi.bawahan",
-					{
-						nipam: staffNipam,
-						kpiId: idKpi,
-						periode: periode?.periode,
-					},
-				],
-			});
+			if (isAdmin)
+				qc.invalidateQueries({
+					queryKey: [
+						"kpi.admin.kinerja",
+						{
+							nipam: staffNipam,
+							kpiId: idKpi,
+							periode: periode?.periode,
+						},
+					],
+				});
+			else
+				qc.invalidateQueries({
+					queryKey: [
+						"trans.kpi.bawahan",
+						{
+							nipam: staffNipam,
+							kpiId: idKpi,
+							periode: periode?.periode,
+						},
+					],
+				});
+
 			enqueueSnackbar("Data berhasil disimpan", { variant: "success" });
 			reset();
 			toggleFormOpen();
 		},
 	});
-
-	const setSearchWaktu = (value: string | null | undefined) =>
-		setWaktu(value);
 
 	const cancelHandler = () => {
 		reset();
@@ -76,12 +104,12 @@ const KpiKinerjaForm = () => {
 			Number(data?.volume),
 			String(data?.satuan),
 			Number(data?.bobot),
-			String(waktu),
+			String(waktuRef.current?.value),
 			String(data?.target)
 		).toFixed(2);
 		const nilaiWaktu = hitungNilaiWaktu(
 			Number(capaianVolumeRef.current?.value),
-			String(waktu),
+			String(waktuRef.current?.value),
 			String(data?.waktu),
 			String(periode?.periode)
 		).toFixed(2);
@@ -94,7 +122,7 @@ const KpiKinerjaForm = () => {
 			id: Number(data?.id),
 			capaianVolume: Number(capaianVolumeRef.current?.value),
 			capaianSatuan: String(data?.capaianSatuan),
-			capaianWaktu: String(waktu),
+			capaianWaktu: String(waktuRef.current?.value),
 			nilaiProdukKerja: Number(nilaiProdukKerja),
 			nilaiWaktu: Number(nilaiWaktu),
 			nilaiTotalUraian: Number(nilaiTotalUraian),
@@ -128,11 +156,12 @@ const KpiKinerjaForm = () => {
 					}}
 				/>
 			</FormControl>
+
 			<FormControl fullWidth>
-				<WaktuAutocomplete
-					search={waktu}
-					setSearchValue={setSearchWaktu}
-					size="small"
+				<TanggalComponent
+					inputRef={waktuRef}
+					tarWaktu={tarWaktu}
+					capWaktu={capWaktu}
 				/>
 			</FormControl>
 
@@ -147,7 +176,6 @@ const KpiKinerjaForm = () => {
 				</Button>
 				<LoadingButton
 					color="primary"
-					// onClick={handleSubmit}
 					type="submit"
 					loading={mutation.isLoading}
 					loadingPosition="end"

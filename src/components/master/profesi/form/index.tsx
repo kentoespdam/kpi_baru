@@ -1,7 +1,5 @@
 "use client";
 import LevelAutocomplete from "@autocomplete/level";
-import BlockIcon from "@mui/icons-material/Block";
-import SaveIcon from "@mui/icons-material/Save";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
@@ -15,10 +13,13 @@ import { ProfesiData } from "@myTypes/entity/profesi";
 import { AUDIT_STATUS } from "@myTypes/index";
 import { useProfesiStore } from "@store/filter/master/profesi";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
 import React from "react";
 import { doSave, getById } from "src/utils/master/profesi";
+const BlockIcon = dynamic(() => import("@mui/icons-material/Block"));
+const SaveIcon = dynamic(() => import("@mui/icons-material/Save"));
 
 type ProfesiFormProps = {
 	id?: number;

@@ -1,5 +1,3 @@
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import EditIcon from "@mui/icons-material/Edit";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
@@ -9,9 +7,14 @@ import { ITEM_HEIGHT } from "@myConfig/index";
 import { useKpiStore } from "@store/filter/master/kpi";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { doDelete } from "@utils/master/kpi";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useSnackbar } from "notistack";
 import { Dispatch, SetStateAction } from "react";
+const DeleteForeverIcon = dynamic(
+	() => import("@mui/icons-material/DeleteForever")
+);
+const EditIcon = dynamic(() => import("@mui/icons-material/Edit"));
 
 type KpiMenuItemButtonProps = {
 	kpiId: number;

@@ -1,4 +1,4 @@
-import { SearchValueProps } from "@components/commons/table/head/search";
+import { SearchValueProps } from "@components/commons/table/head/searchType";
 import { BridgeKpiFilter } from "@myTypes/entity/bridge.kpi";
 import { AUDIT_STATUS } from "@myTypes/index";
 import { create } from "zustand";

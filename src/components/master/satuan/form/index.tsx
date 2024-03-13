@@ -1,7 +1,4 @@
 "use client";
-
-import BlockIcon from "@mui/icons-material/Block";
-import SaveIcon from "@mui/icons-material/Save";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
@@ -15,9 +12,12 @@ import { AUDIT_STATUS } from "@myTypes/index";
 import { useSatuanStore } from "@store/filter/master/satuan";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { doSave, getById } from "@utils/master/satuan";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
 import React from "react";
+const BlockIcon = dynamic(() => import("@mui/icons-material/Block"));
+const SaveIcon = dynamic(() => import("@mui/icons-material/Save"));
 
 type SatuanFormProps = {
 	id?: number;

@@ -4,8 +4,10 @@ import {
 	LOCAL_BRIDGE_KPI,
 } from "@myTypes/entity/bridge.kpi";
 import { useTransKpiStore } from "@store/filter/trans/kpi";
-import axios from "axios";
+import { useKpiAdminStore } from "@store/filter/trans/kpi.admin";
+import axios, { AxiosError } from "axios";
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const getPage = async (props: any) => {
 	const { queryKey } = props;
 
@@ -31,48 +33,54 @@ export const getPage = async (props: any) => {
 
 	try {
 		const { data } = await axios.get(
-			`${LOCAL_BRIDGE_KPI}?${params.toString()}`
+			`${LOCAL_BRIDGE_KPI}?${params.toString()}`,
 		);
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.bridge.kpi.page",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data,
 		);
-		throw new Error(e.response.data.message);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };
 
 export const getList = async () => {
 	try {
 		const { data } = await axios.get(`${LOCAL_BRIDGE_KPI}/list`);
+		useKpiAdminStore.setState({ bridgeKpiList: data.data });
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.bridge.kpi.list",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data,
 		);
-		throw new Error(e.response.data.message);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const getById = async (props: any) => {
 	const id = props[1];
 	try {
 		const { data } = await axios.get(`${LOCAL_BRIDGE_KPI}/${id}`);
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.bridge.kpi.getById",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data,
 		);
-		throw new Error(e.response.data.message);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const getByNipam = async (props: any): Promise<BridgeKpiWithAudit> => {
 	const { queryKey } = props;
 	const nipam = queryKey[1];
@@ -80,14 +88,15 @@ export const getByNipam = async (props: any): Promise<BridgeKpiWithAudit> => {
 		const { data } = await axios.get(`${LOCAL_BRIDGE_KPI}/nipam/${nipam}`);
 		useTransKpiStore.setState({ bridgeKpi: data.data });
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.bridge.kpi.getByNipam",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data,
 		);
 		useTransKpiStore.setState({ bridgeKpi: null });
-		throw new Error(e.response.data.message);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };
 
@@ -97,13 +106,14 @@ export const doSave = async (data: BridgeKpiData) => {
 			? await axios.put(`${LOCAL_BRIDGE_KPI}/${data.id}`, data)
 			: await axios.post(LOCAL_BRIDGE_KPI, data);
 		return result.data;
-	} catch (e: any) {
+	} catch (e) {
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.bridge.kpi.save",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data,
 		);
-		throw new Error(e.response.data.message);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };
 
@@ -111,12 +121,13 @@ export const doDelete = async (id: number) => {
 	try {
 		const { data } = await axios.delete(`${LOCAL_BRIDGE_KPI}/${id}`);
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.bridge.kpi.getById",
 			new Date().toISOString(),
-			e.response.data
+			err.response?.data,
 		);
-		throw new Error(e.response.data.message);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };

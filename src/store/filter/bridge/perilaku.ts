@@ -1,7 +1,7 @@
 import { BridgePerilakuFilter } from "@myTypes/entity/bridge.perilaku";
 import { BaseStore } from "..";
 import { create } from "zustand";
-import { SearchValueProps } from "@components/commons/table/head/search";
+import { SearchValueProps } from "@components/commons/table/head/searchType";
 import { AUDIT_STATUS } from "@myTypes/index";
 
 interface BridgePerilakuStore extends BaseStore, BridgePerilakuFilter {}

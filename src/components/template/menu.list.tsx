@@ -1,14 +1,36 @@
-import DeploymentUnitOutlined from "@ant-design/icons/DeploymentUnitOutlined";
-import HomeOutlinedIcon from "@ant-design/icons/HomeOutlined";
-import OrderedListOutlinedIcon from "@ant-design/icons/OrderedListOutlined";
-import RiseOutlinedIcon from "@ant-design/icons/RiseOutlined";
-import CarryOutOutlinedIcon from "@ant-design/icons/lib/icons/CarryOutOutlined";
-import CheckCircleOutlinedIcon from "@ant-design/icons/lib/icons/CheckCircleOutlined";
-import IdcardOutlinedIcon from "@ant-design/icons/lib/icons/IdcardOutlined";
-import PullRequestOutlinedIcon from "@ant-design/icons/lib/icons/PullRequestOutlined";
-import TeamOutlinedIcon from "@ant-design/icons/lib/icons/TeamOutlined";
-import UserSwitchOutlinedIcon from "@ant-design/icons/lib/icons/UserSwitchOutlined";
 import { ObjectValues, USER_ROLE, UserRole } from "@myTypes/index";
+import dynamic from "next/dynamic";
+
+const DeploymentUnitOutlined = dynamic(
+	() => import("@ant-design/icons/DeploymentUnitOutlined")
+);
+const HomeOutlinedIcon = dynamic(
+	() => import("@ant-design/icons/HomeOutlined")
+);
+const OrderedListOutlinedIcon = dynamic(
+	() => import("@ant-design/icons/OrderedListOutlined")
+);
+const RiseOutlinedIcon = dynamic(
+	() => import("@ant-design/icons/RiseOutlined")
+);
+const CarryOutOutlinedIcon = dynamic(
+	() => import("@ant-design/icons/lib/icons/CarryOutOutlined")
+);
+const CheckCircleOutlinedIcon = dynamic(
+	() => import("@ant-design/icons/lib/icons/CheckCircleOutlined")
+);
+const IdcardOutlinedIcon = dynamic(
+	() => import("@ant-design/icons/lib/icons/IdcardOutlined")
+);
+const PullRequestOutlinedIcon = dynamic(
+	() => import("@ant-design/icons/lib/icons/PullRequestOutlined")
+);
+const TeamOutlinedIcon = dynamic(
+	() => import("@ant-design/icons/lib/icons/TeamOutlined")
+);
+const UserSwitchOutlinedIcon = dynamic(
+	() => import("@ant-design/icons/lib/icons/UserSwitchOutlined")
+);
 
 const MENU_TYPE = {
 	GROUP: "group",
@@ -122,6 +144,12 @@ export const menuList: IMenuList = [
 				name: "Penilaian KPI",
 				icon: <CheckCircleOutlinedIcon />,
 				role: USER_ROLE.USER,
+			},
+			{
+				path: "/trans/kpi-admin",
+				name: "Penilaian KPI Admin",
+				icon: <CheckCircleOutlinedIcon />,
+				role: USER_ROLE.ADMIN,
 			},
 		],
 	},

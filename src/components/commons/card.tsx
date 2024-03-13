@@ -1,6 +1,5 @@
 "use client";
 
-import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
@@ -9,8 +8,14 @@ import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import { Theme, useTheme } from "@mui/material/styles";
 import { ChildrenProps } from "@myTypes/index";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+
+const AddCircleOutlineOutlinedIcon = dynamic(
+	() => import("@mui/icons-material/AddCircleOutlineOutlined"),
+	{ ssr: false }
+);
 
 const cardSx = (theme: Theme, color?: string) => {
 	switch (color) {

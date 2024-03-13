@@ -1,11 +1,9 @@
 "use client";
-
-import { Viewer, Worker } from "@react-pdf-viewer/core";
-import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
-
 import LinearProgress from "@mui/material/LinearProgress";
 import { LOCAL_URAIAN_FILE } from "@myTypes/entity/uraian.file";
+import { Viewer, Worker } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
+import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -27,6 +25,7 @@ const ViewPdfComponent = (props: ViewPdfComponentProps) => {
 			return URL.createObjectURL(result);
 		},
 		enabled: !!id,
+		retry: 2,
 	});
 
 	if (isFetching) return <LinearProgress />;

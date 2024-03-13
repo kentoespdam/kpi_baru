@@ -2,10 +2,14 @@
 
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
-import Tooltip from "@mui/material/Tooltip";
-import EditIcon from "@mui/icons-material/Edit";
-import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import TableCell from "@mui/material/TableCell";
+import Tooltip from "@mui/material/Tooltip";
+import dynamic from "next/dynamic";
+
+const EditIcon = dynamic(() => import("@mui/icons-material/Edit"));
+const HighlightOffIcon = dynamic(
+	() => import("@mui/icons-material/HighlightOff")
+);
 
 export type BtnActionBuilderProps = {
 	deleteHandler: () => void;

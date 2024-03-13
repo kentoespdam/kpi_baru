@@ -1,4 +1,4 @@
-import { SearchValueProps } from "@components/commons/table/head/search";
+import { SearchValueProps } from "@components/commons/table/head/searchType";
 import { LevelFilter } from "@myTypes/entity/level";
 import { AUDIT_STATUS, Nullable } from "@myTypes/index";
 import { PageRequest, SortRequest } from "@myTypes/table";

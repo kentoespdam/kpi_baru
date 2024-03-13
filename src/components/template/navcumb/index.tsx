@@ -1,9 +1,11 @@
-import HomeIcon from "@mui/icons-material/Home";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import MuiLink from "@mui/material/Link";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { hashPath } from "../menu.list";
+
+const HomeIcon = dynamic(() => import("@mui/icons-material/Home"));
 
 const GlobalNav = () => {
 	const pathname = usePathname();
@@ -36,12 +38,13 @@ const GlobalNav = () => {
 
 				return last ? (
 					<MuiLink
-						key={to}
 						sx={{
 							color: "text.primary",
 							textDecoration: "none",
 							textTransform: "capitalize",
 						}}
+						key={to}
+						href="#"
 					>
 						{value}
 					</MuiLink>

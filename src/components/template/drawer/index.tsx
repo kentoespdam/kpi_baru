@@ -1,5 +1,4 @@
 "use client";
-
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Stack from "@mui/material/Stack";
@@ -9,9 +8,11 @@ import { Theme, useTheme } from "@mui/material/styles";
 import { drawerWidth } from "@myConfig/index";
 import { useMenuStore } from "@store/main/menu";
 import { useTemplateStore } from "@store/main/template";
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
-import DrawerContent from "./content";
-import Logo from "./logo";
+
+const DrawerContent = dynamic(() => import("./content"));
+const Logo = dynamic(() => import("./logo"));
 
 const openedMixin = (theme: Theme) => ({
 	width: drawerWidth,

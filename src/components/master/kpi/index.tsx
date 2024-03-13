@@ -1,13 +1,13 @@
 "use client";
-
-import { useKpiStore } from "@store/filter/master/kpi";
-import { useQueries } from "@tanstack/react-query";
-import { getPage } from "src/utils/master/kpi";
-import KpiFilter from "./filter";
 import Divider from "@mui/material/Divider";
 import LinearProgress from "@mui/material/LinearProgress";
-import KpiAccordion from "./accordion";
-import KpiPagination from "./pagination";
+import { useKpiStore } from "@store/filter/master/kpi";
+import { useQueries } from "@tanstack/react-query";
+import dynamic from "next/dynamic";
+import { getPage } from "src/utils/master/kpi";
+import KpiFilter from "./filter";
+const KpiAccordion = dynamic(() => import("./accordion"));
+const KpiPagination = dynamic(() => import("./pagination"));
 
 const KpiComponent = () => {
 	const {

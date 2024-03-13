@@ -1,6 +1,8 @@
-import AuthComponent from "@components/auth";
 import CardBuilder from "@components/commons/card";
 import MuiContainer from "@components/commons/mui/container";
+import dynamic from "next/dynamic";
+
+const AuthComponent = dynamic(() => import("@components/auth"));
 
 export const metadata = {
 	title: "Login KPI",

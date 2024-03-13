@@ -1,7 +1,4 @@
 "use client";
-
-import BlockIcon from "@mui/icons-material/Block";
-import SaveIcon from "@mui/icons-material/Save";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
@@ -14,10 +11,13 @@ import { LevelData } from "@myTypes/entity/level";
 import { AUDIT_STATUS } from "@myTypes/index";
 import { useLevelStore } from "@store/filter/master/level";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
 import React from "react";
 import { doSave, getById } from "src/utils/master/level";
+const BlockIcon = dynamic(() => import("@mui/icons-material/Block"));
+const SaveIcon = dynamic(() => import("@mui/icons-material/Save"));
 
 type LevelFormProps = {
 	id?: number;

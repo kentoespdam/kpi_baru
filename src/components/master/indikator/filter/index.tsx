@@ -7,8 +7,7 @@ import { useIndikatorStore } from "@store/filter/master/indikator";
 import { useState } from "react";
 
 const IndikatorFilter = () => {
-	const { pageRequest, sortRequest, kpiId, indikator, status, setKeyVal } =
-		useIndikatorStore();
+	const { status, setKeyVal } = useIndikatorStore();
 
 	const [checked, setChecked] = useState(
 		status === AUDIT_STATUS.DISABLED ? false : true

@@ -1,7 +1,7 @@
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import PeriodeComponent from "@trans/kpi/periode";
-import KpiStaffComponents from "@trans/kpi/staff";
+import PeriodeComponent from "./periode";
+import KpiStaffComponents from "./staff";
 
 const KpiCard = () => {
 	return (

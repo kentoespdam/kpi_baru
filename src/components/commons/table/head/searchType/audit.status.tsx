@@ -2,9 +2,9 @@ import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
+import { AUDIT_STATUS } from "@myTypes/index";
 import React from "react";
 import { SearchTypeProps } from ".";
-import { AUDIT_STATUS } from "@myTypes/index";
 
 const SearchTypeAuditStatus = (props: SearchTypeProps) => {
 	const { field, handleSearch, status } = props;

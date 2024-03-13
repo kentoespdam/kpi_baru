@@ -4,11 +4,9 @@ import { ChildrenProps } from "@myTypes/index";
 
 const Template = ({ children }: ChildrenProps) => {
 	return (
-		<>
-			<TemplateProvider>
-				<QueryProvider>{children}</QueryProvider>
-			</TemplateProvider>
-		</>
+		<QueryProvider>
+			<TemplateProvider>{children}</TemplateProvider>
+		</QueryProvider>
 	);
 };
 

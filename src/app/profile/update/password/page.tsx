@@ -1,6 +1,10 @@
-import ChangePasswordComponent from "@components/profile/password";
+import dynamic from "next/dynamic";
+
+const MuiContainer = dynamic(() => import("@components/commons/mui/container"));
 import CardBuilder from "@components/commons/card";
-import MuiContainer from "@components/commons/mui/container";
+const ChangePasswordComponent = dynamic(
+	() => import("@components/profile/password")
+);
 
 export const metadata = { title: "Change Password" };
 const ChangePasswordPage = () => {

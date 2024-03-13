@@ -1,8 +1,5 @@
 "use client";
-
 import KpiAutocomplete from "@autocomplete/kpi";
-import DoDisturbIcon from "@mui/icons-material/DoDisturb";
-import SaveIcon from "@mui/icons-material/Save";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
@@ -17,10 +14,13 @@ import { AUDIT_STATUS } from "@myTypes/index";
 import { useIndikatorStore } from "@store/filter/master/indikator";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { doSave, getById } from "@utils/master/indikator";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
 import { FormEvent, useRef, useState } from "react";
+const DoDisturbIcon = dynamic(() => import("@mui/icons-material/DoDisturb"));
+const SaveIcon = dynamic(() => import("@mui/icons-material/Save"));
 
 type IndikatorFormComponentProps = {
 	idKpi?: number;

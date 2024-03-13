@@ -9,7 +9,7 @@ const TransKpiTabPanel = (props: TransKpiTabPanelProps) => {
 	const { children, index, value, ...other } = props;
 
 	return (
-		<div
+		<Box
 			role="tabpanel"
 			hidden={value !== index}
 			id={`tabpanel-${index}`}
@@ -17,7 +17,7 @@ const TransKpiTabPanel = (props: TransKpiTabPanelProps) => {
 			{...other}
 		>
 			{value === index && children}
-		</div>
+		</Box>
 	);
 };
 

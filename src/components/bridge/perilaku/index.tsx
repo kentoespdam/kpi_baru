@@ -1,5 +1,4 @@
 "use client";
-
 import TableLoading from "@components/commons/table/loading";
 import LinearProgress from "@mui/material/LinearProgress";
 import Table from "@mui/material/Table";
@@ -8,9 +7,11 @@ import { bridgePerilakuHead } from "@myTypes/entity/bridge.perilaku";
 import { useBridgePerilakuStore } from "@store/filter/bridge/perilaku";
 import { useQueries } from "@tanstack/react-query";
 import { getPage } from "@utils/bridge/perilaku";
-import BridgePerilakuPagination from "./pagination";
-import BridgePerilakuTableBody from "./table/body";
+import dynamic from "next/dynamic";
+import BridgePerilakuPagination from "./table/pagination";
 import BridgePerilakuTableHead from "./table/head";
+
+const BridgePerilakuTableBody = dynamic(() => import("./table/body"));
 
 const BridgePerilakuComponent = () => {
 	const { pageRequest, sortRequest, perilaku, level, status } =

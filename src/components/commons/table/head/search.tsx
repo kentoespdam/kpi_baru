@@ -1,51 +1,27 @@
 import TableCell from "@mui/material/TableCell";
-import TableRow from "@mui/material/TableRow";
 import { MyTableHead } from "@myTypes/table";
-import SearchTypeText from "./searchType/text";
-import SearchTypeAuditStatus from "./searchType/audit.status";
-import { AuditStatus } from "@myTypes/index";
-import SearchTypeLevel from "./searchType/level";
-import { Level } from "@myTypes/entity/level";
-import { Organization } from "@myTypes/entity/organization";
-import { Position } from "@myTypes/entity/position";
-import SearchTypePosition from "./searchType/position";
-import SearchTypeOrganization from "./searchType/organization";
-import { Kpi } from "@myTypes/entity/kpi";
-import SearchTypeKpi from "./searchType/kpi";
-import { Perilaku } from "@myTypes/entity/perilaku";
-import SearchtypePerilaku from "./searchType/perilaku";
+import dynamic from "next/dynamic";
+import { BasicSearchBuilderProps, SearchValueProps } from "./searchType";
+import TableRow from "@mui/material/TableRow";
 
-export type SearchValueProps =
-	| string
-	| number
-	| Level
-	| Position
-	| Organization
-	| Kpi
-	| Perilaku
-	| null;
+const SearchTypeAuditStatus = dynamic(
+	() => import("./searchType/audit.status")
+);
+const SearchTypeKpi = dynamic(() => import("./searchType/kpi"));
+const SearchTypeLevel = dynamic(() => import("./searchType/level"));
+const SearchTypeOrganization = dynamic(
+	() => import("./searchType/organization")
+);
+const SearchtypePerilaku = dynamic(() => import("./searchType/perilaku"));
+const SearchTypePosition = dynamic(() => import("./searchType/position"));
+const SearchTypeText = dynamic(() => import("./searchType/text"));
 
 type HeaderSearchCellBuilderProps = {
 	header: MyTableHead;
 	handleSearch: (field: string, value: SearchValueProps) => void;
-	status?: AuditStatus | null;
-	level?: Level | null;
-	position?: Position | null;
-	organization?: Organization | null;
-	kpi?: Kpi | null;
-	perilaku?: Perilaku | null;
-};
+} & BasicSearchBuilderProps;
 const HeaderSearchCellBuilder = (props: HeaderSearchCellBuilderProps) => {
-	const {
-		header,
-		handleSearch,
-		status,
-		level,
-		position,
-		organization,
-		kpi,
-		perilaku,
-	} = props;
+	const { header, handleSearch, status, ...other } = props;
 
 	if (header.searchable === "false") return <TableCell></TableCell>;
 
@@ -66,7 +42,7 @@ const HeaderSearchCellBuilder = (props: HeaderSearchCellBuilderProps) => {
 					<SearchTypeLevel
 						field={header.field!}
 						handleSearch={handleSearch}
-						level={level}
+						level={other.level}
 					/>
 				</TableCell>
 			);
@@ -76,7 +52,7 @@ const HeaderSearchCellBuilder = (props: HeaderSearchCellBuilderProps) => {
 					<SearchTypePosition
 						field={header.field!}
 						handleSearch={handleSearch}
-						position={position}
+						position={other.position}
 					/>
 				</TableCell>
 			);
@@ -86,7 +62,7 @@ const HeaderSearchCellBuilder = (props: HeaderSearchCellBuilderProps) => {
 					<SearchTypeOrganization
 						field={header.field!}
 						handleSearch={handleSearch}
-						organization={organization}
+						organization={other.organization}
 					/>
 				</TableCell>
 			);
@@ -96,7 +72,7 @@ const HeaderSearchCellBuilder = (props: HeaderSearchCellBuilderProps) => {
 					<SearchTypeKpi
 						field={header.field!}
 						handleSearch={handleSearch}
-						kpi={kpi}
+						kpi={other.kpi}
 					/>
 				</TableCell>
 			);
@@ -106,7 +82,7 @@ const HeaderSearchCellBuilder = (props: HeaderSearchCellBuilderProps) => {
 					<SearchtypePerilaku
 						field={header.field!}
 						handleSearch={handleSearch}
-						perilaku={perilaku}
+						perilaku={other.perilaku}
 					/>
 				</TableCell>
 			);
@@ -117,6 +93,7 @@ const HeaderSearchCellBuilder = (props: HeaderSearchCellBuilderProps) => {
 						field={header.field!}
 						type={header.type}
 						handleSearch={handleSearch}
+						{...other}
 					/>
 				</TableCell>
 			);
@@ -126,13 +103,7 @@ const HeaderSearchCellBuilder = (props: HeaderSearchCellBuilderProps) => {
 type HeaderSearchBuilderProps = {
 	headers: MyTableHead[];
 	handleSearch: (field: string, value: SearchValueProps) => void;
-	status?: AuditStatus | null;
-	level?: Level | null;
-	position?: Position | null;
-	organization?: Organization | null;
-	kpi?: Kpi | null;
-	perilaku?: Perilaku | null;
-};
+} & BasicSearchBuilderProps;
 const HeaderSearchBuilder = (props: HeaderSearchBuilderProps) => {
 	const { headers, handleSearch, ...other } = props;
 	return (

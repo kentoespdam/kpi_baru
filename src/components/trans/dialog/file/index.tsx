@@ -1,13 +1,19 @@
 import { DialogSlideTransition } from "@components/commons/effect/transition/dialog";
-import CloseIcon from "@mui/icons-material/Close";
+import TransKpiFileListComponent from "@components/trans/kpi/staff/file";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import IconButton from "@mui/material/IconButton";
+import { TransKpiQKeyProps } from "@myTypes/entity/trans.kpi";
 import { useViewFileDialogStore } from "@store/dialog/view.file";
-import TransKpiFileListComponent from "@trans/kpi/staff/file";
+import dynamic from "next/dynamic";
+const CloseIcon = dynamic(() => import("@mui/icons-material/Close"));
 
-const ViewFileDialog = () => {
+type ViewFileDialogProps = {
+	qKeyKpiStaff: (string | TransKpiQKeyProps)[];
+	isAdmin?: boolean;
+};
+const ViewFileDialog = (props: ViewFileDialogProps) => {
 	const { isViewOpen, toggleViewOpen, idUraian } = useViewFileDialogStore();
 
 	return idUraian ? (
@@ -27,7 +33,10 @@ const ViewFileDialog = () => {
 						<CloseIcon />
 					</IconButton>
 				</DialogActions>
-				<TransKpiFileListComponent uraianId={idUraian} />
+				<TransKpiFileListComponent
+					uraianId={idUraian}
+					qKeyKpiStaff={props.qKeyKpiStaff}
+				/>
 			</DialogContent>
 		</Dialog>
 	) : null;

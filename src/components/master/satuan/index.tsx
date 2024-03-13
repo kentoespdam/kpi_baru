@@ -1,15 +1,16 @@
 "use client";
-
+import TableLoading from "@components/commons/table/loading";
 import LinearProgress from "@mui/material/LinearProgress";
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
 import { useSatuanStore } from "@store/filter/master/satuan";
 import { useQueries } from "@tanstack/react-query";
 import { getPage } from "@utils/master/satuan";
+import dynamic from "next/dynamic";
 import SatuanTableHead from "./table/head";
-import TableLoading from "@components/commons/table/loading";
-import SatuanTableBody from "./table/body";
 import SatuanPagination from "./table/pagination";
+
+const SatuanTableBody = dynamic(() => import("./table/body"));
 
 const SatuanComponent = () => {
 	const { pageRequest, sortRequest, status, satuan } = useSatuanStore();

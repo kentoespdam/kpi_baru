@@ -38,6 +38,15 @@ export function isObject(
 export function typeCheck(args: "number" | "string" | "boolean") {
 	return typeof args === args;
 }
+
+export const ACCEPTED_STATUS = {
+	UNLOCKED: "UNLOCKED",
+	ATASAN: "ATASAN",
+	ADMIN: "ADMIN",
+} as const;
+
+export type AcceptedStatus = ObjectValues<typeof ACCEPTED_STATUS>;
+
 export const USER_ROLE = {
 	USER: "USER",
 	ADMIN: "ADMIN",

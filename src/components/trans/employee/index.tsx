@@ -1,19 +1,14 @@
+import { useMediaQuery } from "@mui/material";
 import Stack from "@mui/material/Stack";
-import { useTemplateStore } from "@store/main/template";
-import { useEffect, useState } from "react";
 import DetailEmployeeComponent from "./detail";
 import DetailAtasanComponent from "./detail/atasan";
 
 const EmployeeComponent = () => {
-	const isDesktop = useTemplateStore((state) => state.isDesktop);
-	const [direction, setDirection] = useState(false);
-	useEffect(() => {
-		setDirection(isDesktop);
-	}, [isDesktop]);
+	const isMobile = useMediaQuery("(max-width:600px)");
 	return (
 		<Stack
-			direction={isDesktop ? "row" : "column"}
-			justifyContent={direction ? "space-between" : "center"}
+			direction={isMobile ? "column" : "row"}
+			justifyContent={isMobile ? "center" : "space-between"}
 			spacing={2}
 		>
 			<DetailEmployeeComponent />

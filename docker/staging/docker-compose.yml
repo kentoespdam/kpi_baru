@@ -10,8 +10,8 @@ services:
         ports:
             - 3004:3000
         #hostname: staging-kpi.tirtasatria.tech
-        environment:
-            - HOSTNAME=localhost
+        # environment:
+        #     - HOSTNAME=localhost
         networks:
             - back-tier
 

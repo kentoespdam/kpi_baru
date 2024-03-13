@@ -13,7 +13,7 @@ type PerilakuAutocompleteProps = {
 	size?: "small" | "medium";
 };
 const PerilakuAutocomplete = (props: PerilakuAutocompleteProps) => {
-	const { search, setSearchValue, required, variant, size } = props;
+	const { search, setSearchValue, required, size } = props;
 	const { status, error, data } = useQuery({
 		queryKey: ["perilaku.autocomplete"],
 		queryFn: getList,

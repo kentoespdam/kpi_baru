@@ -1,9 +1,10 @@
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
 import { Profesi } from "@myTypes/entity/profesi";
 import { useQuery } from "@tanstack/react-query";
 import { getList } from "@utils/master/profesi";
 import LoadingAutocomplete from "./loading";
-import Autocomplete from "@mui/material/Autocomplete";
-import TextField from "@mui/material/TextField";
+import { SxProps } from "@mui/material/styles";
 
 type PositionAutcompleteProps = {
 	search: Profesi | null;
@@ -11,10 +12,11 @@ type PositionAutcompleteProps = {
 	required?: boolean;
 	variant?: "standard" | "filled" | "outlined";
 	size?: "small" | "medium";
+	sx?: SxProps;
 };
 
 const ProfesiAutocomplete = (props: PositionAutcompleteProps) => {
-	const { search, setSearchValue, required, variant, size } = props;
+	const { search, setSearchValue, variant, sx } = props;
 	const { status, error, data } = useQuery({
 		queryKey: ["profesi.autocomplete"],
 		queryFn: getList,
@@ -28,7 +30,11 @@ const ProfesiAutocomplete = (props: PositionAutcompleteProps) => {
 			options={data}
 			getOptionLabel={(option: Profesi) => option.name}
 			renderInput={(params) => (
-				<TextField {...params} label="Profesi" variant="standard" />
+				<TextField
+					{...params}
+					label="Profesi"
+					variant={variant ? variant : "standard"}
+				/>
 			)}
 			renderOption={(props, option) => {
 				return (
@@ -42,6 +48,7 @@ const ProfesiAutocomplete = (props: PositionAutcompleteProps) => {
 			onChange={(e, v) => {
 				setSearchValue(v);
 			}}
+			sx={sx}
 		/>
 	);
 };

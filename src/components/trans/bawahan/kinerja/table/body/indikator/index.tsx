@@ -2,15 +2,17 @@ import CellBuilder from "@components/commons/table/cell.builder";
 import TableRow from "@mui/material/TableRow";
 import { TransIndikator } from "@myTypes/entity/trans.indikator";
 import DetailKpiBawahanUraian from "./uraian";
+import { AcceptedStatus } from "@myTypes/index";
 
 type DetailKpiBawahanIndikatorProps = {
 	nipamStaff: string | null;
 	indikator: TransIndikator;
 	urut: number;
 	idKpi: number;
+	lockedStatus: AcceptedStatus;
 };
 const DetailKpiBawahanIndikator = (props: DetailKpiBawahanIndikatorProps) => {
-	const { nipamStaff, indikator, urut, idKpi } = props;
+	const { nipamStaff, indikator, urut, idKpi, lockedStatus } = props;
 	const uraianList = indikator.uraianList;
 	const uraianSize = uraianList.length;
 	const rowSpan = uraianSize <= 1 ? 1 : uraianSize;
@@ -30,6 +32,7 @@ const DetailKpiBawahanIndikator = (props: DetailKpiBawahanIndikatorProps) => {
 						nipamStaff={nipamStaff}
 						idKpi={idKpi}
 						uraianList={uraianList}
+						lockedStatus={lockedStatus}
 						first
 					/>
 				) : (
@@ -45,6 +48,7 @@ const DetailKpiBawahanIndikator = (props: DetailKpiBawahanIndikatorProps) => {
 					nipamStaff={nipamStaff}
 					idKpi={idKpi}
 					uraianList={uraianList}
+					lockedStatus={lockedStatus}
 				/>
 			) : null}
 		</>

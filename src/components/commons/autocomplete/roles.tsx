@@ -48,7 +48,7 @@ const RolesAutocomple = (props: RolesAutocompleProps) => {
 					/>
 				))
 			}
-			value={search}
+			value={curRoles}
 			onChange={handleChange}
 			aria-required={required}
 			sx={{ minWidth: 200 }}

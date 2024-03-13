@@ -1,15 +1,16 @@
 "use client";
 import TableLoading from "@components/commons/table/loading";
+import LinearProgress from "@mui/material/LinearProgress";
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
 import { perilakuHeader } from "@myTypes/entity/perilaku";
 import { usePerilakuStore } from "@store/filter/master/perilaku";
 import { useQueries } from "@tanstack/react-query";
+import dynamic from "next/dynamic";
 import { getPage } from "src/utils/master/perilaku";
-import PerilakuTableBody from "./table/body";
 import PerilakuTableHead from "./table/head";
 import PerilakuPagination from "./table/pagination";
-import LinearProgress from "@mui/material/LinearProgress";
+const PerilakuTableBody = dynamic(() => import("./table/body"));
 
 const PerilakuComponent = () => {
 	const { loading, pageRequest, sortRequest, status, kompetensi, uraian } =

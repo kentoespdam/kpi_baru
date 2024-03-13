@@ -1,19 +1,18 @@
 import { findStaff } from "@helper/employee";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
+import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { DetEmployee } from "@myTypes/entity/det.employee";
 import { useTransKinerjaStore } from "@store/filter/trans/kinerja";
 import { useSessionStore } from "@store/main/session";
-import { useQueryClient } from "@tanstack/react-query";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Box from "@mui/material/Box";
 import { useTemplateStore } from "@store/main/template";
-import { Suspense, lazy } from "react";
-
-const TransKpiBawahanTabs = lazy(
+import { useQueryClient } from "@tanstack/react-query";
+import dynamic from "next/dynamic";
+const ExpandMoreIcon = dynamic(() => import("@mui/icons-material/ExpandMore"));
+const TransKpiBawahanTabs = dynamic(
 	() => import("@components/trans/bawahan/accordion/tabs")
 );
 
@@ -44,7 +43,10 @@ const AccordionBawahan = (props: AccordionBawahanProps) => {
 		<Accordion expanded={expanded === `panel${staffNipam}` ? true : false}>
 			<AccordionSummary
 				expandIcon={
-					<IconButton onClick={expandHandler}>
+					<IconButton
+						onClick={expandHandler}
+						id={`expand-btn-${staffNipam}`}
+					>
 						<ExpandMoreIcon />
 					</IconButton>
 				}
@@ -52,29 +54,35 @@ const AccordionBawahan = (props: AccordionBawahanProps) => {
 				<Stack
 					direction={isDesktop ? "row" : "column"}
 					spacing={1}
-					justifyContent="space-arround"
+					justifyContent="space-between"
+					width="100%"
 				>
-					<Stack direction="column">
-						<Typography variant="body1">
-							{currStaff?.nama}
-						</Typography>
-						<Typography variant="subtitle2" color="text.secondary">
-							{currStaff?.nipam}
-						</Typography>
-					</Stack>
+					<Stack
+						direction={isDesktop ? "row" : "column"}
+						spacing={1}
+						justifyContent="space-arround"
+					>
+						<Stack direction="column">
+							<Typography variant="body1">
+								{currStaff?.nama}
+							</Typography>
+							<Typography
+								variant="subtitle2"
+								color="text.secondary"
+							>
+								{currStaff?.nipam}
+							</Typography>
+						</Stack>
 
-					<Box>
-						<Typography variant="body2" color="text.secondary">
-							{currStaff?.position?.name}
-						</Typography>
-					</Box>
+						<Box>
+							<Typography variant="body2" color="text.secondary">
+								{currStaff?.position?.name}
+							</Typography>
+						</Box>
+					</Stack>
 				</Stack>
 			</AccordionSummary>
-			{expanded ? (
-				<Suspense fallback={<>Loading view...</>}>
-					<TransKpiBawahanTabs />
-				</Suspense>
-			) : null}
+			{expanded === `panel${staffNipam}` ? <TransKpiBawahanTabs /> : null}
 		</Accordion>
 	);
 };

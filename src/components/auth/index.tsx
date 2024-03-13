@@ -1,10 +1,5 @@
 "use client";
-
 import { userToEmail } from "@helper/email";
-import LockIcon from "@mui/icons-material/Lock";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Avatar from "@mui/material/Avatar";
 import FormControl from "@mui/material/FormControl";
@@ -17,11 +12,28 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useSessionStore } from "@store/main/session";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useSnackbar } from "notistack";
 import React from "react";
+const LockIcon = dynamic(() => import("@mui/icons-material/Lock"), {
+	ssr: false,
+});
+const LockOutlinedIcon = dynamic(
+	() => import("@mui/icons-material/LockOutlined"),
+	{ ssr: false }
+);
+const VisibilityIcon = dynamic(() => import("@mui/icons-material/Visibility"), {
+	ssr: false,
+});
+const VisibilityOffIcon = dynamic(
+	() => import("@mui/icons-material/VisibilityOff"),
+	{ ssr: false }
+);
 
 const AuthComponent = () => {
+	const searchParams = useSearchParams()
+	const callbackUrl = decodeURIComponent(`${searchParams.get("callbackUrl")}`)
 	const [submitText, setSubmitText] = React.useState("LOGIN");
 	const router = useRouter();
 	const { setUser } = useSessionStore();
@@ -43,30 +55,26 @@ const AuthComponent = () => {
 
 		setSubmitText("Authenticating...");
 
-		axios
-			.post("/api/auth", {
-				email: userToEmail(usernameRef.current!.value),
-				password: passwordRef.current!.value,
-			})
-			.then((response) => response.data)
-			.then((data) => {
-				setSubmitText("Setup User...");
-				setUser(data);
-			})
-			.then(() => {
-				enqueueSnackbar("Login Success", { variant: "success" });
-			})
-			.catch((e: any) => {
-				setLoading(false);
-				const variant = "error";
-				enqueueSnackbar(e.response.data.message, { variant });
-				console.log("error", e.response.data.message);
-				return;
-			})
-			.finally(() => {
-				setSubmitText("Redirecting...");
-				router.push("/");
+		try {
+			const { status, data } = await axios.post("/api/auth", {
+				email: userToEmail(String(usernameRef.current?.value)),
+				password: passwordRef.current?.value,
 			});
+
+			if (status !== 201) {
+				throw Error(data.message);
+			}
+			setSubmitText("Setup User...");
+			setUser(data);
+			setSubmitText("Redirecting...");
+			router.push(callbackUrl);
+		} catch (e) {
+			setLoading(false);
+			setSubmitText("LOGIN");
+			const variant = "error";
+			enqueueSnackbar("Invalid Username/Password!", { variant });
+			return;
+		}
 	};
 
 	return (
@@ -89,15 +97,13 @@ const AuthComponent = () => {
 						autoComplete="nipam"
 						autoFocus
 						inputRef={usernameRef}
-						// variant="standard"
+					// variant="standard"
 					/>
 				</FormControl>
 				<FormControl fullWidth>
-					<InputLabel htmlFor="standard-adornment-password">
-						Password
-					</InputLabel>
+					<InputLabel htmlFor="password">Password</InputLabel>
 					<OutlinedInput
-						id="outlined-adornment-password"
+						id="password"
 						type={showPassword ? "text" : "password"}
 						inputRef={passwordRef}
 						endAdornment={
@@ -117,7 +123,6 @@ const AuthComponent = () => {
 							</InputAdornment>
 						}
 						label="Password"
-						autoComplete="password"
 					/>
 				</FormControl>
 				<LoadingButton

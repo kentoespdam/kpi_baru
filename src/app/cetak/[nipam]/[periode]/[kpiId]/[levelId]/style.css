@@ -1,0 +1,25 @@
+@page {
+	size: A4 landscape;
+	margin: 0.5in;
+}
+
+@media print {
+	footer {
+		page-break-after: always;
+	}
+}
+
+.blok {
+	width: 842px;
+	height: 595px;
+}
+
+.table tbody tr td {
+	padding: 0.25em;
+	border: solid 1px black;
+}
+
+.table thead tr th {
+	padding: 0.25em;
+	border: solid 1px black;
+}

@@ -1,16 +1,17 @@
 import { LOCAL_ORGANIZATION } from "@myTypes/entity/organization";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 export const getList = async () => {
 	try {
-		const { status, data } = await axios.get(`${LOCAL_ORGANIZATION}/list`);
+		const { data } = await axios.get(`${LOCAL_ORGANIZATION}/list`);
 		return data.data;
-	} catch (e: any) {
+	} catch (e) {
+		const err = e as unknown as AxiosError;
 		console.log(
 			"utils.eo.organization.list",
 			new Date().toISOString(),
-			e.response
+			err.response?.data,
 		);
-		throw new Error(e.response.data.message);
+		throw new Error(JSON.stringify(err.response?.data));
 	}
 };

@@ -1,11 +1,11 @@
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
 import { Satuan } from "@myTypes/entity/satuan";
 import { AutoCompleteProps } from "@myTypes/index";
 import { useQuery } from "@tanstack/react-query";
 import { getList } from "@utils/master/satuan";
-import LoadingAutocomplete from "./loading";
-import Autocomplete from "@mui/material/Autocomplete";
-import TextField from "@mui/material/TextField";
 import { useState } from "react";
+import LoadingAutocomplete from "./loading";
 
 const findCurrentSatuan = (
 	satuans: Satuan[],
@@ -19,9 +19,8 @@ interface SatuanAutocompleteProps extends AutoCompleteProps<Satuan> {
 }
 
 const SatuanAutocomplete = (props: SatuanAutocompleteProps) => {
-	const { search, setSearchValue, required, variant, size, satuanValue } =
-		props;
-	const [currentSatuan, setCurrentSatuan] = useState<Satuan | null>(null);
+	const { search, setSearchValue, required, size, satuanValue } = props;
+	const [currentSatuan, setCurrentSatuan] = useState<Satuan | null>(search);
 
 	const { isFetching, isLoading, error, data } = useQuery({
 		queryKey: ["satuan.autocomplete"],

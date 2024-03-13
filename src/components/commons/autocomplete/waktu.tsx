@@ -1,8 +1,5 @@
 import { waktuList } from "@helper/tanggal";
-import Autocomplete, {
-	AutocompleteChangeDetails,
-	AutocompleteChangeReason,
-} from "@mui/material/Autocomplete";
+import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { SyntheticEvent } from "react";
 
@@ -17,9 +14,7 @@ const WaktuAutocomplete = (props: WaktuAutocompleteProps) => {
 
 	const handleChange = (
 		e: SyntheticEvent<Element, Event>,
-		v: string | null,
-		reason: AutocompleteChangeReason,
-		details?: AutocompleteChangeDetails<string> | undefined
+		v: string | null
 	) => {
 		setSearchValue(v);
 	};

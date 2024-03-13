@@ -5,6 +5,10 @@ interface ViewFormPerilakuDialogStore {
 	isFormPerilakuOpen: boolean;
 	toggleFormPerilakuOpen: (perilaku: TransPerilakuNilai | null) => void;
 	perilaku: TransPerilakuNilai | null;
+	nipam: string | null;
+	setNipam: (nipam: string | null) => void;
+	levelId: number | null;
+	setLevelId: (levelId: number | null) => void;
 }
 
 export const useViewFormPerilakuDialogStore =
@@ -20,4 +24,8 @@ export const useViewFormPerilakuDialogStore =
 					  }
 			),
 		perilaku: null,
+		nipam: null,
+		setNipam: (nipam) => set({ nipam }),
+		levelId: null,
+		setLevelId: (levelId) => set({ levelId }),
 	}));

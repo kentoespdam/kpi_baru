@@ -1,20 +1,28 @@
-import { appwriteHeader, setExpiredCookie } from "@helper/index";
+import {
+	appwriteHeader,
+	isHasSessionCookie,
+	setExpiredCookie,
+} from "@helper/index";
 import axios from "axios";
+import { headers } from "next/headers";
 import { NextRequest } from "next/server";
-import { APPWRITE_ENDPOINT, sessionNames } from "src/lib";
+import { APPWRITE_ENDPOINT } from "src/lib";
 
 export const revalidate = false;
 
 export const GET = async (req: NextRequest) => {
 	const cookies = req.cookies;
+	const headerList = headers();
+	const hostname = String(headerList.get("host")).split(":")[0];
+
 	try {
-		if (cookies.has(sessionNames[0]) || cookies.has(sessionNames[1])) {
-			const { status, data } = await axios.delete(
+		if (isHasSessionCookie(cookies)) {
+			const reqHeader = appwriteHeader(cookies);
+			const { status } = await axios.delete(
 				`${APPWRITE_ENDPOINT}/v1/account/sessions/current`,
-				{
-					headers: appwriteHeader(cookies),
-				}
+				{ headers: reqHeader },
 			);
+
 			if (status === 204)
 				return new Response(
 					JSON.stringify({
@@ -23,9 +31,9 @@ export const GET = async (req: NextRequest) => {
 					}),
 					{
 						headers: {
-							"Set-Cookie": setExpiredCookie(cookies),
+							"Set-Cookie": setExpiredCookie(cookies, hostname),
 						},
-					}
+					},
 				);
 		}
 		return new Response(
@@ -35,11 +43,11 @@ export const GET = async (req: NextRequest) => {
 			}),
 			{
 				headers: {
-					"Set-Cookie": setExpiredCookie(cookies),
+					"Set-Cookie": setExpiredCookie(cookies, hostname),
 				},
-			}
+			},
 		);
-	} catch (e: any) {
+	} catch (e) {
 		console.log("api.auth.logout.delete", new Date().toISOString());
 		return new Response(
 			JSON.stringify({
@@ -48,9 +56,9 @@ export const GET = async (req: NextRequest) => {
 			}),
 			{
 				headers: {
-					"Set-Cookie": setExpiredCookie(cookies),
+					"Set-Cookie": setExpiredCookie(cookies, hostname),
 				},
-			}
+			},
 		);
 	}
 };

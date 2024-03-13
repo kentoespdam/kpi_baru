@@ -1,6 +1,4 @@
 "use client";
-import DoDisturbIcon from "@mui/icons-material/DoDisturb";
-import SaveIcon from "@mui/icons-material/Save";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
@@ -12,11 +10,14 @@ import TextField from "@mui/material/TextField";
 import { AUDIT_STATUS } from "@myTypes/index";
 import { usePerilakuStore } from "@store/filter/master/perilaku";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
 import { ChangeEvent, useRef, useState } from "react";
 import { doSave, getById } from "src/utils/master/perilaku";
+const DoDisturbIcon = dynamic(() => import("@mui/icons-material/DoDisturb"));
+const SaveIcon = dynamic(() => import("@mui/icons-material/Save"));
 
 type PerilakuFormProps = {
 	id?: number;

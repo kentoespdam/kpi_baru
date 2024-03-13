@@ -12,14 +12,7 @@ const ProfesiTableHead = () => {
 		setPageRequest,
 		setKeyVal,
 		status,
-	} = useProfesiStore((state) => ({
-		sortRequest: state.sortRequest,
-		setSortRequest: state.setSortRequest,
-		pageRequest: state.pageRequest,
-		setPageRequest: state.setPageRequest,
-		setKeyVal: state.setKeyVal,
-		status: state.status,
-	}));
+	} = useProfesiStore();
 
 	const handleSort = (sort: string | null, direction: "asc" | "desc") => {
 		setSortRequest({ sort, direction });

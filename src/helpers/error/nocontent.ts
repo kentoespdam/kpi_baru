@@ -1,12 +1,10 @@
 export const responseNoContent = () => {
-	//e.response.data
-	const json = {
-		response: {
-			data: "No Content",
-		},
-	};
-
-	return new Response("No Content", { status: 404 });
+	return new Response(
+		JSON.stringify({
+			message: "No Content",
+		}),
+		{ status: 404 },
+	);
 };
 
 export const responseFileNotFound = () =>
@@ -16,5 +14,5 @@ export const responseFileNotFound = () =>
 				data: "file not found!",
 			},
 		}),
-		{ status: 404 }
+		{ status: 404 },
 	);

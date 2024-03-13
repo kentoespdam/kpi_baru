@@ -56,6 +56,13 @@ export interface BridgeKpiPageResponse
 export const bridgeKpiHead: MyTableHead[] = [
 	{ field: "id", title: "No", searchable: "false", sortable: "true" },
 	{
+		field: "level",
+		title: "Level",
+		searchable: "true",
+		type: "level",
+		sortable: "true",
+	},
+	{
 		field: "nipam",
 		title: "NIPAM",
 		searchable: "true",
@@ -91,13 +98,6 @@ export const bridgeKpiHead: MyTableHead[] = [
 		title: "Organisasi",
 		searchable: "true",
 		type: "organization",
-		sortable: "true",
-	},
-	{
-		field: "level",
-		title: "Level",
-		searchable: "true",
-		type: "level",
 		sortable: "true",
 	},
 	{

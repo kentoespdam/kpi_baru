@@ -1,11 +1,12 @@
 import CardBuilder from "@components/commons/card";
 import LinearProgress from "@mui/material/LinearProgress";
+import Typography from "@mui/material/Typography";
 import { useIndikatorStore } from "@store/filter/master/indikator";
 import { useQuery } from "@tanstack/react-query";
+import dynamic from "next/dynamic";
 import { getPage } from "src/utils/master/indikator";
-import IndikatorAccordion from "./accordion";
 import IndikatorFilter from "./filter";
-import Typography from "@mui/material/Typography";
+const IndikatorAccordion = dynamic(() => import("./accordion"));
 
 const IndikatorComponent = () => {
 	const { pageRequest, sortRequest, kpiId, indikator, status } =
@@ -18,8 +19,9 @@ const IndikatorComponent = () => {
 		],
 		queryFn: getPage,
 		enabled: !!kpiId,
-		retry: 1,
+		retry: 2,
 	});
+	console.log(error);
 	return (
 		<CardBuilder
 			title="Master Indikator"

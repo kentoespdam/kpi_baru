@@ -1,12 +1,9 @@
 "use client";
-
 import IndikatorAutocomplete from "@autocomplete/indikator";
 import KpiAutocomplete from "@autocomplete/kpi";
 import SatuanAutocomplete from "@autocomplete/satuan";
 import WaktuAutocomplete from "@autocomplete/waktu";
 import { waktuList } from "@helper/tanggal";
-import DoDisturbIcon from "@mui/icons-material/DoDisturb";
-import SaveIcon from "@mui/icons-material/Save";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
@@ -19,7 +16,6 @@ import Stack from "@mui/material/Stack";
 import Switch from "@mui/material/Switch";
 import TextField from "@mui/material/TextField";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DateField } from "@mui/x-date-pickers/DateField";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { Indikator } from "@myTypes/entity/indikator";
@@ -31,10 +27,14 @@ import { useUraianStore } from "@store/filter/master/uraian";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { doSave, getById } from "@utils/master/uraian";
 import dayjs, { Dayjs } from "dayjs";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
 import { useRef, useState } from "react";
+
+const DoDisturbIcon = dynamic(() => import("@mui/icons-material/DoDisturb"));
+const SaveIcon = dynamic(() => import("@mui/icons-material/Save"));
 
 type UraianFormComponentProps = {
 	idIndikator?: number;

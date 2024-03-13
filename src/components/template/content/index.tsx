@@ -1,6 +1,6 @@
 "use client";
+import { Toolbar } from "@mui/material";
 import Container from "@mui/material/Container";
-import Toolbar from "@mui/material/Toolbar";
 import { ChildrenProps } from "@myTypes/index";
 import GlobalNav from "../navcumb";
 

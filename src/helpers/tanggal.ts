@@ -33,3 +33,8 @@ export const waktuList = [
 	"Tanggal 31",
 	"Tanggal Custom",
 ];
+
+export const tanggalSekarang = () => {
+	const date = new Date();
+	return new Intl.DateTimeFormat("id-ID", { dateStyle: "full" }).format(date);
+};

@@ -4,7 +4,7 @@ import { createUserAccount } from "src/lib/appwrite/user";
 
 export const PATCH = async (
 	req: NextRequest,
-	{ params }: { params: { slug: string } }
+	{ params }: { params: { slug: string } },
 ) => {
 	const { slug } = params;
 	const body = await req.json();
@@ -12,7 +12,7 @@ export const PATCH = async (
 
 	switch (slug) {
 		case "create":
-			return createUserAccount(body);
+			return createUserAccount(cookies, body);
 		case "password":
 			return updatePassword(cookies, body?.newPass, body?.oldPass);
 		case "name":

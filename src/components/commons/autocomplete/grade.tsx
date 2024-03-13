@@ -2,8 +2,8 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { Grade } from "@myTypes/entity/grade";
 import { useQuery } from "@tanstack/react-query";
-import LoadingAutocomplete from "./loading";
 import { getList } from "@utils/master/grade";
+import LoadingAutocomplete from "./loading";
 
 type GradeAutocompleteProps = {
 	search: Grade | null;

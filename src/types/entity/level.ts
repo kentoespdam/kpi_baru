@@ -20,7 +20,7 @@ export interface LevelFilter {
 }
 
 export const isLevel = (obj: any): obj is Level => {
-	return obj && obj.level;
+	return obj?.level;
 };
 
 export interface LevelWithAudit extends Level, Audit {}

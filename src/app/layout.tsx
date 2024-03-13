@@ -1,8 +1,5 @@
-// import "./globals.css";
-// import { Inter } from 'next/font/google'
 import { Public_Sans as PublicSans } from "next/font/google";
 
-// const inter = Inter({ subsets: ['latin'] })
 const inter = PublicSans({
 	subsets: ["latin"],
 	weight: ["300", "400", "500", "700"],

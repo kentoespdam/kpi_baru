@@ -1,15 +1,16 @@
 "use client";
 import TableLoading from "@components/commons/table/loading";
+import LinearProgress from "@mui/material/LinearProgress";
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
 import { profesiHeader } from "@myTypes/entity/profesi";
 import { useProfesiStore } from "@store/filter/master/profesi";
 import { useQueries } from "@tanstack/react-query";
+import dynamic from "next/dynamic";
 import { getPage } from "src/utils/master/profesi";
 import ProfesiTableBody from "./table/body";
-import ProfesiTableHead from "./table/head";
 import ProfesiPagination from "./table/pagination";
-import LinearProgress from "@mui/material/LinearProgress";
+const ProfesiTableHead = dynamic(() => import("./table/head"));
 
 const ProfesiComponent = () => {
 	const { loading, pageRequest, sortRequest, status, name, level } =

@@ -1,28 +1,35 @@
 import { useSessionStore } from "@store/main/session";
-import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
 import { NextRequest, NextResponse } from "next/server";
-import { getExpToken, getSessionCookie, newHostname } from "./helpers";
-import { APPWRITE_ENDPOINT, APPWRITE_PROJECT_ID, sessionNames } from "./lib";
+import {
+	RequestCookie,
+	RequestCookies,
+} from "next/dist/compiled/@edge-runtime/cookies";
+import {
+	appwriteHeader,
+	getExpToken,
+	isHasSessionCookie,
+	isHasTokenCookie,
+	isValidIpAddress,
+	newHostname,
+} from "./helpers";
+import { sessionNames } from "./lib";
 
 export const middleware = async (req: NextRequest) => {
 	const response = NextResponse.next();
 	const currPath = req.nextUrl.pathname;
 	const cookies = req.cookies;
+	const host = String(req.headers.get("host")).split(":")[0];
 
-	if (
-		(!cookies.has(sessionNames[0]) || !cookies.has(sessionNames[1])) &&
-		!currPath.startsWith("/auth") &&
-		!currPath.startsWith("/api/auth")
-	)
+	if (!isHasSessionCookie(cookies) && !currPath.startsWith("/auth"))
 		return NextResponse.redirect(
 			new URL(
-				"/auth",
-				`${process.env.PROTOCOL}://${process.env.NEXT_PUBLIC_URL}`
-			)
+				`/auth?callbackUrl=${encodeURIComponent(currPath)}`,
+				req.nextUrl.origin,
+			),
 		);
 
-	const sessCookie = getSessionCookie(cookies);
-	if (sessCookie === undefined) if (currPath.startsWith("/auth")) return;
+	if (currPath === "/")
+		return NextResponse.redirect(new URL("/trans/kpi", req.nextUrl.origin));
 
 	const sess = await getSession(cookies);
 	if (!sess) {
@@ -30,25 +37,19 @@ export const middleware = async (req: NextRequest) => {
 		response.cookies.delete(sessionNames[1]);
 		response.cookies.delete(sessionNames[2]);
 		if (currPath.startsWith("/auth") || currPath.startsWith("/api/auth"))
-			return;
+			return response;
 
 		return NextResponse.redirect(
 			new URL(
-				"/auth",
-				`${process.env.PROTOCOL}://${process.env.NEXT_PUBLIC_URL}`
-			)
+				`/auth?callbackUrl=${encodeURIComponent(currPath)}`,
+				req.nextUrl.origin,
+			),
 		);
 	}
 
-	if (!cookies.has(sessionNames[2])) {
-		const token = await createToken(cookies);
-		response.cookies.set(sessionNames[2], token, {
-			path: "/",
-			expires: new Date(getExpToken(token)),
-			domain: newHostname,
-			secure: true,
-			httpOnly: true,
-		});
+	if (!isHasTokenCookie(cookies)) {
+		const token = await renewToken(cookies, host);
+		response.cookies.set(token.name, token.value, token);
 	}
 
 	return response;
@@ -63,63 +64,67 @@ export const config = {
 		 * - _next/image (image optimization files)
 		 * - favicon.ico (favicon file)
 		 */
-		"/((?!_next/static|_next/image|favicon.ico|images|api/trans/kpi/file).*)",
+		"/((?!_next/static|_next/image|favicon.ico|images|api/).*)",
 	],
 };
 
 const getSession = async (cookies: RequestCookies) => {
+	const reqHeaders = appwriteHeader(cookies);
 	try {
-		const xfallback =
-			cookies.get(sessionNames[0])?.value ||
-			cookies.get(sessionNames[1])?.value ||
-			"";
-		const cookieString = cookies.toString();
-		const decodedCookie = decodeURIComponent(cookieString);
-		const headers = {
-			"Content-Type": "application/json",
-			"X-Appwrite-Project": APPWRITE_PROJECT_ID,
-			"Cookie": decodedCookie,
-			"X-Fallback-Cookies": xfallback,
-		};
-		const req = await fetch(`http://localhost:3000/api/auth/session`, {
-			headers: headers,
-		});
+		const req = await fetch(
+			`${process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT}/v1/account/session/current`,
+			{
+				method: "GET",
+				headers: reqHeaders,
+			},
+		);
+
+		if (req.status !== 200) return false;
 
 		const data = await req.json();
 		if (useSessionStore.getState().user === null)
 			useSessionStore.setState({ user: data });
 
-		return req.status === 200 ? true : false;
-	} catch (e: any) {
+		return true;
+	} catch (e) {
 		console.log("middleware get session:", e);
 		return false;
 	}
 };
 
-const createToken = async (cookies: RequestCookies) => {
+export const renewToken = async (cookies: RequestCookies, host: string) => {
+	const reqHeaders = appwriteHeader(cookies);
+
 	try {
-		const xfallback =
-			cookies.get(sessionNames[0])?.value ||
-			cookies.get(sessionNames[1])?.value ||
-			"";
-		const cookieString = cookies.toString();
-		const decodedCookie = decodeURIComponent(cookieString);
-		const headers = {
-			"Content-Type": "application/json",
-			"X-Appwrite-Project": APPWRITE_PROJECT_ID,
-			"Cookie": decodedCookie,
-			"X-Fallback-Cookies": xfallback,
-		};
-		const req = await fetch(`${APPWRITE_ENDPOINT}/v1/account/jwt`, {
-			method: "POST",
-			headers: headers,
-		});
-
-		if (req.status !== 201) throw Error(req.statusText);
-
+		const req = await fetch(
+			`${process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT}/v1/account/jwt`,
+			{
+				method: "POST",
+				headers: reqHeaders,
+			},
+		);
 		const data = await req.json();
-		return data.jwt;
-	} catch (e: any) {
+		console.log(data);
+		const expires = getExpToken(data.jwt);
+		const result = {
+			name: sessionNames[2],
+			value: data.jwt,
+			path: "/",
+			expires: new Date(expires),
+		};
+		if (!isValidIpAddress(host)) {
+			Object.assign(result, {
+				domain: newHostname(host),
+				httpOnly: true,
+				secure: true,
+				sameSite: true,
+				priority: "hight",
+			});
+		}
+
+		return result as RequestCookie;
+	} catch (e) {
 		console.log("middleware create token", e);
+		return {} as RequestCookie;
 	}
 };

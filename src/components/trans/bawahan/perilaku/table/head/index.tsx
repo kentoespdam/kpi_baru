@@ -6,12 +6,12 @@ const TransPerilakuTableHead = () => {
 	return (
 		<TableHead>
 			<TableRow>
-				<CellBuilder value="No" bordered/>
-				<CellBuilder value="Kompetensi" bordered/>
-				<CellBuilder value="Uraian" bordered/>
-				<CellBuilder value="Indikator Perilaku" bordered/>
-				<CellBuilder value="Nilai" bordered/>
-				<CellBuilder value="Action" bordered/>
+				<CellBuilder value="No" bordered />
+				<CellBuilder value="Kompetensi" bordered />
+				<CellBuilder value="Uraian" bordered />
+				<CellBuilder value="Indikator Perilaku" bordered />
+				<CellBuilder value="Nilai" bordered />
+				<CellBuilder value="Action" bordered />
 			</TableRow>
 		</TableHead>
 	);

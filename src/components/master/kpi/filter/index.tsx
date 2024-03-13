@@ -1,35 +1,27 @@
-"use client";
-
-import EnterOutlined from "@ant-design/icons/EnterOutlined";
+import ProfesiAutocomplete from "@autocomplete/profesi";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
-import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Stack from "@mui/material/Stack";
 import Switch from "@mui/material/Switch";
 import Tooltip from "@mui/material/Tooltip";
+import { Profesi } from "@myTypes/entity/profesi";
 import { AUDIT_STATUS } from "@myTypes/index";
 import { useKpiStore } from "@store/filter/master/kpi";
+import dynamic from "next/dynamic";
 import { useRef, useState } from "react";
+const EnterOutlined = dynamic(() => import("@ant-design/icons/EnterOutlined"));
+import IconButton from "@mui/material/IconButton";
 
 const KpiFilter = () => {
-	const {
-		pageRequest,
-		setPageRequest,
-		setKeyVal,
-		status,
-		organization,
-		position,
-		profesi,
-		name,
-		grade,
-	} = useKpiStore();
+	const { setKeyVal, status, name, profesi } = useKpiStore();
 	const field = "kpi";
 	const title = "KPI Name";
 	const nameRef = useRef<HTMLInputElement>(null);
+	const [_profesi, _setProfesi] = useState<Profesi | null>(profesi);
 	const [checked, setChecked] = useState(
 		status === AUDIT_STATUS.DISABLED ? false : true
 	);
@@ -47,6 +39,12 @@ const KpiFilter = () => {
 			setKeyVal("name", e.currentTarget.value);
 		}
 	};
+
+	const handleChangeProfesi = (value: Profesi | null) => {
+		_setProfesi(value);
+		setKeyVal("profesi", value);
+	};
+
 	const searchNameClick = () => {
 		if (nameRef.current === null) return;
 		if (nameRef.current.value === "") setKeyVal("name", null);
@@ -89,6 +87,14 @@ const KpiFilter = () => {
 							</Tooltip>
 						}
 						defaultValue={name}
+					/>
+				</FormControl>
+				<FormControl>
+					<ProfesiAutocomplete
+						search={_profesi}
+						setSearchValue={handleChangeProfesi}
+						variant="outlined"
+						sx={{ minWidth: 250 }}
 					/>
 				</FormControl>
 				<FormGroup>

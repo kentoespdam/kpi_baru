@@ -11,6 +11,12 @@ const BridgeKpiTableHead = () => {
 		pageRequest,
 		setPageRequest,
 		setKeyVal,
+		nipam,
+		name,
+		position,
+		organization,
+		level,
+		kpi,
 		status,
 	} = useBridgeKpiStore();
 
@@ -35,6 +41,12 @@ const BridgeKpiTableHead = () => {
 				headers={bridgeKpiHead}
 				handleSearch={handleSearch}
 				status={status}
+				nipam={nipam}
+				name={name}
+				position={position}
+				organization={organization}
+				level={level}
+				kpi={kpi}
 			/>
 		</TableHead>
 	);
